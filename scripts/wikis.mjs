@@ -6,6 +6,7 @@ import { APPS } from "./apps.mjs";
 
 const CACHE = ".wikis/src";
 const OUT = ".wikis/out";
+const PRIVACY = ".wikis/privacy";
 const ASSETS = "public/docs-assets";
 const SECTION = { en: "docs", es: "ayuda" };
 const CALLOUT = {
@@ -177,6 +178,23 @@ function syncWiki(wiki) {
   console.log(`wikis: ${wiki.repo} → ${pages.size} pages`);
 }
 
+// A policy that failed to arrive stops the deploy: the page Google points people at must never go missing.
+function syncPrivacy({ repo, product }) {
+  const blob = `https://github.com/rgdevment/${repo}/blob/main/`;
+  const raw = execFileSync("curl", ["-fsSL", `https://raw.githubusercontent.com/rgdevment/${repo}/main/PRIVACY.md`], {
+    encoding: "utf8",
+  });
+  const body = raw
+    .replace(/^\uFEFF?#\s+.+\n/, "")
+    .replace(/\]\(([^)\s:#]+)(#[^)]*)?\)/g, (_, file, hash = "") => `](${blob}${file}${hash})`);
+  const meta = { product, title: titleOf(raw, "Privacy policy"), source: `${blob}PRIVACY.md` };
+  writeFileSync(join(PRIVACY, `${product}.md`), `---\n${JSON.stringify(meta, null, 2)}\n---\n${body}`);
+  console.log(`privacy: ${repo} → /${product}/privacy/`);
+}
+
 rmSync(OUT, { recursive: true, force: true });
+rmSync(PRIVACY, { recursive: true, force: true });
 mkdirSync(ASSETS, { recursive: true });
+mkdirSync(PRIVACY, { recursive: true });
 for (const wiki of APPS) syncWiki(wiki);
+for (const app of APPS) syncPrivacy(app);

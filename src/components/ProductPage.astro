@@ -4,6 +4,7 @@ import Icon from "./Icon.astro";
 import Shot from "./Shot.astro";
 import Layout from "../layouts/Layout.astro";
 import { bySection, docPath, docsOf } from "../content/docs";
+import { privacyPath } from "../content/privacy";
 import { GUIDES, written } from "../content/guides";
 import { PRODUCTS, type Product, releasesUrl, shotSrc, storeUrl, words } from "../content/products";
 import { latestRelease, releaseDate } from "../content/releases";
@@ -37,6 +38,7 @@ const say = {
   install: es ? "Cómo se instala" : "How to install it",
   installLede: es ? "Elige el camino que prefieras. Ninguno pide cuenta." : "Pick whichever route you prefer. None of them asks for an account.",
   privacy: es ? "Privacidad" : "Privacy",
+  policy: es ? "Leer la política de privacidad" : "Read the privacy policy",
   faq: es ? "Preguntas frecuentes" : "Frequently asked questions",
   source: es ? "Ver el código fuente" : "View the source code",
   free: es ? "Gratis y de código abierto" : "Free and open source",
@@ -236,6 +238,9 @@ const schema = [
       <div>
         <h2 class="text-xl font-semibold">{say.privacy}</h2>
         <p class="mt-1.5 text-body">{t.privacy}</p>
+        <a class="mt-3 inline-flex items-center gap-1.5 text-sm font-medium text-flame-ink hover:underline" href={href(locale, privacyPath(locale, product.slug))}>
+          {say.policy}
+        </a>
       </div>
     </div>
   </section>

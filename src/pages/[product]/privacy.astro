@@ -1,0 +1,12 @@
+---
+import PrivacyPage from "../../components/PrivacyPage.astro";
+import { privacyRoutes } from "../../content/privacy";
+
+export function getStaticPaths() {
+  return privacyRoutes();
+}
+
+const { policy } = Astro.props;
+---
+
+<PrivacyPage policy={policy} locale="en" />
