@@ -2,12 +2,7 @@ import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { basename, extname, join } from "node:path";
-
-const WIKIS = [
-  { product: "tisty", repo: "Tisty" },
-  { product: "linkunbound", repo: "LinkUnbound" },
-  { product: "copypaste", repo: "CopyPaste" },
-];
+import { APPS } from "./apps.mjs";
 
 const CACHE = ".wikis/src";
 const OUT = ".wikis/out";
@@ -184,4 +179,4 @@ function syncWiki(wiki) {
 
 rmSync(OUT, { recursive: true, force: true });
 mkdirSync(ASSETS, { recursive: true });
-for (const wiki of WIKIS) syncWiki(wiki);
+for (const wiki of APPS) syncWiki(wiki);
