@@ -10,6 +10,14 @@ Motto: software out of conviction, not subscription.
 - [LinkUnbound](https://rgdevment.com/linkunbound/): Chooses which browser opens every link. Registers as the default browser on Windows and macOS; a rule can match the site, a browser profile, or the application the link came from. Unwraps Microsoft SafeLinks. GPL-3.0-only.
 - [CopyPaste](https://rgdevment.com/copypaste/): Clipboard manager keeping a searchable local history. Ignores clipboard content from password managers. Windows and macOS. GPL-3.0.
 
+## Documentation
+
+Built from each project's GitHub wiki, in English and Spanish.
+
+- [Tisty docs](https://rgdevment.com/tisty/docs/): installation, the Markdown editor, tasks, the archive, sync and backup, the MCP server and its tools.
+- [LinkUnbound docs](https://rgdevment.com/linkunbound/docs/): installation, the picker, rules, browsers and profiles, links from other apps, troubleshooting.
+- [CopyPaste docs](https://rgdevment.com/copypaste/docs/): installation, the panel, content kinds, paste as, backup and migration, troubleshooting.
+
 ## Pricing and support
 
 - [Pricing](https://rgdevment.com/pricing/): Every program is free in full. No paid tier, no trial, no feature behind a wall, no account. Why there is no catch: no company, no investors, no payroll.
@@ -33,6 +41,9 @@ Motto: software out of conviction, not subscription.
 - [LinkUnbound](https://rgdevment.com/es/linkunbound/)
 - [CopyPaste](https://rgdevment.com/es/copypaste/)
 - [Guías](https://rgdevment.com/es/guias/)
+- [Ayuda de Tisty](https://rgdevment.com/es/tisty/ayuda/)
+- [Ayuda de LinkUnbound](https://rgdevment.com/es/linkunbound/ayuda/)
+- [Ayuda de CopyPaste](https://rgdevment.com/es/copypaste/ayuda/)
 - [Precios](https://rgdevment.com/es/precios/)
 - [Apoyar](https://rgdevment.com/es/apoyar/)
 

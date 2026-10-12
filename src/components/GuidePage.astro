@@ -1,8 +1,11 @@
 ---
+import Crumbs from "./Crumbs.astro";
+import Icon from "./Icon.astro";
 import Layout from "../layouts/Layout.astro";
+import { docPath, docsOf } from "../content/docs";
 import { GUIDES, type Guide, written } from "../content/guides";
-import { PRODUCTS, words } from "../content/products";
-import { DOMAIN, canonical, href, type Locale } from "../site";
+import { PRODUCTS, shotSrc, words } from "../content/products";
+import { AUTHOR, DOMAIN, PERSON_ID, WEBSITE_ID, canonical, crumbs, href, type Locale } from "../site";
 
 interface Props {
   guide: Guide;
@@ -13,27 +16,51 @@ const { guide, locale } = Astro.props;
 const t = written(guide, locale);
 const es = locale === "es";
 const product = PRODUCTS.find((one) => one.slug === guide.product)!;
+const index = es ? "guias" : "guides";
 
 const say = {
-  home: es ? "Inicio" : "Home",
   guides: es ? "Guías" : "Guides",
-  faq: es ? "Preguntas" : "Questions",
-  more: es ? "Más sobre" : "More about",
+  faq: es ? "Preguntas frecuentes" : "Frequently asked questions",
+  more: es ? "Conocer" : "Meet",
+  help: es ? "Ayuda de" : "Docs for",
   kin: es ? "Sigue por aquí" : "Carry on with",
+  by: es ? "Por" : "By",
+  free: es ? "Gratis, de código abierto, sin cuenta ni telemetría." : "Free, open source, no account, no telemetry.",
 };
 
-const paths = { en: guide.en.slug, es: guide.es.slug };
+const date = new Date(`${guide.published}T12:00:00Z`).toLocaleDateString(es ? "es-CL" : "en-US", {
+  year: "numeric",
+  month: "long",
+  day: "numeric",
+});
 
+const paths = { en: guide.en.slug, es: guide.es.slug };
 const kin = GUIDES.filter((one) => one.id !== guide.id && one.product === guide.product);
+const shot = shotSrc(product, locale) ?? "/social.png";
+const hasDocs = (await docsOf(product.slug, locale)).length > 0;
 
 const schema = [
   {
     "@context": "https://schema.org",
-    "@type": "HowTo",
+    "@type": "TechArticle",
+    headline: t.title,
+    description: t.description,
+    inLanguage: locale,
     datePublished: guide.published,
     dateModified: guide.published,
+    author: { "@id": PERSON_ID, "@type": "Person", name: AUTHOR.name },
+    publisher: { "@id": PERSON_ID },
+    isPartOf: { "@id": WEBSITE_ID },
+    mainEntityOfPage: canonical(locale, t.slug),
+    image: new URL(shot, DOMAIN).toString(),
+    about: { "@type": "SoftwareApplication", name: product.name, url: canonical(locale, product.slug) },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "HowTo",
     name: t.nativeTitle,
     description: t.description,
+    inLanguage: locale,
     step: t.nativeSteps.map((one, at) => ({
       "@type": "HowToStep",
       position: at + 1,
@@ -50,20 +77,10 @@ const schema = [
       acceptedAnswer: { "@type": "Answer", text: one.a },
     })),
   },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: say.home, item: `${DOMAIN}${href(locale)}` },
-      {
-        "@type": "ListItem",
-        position: 2,
-        name: say.guides,
-        item: canonical(locale, es ? "guias" : "guides"),
-      },
-      { "@type": "ListItem", position: 3, name: t.title, item: canonical(locale, t.slug) },
-    ],
-  },
+  crumbs(locale, [
+    [say.guides, index],
+    [t.title, t.slug],
+  ]),
 ];
 ---
 
@@ -77,94 +94,128 @@ const schema = [
   published={guide.published}
   schema={schema}
 >
-  <nav class="mb-10 text-sm text-stone-500">
-    <a class="hover:text-ink" href={href(locale)}>{say.home}</a>
-    <span class="px-2">/</span>
-    <a class="hover:text-ink" href={href(locale, es ? "guias" : "guides")}>{say.guides}</a>
-  </nav>
+  <article class="shell pt-10 sm:pt-14">
+    <Crumbs locale={locale} trail={[[say.guides, index], [t.title, t.slug]]} />
 
-  <article>
-    <h1 class="text-3xl font-bold tracking-tight sm:text-4xl">{t.title}</h1>
-    <p class="mt-6 text-lg leading-relaxed text-stone-600">{t.lede}</p>
-
-    <section class="mt-14">
-      <h2 class="text-2xl font-semibold">{t.nativeTitle}</h2>
-      <ol class="mt-6 space-y-6">
-        {
-          t.nativeSteps.map((one, at) => (
-            <li class="flex gap-4">
-              <span class="flex h-7 w-7 shrink-0 items-center justify-center rounded-full bg-stone-200 text-sm text-stone-700">
-                {at + 1}
-              </span>
-              <div>
-                <h3 class="font-medium text-ink">{one.title}</h3>
-                <p class="mt-1 leading-relaxed text-stone-600">{one.body}</p>
-              </div>
-            </li>
-          ))
-        }
-      </ol>
-    </section>
-
-    <section class="mt-14">
-      <h2 class="text-2xl font-semibold">{t.gapTitle}</h2>
-      <ul class="mt-5 space-y-4">
-        {t.gap.map((one) => <li class="border-l-2 border-stone-300 pl-4 text-stone-600">{one}</li>)}
-      </ul>
-    </section>
-
-    <section class="mt-14">
-      <h2 class="text-2xl font-semibold">{t.toolTitle}</h2>
-      <ul class="mt-5 space-y-4">
-        {
-          t.tool.map((one) => (
-            <li class="border-l-2 pl-4 text-stone-700" style={`border-color: ${product.accent}`}>
-              {one}
-            </li>
-          ))
-        }
-      </ul>
+    <header class="mx-auto mt-12 max-w-3xl">
       <a
-        class="mt-8 inline-block rounded-lg border border-stone-300 px-5 py-3 transition hover:border-stone-400 hover:bg-stone-100"
         href={href(locale, product.slug)}
+        class="chip transition-colors hover:border-fg/25"
+        style={`border-color: color-mix(in srgb, ${product.accent} 35%, transparent)`}
       >
-        {say.more} {product.name}
-        <span class="mt-1 block text-sm text-stone-500">{words(product, locale).tagline}</span>
+        <img src={product.icon} alt="" width="18" height="18" class="h-[18px] w-[18px] rounded-[5px]" />
+        {product.name}
       </a>
-    </section>
+      <h1 class="mt-6 text-4xl font-semibold leading-[1.1] tracking-[-0.02em] sm:text-5xl">{t.title}</h1>
+      <p class="mt-6 text-xl leading-relaxed text-body">{t.lede}</p>
+      <p class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-line pb-8 text-sm text-muted">
+        <span>{say.by} <span class="text-fg">{AUTHOR.name}</span></span>
+        <span aria-hidden="true">·</span>
+        <time datetime={guide.published}>{date}</time>
+      </p>
+    </header>
 
-    {
-      kin.length > 0 && (
-        <section class="mt-14">
-          <h2 class="text-2xl font-semibold">{say.kin}</h2>
-          <ul class="mt-5 space-y-3">
-            {kin.map((one) => (
-              <li>
-                <a
-                  class="block rounded-lg border border-stone-200 p-4 transition hover:border-stone-400 hover:bg-stone-100"
-                  href={href(locale, written(one, locale).slug)}
-                >
-                  <span class="font-medium text-ink">{written(one, locale).title}</span>
-                </a>
+    <div class="mx-auto max-w-3xl">
+      <section class="mt-12">
+        <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">{t.nativeTitle}</h2>
+        <ol class="relative mt-8 space-y-8 border-l border-line pl-8">
+          {
+            t.nativeSteps.map((one, at) => (
+              <li class="relative">
+                <span class="absolute -left-[2.85rem] grid h-7 w-7 place-items-center rounded-full border border-line bg-surface font-mono text-xs text-fg">
+                  {at + 1}
+                </span>
+                <h3 class="text-lg font-semibold">{one.title}</h3>
+                <p class="mt-1.5 text-body">{one.body}</p>
               </li>
-            ))}
-          </ul>
-        </section>
-      )
-    }
+            ))
+          }
+        </ol>
+      </section>
 
-    <section class="mt-14">
-      <h2 class="text-2xl font-semibold">{say.faq}</h2>
-      <div class="mt-5 space-y-6">
+      <section class="mt-16">
+        <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">{t.gapTitle}</h2>
+        <ul class="mt-6 space-y-4">
+          {
+            t.gap.map((one) => (
+              <li class="flex gap-3 text-body">
+                <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full bg-muted" aria-hidden="true" />
+                <span>{one}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </section>
+
+      <section class="card relative mt-16 overflow-hidden p-7 sm:p-9" style={`--accent: ${product.accent}`}>
+        <div
+          class="pointer-events-none absolute -top-24 -right-24 h-64 w-64 rounded-full opacity-[0.15] blur-3xl"
+          style="background: var(--accent)"
+          aria-hidden="true"
+        />
+        <h2 class="relative text-2xl font-semibold tracking-tight">{t.toolTitle}</h2>
+        <ul class="relative mt-6 space-y-3.5">
+          {
+            t.tool.map((one) => (
+              <li class="flex gap-3 text-body">
+                <Icon name="free" class="mt-1 h-4 w-4 shrink-0" />
+                <span>{one}</span>
+              </li>
+            ))
+          }
+        </ul>
+        <a class="group relative mt-8 flex items-center gap-4 rounded-2xl border border-line bg-canvas p-4 transition hover:border-fg/25" href={href(locale, product.slug)}>
+          <img src={product.icon} alt="" width="48" height="48" class="h-12 w-12 rounded-xl" loading="lazy" />
+          <span class="min-w-0">
+            <span class="block font-display font-semibold text-fg">{say.more} {product.name}</span>
+            <span class="block text-sm text-muted">{words(product, locale).tagline} {say.free}</span>
+          </span>
+          <Icon name="arrow" class="ml-auto h-4 w-4 shrink-0 text-muted transition group-hover:translate-x-0.5" />
+        </a>
         {
-          t.faq.map((one) => (
-            <div>
-              <h3 class="font-medium text-ink">{one.q}</h3>
-              <p class="mt-2 leading-relaxed text-stone-600">{one.a}</p>
-            </div>
-          ))
+          hasDocs && (
+            <a class="relative mt-4 inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-fg" href={href(locale, docPath(locale, product.slug))}>
+              <Icon name="book" class="h-4 w-4" />
+              {say.help} {product.name}
+            </a>
+          )
         }
-      </div>
-    </section>
+      </section>
+
+      <section class="mt-16">
+        <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">{say.faq}</h2>
+        <div class="mt-6 divide-y divide-line border-y border-line">
+          {
+            t.faq.map((one) => (
+              <details class="faq group py-2">
+                <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-4 font-display text-lg font-semibold text-fg">
+                  <h3>{one.q}</h3>
+                  <Icon name="chevron" class="h-5 w-5 shrink-0 text-muted transition group-open:rotate-180" />
+                </summary>
+                <p class="pb-5 text-body">{one.a}</p>
+              </details>
+            ))
+          }
+        </div>
+      </section>
+
+      {
+        kin.length > 0 && (
+          <section class="mt-16">
+            <h2 class="eyebrow">{say.kin}</h2>
+            <ul class="mt-5 grid gap-3">
+              {kin.map((one) => (
+                <li>
+                  <a class="card-link group flex items-center justify-between gap-4 p-5" href={href(locale, written(one, locale).slug)}>
+                    <span class="font-display font-semibold text-fg">{written(one, locale).title}</span>
+                    <Icon name="arrow" class="h-4 w-4 shrink-0 text-muted transition group-hover:translate-x-0.5" />
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </section>
+        )
+      }
+    </div>
   </article>
 </Layout>

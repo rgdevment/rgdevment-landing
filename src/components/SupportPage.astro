@@ -1,7 +1,9 @@
 ---
+import Crumbs from "./Crumbs.astro";
+import Icon from "./Icon.astro";
 import Layout from "../layouts/Layout.astro";
 import { PRODUCTS, storeUrl } from "../content/products";
-import { DOMAIN, canonical, href, type Locale } from "../site";
+import { crumbs, type Locale } from "../site";
 
 interface Props {
   locale: Locale;
@@ -17,6 +19,7 @@ const COFFEE = "https://buymeacoffee.com/rgdevment";
 const say = es
   ? {
       title: "Cómo apoyar",
+      seo: "Cómo apoyar software libre, gratis y sin telemetría",
       description:
         "Formas de ayudar a que estas herramientas sigan existiendo. La mayoría no cuesta dinero, y son las que más sirven.",
       lede: "Sin telemetría no sé cuánta gente usa esto, y sin publicidad nadie lo encuentra por su cuenta. Así que lo que más ayuda no es el dinero: es que alguien diga que existe.",
@@ -40,6 +43,7 @@ const say = es
     }
   : {
       title: "How to support",
+      seo: "How to support free, open source apps with no telemetry",
       description:
         "Ways to help these tools keep existing. Most of them cost nothing, and those are the ones that help most.",
       lede: "With no telemetry I do not know how many people use these, and with no advertising nobody finds them on their own. So what helps most is not money: it is somebody saying they exist.",
@@ -62,18 +66,12 @@ const say = es
       home: "Home",
     };
 
-const schema = {
-  "@context": "https://schema.org",
-  "@type": "BreadcrumbList",
-  itemListElement: [
-    { "@type": "ListItem", position: 1, name: say.home, item: `${DOMAIN}${href(locale)}` },
-    { "@type": "ListItem", position: 2, name: say.title, item: canonical(locale, paths[locale]) },
-  ],
-};
+const schema = crumbs(locale, [[say.title, paths[locale]]]);
+const icons = ["star", "store", "heart", "code"] as const;
 ---
 
 <Layout
-  title={say.title}
+  title={say.seo}
   description={say.description}
   locale={locale}
   path={paths[locale]}
@@ -81,37 +79,52 @@ const schema = {
   here="support"
   schema={schema}
 >
-  <header>
-    <h1 class="text-4xl font-bold tracking-tight sm:text-5xl">{say.title}</h1>
-    <p class="mt-6 text-lg leading-relaxed text-stone-600">{say.lede}</p>
-  </header>
+  <section class="relative isolate overflow-hidden">
+    <div class="dotgrid absolute inset-0 -z-10" aria-hidden="true"></div>
+    <div class="shell pt-10 sm:pt-14">
+      <Crumbs locale={locale} trail={[[say.title, paths[locale]]]} />
+      <header class="mt-12 max-w-3xl">
+        <span class="grid h-14 w-14 place-items-center rounded-2xl bg-flame-tint text-flame-ink">
+          <Icon name="heart" class="h-7 w-7" />
+        </span>
+        <h1 class="mt-6 text-5xl font-semibold tracking-[-0.03em] sm:text-6xl">{say.title}</h1>
+        <p class="mt-6 text-lg text-body sm:text-xl">{say.lede}</p>
+      </header>
+    </div>
+  </section>
 
-  <section class="mt-14">
-    <h2 class="text-2xl font-semibold">{say.freeTitle}</h2>
-    <dl class="mt-6 space-y-5">
+  <section class="shell mt-16">
+    <h2 class="section-title">{say.freeTitle}</h2>
+    <dl class="mt-8 grid gap-4 sm:grid-cols-2">
       {
-        say.free.map(([term, body]) => (
-          <div>
-            <dt class="font-medium text-ink">{term}</dt>
-            <dd class="mt-1 leading-relaxed text-stone-600">{body}</dd>
+        say.free.map(([term, body], at) => (
+          <div class="card p-6">
+            <dt class="flex items-center gap-3 font-display text-lg font-semibold text-fg">
+              <span class="grid h-10 w-10 shrink-0 place-items-center rounded-xl bg-sunken text-fg">
+                <Icon name={icons[at]} class="h-5 w-5" />
+              </span>
+              {term}
+            </dt>
+            <dd class="mt-3 text-body">{body}</dd>
           </div>
         ))
       }
     </dl>
 
-    <ul class="mt-8 space-y-3">
+    <ul class="mt-6 grid gap-3 sm:grid-cols-3">
       {
         PRODUCTS.map((product) => {
           const store = storeUrl(product);
           return (
-            <li class="flex flex-wrap items-center gap-x-4 gap-y-1 text-sm">
-              <span class="font-medium text-ink">{product.name}</span>
-              <a class="underline text-stone-600" href={product.repo} rel="noopener">
-                GitHub
+            <li class="card flex items-center gap-3 p-4">
+              <img src={product.icon} alt="" width="36" height="36" class="h-9 w-9 rounded-xl" loading="lazy" />
+              <span class="flex-1 font-medium text-fg">{product.name}</span>
+              <a class="grid h-9 w-9 place-items-center rounded-full border border-line text-muted transition hover:border-fg/25 hover:text-fg" href={product.repo} rel="noopener" aria-label={`${product.name} · GitHub`} title="GitHub">
+                <Icon name="star" class="h-4 w-4" />
               </a>
               {store && (
-                <a class="underline text-stone-600" href={store} rel="noopener">
-                  Microsoft Store
+                <a class="grid h-9 w-9 place-items-center rounded-full border border-line text-muted transition hover:border-fg/25 hover:text-fg" href={store} rel="noopener" aria-label={`${product.name} · Microsoft Store`} title="Microsoft Store">
+                  <Icon name="windows" class="h-4 w-4" />
                 </a>
               )}
             </li>
@@ -121,33 +134,49 @@ const schema = {
     </ul>
   </section>
 
-  <section class="mt-14">
-    <h2 class="text-2xl font-semibold">{say.moneyTitle}</h2>
-    <p class="mt-4 leading-relaxed text-stone-600">{say.money}</p>
-    <p class="mt-6 flex flex-wrap gap-3">
-      <a
-        class="rounded-lg border border-stone-300 px-5 py-3 transition hover:border-stone-400 hover:bg-stone-100"
-        href={SPONSOR}
-        rel="noopener"
-      >
-        <span class="font-medium">{say.sponsor}</span>
-        <span class="mt-0.5 block text-sm text-stone-500">
-          {say.sponsorNote}
-        </span>
-      </a>
-      <a
-        class="rounded-lg border border-stone-300 px-5 py-3 transition hover:border-stone-400 hover:bg-stone-100"
-        href={COFFEE}
-        rel="noopener"
-      >
-        <span class="font-medium">{say.coffee}</span>
-        <span class="mt-0.5 block text-sm text-stone-500">{say.coffeeNote}</span>
-      </a>
-    </p>
+  <section class="shell mt-24 sm:mt-32">
+    <div class="grid gap-10 rounded-[2rem] bg-night px-7 py-12 text-stone-400 sm:px-12 lg:grid-cols-[1.2fr_1fr] lg:items-center">
+      <div>
+        <h2 class="text-3xl font-semibold tracking-tight text-white sm:text-4xl">{say.moneyTitle}</h2>
+        <p class="mt-4 text-lg">{say.money}</p>
+      </div>
+      <div class="grid gap-3">
+        <a class="group flex items-center gap-4 rounded-2xl border border-night-line bg-night-soft px-5 py-4 transition hover:border-stone-600" href={SPONSOR} rel="noopener">
+          <Icon name="github" class="h-6 w-6 text-white" />
+          <span class="flex-1">
+            <span class="block font-medium text-white">{say.sponsor}</span>
+            <span class="block text-sm text-stone-400">{say.sponsorNote}</span>
+          </span>
+          <Icon name="arrow" class="h-4 w-4 text-stone-400 transition group-hover:translate-x-0.5 group-hover:text-white" />
+        </a>
+        <a class="group flex items-center gap-4 rounded-2xl border border-night-line bg-night-soft px-5 py-4 transition hover:border-stone-600" href={COFFEE} rel="noopener">
+          <Icon name="heart" class="h-6 w-6 text-flame" />
+          <span class="flex-1">
+            <span class="block font-medium text-white">{say.coffee}</span>
+            <span class="block text-sm text-stone-400">{say.coffeeNote}</span>
+          </span>
+          <Icon name="arrow" class="h-4 w-4 text-stone-400 transition group-hover:translate-x-0.5 group-hover:text-white" />
+        </a>
+      </div>
+    </div>
   </section>
 
-  <section class="mt-14">
-    <h2 class="text-2xl font-semibold">{say.codeTitle}</h2>
-    <p class="mt-4 leading-relaxed text-stone-600">{say.code}</p>
+  <section class="shell mt-20">
+    <div class="mx-auto max-w-3xl">
+      <h2 class="section-title">{say.codeTitle}</h2>
+      <p class="mt-4 text-lg text-body">{say.code}</p>
+      <ul class="mt-6 flex flex-wrap gap-2">
+        {
+          PRODUCTS.map((one) => (
+            <li>
+              <a class="chip transition hover:border-fg/25" href={one.repo} rel="noopener">
+                <Icon name="github" class="h-3.5 w-3.5" />
+                rgdevment/{one.repo.split("/").pop()}
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
   </section>
 </Layout>

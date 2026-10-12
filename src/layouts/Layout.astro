@@ -1,7 +1,10 @@
 ---
+import "../styles/global.css";
+import Icon from "../components/Icon.astro";
+import Logo from "../components/Logo.astro";
 import Nav from "../components/Nav.astro";
 import { PRODUCTS } from "../content/products";
-import { DOMAIN, LOCALES, canonical, href, type Locale } from "../site";
+import { AUTHOR, DOMAIN, LOCALES, PERSON_ID, WEBSITE_ID, canonical, href, type Locale } from "../site";
 
 interface Props {
   title: string;
@@ -13,144 +16,176 @@ interface Props {
   published?: string;
   here?: string;
   schema?: Record<string, unknown> | Record<string, unknown>[];
+  noindex?: boolean;
 }
 
-const { title, description, locale, path = "", paths, image, published, here, schema } = Astro.props;
+const { title, description, locale, path = "", paths, image, published, here, schema, noindex } = Astro.props;
+const es = locale === "es";
 
 /// A guide keeps a different slug in each language, so the twin of a page is looked up rather
 /// than assumed: without that the hreflang pair would point at a URL that does not exist.
 const at = (one: Locale) => paths?.[one] ?? path;
 const url = canonical(locale, at(locale));
-const card = image ?? { src: locale === "es" ? "/social-es.png" : "/social.png", width: 1200, height: 630 };
+const full = title.includes("rgdevment") || title.length > 44 ? title : `${title} · rgdevment`;
+const card = image ?? { src: es ? "/social-es.png" : "/social.png", width: 1200, height: 630 };
 const social = new URL(card.src, DOMAIN).toString();
-const graphs = schema ? (Array.isArray(schema) ? schema : [schema]) : [];
+
+const site = [
+  {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    "@id": WEBSITE_ID,
+    name: "rgdevment",
+    url: `${DOMAIN}/`,
+    inLanguage: ["en", "es"],
+    publisher: { "@id": PERSON_ID },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    "@id": PERSON_ID,
+    name: AUTHOR.name,
+    alternateName: AUTHOR.handle,
+    url: `${DOMAIN}/`,
+    sameAs: [AUTHOR.github],
+  },
+];
+const graphs = [...site, ...(schema ? (Array.isArray(schema) ? schema : [schema]) : [])];
+
+const say = es
+  ? {
+      skip: "Ir al contenido",
+      motto: "Software por convicción, no por suscripción.",
+      promise: "Gratis, de código abierto, sin cuentas y sin telemetría. Lo que guardan se queda en tu equipo.",
+      apps: "Aplicaciones",
+      site: "Sitio",
+      guides: "Guías",
+      pricing: "Precios",
+      support: "Apoyar",
+      foot: "Mario Hidalgo G. Código abierto, cada programa con su licencia.",
+      footer: "Pie de página",
+    }
+  : {
+      skip: "Skip to content",
+      motto: "Software out of conviction, not subscription.",
+      promise: "Free, open source, no accounts and no telemetry. What they keep stays on your machine.",
+      apps: "Apps",
+      site: "Site",
+      guides: "Guides",
+      pricing: "Pricing",
+      support: "Support",
+      foot: "Mario Hidalgo G. Open source, each program under its own licence.",
+      footer: "Footer",
+    };
 ---
 
 <!doctype html>
 <html lang={locale} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width" />
-    <title>{title}</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{full}</title>
     <meta name="description" content={description} />
-    <link rel="canonical" href={url} />
+    <meta name="author" content={AUTHOR.name} />
+    {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={url} />}
 
     {
-      LOCALES.map((one) => (
-        <link rel="alternate" hreflang={one} href={canonical(one, at(one))} />
-      ))
+      !noindex &&
+        LOCALES.map((one) => <link rel="alternate" hreflang={one} href={canonical(one, at(one))} />)
     }
-    <link rel="alternate" hreflang="x-default" href={canonical("en", at("en"))} />
+    {!noindex && <link rel="alternate" hreflang="x-default" href={canonical("en", at("en"))} />}
 
     <meta property="og:type" content={published ? "article" : "website"} />
     <meta property="og:site_name" content="rgdevment" />
     <meta property="og:url" content={url} />
-    <meta property="og:title" content={title} />
+    <meta property="og:title" content={full} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={social} />
+    <meta property="og:image:type" content="image/png" />
     <meta property="og:image:width" content={String(card.width)} />
     <meta property="og:image:height" content={String(card.height)} />
     <meta property="og:image:alt" content={title} />
-    <meta property="og:locale" content={locale === "es" ? "es_ES" : "en_US"} />
-    <meta property="og:locale:alternate" content={locale === "es" ? "en_US" : "es_ES"} />
+    <meta property="og:locale" content={es ? "es_LA" : "en_US"} />
+    <meta property="og:locale:alternate" content={es ? "en_US" : "es_LA"} />
     {published && <meta property="article:published_time" content={published} />}
-    {published && <meta property="article:author" content="Mario Hidalgo G." />}
+    {published && <meta property="article:author" content={AUTHOR.name} />}
     <meta name="twitter:card" content="summary_large_image" />
-    <meta name="twitter:title" content={title} />
+    <meta name="twitter:title" content={full} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={social} />
+    <meta name="twitter:image:alt" content={title} />
 
-    <meta name="theme-color" content="#f6f5f2" />
+    <meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#0e0d0b" media="(prefers-color-scheme: dark)" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any" />
     <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="manifest" href="/site.webmanifest" />
+    <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <meta name="generator" content={Astro.generator} />
 
-    {
-      graphs.map((graph) => (
-        <script
-          type="application/ld+json"
-          set:html={JSON.stringify(graph)}
-        />
-      ))
-    }
+    {graphs.map((graph) => <script type="application/ld+json" set:html={JSON.stringify(graph)} />)}
   </head>
-  <body
-    class="bg-paper text-[17px] leading-relaxed text-ink-soft font-sans antialiased selection:bg-ink selection:text-white sm:text-lg"
-  >
+  <body class="min-h-screen">
     <a
       href="#content"
-      class="sr-only focus:not-sr-only focus:absolute focus:top-3 focus:left-3 focus:z-50 focus:rounded-md focus:bg-ink focus:px-4 focus:py-2 focus:text-paper"
+      class="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:rounded-full focus:bg-fg focus:px-4 focus:py-2 focus:text-canvas"
     >
-      {locale === "es" ? "Ir al contenido" : "Skip to content"}
+      {say.skip}
     </a>
 
-    <Nav locale={locale} here={here} other={at(locale === "es" ? "en" : "es")} />
+    <Nav locale={locale} here={here} other={at(es ? "en" : "es")} />
 
-    <main id="content" class="mx-auto max-w-5xl px-6 py-16 sm:px-8 sm:py-24">
+    <main id="content">
       <slot />
     </main>
 
-    <footer class="mx-auto mt-8 max-w-5xl border-t border-stone-200 px-6 py-12 sm:px-8">
-      <div class="flex flex-col gap-10 sm:flex-row sm:justify-between">
+    <footer class="mt-24 border-t border-line bg-sunken/60 sm:mt-32">
+      <div class="shell grid gap-12 py-14 sm:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <img src="/rgdevment.svg" alt="rgdevment" width="660" height="108" class="h-5 w-auto" />
-          <p class="mt-3 max-w-xs text-sm text-stone-500">
-            {
-              locale === "es"
-                ? "Software por convicción, no por suscripción."
-                : "Software out of conviction, not subscription."
-            }
-          </p>
-        </div>
-
-        <nav
-          class="grid grid-cols-2 gap-x-12 gap-y-2 text-sm sm:grid-cols-3"
-          aria-label={locale === "es" ? "Pie" : "Footer"}
-        >
-          {
-            PRODUCTS.map((one) => (
-              <a class="text-stone-500 transition-colors hover:text-ink" href={href(locale, one.slug)}>
-                {one.name}
-              </a>
-            ))
-          }
+          <a href={href(locale)} class="inline-block"><Logo class="h-6 w-auto" /></a>
+          <p class="mt-4 max-w-sm font-display text-lg text-fg">{say.motto}</p>
+          <p class="mt-2 max-w-sm text-sm text-muted">{say.promise}</p>
           <a
-            class="text-stone-500 transition-colors hover:text-ink"
-            href={href(locale, locale === "es" ? "guias" : "guides")}
-          >
-            {locale === "es" ? "Guías" : "Guides"}
-          </a>
-          <a
-            class="text-stone-500 transition-colors hover:text-ink"
-            href={href(locale, locale === "es" ? "precios" : "pricing")}
-          >
-            {locale === "es" ? "Precios" : "Pricing"}
-          </a>
-          <a
-            class="text-stone-500 transition-colors hover:text-ink"
-            href={href(locale, locale === "es" ? "apoyar" : "support")}
-          >
-            {locale === "es" ? "Apoyar" : "Support"}
-          </a>
-          <a
-            class="text-stone-500 transition-colors hover:text-ink"
-            href="https://github.com/rgdevment"
+            class="mt-5 inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-fg"
+            href={AUTHOR.github}
             rel="noopener"
           >
-            GitHub
+            <Icon name="github" class="h-4 w-4" />
+            github.com/{AUTHOR.handle}
           </a>
+        </div>
+
+        <nav aria-label={say.footer} class="contents">
+          <div>
+            <p class="eyebrow">{say.apps}</p>
+            <ul class="mt-4 space-y-2.5 text-sm">
+              {
+                PRODUCTS.map((one) => (
+                  <li>
+                    <a class="inline-flex items-center gap-2.5 text-body transition-colors hover:text-fg" href={href(locale, one.slug)}>
+                      <img src={one.icon} alt="" width="20" height="20" class="h-5 w-5 rounded-md" loading="lazy" />
+                      {one.name}
+                    </a>
+                  </li>
+                ))
+              }
+            </ul>
+          </div>
+          <div>
+            <p class="eyebrow">{say.site}</p>
+            <ul class="mt-4 space-y-2.5 text-sm">
+              <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "guias" : "guides")}>{say.guides}</a></li>
+              <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "precios" : "pricing")}>{say.pricing}</a></li>
+              <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "apoyar" : "support")}>{say.support}</a></li>
+              <li><a class="text-body transition-colors hover:text-fg" href={href(es ? "en" : "es", at(es ? "en" : "es"))} lang={es ? "en" : "es"} hreflang={es ? "en" : "es"}>{es ? "English" : "Español"}</a></li>
+            </ul>
+          </div>
         </nav>
       </div>
-
-      <p class="mt-10 text-sm text-stone-400">
-        {
-          locale === "es"
-            ? "Mario Hidalgo G. Código abierto, cada programa con su licencia."
-            : "Mario Hidalgo G. Open source, each program under its own licence."
-        }
-      </p>
+      <div class="shell border-t border-line py-6">
+        <p class="text-sm text-muted">{say.foot}</p>
+      </div>
     </footer>
   </body>
 </html>

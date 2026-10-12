@@ -1,8 +1,11 @@
 ---
 import Icon from "./Icon.astro";
+import Shot from "./Shot.astro";
 import Layout from "../layouts/Layout.astro";
-import { PRODUCTS, words } from "../content/products";
-import { DOMAIN, canonical, href, type Locale } from "../site";
+import { GUIDES, written } from "../content/guides";
+import { PRODUCTS, releasesUrl, storeUrl, words } from "../content/products";
+import { newestRelease, releaseDate } from "../content/releases";
+import { AUTHOR, DOMAIN, PERSON_ID, canonical, href, type Locale } from "../site";
 
 interface Props {
   locale: Locale;
@@ -13,89 +16,94 @@ const es = locale === "es";
 
 const say = es
   ? {
-      title: "Herramientas de escritorio que son tuyas",
+      title: "rgdevment · Apps gratis y libres para Windows y macOS",
       description:
-        "Programas gratuitos y de código abierto para Windows y macOS: notas y tareas que se quedan en tu disco, un selector de navegador y un gestor de portapapeles.",
+        "Aplicaciones gratuitas y de código abierto para Windows y macOS: notas y tareas en tu disco, un selector de navegador y un gestor de portapapeles. Sin cuenta ni telemetría.",
+      badge: "Gratis · Código abierto · Windows y macOS",
+      fresh: "Nuevo",
+      out: "ya está disponible",
       motto: "Software por convicción,",
       motto2: "no por suscripción.",
-      lede: "Programas que se adaptan, no que se apartan. Tus datos en tu disco o en tu nube, tú eliges. Sin telemetría, sin cuentas, sin suscripciones. Gratis y de código abierto.",
-      marks: ["Windows y macOS", "Código abierto", "Sin telemetría", "Gratis, de verdad"],
-      tools: "Las herramientas",
-      toolsLede: "Cada una nació de un fastidio propio.",
-      see: "Ver",
+      lede: "Aplicaciones de escritorio que se adaptan a cómo trabajas. Tus datos en tu disco o en tu nube, tú eliges. Sin telemetría, sin cuentas, sin suscripciones.",
+      cta: "Ver las aplicaciones",
+      code: "Leer el código",
+      marks: [
+        ["lock", "Local"],
+        ["eye", "Sin telemetría"],
+        ["code", "Código abierto"],
+        ["free", "Gratis, de verdad"],
+      ],
+      tools: "Las aplicaciones",
+      toolsLede: "Tres herramientas pequeñas. Cada una nació de un fastidio propio.",
+      see: "Conocer",
+      store: "Microsoft Store",
+      whyEyebrow: "Principios",
       whyTitle: "Cómo están hechas",
       why: [
-        [
-          "disk",
-          "Tus datos, donde tú digas",
-          "Lo que guardan son archivos tuyos, en tu equipo. Si quieres sincronizarlos, pones esa carpeta donde tú decidas: nadie lo hace por ti.",
-        ],
-        [
-          "shield",
-          "Nada que recoger",
-          "Sin telemetría, sin analítica, sin identificadores. No sé cuánta gente las usa, y esa es la idea.",
-        ],
-        [
-          "code",
-          "Abiertas de par en par",
-          "El código está publicado entero, con su licencia. Puedes leer qué hace antes de fiarte de esta página.",
-        ],
-        [
-          "free",
-          "Gratis sin condiciones",
-          "No hay versión de pago ni funciones esperando detrás de un muro. No hay empresa que alimentar.",
-        ],
+        ["disk", "Tus datos, donde tú digas", "Lo que guardan son archivos tuyos, en tu equipo. Si quieres sincronizarlos, pones esa carpeta donde tú decidas: nadie lo hace por ti."],
+        ["shield", "Nada que recoger", "Sin telemetría, sin analítica, sin identificadores. No sé cuánta gente las usa, y esa es la idea."],
+        ["code", "Abiertas de par en par", "El código está publicado entero, con su licencia. Puedes leer qué hace antes de fiarte de esta página."],
+        ["free", "Gratis sin condiciones", "No hay versión de pago ni funciones esperando detrás de un muro. No hay empresa que alimentar."],
       ],
+      proofEyebrow: "No me creas a mí",
+      proofTitle: "Compruébalo en el código.",
+      proof: "Cualquiera puede leer si hay telemetría, si algo sale del equipo o qué se escribe en disco. Esa es la garantía, no esta página.",
       guidesTitle: "Guías",
-      guidesLede:
-        "Cómo abrir los enlaces de Teams o de Outlook donde tú quieras, y qué hacer cuando el ajuste de la aplicación no basta.",
-      guidesGo: "Ver las guías",
+      guidesLede: "Primero el ajuste que tu sistema ya trae; después, lo que ese ajuste no resuelve.",
+      guidesGo: "Todas las guías",
       priceTitle: "¿Cuánto cuesta?",
       priceLede: "Nada, y esa suele ser la parte difícil de creer.",
       priceGo: "Ver precios",
+      helpTitle: "¿Te sirvió?",
+      helpLede: "Una estrella o una valoración ayudan más que el dinero.",
+      helpGo: "Cómo apoyar",
     }
   : {
-      title: "Desktop tools that are yours",
+      title: "rgdevment · Free, open source apps for Windows and macOS",
       description:
-        "Free, open source programs for Windows and macOS: notes and tasks that stay on your disk, a browser picker and a clipboard manager. No account, no telemetry.",
+        "Free, open source apps for Windows and macOS: notes and tasks that stay on your disk, a browser picker and a clipboard manager. No account, no telemetry.",
+      badge: "Free · Open source · Windows and macOS",
+      fresh: "New",
+      out: "is out",
       motto: "Software out of conviction,",
       motto2: "not subscription.",
-      lede: "Programs that fit how you work instead of getting in your way. Your data on your disk or in your cloud, your call. No telemetry, no accounts, no subscriptions. Free and open source.",
-      marks: ["Windows and macOS", "Open source", "No telemetry", "Free, really"],
-      tools: "The tools",
-      toolsLede: "Each one came from an annoyance of my own.",
-      see: "See",
+      lede: "Desktop apps that fit how you work instead of getting in your way. Your data on your disk or in your cloud, your call. No telemetry, no accounts, no subscriptions.",
+      cta: "See the apps",
+      code: "Read the source",
+      marks: [
+        ["lock", "Local"],
+        ["eye", "No telemetry"],
+        ["code", "Open source"],
+        ["free", "Free, really"],
+      ],
+      tools: "The apps",
+      toolsLede: "Three small tools. Each one came from an annoyance of my own.",
+      see: "Meet",
+      store: "Microsoft Store",
+      whyEyebrow: "Principles",
       whyTitle: "How they are built",
       why: [
-        [
-          "disk",
-          "Your data, where you say",
-          "What they keep are your files, on your machine. Want them synced? You put that folder wherever you choose: nobody does it for you.",
-        ],
-        [
-          "shield",
-          "Nothing to collect",
-          "No telemetry, no analytics, no identifiers. I do not know how many people use them, and that is the point.",
-        ],
-        [
-          "code",
-          "Open all the way",
-          "The source is published in full, with its licence. You can read what it does before taking this page at its word.",
-        ],
-        [
-          "free",
-          "Free with no strings",
-          "No paid tier, no features waiting behind a wall. There is no company to feed.",
-        ],
+        ["disk", "Your data, where you say", "What they keep are your files, on your machine. Want them synced? You put that folder wherever you choose: nobody does it for you."],
+        ["shield", "Nothing to collect", "No telemetry, no analytics, no identifiers. I do not know how many people use them, and that is the point."],
+        ["code", "Open all the way", "The source is published in full, with its licence. You can read what it does before taking this page at its word."],
+        ["free", "Free with no strings", "No paid tier, no features waiting behind a wall. There is no company to feed."],
       ],
+      proofEyebrow: "Don't take my word for it",
+      proofTitle: "Check it in the source.",
+      proof: "Anyone can read whether there is telemetry, whether anything leaves the machine, or what gets written to disk. That is the guarantee, not this page.",
       guidesTitle: "Guides",
-      guidesLede:
-        "How to open Teams or Outlook links where you meant them to go, and what to do when the application's own setting is not enough.",
-      guidesGo: "See the guides",
+      guidesLede: "First the setting your system already has; then what that setting does not fix.",
+      guidesGo: "All the guides",
       priceTitle: "What does it cost?",
       priceLede: "Nothing, and that is usually the hard part to believe.",
       priceGo: "See pricing",
+      helpTitle: "Found it useful?",
+      helpLede: "A star or a rating helps more than money.",
+      helpGo: "How to support",
     };
+
+const release = await newestRelease();
+const latest = [...GUIDES].sort((a, b) => b.published.localeCompare(a.published)).slice(0, 4);
 
 const schema = {
   "@context": "https://schema.org",
@@ -103,6 +111,8 @@ const schema = {
   name: say.title,
   description: say.description,
   url: canonical(locale),
+  inLanguage: locale,
+  author: { "@id": PERSON_ID },
   hasPart: PRODUCTS.map((p) => ({
     "@type": "SoftwareApplication",
     name: p.name,
@@ -110,112 +120,277 @@ const schema = {
     applicationCategory: "UtilitiesApplication",
     operatingSystem: p.platforms.join(", "),
     url: canonical(locale, p.slug),
+    image: new URL(p.icon, DOMAIN).toString(),
     isAccessibleForFree: true,
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
   })),
-  publisher: { "@type": "Person", name: "Mario Hidalgo G.", url: `${DOMAIN}${href(locale)}` },
 };
-
-const marks = ["windows", "code", "shield", "free"] as const;
 ---
 
 <Layout title={say.title} description={say.description} locale={locale} schema={schema}>
-  <section class="pt-2 pb-4 text-center sm:pt-8">
-    <h1 class="text-4xl font-bold tracking-tight text-ink sm:text-6xl">
-      <span class="block">{say.motto}</span>
-      <span class="block text-stone-400">{say.motto2}</span>
-    </h1>
-    <p class="mx-auto mt-7 max-w-2xl text-lg text-stone-600 sm:text-xl">{say.lede}</p>
+  <section class="relative isolate overflow-hidden">
+    <div class="halo absolute inset-0 -z-10" aria-hidden="true"></div>
+    <div class="dotgrid absolute inset-0 -z-10" aria-hidden="true"></div>
 
-    <ul class="mt-8 flex flex-wrap justify-center gap-2">
+    <div class="shell pt-16 pb-20 text-center sm:pt-24 sm:pb-28">
       {
-        say.marks.map((one, at) => (
-          <li
-            class={`inline-flex items-center gap-1.5 rounded-lg px-3 py-1.5 text-sm ${at === 3 ? "bg-flame-tint font-medium text-flame-deep" : "bg-stone-100 text-stone-600"}`}
-          >
-            <Icon name={marks[at]} class="h-3.5 w-3.5" />
-            {one}
-          </li>
-        ))
-      }
-    </ul>
-  </section>
-
-  <section class="mt-16 sm:mt-24">
-    <div class="flex flex-wrap items-baseline justify-between gap-2">
-      <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">{say.tools}</h2>
-      <p class="text-stone-500">{say.toolsLede}</p>
-    </div>
-
-    <div class="mt-7 grid gap-5 sm:grid-cols-3">
-      {
-        PRODUCTS.map((product) => (
+        release ? (
           <a
-            class="group flex flex-col rounded-2xl border border-stone-200 bg-white p-6 shadow-sm transition hover:-translate-y-0.5 hover:border-stone-300 hover:shadow-md"
-            href={href(locale, product.slug)}
+            class="group inline-flex items-center gap-2.5 rounded-full border border-line bg-surface/70 py-1 pr-4 pl-1 text-sm text-body backdrop-blur transition hover:border-fg/25"
+            href={release.url}
+            rel="noopener"
           >
-            <span
-              class="h-1.5 w-10 rounded-full"
-              style={`background: ${product.accent}`}
-              aria-hidden="true"
-            />
-            <h3 class="mt-5 text-xl font-semibold text-ink">{product.name}</h3>
-            <p class="mt-2 leading-snug text-stone-700">{words(product, locale).tagline}</p>
-            <p class="mt-3 flex-1 text-sm leading-relaxed text-stone-500">
-              {words(product, locale).problem}
-            </p>
-            <span class="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-ink">
-              {say.see} {product.name}
-              <Icon name="arrow" class="h-4 w-4 transition group-hover:translate-x-0.5" />
+            <span class="rounded-full bg-flame px-2.5 py-0.5 font-mono text-xs font-medium text-night">{say.fresh}</span>
+            <img src={release.product.icon} alt="" width="18" height="18" class="h-[18px] w-[18px] rounded-[5px]" />
+            <span>
+              <span class="font-medium text-fg">{release.product.name} {release.version}</span> {say.out}
+              <span class="hidden text-muted sm:inline"> · {releaseDate(release, locale)}</span>
             </span>
+            <Icon name="arrow" class="h-3.5 w-3.5 text-muted transition group-hover:translate-x-0.5" />
           </a>
-        ))
+        ) : (
+          <p class="inline-flex items-center gap-2 rounded-full border border-line bg-surface/70 px-4 py-1.5 font-mono text-xs text-muted backdrop-blur">
+            <span class="h-1.5 w-1.5 rounded-full bg-flame" aria-hidden="true" />
+            {say.badge}
+          </p>
+        )
+      }
+
+      <h1 class="mx-auto mt-8 max-w-4xl text-[2.6rem] font-semibold leading-[1.04] tracking-[-0.03em] sm:text-7xl">
+        <span class="block">{say.motto}</span>
+        <span class="block text-muted">{say.motto2}</span>
+      </h1>
+
+      <p class="mx-auto mt-7 max-w-2xl text-lg text-body sm:text-xl">{say.lede}</p>
+
+      <div class="mt-10 flex flex-wrap justify-center gap-3">
+        <a class="btn-primary" href="#apps">
+          {say.cta}
+          <Icon name="arrow" class="h-4 w-4" />
+        </a>
+        <a class="btn-ghost" href={AUTHOR.github} rel="noopener">
+          <Icon name="github" class="h-4 w-4" />
+          {say.code}
+        </a>
+      </div>
+
+      <ul class="mt-12 flex flex-wrap justify-center gap-x-7 gap-y-3 text-sm text-body">
+        {
+          say.marks.map(([icon, label]) => (
+            <li class="inline-flex items-center gap-2">
+              <span class="grid h-7 w-7 place-items-center rounded-full bg-flame-tint text-flame-ink">
+                <Icon name={icon as "lock"} class="h-3.5 w-3.5" />
+              </span>
+              {label}
+            </li>
+          ))
+        }
+      </ul>
+
+      <ul class="mx-auto mt-16 flex max-w-md items-center justify-center gap-5" aria-label={say.tools}>
+        {
+          PRODUCTS.map((one) => (
+            <li>
+              <a class="group block" href={href(locale, one.slug)} title={one.name}>
+                <img
+                  src={one.icon}
+                  alt={one.name}
+                  width="72"
+                  height="72"
+                  class="h-16 w-16 rounded-[1.1rem] shadow-[0_12px_30px_-12px_rgb(0_0_0/0.45)] transition duration-300 group-hover:-translate-y-1 sm:h-[72px] sm:w-[72px]"
+                />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </section>
+
+  <section id="apps" class="shell scroll-mt-20">
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <h2 class="section-title">{say.tools}</h2>
+      <p class="text-muted">{say.toolsLede}</p>
+    </div>
+
+    <div class="mt-10 space-y-8">
+      {
+        PRODUCTS.map((product, at) => {
+          const t = words(product, locale);
+          const store = storeUrl(product);
+          return (
+            <article
+              class="card group relative grid overflow-hidden lg:grid-cols-[1fr_1.15fr]"
+              style={`--accent: ${product.accent}`}
+            >
+              <div
+                class="pointer-events-none absolute -top-32 -left-24 h-72 w-72 rounded-full opacity-[0.14] blur-3xl"
+                style="background: var(--accent)"
+                aria-hidden="true"
+              />
+              <div class={`relative flex flex-col p-7 sm:p-10 ${at % 2 ? "lg:order-2" : ""}`}>
+                <div class="flex items-center gap-4">
+                  <img src={product.icon} alt="" width="56" height="56" class="h-14 w-14 rounded-2xl" loading="lazy" />
+                  <div>
+                    <h3 class="text-2xl font-semibold tracking-tight">
+                      <a href={href(locale, product.slug)} class="transition-colors hover:text-flame-ink">
+                        {product.name}
+                      </a>
+                    </h3>
+                    <p class="font-mono text-xs text-muted">
+                      {product.platforms.join(" · ")} · {product.licence}
+                    </p>
+                  </div>
+                </div>
+                <p class="mt-6 font-display text-xl leading-snug text-fg">{t.tagline}</p>
+                <p class="mt-3 flex-1 text-body">{t.problem}</p>
+                <div class="mt-8 flex flex-wrap items-center gap-3">
+                  <a class="btn-primary" href={href(locale, product.slug)}>
+                    {say.see} {product.name}
+                    <Icon name="arrow" class="h-4 w-4" />
+                  </a>
+                  {store ? (
+                    <a class="btn-ghost" href={store} rel="noopener">
+                      <Icon name="windows" class="h-4 w-4" />
+                      {say.store}
+                    </a>
+                  ) : (
+                    <a class="btn-ghost" href={releasesUrl(product)} rel="noopener">
+                      <Icon name="download" class="h-4 w-4" />
+                      GitHub
+                    </a>
+                  )}
+                </div>
+              </div>
+              {product.shot && (
+                <a
+                  href={href(locale, product.slug)}
+                  tabindex="-1"
+                  aria-hidden="true"
+                  class={`relative block border-line bg-night p-3 sm:p-4 ${at % 2 ? "lg:order-1 lg:border-r" : "lg:border-l"} border-t lg:border-t-0`}
+                >
+                  <Shot
+                    product={product}
+                    locale={locale}
+                    class="h-full w-full rounded-2xl object-cover object-left transition duration-500 group-hover:scale-[1.015]"
+                  />
+                </a>
+              )}
+            </article>
+          );
+        })
       }
     </div>
   </section>
 
-  <section class="mt-16 sm:mt-24">
-    <h2 class="text-2xl font-semibold tracking-tight sm:text-3xl">{say.whyTitle}</h2>
-    <dl class="mt-7 grid gap-5 sm:grid-cols-2">
+  <section class="shell mt-24 sm:mt-32">
+    <p class="eyebrow">{say.whyEyebrow}</p>
+    <h2 class="section-title mt-3">{say.whyTitle}</h2>
+    <dl class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
       {
         say.why.map(([icon, term, body]) => (
-          <div class="rounded-2xl border border-stone-200 bg-white p-6">
-            <dt class="flex items-center gap-2.5 font-semibold text-ink">
-              <span class="grid h-9 w-9 shrink-0 place-items-center rounded-lg bg-stone-100 text-stone-700">
-                <Icon name={icon as "disk"} class="h-[18px] w-[18px]" />
+          <div class="card p-6">
+            <dt>
+              <span class="grid h-10 w-10 place-items-center rounded-xl bg-flame-tint text-flame-ink">
+                <Icon name={icon as "disk"} class="h-5 w-5" />
               </span>
-              {term}
+              <span class="mt-5 block font-display text-lg font-semibold text-fg">{term}</span>
             </dt>
-            <dd class="mt-3 leading-relaxed text-stone-600">{body}</dd>
+            <dd class="mt-2 text-[15px] leading-relaxed text-body">{body}</dd>
           </div>
         ))
       }
     </dl>
   </section>
 
-  <section class="mt-16 grid gap-5 sm:mt-24 sm:grid-cols-2">
-    <div class="rounded-2xl border border-stone-200 bg-white p-7">
-      <h2 class="text-xl font-semibold">{say.guidesTitle}</h2>
-      <p class="mt-3 leading-relaxed text-stone-600">{say.guidesLede}</p>
-      <a
-        class="mt-5 inline-flex items-center gap-1.5 font-medium text-ink hover:underline"
-        href={href(locale, es ? "guias" : "guides")}
-      >
+  <section class="shell mt-24 sm:mt-32">
+    <div class="relative overflow-hidden rounded-[2rem] bg-night px-7 py-12 text-stone-300 sm:px-12 sm:py-16">
+      <div
+        class="pointer-events-none absolute -right-24 -bottom-32 h-96 w-96 rounded-full bg-flame/25 blur-3xl"
+        aria-hidden="true"
+      ></div>
+      <div class="relative grid gap-10 lg:grid-cols-[1.1fr_1fr] lg:items-center">
+        <div>
+          <p class="font-mono text-xs uppercase tracking-[0.18em] text-flame">{say.proofEyebrow}</p>
+          <h2 class="mt-4 text-3xl font-semibold tracking-tight text-white sm:text-4xl">{say.proofTitle}</h2>
+          <p class="mt-4 max-w-lg text-lg text-stone-400">{say.proof}</p>
+        </div>
+        <ul class="space-y-3">
+          {
+            PRODUCTS.map((one) => (
+              <li>
+                <a
+                  class="group flex items-center gap-4 rounded-2xl border border-night-line bg-night-soft px-4 py-3.5 transition hover:border-stone-600"
+                  href={one.repo}
+                  rel="noopener"
+                >
+                  <img src={one.icon} alt="" width="36" height="36" class="h-9 w-9 rounded-xl" loading="lazy" />
+                  <span class="min-w-0 flex-1">
+                    <span class="block font-mono text-sm text-white">rgdevment/{one.repo.split("/").pop()}</span>
+                    <span class="block text-xs text-stone-400">{one.licence}</span>
+                  </span>
+                  <Icon name="github" class="h-5 w-5 text-stone-400 transition group-hover:text-white" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section class="shell mt-24 sm:mt-32">
+    <div class="flex flex-wrap items-end justify-between gap-3">
+      <div>
+        <h2 class="section-title">{say.guidesTitle}</h2>
+        <p class="mt-3 max-w-xl text-muted">{say.guidesLede}</p>
+      </div>
+      <a class="inline-flex items-center gap-1.5 font-medium text-fg hover:underline" href={href(locale, es ? "guias" : "guides")}>
         {say.guidesGo}
         <Icon name="arrow" class="h-4 w-4" />
       </a>
     </div>
+    <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+      {
+        latest.map((one) => {
+          const t = written(one, locale);
+          const product = PRODUCTS.find((p) => p.slug === one.product)!;
+          return (
+            <li>
+              <a class="card-link flex h-full gap-4 p-5" href={href(locale, t.slug)}>
+                <img src={product.icon} alt="" width="32" height="32" class="h-8 w-8 shrink-0 rounded-lg" loading="lazy" />
+                <span>
+                  <span class="block font-display font-semibold leading-snug text-fg">{t.title}</span>
+                  <span class="mt-1.5 line-clamp-2 block text-sm text-muted">{t.description}</span>
+                </span>
+              </a>
+            </li>
+          );
+        })
+      }
+    </ul>
+  </section>
 
-    <div class="rounded-2xl bg-ink p-7 text-white">
-      <h2 class="text-xl font-semibold">{say.priceTitle}</h2>
-      <p class="mt-3 leading-relaxed text-stone-300">{say.priceLede}</p>
-      <a
-        class="mt-5 inline-flex items-center gap-1.5 font-medium text-white hover:underline"
-        href={href(locale, es ? "precios" : "pricing")}
-      >
+  <section class="shell mt-24 grid gap-4 sm:mt-32 sm:grid-cols-2">
+    <a class="card-link group block p-8" href={href(locale, es ? "precios" : "pricing")}>
+      <p class="font-display text-6xl font-semibold tracking-tight text-fg">0</p>
+      <h2 class="mt-4 text-xl font-semibold">{say.priceTitle}</h2>
+      <p class="mt-2 text-body">{say.priceLede}</p>
+      <span class="mt-6 inline-flex items-center gap-1.5 font-medium text-fg">
         {say.priceGo}
-        <Icon name="arrow" class="h-4 w-4" />
-      </a>
-    </div>
+        <Icon name="arrow" class="h-4 w-4 transition group-hover:translate-x-0.5" />
+      </span>
+    </a>
+    <a class="card-link group block p-8" href={href(locale, es ? "apoyar" : "support")}>
+      <span class="grid h-14 w-14 place-items-center rounded-2xl bg-flame-tint text-flame-ink">
+        <Icon name="heart" class="h-7 w-7" />
+      </span>
+      <h2 class="mt-5 text-xl font-semibold">{say.helpTitle}</h2>
+      <p class="mt-2 text-body">{say.helpLede}</p>
+      <span class="mt-6 inline-flex items-center gap-1.5 font-medium text-fg">
+        {say.helpGo}
+        <Icon name="arrow" class="h-4 w-4 transition group-hover:translate-x-0.5" />
+      </span>
+    </a>
   </section>
 </Layout>
