@@ -1,0 +1,34 @@
+---
+import type { Doc } from "../content/docs";
+
+interface Props {
+  current: string;
+  overview: { label: string; href: string; on: boolean };
+  sections: [string, Doc[]][];
+  linkOf: (one: Doc) => string;
+}
+
+const { current, overview, sections, linkOf } = Astro.props;
+const item = (on: boolean) =>
+  `block rounded-lg px-3 py-1.5 ${on ? "bg-fg/[0.06] font-medium text-fg" : "text-body hover:text-fg"}`;
+---
+
+<a href={overview.href} class={item(overview.on)} aria-current={overview.on ? "page" : undefined}>
+  {overview.label}
+</a>
+{
+  sections.map(([section, list]) => (
+    <div class="mt-5">
+      <p class="eyebrow px-3 text-[11px]">{section}</p>
+      <ul class="mt-2 space-y-0.5">
+        {list.map((one) => (
+          <li>
+            <a href={linkOf(one)} class={item(one.id === current)} aria-current={one.id === current ? "page" : undefined}>
+              {one.data.title}
+            </a>
+          </li>
+        ))}
+      </ul>
+    </div>
+  ))
+}

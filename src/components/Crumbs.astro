@@ -1,0 +1,32 @@
+---
+import { href, type Locale, withHome } from "../site";
+
+interface Props {
+  locale: Locale;
+  trail: [string, string][];
+}
+
+const { locale, trail } = Astro.props;
+const all = withHome(locale, trail);
+---
+
+<nav aria-label={locale === "es" ? "Ruta" : "Breadcrumb"} class="text-sm text-muted">
+  <ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
+    {
+      all.map(([name, path], at) => (
+        <li class="flex items-center gap-2">
+          {at > 0 && <span aria-hidden="true" class="text-line">/</span>}
+          {at < all.length - 1 ? (
+            <a class="transition-colors hover:text-fg" href={href(locale, path)}>
+              {name}
+            </a>
+          ) : (
+            <span aria-current="page" class="text-body">
+              {name}
+            </span>
+          )}
+        </li>
+      ))
+    }
+  </ol>
+</nav>

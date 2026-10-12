@@ -29,6 +29,7 @@ export type Product = {
     es: string;
   };
   accent: string;
+  icon: string;
   en: Words;
   es: Words;
 };
@@ -52,6 +53,7 @@ export const PRODUCTS: Product[] = [
       es: "Tisty: las tareas del dia junto a los documentos que dejaron, guardados como archivos en disco",
     },
     accent: "#6F4BD8",
+    icon: "/icons/tisty.png",
     en: {
       tagline: "Notes, documents and tasks. The record of what you learned solving them.",
       title: "Tisty - Notes, documents and tasks on your own disk",
@@ -120,6 +122,7 @@ export const PRODUCTS: Product[] = [
       es: "LinkUnbound: el selector junto a un enlace, con los navegadores instalados y el perfil en que abre cada uno",
     },
     accent: "#2F62D8",
+    icon: "/icons/linkunbound.png",
     en: {
       tagline: "Choose which browser opens every link.",
       meta: "Free, open source browser picker for Windows and macOS. Choose which browser or profile opens every link, with rules per site and per application.",
@@ -193,6 +196,7 @@ export const PRODUCTS: Product[] = [
       es: "CopyPaste: el panel del portapapeles con su buscador y un historial de textos, imagenes y archivos",
     },
     accent: "#1E7A52",
+    icon: "/icons/copypaste.png",
     en: {
       tagline: "Everything you copied, still there.",
       meta: "Free, open source clipboard manager for Windows and macOS. A searchable local history of what you copy that ignores your password manager.",
@@ -246,6 +250,15 @@ export const PRODUCTS: Product[] = [
 
 export function words(product: Product, locale: Locale): Words {
   return locale === "es" ? product.es : product.en;
+}
+
+export function shotSrc(product: Product, locale: Locale): string | undefined {
+  const shot = product.shot;
+  return shot && (locale === "es" && shot.srcEs ? shot.srcEs : shot.src);
+}
+
+export function releasesUrl(product: Product): string {
+  return `${product.repo}/releases`;
 }
 
 export function storeUrl(product: Product): string | null {

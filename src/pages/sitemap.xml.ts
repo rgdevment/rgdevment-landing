@@ -1,4 +1,6 @@
 import type { APIRoute } from "astro";
+import { getCollection } from "astro:content";
+import { docPath } from "../content/docs";
 import { GUIDES } from "../content/guides";
 import { PRODUCTS } from "../content/products";
 import { LOCALES, canonical } from "../site";
@@ -23,11 +25,20 @@ const ENTRIES: Entry[] = [
 
 const BREAK = "\n";
 
+async function docEntries(): Promise<Entry[]> {
+  const docs = await getCollection("docs", (one) => one.data.locale === "en" && one.data.twin !== null);
+  return docs.map((one) => ({
+    en: docPath("en", one.data.product, one.data.page),
+    es: docPath("es", one.data.product, one.data.twin!),
+    priority: one.data.page ? "0.6" : "0.7",
+  }));
+}
+
 /// Every page is declared once per language, each one naming its twin, so the two versions are
 /// read as the same page in two languages instead of as two pages saying the same thing. A guide
 /// keeps a different slug in each language, which is why the pair travels together.
-export const GET: APIRoute = () => {
-  const urls = ENTRIES.flatMap((entry) =>
+export const GET: APIRoute = async () => {
+  const urls = [...ENTRIES, ...(await docEntries())].flatMap((entry) =>
     LOCALES.map((locale) => {
       const alternates = LOCALES.map(
         (other) =>

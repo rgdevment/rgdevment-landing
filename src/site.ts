@@ -21,3 +21,23 @@ export function href(locale: Locale, path = ""): string {
 export function canonical(locale: Locale, path = ""): string {
   return `${DOMAIN}${href(locale, path)}`;
 }
+
+export const PERSON_ID = `${DOMAIN}/#person`;
+export const WEBSITE_ID = `${DOMAIN}/#website`;
+
+export function withHome(locale: Locale, trail: [string, string][]): [string, string][] {
+  return [[locale === "es" ? "Inicio" : "Home", ""], ...trail];
+}
+
+export function crumbs(locale: Locale, trail: [string, string][]) {
+  return {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: withHome(locale, trail).map(([name, path], at) => ({
+      "@type": "ListItem",
+      position: at + 1,
+      name,
+      item: canonical(locale, path),
+    })),
+  };
+}

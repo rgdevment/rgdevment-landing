@@ -1,4 +1,5 @@
 ---
+import Logo from "./Logo.astro";
 import { PRODUCTS } from "../content/products";
 import { href, type Locale } from "../site";
 
@@ -12,113 +13,118 @@ const { locale, here, other } = Astro.props;
 const there: Locale = locale === "es" ? "en" : "es";
 const es = locale === "es";
 
-const links: [string, string, string][] = [
-  ...PRODUCTS.map((p) => [p.slug, p.name, p.slug] as [string, string, string]),
-  ...((es
-    ? [
-        ["guias", "Guías", "guides"],
-        ["precios", "Precios", "pricing"],
-        ["apoyar", "Apoyar", "support"],
-      ]
-    : [
-        ["guides", "Guides", "guides"],
-        ["pricing", "Pricing", "pricing"],
-        ["support", "Support", "support"],
-      ]) as [string, string, string][]),
-];
+const pages: [string, string, string][] = es
+  ? [
+      ["guias", "Guías", "guides"],
+      ["precios", "Precios", "pricing"],
+      ["apoyar", "Apoyar", "support"],
+    ]
+  : [
+      ["guides", "Guides", "guides"],
+      ["pricing", "Pricing", "pricing"],
+      ["support", "Support", "support"],
+    ];
 
-const on = "text-ink font-medium";
-const off = "text-stone-500 transition-colors hover:text-ink";
+const link = (key: string) =>
+  here === key
+    ? "rounded-full bg-fg/[0.06] px-3 py-1.5 text-fg"
+    : "rounded-full px-3 py-1.5 text-muted transition-colors hover:text-fg";
 ---
 
-<header class="sticky top-0 z-40 border-b border-stone-200/70 bg-paper/85 backdrop-blur-md">
-  <nav
-    aria-label={es ? "Principal" : "Main"}
-    class="mx-auto max-w-5xl px-6 sm:px-8"
-  >
-    <!-- A details element gives a menu that folds on a narrow screen without a line of JavaScript. -->
-    <details class="group [&[open]_.shut]:hidden [&:not([open])_.open]:hidden">
-      <summary
-        class="flex cursor-pointer list-none items-center gap-3 py-4 lg:cursor-default [&::-webkit-details-marker]:hidden"
-      >
-        <a class="flex items-center" href={href(locale)}>
-          <img
-            src="/rgdevment.svg"
-            alt="rgdevment"
-            width="660"
-            height="108"
-            class="h-6 w-auto lg:h-[26px]"
-          />
+<header class="sticky top-0 z-40 border-b border-line/70 bg-canvas/80 backdrop-blur-xl backdrop-saturate-150">
+  <nav aria-label={es ? "Principal" : "Main"} class="shell flex h-16 items-center gap-6">
+    <a class="flex shrink-0 items-center" href={href(locale)} aria-label={es ? "rgdevment, inicio" : "rgdevment, home"}>
+      <Logo class="h-[22px] w-auto sm:h-6" />
+    </a>
+
+    <ul class="ml-auto hidden items-center gap-1 text-[15px] lg:flex">
+      {
+        PRODUCTS.map((one) => (
+          <li>
+            <a
+              class={`inline-flex items-center gap-2 ${link(one.slug)}`}
+              aria-current={here === one.slug ? "page" : undefined}
+              href={href(locale, one.slug)}
+            >
+              <img src={one.icon} alt="" width="18" height="18" class="h-[18px] w-[18px] rounded-[5px]" />
+              {one.name}
+            </a>
+          </li>
+        ))
+      }
+      <li aria-hidden="true" class="mx-2 h-4 w-px bg-line"></li>
+      {
+        pages.map(([slug, label, key]) => (
+          <li>
+            <a class={link(key)} aria-current={here === key ? "page" : undefined} href={href(locale, slug)}>
+              {label}
+            </a>
+          </li>
+        ))
+      }
+      <li class="ml-2">
+        <a
+          class="rounded-full border border-line px-3 py-1 font-mono text-xs text-muted transition-colors hover:border-fg/30 hover:text-fg"
+          href={href(there, other)}
+          lang={there}
+          hreflang={there}
+          title={es ? "Read in English" : "Leer en español"}
+        >
+          {es ? "EN" : "ES"}
         </a>
+      </li>
+    </ul>
 
-        <span class="ml-auto flex items-center gap-4 lg:hidden">
-          <span class="text-stone-400" aria-hidden="true">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="shut h-6 w-6">
-              <path d="M4 7h16M4 12h16M4 17h16" />
-            </svg>
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="open h-6 w-6">
-              <path d="M6 6l12 12M18 6L6 18" />
-            </svg>
-          </span>
-        </span>
+    <details class="group ml-auto lg:hidden">
+      <summary
+        class="grid h-10 w-10 cursor-pointer list-none place-items-center rounded-full border border-line text-fg [&::-webkit-details-marker]:hidden"
+        aria-label={es ? "Menú" : "Menu"}
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="h-5 w-5 group-open:hidden" aria-hidden="true">
+          <path d="M4 8h16M4 16h16" />
+        </svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="hidden h-5 w-5 group-open:block" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </summary>
 
-        <ul class="ml-auto hidden items-center gap-7 lg:flex">
+      <div class="absolute inset-x-0 top-16 border-b border-line bg-canvas/95 shadow-xl backdrop-blur-xl">
+        <ul class="shell grid gap-1 py-4 text-lg">
           {
-            links.map(([slug, label, key], at) => (
-              <>
-                {at === PRODUCTS.length && (
-                  <li aria-hidden="true"><span class="block h-4 w-px bg-stone-300" /></li>
-                )}
-                <li>
-                  <a
-                    class={here === key ? on : off}
-                    aria-current={here === key ? "page" : undefined}
-                    href={href(locale, slug)}
-                  >
-                    {label}
-                  </a>
-                </li>
-              </>
+            PRODUCTS.map((one) => (
+              <li>
+                <a
+                  class={`flex items-center gap-3 rounded-2xl px-3 py-2.5 ${here === one.slug ? "bg-surface text-fg" : "text-body"}`}
+                  aria-current={here === one.slug ? "page" : undefined}
+                  href={href(locale, one.slug)}
+                >
+                  <img src={one.icon} alt="" width="28" height="28" class="h-7 w-7 rounded-lg" />
+                  {one.name}
+                </a>
+              </li>
+            ))
+          }
+          <li class="my-2 h-px bg-line" aria-hidden="true"></li>
+          {
+            pages.map(([slug, label, key]) => (
+              <li>
+                <a
+                  class={`block rounded-2xl px-3 py-2.5 ${here === key ? "bg-surface text-fg" : "text-body"}`}
+                  aria-current={here === key ? "page" : undefined}
+                  href={href(locale, slug)}
+                >
+                  {label}
+                </a>
+              </li>
             ))
           }
           <li>
-            <a
-              class="rounded-full border border-stone-300 px-3 py-1 text-sm text-stone-600 transition-colors hover:border-stone-400 hover:bg-white hover:text-ink"
-              href={href(there, other)}
-              lang={there}
-              hreflang={there}
-            >
-              {es ? "EN" : "ES"}
+            <a class="block rounded-2xl px-3 py-2.5 text-muted" href={href(there, other)} lang={there} hreflang={there}>
+              {es ? "English" : "Español"}
             </a>
           </li>
         </ul>
-      </summary>
-
-      <ul class="grid gap-1 pb-5 text-lg lg:hidden">
-        {
-          links.map(([slug, label, key]) => (
-            <li>
-              <a
-                class={`block rounded-lg px-3 py-2 ${here === key ? "bg-white font-medium text-ink" : "text-stone-600"}`}
-                aria-current={here === key ? "page" : undefined}
-                href={href(locale, slug)}
-              >
-                {label}
-              </a>
-            </li>
-          ))
-        }
-        <li class="mt-2 border-t border-stone-200 pt-3">
-          <a
-            class="block rounded-lg px-3 py-2 text-stone-600"
-            href={href(there, other)}
-            lang={there}
-            hreflang={there}
-          >
-            {es ? "English" : "Español"}
-          </a>
-        </li>
-      </ul>
+      </div>
     </details>
   </nav>
 </header>

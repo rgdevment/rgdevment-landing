@@ -1,0 +1,184 @@
+---
+import "katex/dist/katex.min.css";
+import { render } from "astro:content";
+import Crumbs from "./Crumbs.astro";
+import DocNav from "./DocNav.astro";
+import Icon from "./Icon.astro";
+import Layout from "../layouts/Layout.astro";
+import { bySection, type Doc, docPath, docsOf } from "../content/docs";
+import { PRODUCTS } from "../content/products";
+import { AUTHOR, PERSON_ID, WEBSITE_ID, canonical, crumbs, href, type Locale } from "../site";
+
+interface Props {
+  doc: Doc;
+  locale: Locale;
+}
+
+const { doc, locale } = Astro.props;
+const es = locale === "es";
+const data = doc.data;
+const product = PRODUCTS.find((one) => one.slug === data.product)!;
+const { Content, headings } = await render(doc);
+
+const siblings = await docsOf(product.slug, locale);
+const at = siblings.findIndex((one) => one.id === doc.id);
+const prev = at > 0 ? siblings[at - 1] : undefined;
+const next = siblings[at + 1];
+
+const sections = bySection(siblings);
+
+const say = {
+  docs: es ? "Ayuda" : "Docs",
+  overview: es ? "Inicio" : "Overview",
+  title: es ? `Ayuda de ${product.name}` : `${product.name} documentation`,
+  toc: es ? "En esta página" : "On this page",
+  edit: es ? "Editar en la wiki" : "Edit on the wiki",
+  prev: es ? "Anterior" : "Previous",
+  next: es ? "Siguiente" : "Next",
+  menu: es ? "Índice de la ayuda" : "Docs contents",
+};
+
+const index = docPath(locale, product.slug);
+const path = docPath(locale, product.slug, data.page);
+const other: Locale = es ? "en" : "es";
+const paths = { [locale]: path, [other]: docPath(other, product.slug, data.twin ?? "") };
+const heading = data.page ? data.title : say.title;
+const title = data.page ? `${data.title} · ${product.name}` : say.title;
+const trail: [string, string][] = [
+  [product.name, product.slug],
+  [say.docs, index],
+  ...(data.page ? [[data.title, path] as [string, string]] : []),
+];
+const toc = headings.filter((one) => one.depth === 2);
+const linkOf = (one: Doc) => href(locale, docPath(locale, product.slug, one.data.page));
+const overview = { label: say.overview, href: href(locale, index), on: !data.page };
+
+const schema = [
+  {
+    "@context": "https://schema.org",
+    "@type": "TechArticle",
+    headline: heading,
+    description: data.description,
+    inLanguage: locale,
+    author: { "@id": PERSON_ID, "@type": "Person", name: AUTHOR.name },
+    publisher: { "@id": PERSON_ID },
+    isPartOf: { "@id": WEBSITE_ID },
+    mainEntityOfPage: canonical(locale, path),
+    about: { "@type": "SoftwareApplication", name: product.name, url: canonical(locale, product.slug) },
+  },
+  crumbs(locale, trail),
+];
+---
+
+<Layout
+  title={title}
+  description={data.description || heading}
+  locale={locale}
+  path={path}
+  paths={paths}
+  here={product.slug}
+  schema={schema}
+>
+  <div class="shell pt-10 sm:pt-14">
+    <Crumbs locale={locale} trail={trail} />
+
+    <div class="mt-10 grid gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] xl:grid-cols-[15rem_minmax(0,1fr)_12rem]">
+      <aside class="lg:sticky lg:top-24 lg:max-h-[calc(100vh-7rem)] lg:self-start lg:overflow-y-auto">
+        <details class="group card lg:hidden">
+          <summary class="flex cursor-pointer list-none items-center gap-3 p-4 [&::-webkit-details-marker]:hidden">
+            <img src={product.icon} alt="" width="28" height="28" class="h-7 w-7 rounded-lg" />
+            <span class="font-display font-semibold text-fg">{say.title}</span>
+            <Icon name="chevron" class="ml-auto h-4 w-4 text-muted transition group-open:rotate-180" />
+          </summary>
+          <nav aria-label={say.menu} class="px-1 pb-4 text-[15px]">
+            <DocNav current={doc.id} overview={overview} sections={sections} linkOf={linkOf} />
+          </nav>
+        </details>
+        <div class="hidden lg:block">
+          <a href={href(locale, product.slug)} class="flex items-center gap-3">
+            <img src={product.icon} alt="" width="28" height="28" class="h-7 w-7 rounded-lg" />
+            <span class="font-display font-semibold text-fg">{product.name}</span>
+          </a>
+          <nav aria-label={say.menu} class="mt-6 text-[15px]">
+            <DocNav current={doc.id} overview={overview} sections={sections} linkOf={linkOf} />
+          </nav>
+        </div>
+      </aside>
+
+      <article class="min-w-0">
+        <header class="border-b border-line pb-8">
+          {data.page && <p class="eyebrow">{data.section}</p>}
+          <h1 class="mt-3 text-4xl font-semibold tracking-[-0.02em] sm:text-5xl">{heading}</h1>
+          {data.description && <p class="mt-5 text-lg text-body">{data.description}</p>}
+        </header>
+
+        <div class="prose prose-lg mt-8">
+          <Content />
+        </div>
+
+        <nav class="mt-16 grid gap-4 border-t border-line pt-8 sm:grid-cols-2" aria-label={es ? "Paginación" : "Pagination"}>
+          {
+            prev ? (
+              <a class="card-link group p-5" href={linkOf(prev)}>
+                <span class="text-sm text-muted">{say.prev}</span>
+                <span class="mt-1 block font-display font-semibold text-fg">{prev.data.page ? prev.data.title : say.overview}</span>
+              </a>
+            ) : (
+              <span />
+            )
+          }
+          {
+            next && (
+              <a class="card-link group p-5 text-right" href={linkOf(next)}>
+                <span class="text-sm text-muted">{say.next}</span>
+                <span class="mt-1 block font-display font-semibold text-fg">{next.data.title}</span>
+              </a>
+            )
+          }
+        </nav>
+
+        <p class="mt-8 text-sm">
+          <a class="inline-flex items-center gap-2 text-muted transition-colors hover:text-fg" href={data.source} rel="noopener">
+            <Icon name="github" class="h-4 w-4" />
+            {say.edit}
+          </a>
+        </p>
+      </article>
+
+      {
+        toc.length > 1 && (
+          <aside class="hidden xl:block">
+            <nav aria-label={say.toc} class="sticky top-24 text-sm">
+              <p class="eyebrow text-[11px]">{say.toc}</p>
+              <ul class="mt-3 space-y-2 border-l border-line">
+                {toc.map((one) => (
+                  <li>
+                    <a class="-ml-px block border-l border-transparent pl-4 text-muted transition-colors hover:border-fg hover:text-fg" href={`#${one.slug}`}>
+                      {one.text}
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </nav>
+          </aside>
+        )
+      }
+    </div>
+  </div>
+  <script>
+    const blocks = [...document.querySelectorAll<HTMLElement>("pre > code.language-mermaid")];
+    if (blocks.length) {
+      const { default: mermaid } = await import("mermaid");
+      const dark = matchMedia("(prefers-color-scheme: dark)").matches;
+      mermaid.initialize({ startOnLoad: false, theme: dark ? "dark" : "neutral", fontFamily: "Inter Variable, sans-serif" });
+      const nodes = blocks.map((code) => {
+        const box = document.createElement("div");
+        box.className = "mermaid not-prose my-8 flex justify-center overflow-x-auto rounded-2xl border border-line bg-surface p-6";
+        box.textContent = code.textContent;
+        code.parentElement!.replaceWith(box);
+        return box;
+      });
+      await mermaid.run({ nodes });
+    }
+  </script>
+</Layout>

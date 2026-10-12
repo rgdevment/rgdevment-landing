@@ -1,8 +1,11 @@
 ---
+import Crumbs from "./Crumbs.astro";
+import Icon from "./Icon.astro";
 import Layout from "../layouts/Layout.astro";
+import { docPath } from "../content/docs";
 import { GUIDES, written } from "../content/guides";
-import { PRODUCTS } from "../content/products";
-import { DOMAIN, canonical, href, type Locale } from "../site";
+import { PRODUCTS, words } from "../content/products";
+import { canonical, crumbs, href, type Locale } from "../site";
 
 interface Props {
   locale: Locale;
@@ -15,46 +18,54 @@ const path = es ? "guias" : "guides";
 const say = es
   ? {
       title: "Guías",
+      seo: "Guías: navegadores, portapapeles y notas en Windows y macOS",
       description:
-        "Cómo abrir los enlaces de Teams o de Outlook en el navegador que quieras, mandar los del trabajo a un perfil concreto, y qué alternativas hay a Browserosaurus.",
-      lede: "Cada guía empieza por el ajuste que la propia aplicación ya trae, porque muchas veces con eso basta y no hace falta instalar nada. Después viene lo que ese ajuste no resuelve.",
-      home: "Inicio",
+        "Cómo abrir los enlaces de Teams o de Outlook en el navegador que quieras, el historial del portapapeles en Windows y Mac, y notas que se leen sin la aplicación.",
+      lede: "Cada guía empieza por el ajuste que tu sistema o la propia aplicación ya traen, porque muchas veces con eso basta y no hace falta instalar nada. Después viene lo que ese ajuste no resuelve.",
+      count: "guías",
+      read: "Leer la guía",
+      manual: "¿Buscas cómo usar una aplicación? Cada una tiene su ayuda:",
+      help: "Ayuda de",
     }
   : {
       title: "Guides",
+      seo: "Guides: browsers, clipboard and notes on Windows and macOS",
       description:
-        "How to open Teams or Outlook links in the browser you meant, send work links to a particular profile, and what the alternatives to Browserosaurus are.",
-      lede: "Each guide starts with the setting the application already carries, because that is often enough and saves you installing anything. What it does not fix comes after.",
-      home: "Home",
+        "How to open Teams or Outlook links in the browser you meant, clipboard history on Windows and Mac, and notes you can read without the app.",
+      lede: "Each guide starts with the setting your system or the application already carries, because that is often enough and saves you installing anything. What it does not fix comes after.",
+      count: "guides",
+      read: "Read the guide",
+      manual: "Looking for how to use an app? Each one has its docs:",
+      help: "Docs for",
     };
+
+const groups = PRODUCTS.map((product) => ({
+  product,
+  guides: GUIDES.filter((one) => one.product === product.slug),
+})).filter((group) => group.guides.length > 0);
 
 const schema = [
   {
     "@context": "https://schema.org",
     "@type": "CollectionPage",
-    name: say.title,
+    name: say.seo,
     description: say.description,
     url: canonical(locale, path),
+    inLanguage: locale,
     hasPart: GUIDES.map((one) => ({
-      "@type": "Article",
+      "@type": "TechArticle",
       headline: written(one, locale).title,
       description: written(one, locale).description,
       url: canonical(locale, written(one, locale).slug),
+      datePublished: one.published,
     })),
   },
-  {
-    "@context": "https://schema.org",
-    "@type": "BreadcrumbList",
-    itemListElement: [
-      { "@type": "ListItem", position: 1, name: say.home, item: `${DOMAIN}${href(locale)}` },
-      { "@type": "ListItem", position: 2, name: say.title, item: canonical(locale, path) },
-    ],
-  },
+  crumbs(locale, [[say.title, path]]),
 ];
 ---
 
 <Layout
-  title={say.title}
+  title={say.seo}
   description={say.description}
   locale={locale}
   path={path}
@@ -62,42 +73,68 @@ const schema = [
   here="guides"
   schema={schema}
 >
-  <nav class="mb-10 text-sm text-stone-500">
-    <a class="hover:text-ink" href={href(locale)}>{say.home}</a>
-    <span class="px-2">/</span>
-    <span class="text-stone-700">{say.title}</span>
-  </nav>
+  <section class="relative isolate overflow-hidden">
+    <div class="dotgrid absolute inset-0 -z-10" aria-hidden="true"></div>
+    <div class="shell pt-10 pb-4 sm:pt-14">
+      <Crumbs locale={locale} trail={[[say.title, path]]} />
+      <header class="mt-12 max-w-3xl">
+        <p class="eyebrow">{GUIDES.length} {say.count}</p>
+        <h1 class="mt-3 text-5xl font-semibold tracking-[-0.03em] sm:text-6xl">{say.title}</h1>
+        <p class="mt-6 text-lg text-body sm:text-xl">{say.lede}</p>
+        <p class="mt-8 text-muted">{say.manual}</p>
+        <ul class="mt-3 flex flex-wrap gap-2">
+          {
+            PRODUCTS.map((one) => (
+              <li>
+                <a class="chip transition hover:border-fg/25 hover:text-fg" href={href(locale, docPath(locale, one.slug))}>
+                  <img src={one.icon} alt="" width="18" height="18" class="h-[18px] w-[18px] rounded-[5px]" />
+                  {say.help} {one.name}
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+      </header>
+    </div>
+  </section>
 
-  <header>
-    <h1 class="text-4xl font-bold tracking-tight">{say.title}</h1>
-    <p class="mt-6 text-lg leading-relaxed text-stone-600">{say.lede}</p>
-  </header>
-
-  <ul class="mt-12 space-y-4">
+  <div class="shell mt-14 space-y-16">
     {
-      GUIDES.map((one) => {
-        const t = written(one, locale);
-        const product = PRODUCTS.find((p) => p.slug === one.product)!;
-        return (
-          <li>
+      groups.map(({ product, guides }) => (
+        <section aria-labelledby={`g-${product.slug}`}>
+          <div class="flex items-center gap-3 border-b border-line pb-4">
+            <img src={product.icon} alt="" width="32" height="32" class="h-8 w-8 rounded-lg" loading="lazy" />
+            <h2 id={`g-${product.slug}`} class="text-2xl font-semibold tracking-tight">
+              <a class="transition-colors hover:text-flame-ink" href={href(locale, product.slug)}>{product.name}</a>
+            </h2>
+            <p class="hidden text-sm text-muted md:block">{words(product, locale).tagline}</p>
             <a
-              class="block rounded-xl border border-stone-200 bg-white p-6 transition hover:border-stone-400 hover:bg-stone-100"
-              href={href(locale, t.slug)}
+              class="ml-auto inline-flex shrink-0 items-center gap-1.5 text-sm font-medium text-fg hover:underline"
+              href={href(locale, docPath(locale, product.slug))}
             >
-              <h2 class="text-xl font-semibold">{t.title}</h2>
-              <p class="mt-2 leading-relaxed text-stone-600">{t.description}</p>
-              <p class="mt-3 flex items-center gap-2 text-sm text-stone-500">
-                <span
-                  class="inline-block h-2 w-2 rounded-full"
-                  style={`background: ${product.accent}`}
-                  aria-hidden="true"
-                />
-                {product.name}
-              </p>
+              {say.help} {product.name}
+              <Icon name="arrow" class="h-3.5 w-3.5" />
             </a>
-          </li>
-        );
-      })
+          </div>
+          <ul class="mt-6 grid gap-4 md:grid-cols-2">
+            {guides.map((one) => {
+              const t = written(one, locale);
+              return (
+                <li>
+                  <a class="card-link group flex h-full flex-col p-6" href={href(locale, t.slug)}>
+                    <h3 class="text-xl font-semibold leading-snug">{t.title}</h3>
+                    <p class="mt-2 flex-1 text-[15px] text-body">{t.description}</p>
+                    <span class="mt-5 inline-flex items-center gap-1.5 text-sm font-medium text-fg">
+                      {say.read}
+                      <Icon name="arrow" class="h-4 w-4 transition group-hover:translate-x-0.5" />
+                    </span>
+                  </a>
+                </li>
+              );
+            })}
+          </ul>
+        </section>
+      ))
     }
-  </ul>
+  </div>
 </Layout>

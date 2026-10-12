@@ -1,0 +1,12 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: klass = "h-6 w-auto" } = Astro.props;
+---
+
+<picture>
+  <source srcset="/rgdevment-white.svg" media="(prefers-color-scheme: dark)" />
+  <img src="/rgdevment.svg" alt="rgdevment" width="660" height="108" class={klass} />
+</picture>

@@ -1,0 +1,29 @@
+---
+import { type Product, shotSrc } from "../content/products";
+import type { Locale } from "../site";
+
+interface Props {
+  product: Product;
+  locale: Locale;
+  eager?: boolean;
+  class?: string;
+}
+
+const { product, locale, eager = false, class: klass = "" } = Astro.props;
+const shot = product.shot!;
+const src = shotSrc(product, locale)!;
+---
+
+<picture>
+  <source srcset={src.replace(/\.png$/, ".webp")} type="image/webp" />
+  <img
+    src={src}
+    width={shot.width}
+    height={shot.height}
+    alt={locale === "es" ? shot.es : shot.en}
+    loading={eager ? "eager" : "lazy"}
+    fetchpriority={eager ? "high" : undefined}
+    decoding="async"
+    class={klass}
+  />
+</picture>
