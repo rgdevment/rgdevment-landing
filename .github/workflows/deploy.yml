@@ -35,6 +35,9 @@ jobs:
       - name: Fetch wikis
         run: npm run wikis
 
+      - name: Check types
+        run: npm run check
+
       - name: Build
         run: npm run build
         env:
@@ -55,3 +58,11 @@ jobs:
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
+      - name: Tell search engines what changed
+        if: github.event_name == 'push'
+        continue-on-error: true
+        run: |
+          urls=$(curl -fsSL https://rgdevment.com/sitemap.xml | grep -o '<loc>[^<]*' | sed 's/<loc>//' | jq -R . | jq -s .)
+          jq -n --argjson urls "$urls" '{host: "rgdevment.com", key: "c039190381f3501448bba3a377e80147", keyLocation: "https://rgdevment.com/c039190381f3501448bba3a377e80147.txt", urlList: $urls}' \
+            | curl -fsS -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json; charset=utf-8' --data-binary @-
