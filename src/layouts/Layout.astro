@@ -47,7 +47,7 @@ const site = [
     name: AUTHOR.name,
     alternateName: AUTHOR.handle,
     url: `${DOMAIN}/`,
-    sameAs: [AUTHOR.github],
+    sameAs: [AUTHOR.github, AUTHOR.x],
   },
 ];
 const graphs = [...site, ...(schema ? (Array.isArray(schema) ? schema : [schema]) : [])];

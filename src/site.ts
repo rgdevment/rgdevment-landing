@@ -8,6 +8,7 @@ export const AUTHOR = {
   name: "Mario Hidalgo G.",
   handle: "rgdevment",
   github: "https://github.com/rgdevment",
+  x: "https://x.com/rgdevment",
 };
 
 /// The English pages live at the root and Spanish under /es/, so a path is built once here
