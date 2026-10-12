@@ -190,10 +190,11 @@ export const PRODUCTS: Product[] = [
     cask: "copypaste",
     shot: {
       src: "/copypaste-social.png",
+      srcEs: "/copypaste-social-es.png",
       width: 1280,
       height: 640,
-      en: "CopyPaste: the clipboard panel with its search box and a history of text, images and files",
-      es: "CopyPaste: el panel del portapapeles con su buscador y un historial de textos, imagenes y archivos",
+      en: "CopyPaste 3.0: the clipboard panel with its search box, filters by kind and a history of text and images",
+      es: "CopyPaste 3.0: el panel del portapapeles con su buscador, los filtros por tipo y un historial de textos e imágenes",
     },
     accent: "#1E7A52",
     icon: "/icons/copypaste.png",
