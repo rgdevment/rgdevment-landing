@@ -16,4 +16,13 @@ const docs = defineCollection({
   }),
 });
 
-export const collections = { docs };
+const privacy = defineCollection({
+  loader: glob({ pattern: "*.md", base: "./.wikis/privacy" }),
+  schema: z.object({
+    title: z.string(),
+    product: z.string(),
+    source: z.string().url(),
+  }),
+});
+
+export const collections = { docs, privacy };

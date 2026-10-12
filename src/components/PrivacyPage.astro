@@ -1,0 +1,65 @@
+---
+import type { CollectionEntry } from "astro:content";
+import { render } from "astro:content";
+import Crumbs from "./Crumbs.astro";
+import Icon from "./Icon.astro";
+import Layout from "../layouts/Layout.astro";
+import { PRODUCTS } from "../content/products";
+import { privacyPath } from "../content/privacy";
+import { crumbs, type Locale } from "../site";
+
+interface Props {
+  policy: CollectionEntry<"privacy">;
+  locale: Locale;
+}
+
+const { policy, locale } = Astro.props;
+const es = locale === "es";
+const product = PRODUCTS.find((one) => one.slug === policy.data.product)!;
+const { Content } = await render(policy);
+
+const say = {
+  title: es ? `Política de privacidad de ${product.name}` : `${product.name} privacy policy`,
+  crumb: es ? "Privacidad" : "Privacy",
+  lede: es
+    ? `Qué hace ${product.name} con tus datos, sacado tal cual del repositorio. Se publica en inglés, que es la versión que rige.`
+    : `What ${product.name} does with your data, taken as it stands from its repository.`,
+  source: es ? "Ver en GitHub" : "View on GitHub",
+};
+
+const path = privacyPath(locale, product.slug);
+const paths = { en: privacyPath("en", product.slug), es: privacyPath("es", product.slug) };
+const trail: [string, string][] = [
+  [product.name, product.slug],
+  [say.crumb, path],
+];
+---
+
+<Layout
+  title={say.title}
+  description={say.lede}
+  locale={locale}
+  path={path}
+  paths={paths}
+  here={product.slug}
+  schema={crumbs(locale, trail)}
+>
+  <div class="shell pt-10 sm:pt-14">
+    <Crumbs locale={locale} trail={trail} />
+    <article class="mx-auto mt-10 max-w-3xl">
+      <header class="border-b border-line pb-8">
+        <h1 class="text-4xl font-semibold tracking-[-0.02em] sm:text-5xl">{say.title}</h1>
+        <p class="mt-5 text-lg text-body">{say.lede}</p>
+      </header>
+      <div class="prose prose-lg mt-8" lang="en">
+        <Content />
+      </div>
+      <p class="mt-8 text-sm">
+        <a class="inline-flex items-center gap-2 text-muted transition-colors hover:text-fg" href={policy.data.source} rel="noopener">
+          <Icon name="github" class="h-4 w-4" />
+          {say.source}
+        </a>
+      </p>
+    </article>
+  </div>
+</Layout>
