@@ -38,6 +38,11 @@ const link = (key: string) =>
     </a>
 
     <ul class="ml-auto hidden items-center gap-1 text-[15px] lg:flex">
+      <li>
+        <a class={link("home")} aria-current={here === "home" ? "page" : undefined} href={href(locale)}>
+          {es ? "Inicio" : "Home"}
+        </a>
+      </li>
       {
         PRODUCTS.map((one) => (
           <li>
@@ -90,6 +95,15 @@ const link = (key: string) =>
 
       <div class="absolute inset-x-0 top-16 border-b border-line bg-canvas/95 shadow-xl backdrop-blur-xl">
         <ul class="shell grid gap-1 py-4 text-lg">
+          <li>
+            <a
+              class={`block rounded-2xl px-3 py-2.5 ${here === "home" ? "bg-surface text-fg" : "text-body"}`}
+              aria-current={here === "home" ? "page" : undefined}
+              href={href(locale)}
+            >
+              {es ? "Inicio" : "Home"}
+            </a>
+          </li>
           {
             PRODUCTS.map((one) => (
               <li>
