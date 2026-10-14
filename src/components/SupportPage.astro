@@ -7,9 +7,11 @@ import { crumbs, type Locale } from "../site";
 
 interface Props {
   locale: Locale;
+  only?: string;
 }
 
-const { locale } = Astro.props;
+const { locale, only } = Astro.props;
+const shown = only ? PRODUCTS.filter((one) => one.slug === only) : PRODUCTS;
 const es = locale === "es";
 const paths = { en: "support", es: "apoyar" };
 
@@ -113,7 +115,7 @@ const icons = ["star", "store", "heart", "code"] as const;
 
     <ul class="mt-6 grid gap-3 sm:grid-cols-3">
       {
-        PRODUCTS.map((product) => {
+        shown.map((product) => {
           const store = storeUrl(product);
           return (
             <li class="card flex items-center gap-3 p-4">
@@ -167,7 +169,7 @@ const icons = ["star", "store", "heart", "code"] as const;
       <p class="mt-4 text-lg text-body">{say.code}</p>
       <ul class="mt-6 flex flex-wrap gap-2">
         {
-          PRODUCTS.map((one) => (
+          shown.map((one) => (
             <li>
               <a class="chip transition hover:border-fg/25" href={one.repo} rel="noopener">
                 <Icon name="github" class="h-3.5 w-3.5" />

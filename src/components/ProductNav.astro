@@ -2,7 +2,7 @@
 import { docPath } from "../content/docs";
 import { privacyPath } from "../content/privacy";
 import type { Product } from "../content/products";
-import { href, mainHref, type Locale } from "../site";
+import { href, type Locale } from "../site";
 
 interface Props {
   product: Product;
@@ -26,7 +26,8 @@ const link = "rounded-full px-3 py-1.5 text-muted transition-colors hover:text-f
     <ul class="ml-auto flex items-center gap-1 text-[15px]">
       <li><a class={link} href={href(locale, docPath(locale, product.slug))}>{es ? "Ayuda" : "Docs"}</a></li>
       <li class="hidden sm:inline"><a class={link} href={href(locale, privacyPath(locale, product.slug))}>{es ? "Privacidad" : "Privacy"}</a></li>
-      <li class="hidden sm:inline"><a class={link} href={mainHref(locale)}>rgdevment.com</a></li>
+      <li class="hidden sm:inline"><a class={link} href={product.repo} rel="noopener">{es ? "Repositorio" : "Repository"}</a></li>
+      <li class="hidden sm:inline"><a class={link} href={href(locale, es ? "precios" : "pricing")}>{es ? "Precios" : "Pricing"}</a></li>
       <li class="ml-2">
         <a
           class="rounded-full border border-line px-3 py-1 font-mono text-xs text-muted transition-colors hover:border-fg/30 hover:text-fg"
