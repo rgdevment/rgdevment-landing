@@ -8,6 +8,8 @@ type Words = {
   problem: string;
   what: string[];
   privacy: string;
+  /// What its own site's pricing page promises about the data, beside the price.
+  data?: { line: string; checks: string[] };
   faq: { q: string; a: string }[];
 };
 
@@ -68,6 +70,15 @@ export const PRODUCTS: Product[] = [
       ],
       privacy:
         "Local-first by design. The files are yours and readable without Tisty running.",
+      data: {
+        line: "On your disk or in your own cloud.",
+        checks: [
+          "Stays on this computer",
+          "Syncs through your Google Drive or a folder you choose",
+          "No telemetry, no ads",
+          "Export everything whenever you want",
+        ],
+      },
       faq: [
         {
           q: "What happens to my notes if Tisty disappears?",
@@ -93,6 +104,15 @@ export const PRODUCTS: Product[] = [
       ],
       privacy:
         "Local por diseño. Los archivos son tuyos y se leen sin que Tisty esté abierto.",
+      data: {
+        line: "En tu disco o en tu propia nube.",
+        checks: [
+          "Se quedan en este equipo",
+          "Se sincronizan por tu Google Drive o por una carpeta que eliges",
+          "Sin telemetría ni anuncios",
+          "Exportas todo cuando quieras",
+        ],
+      },
       faq: [
         {
           q: "¿Qué pasa con mis notas si Tisty desaparece?",
@@ -136,6 +156,15 @@ export const PRODUCTS: Product[] = [
       ],
       privacy:
         "No account, no ads, no telemetry, no server. Your rules and the links you open never leave the machine.",
+      data: {
+        line: "Your rules and your links stay on this computer.",
+        checks: [
+          "Rules and settings stay on this computer",
+          "The links you open are never sent anywhere",
+          "No telemetry, no ads",
+          "No account to create",
+        ],
+      },
       faq: [
         {
           q: "Why do Teams and Outlook still open Edge?",
@@ -164,6 +193,15 @@ export const PRODUCTS: Product[] = [
       ],
       privacy:
         "Sin cuenta, sin publicidad, sin telemetría, sin servidor. Tus reglas y los enlaces que abres no salen de este equipo.",
+      data: {
+        line: "Tus reglas y tus enlaces se quedan en este equipo.",
+        checks: [
+          "Las reglas y los ajustes se quedan en este equipo",
+          "Los enlaces que abres no se envían a ninguna parte",
+          "Sin telemetría ni anuncios",
+          "Sin cuenta que crear",
+        ],
+      },
       faq: [
         {
           q: "¿Por qué Teams y Outlook siguen abriendo Edge?",

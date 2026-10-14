@@ -7,7 +7,7 @@ Motto: software out of conviction, not subscription.
 ## Tools
 
 - [Tisty](https://www.tisty.app/): Notes, documents and tasks, and the record of what you learned solving them: what you finish keeps its steps, its dated journal and the documents you leaned on. Plain files on disk, readable without the application. Exposes an MCP server so an assistant can read and write them with permission. Windows and macOS. AGPL-3.0.
-- [LinkUnbound](https://rgdevment.com/linkunbound/): Chooses which browser opens every link. Registers as the default browser on Windows and macOS; a rule can match the site, a browser profile, or the application the link came from. Unwraps Microsoft SafeLinks. GPL-3.0-only.
+- [LinkUnbound](https://www.linkunbound.app/): Chooses which browser opens every link. Registers as the default browser on Windows and macOS; a rule can match the site, a browser profile, or the application the link came from. Unwraps Microsoft SafeLinks. GPL-3.0-only.
 - [CopyPaste](https://rgdevment.com/copypaste/): Clipboard manager keeping a searchable local history. Ignores clipboard content from password managers. Windows and macOS. GPL-3.0.
 
 ## Documentation
@@ -15,7 +15,7 @@ Motto: software out of conviction, not subscription.
 Built from each project's GitHub wiki, in English and Spanish.
 
 - [Tisty docs](https://www.tisty.app/docs/): installation, the Markdown editor, tasks, the archive, sync and backup, the MCP server and its tools.
-- [LinkUnbound docs](https://rgdevment.com/linkunbound/docs/): installation, the picker, rules, browsers and profiles, links from other apps, troubleshooting.
+- [LinkUnbound docs](https://www.linkunbound.app/docs/): installation, the picker, rules, browsers and profiles, links from other apps, troubleshooting.
 - [CopyPaste docs](https://rgdevment.com/copypaste/docs/): installation, the panel, content kinds, paste as, backup and migration, troubleshooting.
 
 ## Pricing and support
@@ -38,11 +38,11 @@ Built from each project's GitHub wiki, in English and Spanish.
 
 - [Inicio](https://rgdevment.com/es/)
 - [Tisty](https://www.tisty.app/es/)
-- [LinkUnbound](https://rgdevment.com/es/linkunbound/)
+- [LinkUnbound](https://www.linkunbound.app/es/)
 - [CopyPaste](https://rgdevment.com/es/copypaste/)
 - [Guías](https://rgdevment.com/es/guias/)
 - [Ayuda de Tisty](https://www.tisty.app/es/ayuda/)
-- [Ayuda de LinkUnbound](https://rgdevment.com/es/linkunbound/ayuda/)
+- [Ayuda de LinkUnbound](https://www.linkunbound.app/es/ayuda/)
 - [Ayuda de CopyPaste](https://rgdevment.com/es/copypaste/ayuda/)
 - [Precios](https://rgdevment.com/es/precios/)
 - [Apoyar](https://rgdevment.com/es/apoyar/)

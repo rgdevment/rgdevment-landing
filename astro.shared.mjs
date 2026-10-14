@@ -2,7 +2,7 @@ import tailwind from '@astrojs/tailwind';
 import rehypeKatex from 'rehype-katex';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import remarkMath from 'remark-math';
-import { relocate } from './src/hosts.ts';
+import { homeOf, relocate } from './src/hosts.ts';
 
 // Anyone allowed to edit a wiki writes onto this origin, so only GitHub's own safe subset survives.
 const wikiSafe = {
@@ -34,5 +34,15 @@ export function shared({ product = null } = {}) {
       remarkPlugins: [[remarkMath, { singleDollarTextMath: false }]],
       rehypePlugins: [[rehypeSanitize, wikiSafe], rehypeKatex, rehypeRelocate(product)],
     },
+  };
+}
+
+export function ownSite(product) {
+  return {
+    ...shared({ product }),
+    site: homeOf(product),
+    srcDir: './src/sites/app',
+    outDir: `./dist-${product}`,
+    cacheDir: `./node_modules/.astro-${product}`,
   };
 }

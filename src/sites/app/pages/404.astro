@@ -2,11 +2,14 @@
 import Icon from "../../../components/Icon.astro";
 import Layout from "../../../layouts/Layout.astro";
 import { docPath } from "../../../content/docs";
+import { PRODUCTS } from "../../../content/products";
 import { HOME_PRODUCT, href } from "../../../site";
+
+const product = PRODUCTS.find((one) => one.slug === HOME_PRODUCT)!;
 ---
 
 <Layout
-  title="404 · Tisty"
+  title={`404 · ${product.name}`}
   description="This page does not exist. Esta página no existe."
   locale="en"
   noindex
