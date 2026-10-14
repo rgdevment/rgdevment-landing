@@ -219,26 +219,27 @@ export const PRODUCTS: Product[] = [
     },
   },
   {
-    slug: "copypaste",
-    name: "CopyPaste",
+    slug: "copanda",
+    name: "CoPanda",
     repo: "https://github.com/rgdevment/CopyPaste",
     licence: "GPL-3.0",
     platforms: ["Windows", "macOS"],
     storeId: "9NBJRZF3K856",
-    cask: "copypaste",
+    cask: "copanda",
     shot: {
-      src: "/copypaste-social.png",
-      srcEs: "/copypaste-social-es.png",
+      src: "/copanda-social.png",
+      srcEs: "/copanda-social-es.png",
       width: 1280,
       height: 640,
-      en: "CopyPaste 3.0: the clipboard panel with its search box, filters by kind and a history of text and images",
-      es: "CopyPaste 3.0: el panel del portapapeles con su buscador, los filtros por tipo y un historial de textos e imágenes",
+      en: "CoPanda: the clipboard panel with its search box, filters by kind and a history of text and images",
+      es: "CoPanda: el panel del portapapeles con su buscador, los filtros por tipo y un historial de textos e imágenes",
     },
     accent: "#1E7A52",
-    icon: "/icons/copypaste.png",
+    icon: "/icons/copanda.png",
     en: {
-      tagline: "Everything you copied, still there.",
-      meta: "Free, open source clipboard manager for Windows and macOS. A searchable local history of what you copy that ignores your password manager.",
+      tagline: "An extra thumb for your clipboard.",
+      title: "CoPanda - Clipboard history that stays on your machine",
+      meta: "CoPanda, formerly CopyPaste: a free, open source clipboard manager for Windows and macOS. A searchable local history that ignores your password manager.",
       problem:
         "You copied an address ten minutes ago and then copied something else. It is gone, and the only way back is to go and find it again.",
       what: [
@@ -249,7 +250,20 @@ export const PRODUCTS: Product[] = [
       ],
       privacy:
         "Everything is stored locally under your user profile. No mandatory cloud, no tracking.",
+      data: {
+        line: "Your history stays on this computer.",
+        checks: [
+          "History, images and settings stay on this computer",
+          "What comes from a password manager is never kept",
+          "No telemetry, no ads",
+          "Export everything as a backup file",
+        ],
+      },
       faq: [
+        {
+          q: "Is CoPanda the same as CopyPaste?",
+          a: "Yes. CopyPaste is now called CoPanda: the same app, the same history and the same settings. Updating keeps everything where it was.",
+        },
         {
           q: "Does it store passwords?",
           a: "No. Clipboard content coming from password managers such as 1Password or Bitwarden is ignored.",
@@ -261,8 +275,9 @@ export const PRODUCTS: Product[] = [
       ],
     },
     es: {
-      tagline: "Todo lo que copiaste, ahí sigue.",
-      meta: "Gestor de portapapeles gratuito y de código abierto para Windows y macOS. Historial local y buscable de lo que copias, que ignora tu gestor de contraseñas.",
+      tagline: "Un pulgar extra para tu portapapeles.",
+      title: "CoPanda - Historial del portapapeles que se queda en tu equipo",
+      meta: "CoPanda, antes CopyPaste: gestor de portapapeles gratuito y de código abierto para Windows y macOS. Historial local y buscable que ignora tu gestor de contraseñas.",
       problem:
         "Copiaste una dirección hace diez minutos y luego copiaste otra cosa. Ya no está, y la única forma de recuperarla es ir a buscarla otra vez.",
       what: [
@@ -273,7 +288,20 @@ export const PRODUCTS: Product[] = [
       ],
       privacy:
         "Todo se guarda localmente en tu perfil de usuario. Sin nube obligatoria y sin rastreo.",
+      data: {
+        line: "Tu historial se queda en este equipo.",
+        checks: [
+          "El historial, las imágenes y los ajustes se quedan en este equipo",
+          "Lo que viene de un gestor de contraseñas nunca se guarda",
+          "Sin telemetría ni anuncios",
+          "Exportas todo como copia de seguridad",
+        ],
+      },
       faq: [
+        {
+          q: "¿CoPanda es lo mismo que CopyPaste?",
+          a: "Sí. CopyPaste ahora se llama CoPanda: la misma aplicación, el mismo historial y los mismos ajustes. Al actualizar, todo sigue donde estaba.",
+        },
         {
           q: "¿Guarda las contraseñas?",
           a: "No. Lo que llega al portapapeles desde un gestor de contraseñas como 1Password o Bitwarden se ignora.",
