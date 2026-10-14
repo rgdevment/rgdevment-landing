@@ -57,13 +57,13 @@ export const PRODUCTS: Product[] = [
     en: {
       tagline: "Notes, documents and tasks. The record of what you learned solving them.",
       title: "Tisty - Notes, documents and tasks on your own disk",
-      meta: "Notes, documents and tasks as plain files on your own disk, for Windows and macOS. Free and open source: no account, no server, no subscription.",
+      meta: "Notes, documents and tasks as plain files on your own disk, for Windows and macOS. Free and open source: no Tisty account, no server, no subscription.",
       problem:
         "A task list forgets the moment you tick the box. Six months later the same problem comes back and all that is left is knowing you solved it once, somehow.",
       what: [
         "What you finish stays: the steps you took, the dated journal, the files and the documents you leaned on. Months later you search for how you solved it, and it is there.",
         "Notes, documents and tasks kept as plain files on your own disk, readable without Tisty running.",
-        "No account and no server: nothing is synchronised unless you put the folder somewhere that synchronises.",
+        "No Tisty account and no server: nothing is synchronised unless you choose your Google Drive or a folder that synchronises.",
         "An MCP door your assistant can knock on, so a model can read and write what you keep, with your permission.",
       ],
       privacy:
@@ -82,13 +82,13 @@ export const PRODUCTS: Product[] = [
     es: {
       tagline: "Notas, documentos y tareas. El historial de lo que aprendiste resolviendo.",
       title: "Tisty - Notas, documentos y tareas en tu propio disco",
-      meta: "Notas, documentos y tareas en archivos de tu propio disco, para Windows y macOS. Gratis y de código abierto: sin cuenta, sin servidor y sin suscripción.",
+      meta: "Notas, documentos y tareas en archivos de tu propio disco, para Windows y macOS. Gratis y de código abierto: sin cuenta de Tisty, sin servidor y sin suscripción.",
       problem:
         "Una lista de tareas olvida en cuanto marcas la casilla. Seis meses después vuelve el mismo problema y lo único que queda es saber que ya lo resolviste una vez, de alguna manera.",
       what: [
         "Lo que cierras se queda: los pasos que diste, el diario con su fecha, los archivos y los documentos en que te apoyaste. Meses después buscas cómo lo resolviste, y está.",
         "Notas, documentos y tareas guardados como archivos corrientes en tu propio disco, legibles sin Tisty abierto.",
-        "Sin cuenta y sin servidor: no se sincroniza nada salvo que tú pongas la carpeta en un sitio que sincronice.",
+        "Sin cuenta de Tisty y sin servidor: no se sincroniza nada salvo que elijas tu Google Drive o una carpeta que sincronice.",
         "Una puerta MCP a la que tu asistente puede llamar, para que un modelo lea y escriba lo que guardas, con tu permiso.",
       ],
       privacy:

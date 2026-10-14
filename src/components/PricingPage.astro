@@ -2,6 +2,7 @@
 import Crumbs from "./Crumbs.astro";
 import Icon from "./Icon.astro";
 import Layout from "../layouts/Layout.astro";
+import { privacyPath } from "../content/privacy";
 import { PRODUCTS, storeUrl, words } from "../content/products";
 import { crumbs, href, type Locale } from "../site";
 
@@ -14,6 +15,8 @@ const { locale, only } = Astro.props;
 const shown = only ? PRODUCTS.filter((one) => one.slug === only) : PRODUCTS;
 const es = locale === "es";
 const paths = { en: "pricing", es: "precios" };
+const account = (name: string) => (es ? `Sin cuenta de ${name}` : `No ${name} account`);
+const home = only ? shown[0] : undefined;
 
 const say = es
   ? {
@@ -23,14 +26,30 @@ const say = es
         "Todas las aplicaciones son gratuitas: sin versión de pago, sin prueba limitada y sin funciones guardadas detrás de un muro. Qué significa exactamente y por qué.",
       hero: "Gratis, y sin letra pequeña.",
       sub: ["Sin cuenta. Sin suscripción.", "Sin telemetría. Sin anuncios."],
-      forever: "para siempre",
+      free: "Gratis",
       included: [
         "Todas las funciones",
-        "Sin límite de uso",
-        "Sin cuenta ni registro",
+        "Sin funciones de pago",
         "Actualizaciones incluidas",
       ],
       get: "Ver",
+      yours: {
+        title: "Tus datos, tuyos",
+        line: "En tu disco o en tu propia nube.",
+        checks: [
+          "Se quedan en este equipo",
+          "Se sincronizan por tu Google Drive o por una carpeta que eliges",
+          "Sin telemetría ni anuncios",
+          "Exportas todo cuando quieras",
+        ],
+        go: "Ver privacidad",
+      },
+      source: {
+        title: "Código abierto",
+        line: "AGPL-3.0: puedes leerlo, compilarlo y auditarlo.",
+        checks: ["Código en GitHub", "Compila tu propia copia", "Instaladores firmados", "Ninguna función detrás de un pago"],
+        go: "Ver el código",
+      },
       catchTitle: "¿Dónde está el truco?",
       catch: [
         "No lo hay, y la respuesta honesta es que tampoco hay modelo de negocio. No hay empresa detrás, ni inversores esperando retorno, ni nómina que pagar. Son programas que necesitaba, y mantenerlos cuesta tiempo, no dinero.",
@@ -46,7 +65,7 @@ const say = es
       faq: [
         {
           q: "¿De verdad son gratis?",
-          a: "Sí, todas, completas, sin versión de pago ni funciones bloqueadas. Se instalan desde la Microsoft Store, con Homebrew, con winget o directamente desde GitHub, y ninguna pide una cuenta.",
+          a: "Sí, todas, completas, sin versión de pago ni funciones bloqueadas. Se instalan desde la Microsoft Store, con Homebrew, con winget o directamente desde GitHub, y ninguna te obliga a crear una cuenta.",
         },
         {
           q: "¿Van a ser de pago más adelante?",
@@ -70,14 +89,30 @@ const say = es
         "Every application here is free: no paid tier, no limited trial, and nothing kept behind a wall. What that means exactly, and why.",
       hero: "Free, and no small print.",
       sub: ["No account. No subscription.", "No telemetry. No ads."],
-      forever: "forever",
+      free: "Free",
       included: [
         "Every feature",
-        "No usage limits",
-        "No account, no sign-up",
+        "No paid features",
         "Updates included",
       ],
       get: "See",
+      yours: {
+        title: "Your data, yours",
+        line: "On your disk or in your own cloud.",
+        checks: [
+          "Stays on this computer",
+          "Syncs through your Google Drive or a folder you choose",
+          "No telemetry, no ads",
+          "Export everything whenever you want",
+        ],
+        go: "Read the privacy policy",
+      },
+      source: {
+        title: "Open source",
+        line: "AGPL-3.0: read it, build it, audit it.",
+        checks: ["Code on GitHub", "Build your own copy", "Signed installers", "No paywalled features"],
+        go: "See the code",
+      },
       catchTitle: "Where is the catch?",
       catch: [
         "There isn't one, and the honest answer is that there is no business model either. No company behind this, no investors waiting for a return, no payroll. They are programs I needed, and keeping them going costs time, not money.",
@@ -93,7 +128,7 @@ const say = es
       faq: [
         {
           q: "Are they really free?",
-          a: "Yes, every one of them, in full, with no paid tier and nothing locked. They install from the Microsoft Store, with Homebrew, with winget or straight from GitHub, and none of them asks for an account.",
+          a: "Yes, every one of them, in full, with no paid tier and nothing locked. They install from the Microsoft Store, with Homebrew, with winget or straight from GitHub, and none of them makes you create an account.",
         },
         {
           q: "Will they become paid later?",
@@ -167,13 +202,10 @@ const schema = [
             </div>
             <p class="relative mt-3 text-[15px] leading-snug text-muted">{words(product, locale).tagline}</p>
 
-            <p class="relative mt-7 flex items-baseline gap-2">
-              <span class="font-display text-7xl font-semibold tracking-tight text-fg">0</span>
-              <span class="text-muted">{say.forever}</span>
-            </p>
+            <p class="relative mt-7 font-display text-7xl font-semibold tracking-tight text-fg">{say.free}</p>
 
             <ul class="relative mt-7 flex-1 space-y-2.5 text-[15px] text-body">
-              {[...say.included, product.licence].map((one) => (
+              {[...say.included, account(product.name), product.licence].map((one) => (
                 <li class="flex items-start gap-2.5">
                   <Icon name="free" class="mt-1 h-4 w-4 shrink-0 text-flame-ink" />
                   {one}
@@ -192,6 +224,41 @@ const schema = [
           </article>
         );
       })
+    }
+    {
+      home &&
+        [
+          { ...say.yours, icon: "lock" as const, to: href(locale, privacyPath(locale, home.slug)), out: false },
+          { ...say.source, icon: "code" as const, to: home.repo, out: true },
+        ].map((one) => (
+          <article class="card relative flex flex-col overflow-hidden p-7" style={`--accent: ${home.accent}`}>
+            <div
+              class="pointer-events-none absolute -top-20 -right-20 h-48 w-48 rounded-full opacity-[0.16] blur-3xl"
+              style="background: var(--accent)"
+              aria-hidden="true"
+            />
+            <div class="relative flex items-center gap-3">
+              <span class="flex h-11 w-11 items-center justify-center rounded-xl bg-fg/[0.06] text-fg">
+                <Icon name={one.icon} class="h-5 w-5" />
+              </span>
+              <h2 class="text-2xl font-semibold">{one.title}</h2>
+            </div>
+            <p class="relative mt-3 text-[15px] leading-snug text-muted">{one.line}</p>
+
+            <ul class="relative mt-7 flex-1 space-y-2.5 text-[15px] text-body">
+              {one.checks.map((check) => (
+                <li class="flex items-start gap-2.5">
+                  <Icon name="free" class="mt-1 h-4 w-4 shrink-0 text-flame-ink" />
+                  {check}
+                </li>
+              ))}
+            </ul>
+
+            <a class="btn-ghost relative mt-8" href={one.to} rel={one.out ? "noopener" : undefined}>
+              {one.go}
+            </a>
+          </article>
+        ))
     }
   </section>
 

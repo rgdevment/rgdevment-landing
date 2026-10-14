@@ -6,9 +6,10 @@ interface Props {
   overview: { label: string; href: string; on: boolean };
   sections: [string, Doc[]][];
   linkOf: (one: Doc) => string;
+  source?: { label: string; href: string };
 }
 
-const { current, overview, sections, linkOf } = Astro.props;
+const { current, overview, sections, linkOf, source } = Astro.props;
 const item = (on: boolean) =>
   `block rounded-lg px-3 py-1.5 ${on ? "bg-fg/[0.06] font-medium text-fg" : "text-body hover:text-fg"}`;
 ---
@@ -31,4 +32,11 @@ const item = (on: boolean) =>
       </ul>
     </div>
   ))
+}
+{
+  source && (
+    <a href={source.href} rel="noopener" class="mt-5 block border-t border-line px-3 pt-4 text-sm text-muted hover:text-fg">
+      {source.label}
+    </a>
+  )
 }
