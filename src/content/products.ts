@@ -63,7 +63,7 @@ export const PRODUCTS: Product[] = [
       what: [
         "What you finish stays: the steps you took, the dated journal, the files and the documents you leaned on. Months later you search for how you solved it, and it is there.",
         "Notes, documents and tasks kept as plain files on your own disk, readable without Tisty running.",
-        "No Tisty account and no server: nothing is synchronised unless you choose your Google Drive or a folder that synchronises.",
+        "No accounts, no subscription, no telemetry. You choose how your data travels: your own cloud, your NAS or just this computer. Free and open source.",
         "An MCP door your assistant can knock on, so a model can read and write what you keep, with your permission.",
       ],
       privacy:
@@ -88,7 +88,7 @@ export const PRODUCTS: Product[] = [
       what: [
         "Lo que cierras se queda: los pasos que diste, el diario con su fecha, los archivos y los documentos en que te apoyaste. Meses después buscas cómo lo resolviste, y está.",
         "Notas, documentos y tareas guardados como archivos corrientes en tu propio disco, legibles sin Tisty abierto.",
-        "Sin cuenta de Tisty y sin servidor: no se sincroniza nada salvo que elijas tu Google Drive o una carpeta que sincronice.",
+        "Sin cuentas, sin suscripción y sin telemetría. Tú eliges cómo viajan tus datos: tu nube, tu NAS o solo este equipo. Gratis y de código abierto.",
         "Una puerta MCP a la que tu asistente puede llamar, para que un modelo lea y escriba lo que guardas, con tu permiso.",
       ],
       privacy:
