@@ -10,6 +10,10 @@ type Words = {
   privacy: string;
   /// What its own site's pricing page promises about the data, beside the price.
   data?: { line: string; checks: string[] };
+  /// The name it went by before, said where the page opens.
+  formerly?: string;
+  /// The story behind its name, told beside its mascot.
+  mascot?: { title: string; body: string };
   faq: { q: string; a: string }[];
 };
 
@@ -32,6 +36,7 @@ export type Product = {
   };
   accent: string;
   icon: string;
+  mascot?: string;
   en: Words;
   es: Words;
 };
@@ -229,17 +234,23 @@ export const PRODUCTS: Product[] = [
     shot: {
       src: "/copanda-social.png",
       srcEs: "/copanda-social-es.png",
-      width: 1280,
-      height: 640,
-      en: "CoPanda: the clipboard panel with its search box, filters by kind and a history of text and images",
-      es: "CoPanda: el panel del portapapeles con su buscador, los filtros por tipo y un historial de textos e imágenes",
+      width: 1920,
+      height: 1080,
+      en: "CoPanda: the clipboard panel with its search box, filters by kind and a history of text and images, beside the panda",
+      es: "CoPanda: el panel del portapapeles con su buscador, los filtros por tipo y un historial de textos e imágenes, junto al panda",
     },
-    accent: "#1E7A52",
+    accent: "#3B34B8",
     icon: "/icons/copanda.png",
+    mascot: "/copanda-head.svg",
     en: {
       tagline: "An extra thumb for your clipboard.",
       title: "CoPanda - Clipboard history that stays on your machine",
       meta: "CoPanda, formerly CopyPaste: a free, open source clipboard manager for Windows and macOS. A searchable local history that ignores your password manager.",
+      formerly: "Formerly CopyPaste. The same app and the same history, with a name of its own.",
+      mascot: {
+        title: "An extra thumb for your clipboard.",
+        body: "A panda has a false thumb: an extra bone in its wrist that it uses to grip bamboo. CoPanda is that extra thumb for what you copy. It holds on to it so you can pick it up again whenever you need it.",
+      },
       problem:
         "You copied an address ten minutes ago and then copied something else. It is gone, and the only way back is to go and find it again.",
       what: [
@@ -278,6 +289,11 @@ export const PRODUCTS: Product[] = [
       tagline: "Un pulgar extra para tu portapapeles.",
       title: "CoPanda - Historial del portapapeles que se queda en tu equipo",
       meta: "CoPanda, antes CopyPaste: gestor de portapapeles gratuito y de código abierto para Windows y macOS. Historial local y buscable que ignora tu gestor de contraseñas.",
+      formerly: "Antes se llamaba CopyPaste. La misma aplicación y el mismo historial, con un nombre propio.",
+      mascot: {
+        title: "Un pulgar extra para tu portapapeles.",
+        body: "El panda tiene un falso pulgar: un hueso extra en la muñeca que usa para agarrar el bambú. CoPanda es ese pulgar extra para lo que copias. Lo sostiene para que lo vuelvas a tomar cuando lo necesites.",
+      },
       problem:
         "Copiaste una dirección hace diez minutos y luego copiaste otra cosa. Ya no está, y la única forma de recuperarla es ir a buscarla otra vez.",
       what: [
