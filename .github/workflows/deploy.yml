@@ -45,6 +45,7 @@ jobs:
         run: |
           npm run build:tisty
           npm run build:linkunbound
+          npm run build:copanda
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -62,6 +63,7 @@ jobs:
           path: |
             ./dist-tisty
             ./dist-linkunbound
+            ./dist-copanda
           retention-days: 1
 
   cloudflare:
@@ -112,7 +114,7 @@ jobs:
       contents: read
     strategy:
       matrix:
-        app: [tisty, linkunbound]
+        app: [tisty, linkunbound, copanda]
     env:
       HAS_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
     steps:
