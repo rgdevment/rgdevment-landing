@@ -7,6 +7,7 @@
     "dev": "astro dev",
     "check": "astro check",
     "build": "astro build",
+    "build:tisty": "astro build --config astro.tisty.config.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },

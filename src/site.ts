@@ -1,4 +1,7 @@
-export const DOMAIN = (import.meta.env.SITE ?? "https://rgdevment.com").replace(/\/$/, "");
+import { HOMES, MAIN, relocate } from "./hosts";
+
+export const DOMAIN = (import.meta.env.SITE ?? MAIN).replace(/\/$/, "");
+export const HOME_PRODUCT: string | null = HOMES[DOMAIN] ?? null;
 
 export const LOCALES = ["en", "es"] as const;
 export type Locale = (typeof LOCALES)[number];
@@ -13,20 +16,30 @@ export const AUTHOR = {
 
 /// The English pages live at the root and Spanish under /es/, so a path is built once here
 /// rather than in every template that needs to point at its twin.
-export function href(locale: Locale, path = ""): string {
+function local(locale: Locale, path: string): string {
   const clean = path.replace(/^\/+|\/+$/g, "");
   const prefix = locale === DEFAULT_LOCALE ? "" : `/${locale}`;
-  return `${prefix}/${clean}${clean ? "/" : ""}` || "/";
+  return `${prefix}/${clean}${clean ? "/" : ""}`;
+}
+
+export function href(locale: Locale, path = ""): string {
+  return relocate(local(locale, path), HOME_PRODUCT);
+}
+
+export function mainHref(locale: Locale, path = ""): string {
+  return `${MAIN}${local(locale, path)}`;
 }
 
 export function canonical(locale: Locale, path = ""): string {
-  return `${DOMAIN}${href(locale, path)}`;
+  const to = href(locale, path);
+  return to.startsWith("/") ? `${DOMAIN}${to}` : to;
 }
 
-export const PERSON_ID = `${DOMAIN}/#person`;
+export const PERSON_ID = `${MAIN}/#person`;
 export const WEBSITE_ID = `${DOMAIN}/#website`;
 
 export function withHome(locale: Locale, trail: [string, string][]): [string, string][] {
+  if (HOME_PRODUCT) return trail;
   return [[locale === "es" ? "Inicio" : "Home", ""], ...trail];
 }
 

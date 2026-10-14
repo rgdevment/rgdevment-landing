@@ -1,0 +1,14 @@
+---
+import DocPage from "../../../../../components/DocPage.astro";
+import { docsOf } from "../../../../../content/docs";
+import { HOME_PRODUCT } from "../../../../../site";
+
+export async function getStaticPaths() {
+  const docs = await docsOf(HOME_PRODUCT!, "es");
+  return docs.map((doc) => ({ params: { slug: doc.data.page || undefined }, props: { doc } }));
+}
+
+const { doc } = Astro.props;
+---
+
+<DocPage doc={doc} locale="es" />

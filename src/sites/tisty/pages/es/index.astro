@@ -1,0 +1,9 @@
+---
+import ProductPage from "../../../../components/ProductPage.astro";
+import { PRODUCTS } from "../../../../content/products";
+import { HOME_PRODUCT } from "../../../../site";
+
+const product = PRODUCTS.find((one) => one.slug === HOME_PRODUCT)!;
+---
+
+<ProductPage product={product} locale="es" />

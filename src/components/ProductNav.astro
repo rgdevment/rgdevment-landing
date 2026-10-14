@@ -1,0 +1,43 @@
+---
+import { docPath } from "../content/docs";
+import { privacyPath } from "../content/privacy";
+import type { Product } from "../content/products";
+import { href, mainHref, type Locale } from "../site";
+
+interface Props {
+  product: Product;
+  locale: Locale;
+  other: string;
+}
+
+const { product, locale, other } = Astro.props;
+const there: Locale = locale === "es" ? "en" : "es";
+const es = locale === "es";
+const link = "rounded-full px-3 py-1.5 text-muted transition-colors hover:text-fg";
+---
+
+<header class="sticky top-0 z-40 border-b border-line/70 bg-canvas/80 backdrop-blur-xl backdrop-saturate-150">
+  <nav aria-label={es ? "Principal" : "Main"} class="shell flex h-16 items-center gap-6">
+    <a class="flex shrink-0 items-center gap-3" href={href(locale)} aria-label={es ? `${product.name}, inicio` : `${product.name}, home`}>
+      <img src={product.icon} alt="" width="28" height="28" class="h-7 w-7 rounded-lg" />
+      <span class="font-display text-lg font-semibold text-fg">{product.name}</span>
+    </a>
+
+    <ul class="ml-auto flex items-center gap-1 text-[15px]">
+      <li><a class={link} href={href(locale, docPath(locale, product.slug))}>{es ? "Ayuda" : "Docs"}</a></li>
+      <li class="hidden sm:inline"><a class={link} href={href(locale, privacyPath(locale, product.slug))}>{es ? "Privacidad" : "Privacy"}</a></li>
+      <li class="hidden sm:inline"><a class={link} href={mainHref(locale)}>rgdevment.com</a></li>
+      <li class="ml-2">
+        <a
+          class="rounded-full border border-line px-3 py-1 font-mono text-xs text-muted transition-colors hover:border-fg/30 hover:text-fg"
+          href={href(there, other)}
+          lang={there}
+          hreflang={there}
+          title={es ? "Read in English" : "Leer en español"}
+        >
+          {es ? "EN" : "ES"}
+        </a>
+      </li>
+    </ul>
+  </nav>
+</header>

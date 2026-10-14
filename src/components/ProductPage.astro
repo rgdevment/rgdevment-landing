@@ -8,7 +8,7 @@ import { privacyPath } from "../content/privacy";
 import { GUIDES, written } from "../content/guides";
 import { PRODUCTS, type Product, releasesUrl, shotSrc, storeUrl, words } from "../content/products";
 import { latestRelease, releaseDate } from "../content/releases";
-import { DOMAIN, PERSON_ID, canonical, crumbs, href, type Locale } from "../site";
+import { DOMAIN, HOME_PRODUCT, PERSON_ID, canonical, crumbs, href, type Locale } from "../site";
 
 interface Props {
   product: Product;
@@ -28,7 +28,7 @@ const release = await latestRelease(product);
 const docs = await docsOf(product.slug, locale);
 const docIndex = docPath(locale, product.slug);
 const docSections = bySection(docs);
-const guides = GUIDES.filter((one) => one.product === product.slug);
+const guides = HOME_PRODUCT ? [] : GUIDES.filter((one) => one.product === product.slug);
 const others = PRODUCTS.filter((one) => one.slug !== product.slug);
 
 const say = {
