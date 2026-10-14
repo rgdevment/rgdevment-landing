@@ -3,7 +3,7 @@ import Crumbs from "./Crumbs.astro";
 import Icon from "./Icon.astro";
 import Layout from "../layouts/Layout.astro";
 import { privacyPath } from "../content/privacy";
-import { PRODUCTS, storeUrl, words } from "../content/products";
+import { PRODUCTS, type Product, words } from "../content/products";
 import { crumbs, href, type Locale } from "../site";
 
 interface Props {
@@ -12,6 +12,8 @@ interface Props {
 }
 
 const { locale, only } = Astro.props;
+const platformsOf = (product: Product) =>
+  [...product.platforms].sort((one) => (one === "macOS" ? -1 : 1)).map((one) => (one === "macOS" ? "Mac" : one)).join(" / ");
 const shown = only ? PRODUCTS.filter((one) => one.slug === only) : PRODUCTS;
 const es = locale === "es";
 const paths = { en: "pricing", es: "precios" };
@@ -188,7 +190,6 @@ const schema = [
   <section class="shell grid gap-5 lg:grid-cols-3">
     {
       shown.map((product) => {
-        const store = storeUrl(product);
         return (
           <article class="card relative flex flex-col overflow-hidden p-7" style={`--accent: ${product.accent}`}>
             <div
@@ -216,11 +217,9 @@ const schema = [
             <a class="btn-primary relative mt-8" href={href(locale, product.slug)}>
               {say.get} {product.name}
             </a>
-            {store && (
-              <a class="relative mt-3 block text-center text-sm text-muted underline decoration-line underline-offset-4 transition hover:text-fg" href={store} rel="noopener">
-                Microsoft Store
-              </a>
-            )}
+            <a class="relative mt-3 block text-center text-sm text-muted underline decoration-line underline-offset-4 transition hover:text-fg" href={`${href(locale, product.slug)}#install`}>
+              {platformsOf(product)}
+            </a>
           </article>
         );
       })
