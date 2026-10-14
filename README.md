@@ -1,6 +1,6 @@
 # rgdevment.com
 
-The site for Tisty, LinkUnbound and CopyPaste: free, open source desktop apps for Windows and macOS. Built with Astro and Tailwind, published to GitHub Pages.
+The site for Tisty, LinkUnbound and CopyPaste: free, open source desktop apps for Windows and macOS. Built with Astro and Tailwind, published to Cloudflare Pages. Tisty and LinkUnbound each get their own site on www.tisty.app and www.linkunbound.app, built from `src/sites/app` with `npm run build:<app>`; rgdevment.com sends their old pages there.
 
 ## Run it
 

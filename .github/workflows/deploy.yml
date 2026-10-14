@@ -41,8 +41,10 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Build Tisty's site
-        run: npm run build:tisty
+      - name: Build each app's own site
+        run: |
+          npm run build:tisty
+          npm run build:linkunbound
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
@@ -53,11 +55,13 @@ jobs:
           path: ./dist
           retention-days: 1
 
-      - name: Keep Tisty's build for Cloudflare
+      - name: Keep the apps' builds for Cloudflare
         uses: actions/upload-artifact@v4
         with:
-          name: site-tisty
-          path: ./dist-tisty
+          name: site-apps
+          path: |
+            ./dist-tisty
+            ./dist-linkunbound
           retention-days: 1
 
   cloudflare:
@@ -101,20 +105,23 @@ jobs:
           jq -n --argjson urls "$urls" '{host: "rgdevment.com", key: "c039190381f3501448bba3a377e80147", keyLocation: "https://rgdevment.com/c039190381f3501448bba3a377e80147.txt", urlList: $urls}' \
             | curl -fsS -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json; charset=utf-8' --data-binary @-
 
-  cloudflare-tisty:
+  cloudflare-apps:
     needs: build
     runs-on: ubuntu-latest
     permissions:
       contents: read
+    strategy:
+      matrix:
+        app: [tisty, linkunbound]
     env:
       HAS_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
     steps:
-      - name: The build
+      - name: The builds
         if: env.HAS_TOKEN == 'true'
         uses: actions/download-artifact@v4
         with:
-          name: site-tisty
-          path: ./dist-tisty
+          name: site-apps
+          path: .
 
       - name: The Pages project
         if: env.HAS_TOKEN == 'true'
@@ -122,7 +129,7 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages project create tisty --production-branch=main
+          command: pages project create ${{ matrix.app }} --production-branch=main
         continue-on-error: true
 
       - name: Deploy to Cloudflare Pages
@@ -131,4 +138,4 @@ jobs:
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist-tisty --project-name=tisty --branch=main
+          command: pages deploy dist-${{ matrix.app }} --project-name=${{ matrix.app }} --branch=main

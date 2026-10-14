@@ -8,6 +8,7 @@
     "check": "astro check",
     "build": "astro build",
     "build:tisty": "astro build --config astro.tisty.config.mjs",
+    "build:linkunbound": "astro build --config astro.linkunbound.config.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },

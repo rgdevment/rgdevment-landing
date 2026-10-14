@@ -1,7 +1,10 @@
 export const MAIN = "https://rgdevment.com";
 
 /// A product that owns a domain is its home page there, and everything else lives on the main site.
-export const HOMES: Record<string, string> = { "https://www.tisty.app": "tisty" };
+export const HOMES: Record<string, string> = {
+  "https://www.tisty.app": "tisty",
+  "https://www.linkunbound.app": "linkunbound",
+};
 
 /// Pages a product's own site keeps for itself, showing only that product.
 const OWN = ["pricing", "support", "precios", "apoyar"];
