@@ -1,6 +1,6 @@
 # build output
 dist/
-dist-tisty/
+dist-*/
 # generated types
 .astro/
 
