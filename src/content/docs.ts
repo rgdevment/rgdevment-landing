@@ -1,4 +1,5 @@
 import { type CollectionEntry, getCollection } from "astro:content";
+import { homeOf } from "../hosts";
 import type { Locale } from "../site";
 
 export type Doc = CollectionEntry<"docs">;
@@ -15,7 +16,7 @@ export async function docsOf(product: string, locale: Locale): Promise<Doc[]> {
 }
 
 export async function docRoutes(locale: Locale) {
-  const all = await getCollection("docs", (one) => one.data.locale === locale);
+  const all = await getCollection("docs", (one) => one.data.locale === locale && !homeOf(one.data.product));
   return all.map((doc) => ({
     params: { product: doc.data.product, slug: doc.data.page || undefined },
     props: { doc },
