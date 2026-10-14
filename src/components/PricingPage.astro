@@ -7,9 +7,11 @@ import { crumbs, href, type Locale } from "../site";
 
 interface Props {
   locale: Locale;
+  only?: string;
 }
 
-const { locale } = Astro.props;
+const { locale, only } = Astro.props;
+const shown = only ? PRODUCTS.filter((one) => one.slug === only) : PRODUCTS;
 const es = locale === "es";
 const paths = { en: "pricing", es: "precios" };
 
@@ -150,7 +152,7 @@ const schema = [
 
   <section class="shell grid gap-5 lg:grid-cols-3">
     {
-      PRODUCTS.map((product) => {
+      shown.map((product) => {
         const store = storeUrl(product);
         return (
           <article class="card relative flex flex-col overflow-hidden p-7" style={`--accent: ${product.accent}`}>
