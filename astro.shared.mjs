@@ -32,7 +32,7 @@ export function shared({ product = null } = {}) {
     markdown: {
       syntaxHighlight: { type: 'shiki', excludeLangs: ['math', 'mermaid'] },
       remarkPlugins: [[remarkMath, { singleDollarTextMath: false }]],
-      rehypePlugins: [[rehypeSanitize, wikiSafe], rehypeKatex, ...(product ? [rehypeRelocate(product)] : [])],
+      rehypePlugins: [[rehypeSanitize, wikiSafe], rehypeKatex, rehypeRelocate(product)],
     },
   };
 }

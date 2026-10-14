@@ -1,9 +1,13 @@
 ---
 import ProductPage from "../../components/ProductPage.astro";
+import { homeOf } from "../../hosts";
 import { PRODUCTS } from "../../content/products";
 
 export function getStaticPaths() {
-  return PRODUCTS.map((product) => ({ params: { product: product.slug }, props: { product } }));
+  return PRODUCTS.filter((product) => !homeOf(product.slug)).map((product) => ({
+    params: { product: product.slug },
+    props: { product },
+  }));
 }
 
 const { product } = Astro.props;

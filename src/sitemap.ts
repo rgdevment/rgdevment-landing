@@ -1,5 +1,6 @@
 import { getCollection } from "astro:content";
 import { docPath } from "./content/docs";
+import { homeOf } from "./hosts";
 import { LOCALES, canonical } from "./site";
 
 export type Entry = { en: string; es: string; priority: string; lastmod?: string };
@@ -9,7 +10,7 @@ const BREAK = "\n";
 export async function docEntries(product?: string): Promise<Entry[]> {
   const docs = await getCollection(
     "docs",
-    (one) => one.data.locale === "en" && one.data.twin !== null && (!product || one.data.product === product),
+    (one) => one.data.locale === "en" && one.data.twin !== null && (product ? one.data.product === product : !homeOf(one.data.product)),
   );
   return docs.map((one) => ({
     en: docPath("en", one.data.product, one.data.page),
