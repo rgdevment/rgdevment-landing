@@ -3,8 +3,10 @@ import "../styles/global.css";
 import Icon from "../components/Icon.astro";
 import Logo from "../components/Logo.astro";
 import Nav from "../components/Nav.astro";
-import { PRODUCTS } from "../content/products";
-import { AUTHOR, DOMAIN, LOCALES, PERSON_ID, WEBSITE_ID, canonical, href, type Locale } from "../site";
+import ProductNav from "../components/ProductNav.astro";
+import { PRODUCTS, shotSrc } from "../content/products";
+import { MAIN } from "../hosts";
+import { AUTHOR, DOMAIN, HOME_PRODUCT, LOCALES, PERSON_ID, WEBSITE_ID, canonical, href, mainHref, type Locale } from "../site";
 
 interface Props {
   title: string;
@@ -26,8 +28,11 @@ const es = locale === "es";
 /// than assumed: without that the hreflang pair would point at a URL that does not exist.
 const at = (one: Locale) => paths?.[one] ?? path;
 const url = canonical(locale, at(locale));
-const full = title.includes("rgdevment") || title.length > 44 ? title : `${title} · rgdevment`;
-const card = image ?? { src: es ? "/social-es.png" : "/social.png", width: 1200, height: 630 };
+const owner = PRODUCTS.find((one) => one.slug === HOME_PRODUCT);
+const brand = owner?.name ?? "rgdevment";
+const full = title.includes(brand) || title.length > 44 ? title : `${title} · ${brand}`;
+const ownCard = owner?.shot && { src: shotSrc(owner, locale)!, width: owner.shot.width, height: owner.shot.height };
+const card = image ?? ownCard ?? { src: es ? "/social-es.png" : "/social.png", width: 1200, height: 630 };
 const social = new URL(card.src, DOMAIN).toString();
 
 const site = [
@@ -35,7 +40,7 @@ const site = [
     "@context": "https://schema.org",
     "@type": "WebSite",
     "@id": WEBSITE_ID,
-    name: "rgdevment",
+    name: brand,
     url: `${DOMAIN}/`,
     inLanguage: ["en", "es"],
     publisher: { "@id": PERSON_ID },
@@ -46,7 +51,7 @@ const site = [
     "@id": PERSON_ID,
     name: AUTHOR.name,
     alternateName: AUTHOR.handle,
-    url: `${DOMAIN}/`,
+    url: `${MAIN}/`,
     sameAs: [AUTHOR.github, AUTHOR.x],
   },
 ];
@@ -96,7 +101,7 @@ const say = es
     {!noindex && <link rel="alternate" hreflang="x-default" href={canonical("en", at("en"))} />}
 
     <meta property="og:type" content={published ? "article" : "website"} />
-    <meta property="og:site_name" content="rgdevment" />
+    <meta property="og:site_name" content={brand} />
     <meta property="og:url" content={url} />
     <meta property="og:title" content={full} />
     <meta property="og:description" content={description} />
@@ -117,9 +122,20 @@ const say = es
 
     <meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0e0d0b" media="(prefers-color-scheme: dark)" />
-    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
-    <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any" />
-    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+    {
+      owner ? (
+        <>
+          <link rel="icon" type="image/png" href={owner.icon} />
+          <link rel="apple-touch-icon" href={owner.icon} />
+        </>
+      ) : (
+        <>
+          <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+          <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any" />
+          <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
+        </>
+      )
+    }
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <meta name="generator" content={Astro.generator} />
@@ -134,7 +150,13 @@ const say = es
       {say.skip}
     </a>
 
-    <Nav locale={locale} here={here} other={at(es ? "en" : "es")} />
+    {
+      owner ? (
+        <ProductNav product={owner} locale={locale} other={at(es ? "en" : "es")} />
+      ) : (
+        <Nav locale={locale} here={here} other={at(es ? "en" : "es")} />
+      )
+    }
 
     <main id="content">
       <slot />
@@ -143,7 +165,7 @@ const say = es
     <footer class="mt-24 border-t border-line bg-sunken/60 sm:mt-32">
       <div class="shell grid gap-12 py-14 sm:grid-cols-[1.4fr_1fr_1fr]">
         <div>
-          <a href={href(locale)} class="inline-block"><Logo class="h-6 w-auto" /></a>
+          <a href={owner ? mainHref(locale) : href(locale)} class="inline-block"><Logo class="h-6 w-auto" /></a>
           <p class="mt-4 max-w-sm font-display text-lg text-fg">{say.motto}</p>
           <p class="mt-2 max-w-sm text-sm text-muted">{say.promise}</p>
           <a
@@ -175,7 +197,7 @@ const say = es
           <div>
             <p class="eyebrow">{say.site}</p>
             <ul class="mt-4 space-y-2.5 text-sm">
-              <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "guias" : "guides")}>{say.guides}</a></li>
+              {!owner && <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "guias" : "guides")}>{say.guides}</a></li>}
               <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "precios" : "pricing")}>{say.pricing}</a></li>
               <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "apoyar" : "support")}>{say.support}</a></li>
               <li><a class="text-body transition-colors hover:text-fg" href={href(es ? "en" : "es", at(es ? "en" : "es"))} lang={es ? "en" : "es"} hreflang={es ? "en" : "es"}>{es ? "English" : "Español"}</a></li>
