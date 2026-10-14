@@ -1,4 +1,4 @@
-import { COPYPASTE_GUIDES } from "./guides-copypaste";
+import { COPANDA_GUIDES } from "./guides-copanda";
 import { TISTY_GUIDES } from "./guides-tisty";
 import type { Guide } from "./guide";
 
@@ -380,5 +380,5 @@ const LINKUNBOUND_GUIDES: Guide[] = [
   },
 ];
 
-/// Named in the order the products are named everywhere else: Tisty, LinkUnbound, CopyPaste.
-export const GUIDES: Guide[] = [...TISTY_GUIDES, ...LINKUNBOUND_GUIDES, ...COPYPASTE_GUIDES];
+/// Named in the order the products are named everywhere else: Tisty, LinkUnbound, CoPanda.
+export const GUIDES: Guide[] = [...TISTY_GUIDES, ...LINKUNBOUND_GUIDES, ...COPANDA_GUIDES];

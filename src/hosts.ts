@@ -4,7 +4,11 @@ export const MAIN = "https://rgdevment.com";
 export const HOMES: Record<string, string> = {
   "https://www.tisty.app": "tisty",
   "https://www.linkunbound.app": "linkunbound",
+  "https://www.copanda.app": "copanda",
 };
+
+/// A product that changed its name keeps its old address pointing at the new one.
+const FORMER: Record<string, string> = { copypaste: "copanda" };
 
 /// Pages a product's own site keeps for itself, showing only that product.
 const OWN = ["pricing", "support", "precios", "apoyar"];
@@ -29,14 +33,16 @@ export function relocate(url: string, product: string | null): string {
 function away(url: string): string {
   const path = url.startsWith(`${MAIN}/`) ? url.slice(MAIN.length) : url;
   if (!path.startsWith("/") || path.startsWith("//")) return url;
-  const first = path.match(/^(?:\/es(?=\/|$))?\/?([^/?#]*)/)?.[1] ?? "";
+  const named = path.match(/^(?:\/es(?=\/|$))?\/?([^/?#]*)/)?.[1] ?? "";
+  const first = FORMER[named] ?? named;
   const home = first ? homeOf(first) : undefined;
-  return home ? `${home}${relocate(path, first)}` : url;
+  return home ? `${home}${relocate(path.replace(named, first), first)}` : url;
 }
 
 /// Cloudflare Pages rules sending the main site's old pages of each moved product to its domain.
 export function redirects(): string {
-  return Object.entries(HOMES)
+  const formers = Object.entries(FORMER).map(([old, product]) => [homeOf(product), old]);
+  return [...Object.entries(HOMES), ...formers]
     .flatMap(([domain, product]) => [
       `/${product} ${domain}/ 301`,
       `/${product}/* ${domain}/:splat 301`,

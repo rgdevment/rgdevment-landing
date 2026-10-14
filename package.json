@@ -9,6 +9,7 @@
     "build": "astro build",
     "build:tisty": "astro build --config astro.tisty.config.mjs",
     "build:linkunbound": "astro build --config astro.linkunbound.config.mjs",
+    "build:copanda": "astro build --config astro.copanda.config.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },

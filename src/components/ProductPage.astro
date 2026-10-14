@@ -122,6 +122,7 @@ const schema = [
         />
         <h1 class="mt-7 text-5xl font-semibold tracking-[-0.03em] sm:text-6xl">{product.name}</h1>
         <p class="mt-4 font-display text-xl text-fg sm:text-2xl">{t.tagline}</p>
+        {t.formerly && <p class="mt-3 text-sm text-muted">{t.formerly}</p>}
         <p class="mx-auto mt-5 max-w-2xl text-lg text-body">{t.problem}</p>
 
         {
@@ -229,6 +230,20 @@ const schema = [
       }
     </ol>
   </section>
+
+  {
+    product.mascot && t.mascot && (
+      <section class="shell mt-16">
+        <div class="card flex flex-col items-center gap-6 p-7 text-center sm:flex-row sm:p-9 sm:text-left">
+          <img src={product.mascot} alt="" width="120" height="108" class="h-24 w-auto shrink-0 sm:h-28" />
+          <div>
+            <h2 class="font-display text-2xl font-semibold">{t.mascot.title}</h2>
+            <p class="mt-2 text-body">{t.mascot.body}</p>
+          </div>
+        </div>
+      </section>
+    )
+  }
 
   <section class="shell mt-16">
     <div class="flex flex-col gap-5 rounded-3xl border border-flame/25 bg-flame-tint p-7 sm:flex-row sm:items-center sm:p-9">

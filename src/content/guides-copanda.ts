@@ -1,9 +1,9 @@
 import type { Guide } from "./guide";
 
-export const COPYPASTE_GUIDES: Guide[] = [
+export const COPANDA_GUIDES: Guide[] = [
   {
     id: "windows-clipboard-history",
-    product: "copypaste",
+    product: "copanda",
     published: "2026-09-24",
     en: {
       slug: "guides/windows-clipboard-history",
@@ -35,7 +35,7 @@ export const COPYPASTE_GUIDES: Guide[] = [
       ],
       toolTitle: "When twenty-five is not enough",
       tool: [
-        "CopyPaste keeps a history that survives restarts and that you can search.",
+        "CoPanda keeps a history that survives restarts and that you can search.",
         "Clipboard content coming from password managers is ignored, so credentials never reach the history.",
         "History, images and settings can be exported and imported as a backup file.",
         "Free and open source under the GPL-3.0, for Windows and macOS.",
@@ -85,7 +85,7 @@ export const COPYPASTE_GUIDES: Guide[] = [
       ],
       toolTitle: "Cuando veinticinco no bastan",
       tool: [
-        "CopyPaste guarda un historial que sobrevive a los reinicios y en el que puedes buscar.",
+        "CoPanda guarda un historial que sobrevive a los reinicios y en el que puedes buscar.",
         "Lo que llega al portapapeles desde un gestor de contraseñas se ignora, así que las credenciales nunca entran en el historial.",
         "El historial, las imágenes y los ajustes se pueden exportar e importar como copia de seguridad.",
         "Gratuito y de código abierto bajo la GPL-3.0, para Windows y macOS.",
@@ -108,7 +108,7 @@ export const COPYPASTE_GUIDES: Guide[] = [
   },
   {
     id: "mac-clipboard-history",
-    product: "copypaste",
+    product: "copanda",
     published: "2026-09-24",
     en: {
       slug: "guides/clipboard-history-on-mac",
@@ -135,7 +135,7 @@ export const COPYPASTE_GUIDES: Guide[] = [
       ],
       toolTitle: "Giving the Mac the history it never had",
       tool: [
-        "CopyPaste keeps a searchable history of what you copy, on your own disk.",
+        "CoPanda keeps a searchable history of what you copy, on your own disk.",
         "It ignores clipboard content from password managers, so credentials stay out of it.",
         "The same application and the same history on Windows and macOS.",
         "Free and open source under the GPL-3.0.",
@@ -176,7 +176,7 @@ export const COPYPASTE_GUIDES: Guide[] = [
       ],
       toolTitle: "Darle al Mac el historial que nunca tuvo",
       tool: [
-        "CopyPaste guarda en tu propio disco un historial de lo que copias, y puedes buscar dentro.",
+        "CoPanda guarda en tu propio disco un historial de lo que copias, y puedes buscar dentro.",
         "Ignora lo que llega al portapapeles desde un gestor de contraseñas, así que las credenciales se quedan fuera.",
         "La misma aplicación y el mismo historial en Windows y en macOS.",
         "Gratuito y de código abierto bajo la GPL-3.0.",
