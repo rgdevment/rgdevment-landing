@@ -48,6 +48,13 @@ jobs:
         with:
           path: ./dist
 
+      - name: Keep the build for Cloudflare
+        uses: actions/upload-artifact@v4
+        with:
+          name: site
+          path: ./dist
+          retention-days: 1
+
   deploy:
     environment:
       name: github-pages
@@ -66,3 +73,36 @@ jobs:
           urls=$(curl -fsSL https://rgdevment.com/sitemap.xml | grep -o '<loc>[^<]*' | sed 's/<loc>//' | jq -R . | jq -s .)
           jq -n --argjson urls "$urls" '{host: "rgdevment.com", key: "c039190381f3501448bba3a377e80147", keyLocation: "https://rgdevment.com/c039190381f3501448bba3a377e80147.txt", urlList: $urls}' \
             | curl -fsS -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json; charset=utf-8' --data-binary @-
+
+  cloudflare:
+    needs: build
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+    env:
+      HAS_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
+    steps:
+      - name: The build
+        if: env.HAS_TOKEN == 'true'
+        uses: actions/download-artifact@v4
+        with:
+          name: site
+          path: ./dist
+
+      # A project that does not exist yet is made once; every later run finds it.
+      - name: The Pages project
+        if: env.HAS_TOKEN == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages project create rgdevment --production-branch=main
+        continue-on-error: true
+
+      - name: Deploy to Cloudflare Pages
+        if: env.HAS_TOKEN == 'true'
+        uses: cloudflare/wrangler-action@v3
+        with:
+          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
+          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
+          command: pages deploy dist --project-name=rgdevment --branch=main
