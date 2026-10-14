@@ -19,6 +19,7 @@ const es = locale === "es";
 const paths = { en: "pricing", es: "precios" };
 const account = (name: string) => (es ? `Sin cuenta de ${name}` : `No ${name} account`);
 const home = only ? shown[0] : undefined;
+const data = home && words(home, locale).data;
 
 const say = es
   ? {
@@ -37,18 +38,11 @@ const say = es
       get: "Ver",
       yours: {
         title: "Tus datos, tuyos",
-        line: "En tu disco o en tu propia nube.",
-        checks: [
-          "Se quedan en este equipo",
-          "Se sincronizan por tu Google Drive o por una carpeta que eliges",
-          "Sin telemetría ni anuncios",
-          "Exportas todo cuando quieras",
-        ],
         go: "Ver privacidad",
       },
       source: {
         title: "Código abierto",
-        line: "AGPL-3.0: puedes leerlo, compilarlo y auditarlo.",
+        line: "puedes leerlo, compilarlo y auditarlo.",
         checks: ["Código en GitHub", "Compila tu propia copia", "Instaladores firmados", "Ninguna función detrás de un pago"],
         go: "Ver el código",
       },
@@ -100,18 +94,11 @@ const say = es
       get: "See",
       yours: {
         title: "Your data, yours",
-        line: "On your disk or in your own cloud.",
-        checks: [
-          "Stays on this computer",
-          "Syncs through your Google Drive or a folder you choose",
-          "No telemetry, no ads",
-          "Export everything whenever you want",
-        ],
         go: "Read the privacy policy",
       },
       source: {
         title: "Open source",
-        line: "AGPL-3.0: read it, build it, audit it.",
+        line: "read it, build it, audit it.",
         checks: ["Code on GitHub", "Build your own copy", "Signed installers", "No paywalled features"],
         go: "See the code",
       },
@@ -227,8 +214,8 @@ const schema = [
     {
       home &&
         [
-          { ...say.yours, icon: "lock" as const, to: href(locale, privacyPath(locale, home.slug)), out: false },
-          { ...say.source, icon: "code" as const, to: home.repo, out: true },
+          ...(data ? [{ ...say.yours, ...data, icon: "lock" as const, to: href(locale, privacyPath(locale, home.slug)), out: false }] : []),
+          { ...say.source, line: `${home.licence}: ${say.source.line}`, icon: "code" as const, to: home.repo, out: true },
         ].map((one) => (
           <article class="card relative flex flex-col overflow-hidden p-7" style={`--accent: ${home.accent}`}>
             <div
