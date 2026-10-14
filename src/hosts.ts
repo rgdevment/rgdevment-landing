@@ -12,13 +12,14 @@ export function homeOf(product: string): string | undefined {
 
 export function relocate(url: string, product: string | null): string {
   if (!product) return away(url);
+  if (url.startsWith(`${MAIN}/`)) return relocate(url.slice(MAIN.length), product);
   if (!url.startsWith("/") || url.startsWith("//")) return url;
   const [, prefix = "", rest = ""] = url.match(/^(\/es(?=\/|$))?\/?(.*)$/) ?? [];
   const [page, tail = ""] = rest.split(/(?=[?#])/, 2);
   if (OWN.includes(page.replace(/\/$/, ""))) return url;
   if (page === "" || page === `${product}/` || page === product) return `${prefix}/${tail}`;
   if (page.startsWith(`${product}/`)) return `${prefix}/${page.slice(product.length + 1)}${tail}`;
-  return `${MAIN}${url}`;
+  return away(`${MAIN}${url}`);
 }
 
 /// On the main site, a page of a product that owns a domain has moved there.
