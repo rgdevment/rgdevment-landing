@@ -1,4 +1,4 @@
-name: Deploy to GitHub Pages
+name: Deploy to Cloudflare Pages
 
 on:
   push:
@@ -9,8 +9,6 @@ on:
 
 permissions:
   contents: read
-  pages: write
-  id-token: write
 
 concurrency:
   group: 'pages'
@@ -43,36 +41,12 @@ jobs:
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: ./dist
-
       - name: Keep the build for Cloudflare
         uses: actions/upload-artifact@v4
         with:
           name: site
           path: ./dist
           retention-days: 1
-
-  deploy:
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    needs: build
-    runs-on: ubuntu-latest
-    steps:
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
-
-      - name: Tell search engines what changed
-        if: github.event_name == 'push'
-        continue-on-error: true
-        run: |
-          urls=$(curl -fsSL https://rgdevment.com/sitemap.xml | grep -o '<loc>[^<]*' | sed 's/<loc>//' | jq -R . | jq -s .)
-          jq -n --argjson urls "$urls" '{host: "rgdevment.com", key: "c039190381f3501448bba3a377e80147", keyLocation: "https://rgdevment.com/c039190381f3501448bba3a377e80147.txt", urlList: $urls}' \
-            | curl -fsS -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json; charset=utf-8' --data-binary @-
 
   cloudflare:
     needs: build
@@ -106,3 +80,11 @@ jobs:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name=rgdevment --branch=main
+
+      - name: Tell search engines what changed
+        if: github.event_name == 'push'
+        continue-on-error: true
+        run: |
+          urls=$(curl -fsSL https://rgdevment.com/sitemap.xml | grep -o '<loc>[^<]*' | sed 's/<loc>//' | jq -R . | jq -s .)
+          jq -n --argjson urls "$urls" '{host: "rgdevment.com", key: "c039190381f3501448bba3a377e80147", keyLocation: "https://rgdevment.com/c039190381f3501448bba3a377e80147.txt", urlList: $urls}' \
+            | curl -fsS -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json; charset=utf-8' --data-binary @-
