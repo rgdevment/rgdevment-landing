@@ -10,6 +10,7 @@ const { locale, trail } = Astro.props;
 const all = withHome(locale, trail);
 ---
 
+{all.length > 1 && (
 <nav aria-label={locale === "es" ? "Ruta" : "Breadcrumb"} class="text-sm text-muted">
   <ol class="flex flex-wrap items-center gap-x-2 gap-y-1">
     {
@@ -30,3 +31,4 @@ const all = withHome(locale, trail);
     }
   </ol>
 </nav>
+)}

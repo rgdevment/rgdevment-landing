@@ -36,7 +36,7 @@ export const TISTY_GUIDES: Guide[] = [
       tool: [
         "Tisty keeps notes, documents and tasks as plain files on your own disk. There is nothing to export, because the files are the notes.",
         "Any editor opens them, with Tisty running or not, installed or not.",
-        "No Tisty account and no server: nothing is synchronised unless you choose your Google Drive or a folder that synchronises.",
+        "No accounts, no subscription, no telemetry. You choose how your data travels: your own cloud, your NAS or just this computer. Free and open source.",
         "Free and open source under the AGPL-3.0, for Windows and macOS.",
       ],
       faq: [
@@ -81,7 +81,7 @@ export const TISTY_GUIDES: Guide[] = [
       tool: [
         "Tisty guarda notas, documentos y tareas como archivos corrientes en tu propio disco. No hay nada que exportar, porque los archivos son las notas.",
         "Los abre cualquier editor, con Tisty abierto o cerrado, instalado o no.",
-        "Sin cuenta de Tisty y sin servidor: no se sincroniza nada salvo que elijas tu Google Drive o una carpeta que sincronice.",
+        "Sin cuentas, sin suscripción y sin telemetría. Tú eliges cómo viajan tus datos: tu nube, tu NAS o solo este equipo. Gratis y de código abierto.",
         "Gratuito y de código abierto bajo la AGPL-3.0, para Windows y macOS.",
       ],
       faq: [
