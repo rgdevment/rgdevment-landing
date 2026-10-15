@@ -1,4 +1,4 @@
-import { copyFileSync, readdirSync, rmSync } from 'node:fs';
+import { appendFileSync, copyFileSync, readdirSync, rmSync } from 'node:fs';
 import tailwind from '@astrojs/tailwind';
 import rehypeKatex from 'rehype-katex';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
@@ -61,6 +61,7 @@ function ownFiles(product) {
           ...readdirSync(at('docs-assets/')).filter((name) => !name.startsWith(`${product}-`)).map((name) => `docs-assets/${name}`),
         ];
         copyFileSync(`./public/icons/${product}.ico`, at('favicon.ico'));
+        appendFileSync(at('_headers'), '\n/llms-full.txt\n  Content-Type: text/plain; charset=utf-8\n');
         drop.forEach((path) => rmSync(at(path), { force: true }));
       },
     },
