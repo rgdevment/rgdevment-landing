@@ -1,5 +1,6 @@
-import { DOMAIN, HOME_PRODUCT } from "./site";
-import { PRODUCTS } from "./content/products";
+import sharp from "sharp";
+import { DOMAIN, HOME_PRODUCT, LOCALES, type Locale } from "./site";
+import { PRODUCTS, type Product, shotSrc } from "./content/products";
 
 export function robots(): Response {
   return new Response(`User-agent: *\nAllow: /\n\nSitemap: ${DOMAIN}/sitemap.xml\n`, {
@@ -43,4 +44,18 @@ export function manifest(): Response {
   return new Response(body, {
     headers: { "Content-Type": "application/manifest+json" },
   });
+}
+
+export function cardRoutes() {
+  return PRODUCTS.filter((one) => one.shot && (!HOME_PRODUCT || one.slug === HOME_PRODUCT)).flatMap((product) =>
+    LOCALES.map((locale) => ({ params: { card: `${product.slug}-${locale}` }, props: { product, locale } })),
+  );
+}
+
+export async function card({ props }: { props: { product: Product; locale: Locale } }): Promise<Response> {
+  const png = await sharp(`./public${shotSrc(props.product, props.locale)}`)
+    .resize(1200, 630, { fit: "cover" })
+    .png({ compressionLevel: 9 })
+    .toBuffer();
+  return new Response(new Uint8Array(png), { headers: { "Content-Type": "image/png" } });
 }

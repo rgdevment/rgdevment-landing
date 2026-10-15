@@ -6,7 +6,7 @@ import Layout from "../layouts/Layout.astro";
 import { bySection, docPath, docsOf } from "../content/docs";
 import { privacyPath } from "../content/privacy";
 import { GUIDES, written } from "../content/guides";
-import { PRODUCTS, type Product, releasesUrl, shotSrc, storeUrl, words } from "../content/products";
+import { PRODUCTS, type Product, cardOf, releasesUrl, shotSrc, storeUrl, words } from "../content/products";
 import { latestRelease, releaseDate } from "../content/releases";
 import { DOMAIN, HOME_PRODUCT, PERSON_ID, canonical, crumbs, href, type Locale } from "../site";
 
@@ -22,7 +22,7 @@ const store = storeUrl(product);
 const releases = releasesUrl(product);
 const path = product.slug;
 const shot = shotSrc(product, locale);
-const social = product.shot && shot ? { src: shot, width: product.shot.width, height: product.shot.height } : undefined;
+const social = cardOf(product, locale);
 
 const release = await latestRelease(product);
 const docs = await docsOf(product.slug, locale);

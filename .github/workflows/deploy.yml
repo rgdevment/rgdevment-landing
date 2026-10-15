@@ -33,6 +33,9 @@ jobs:
       - name: Fetch wikis
         run: npm run wikis
 
+      - name: Fetch each app's hero, mascot and icon
+        run: npm run assets
+
       - name: Check types
         run: npm run check
 
