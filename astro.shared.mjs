@@ -32,6 +32,8 @@ export function shared({ product = null } = {}) {
   return {
     trailingSlash: 'always',
     integrations: [tailwind({ applyBaseStyles: false })],
+    // Mermaid's diagram chunks are large, but a page only downloads them when it draws a diagram.
+    vite: { build: { chunkSizeWarningLimit: 1600 } },
     markdown: {
       syntaxHighlight: { type: 'shiki', excludeLangs: ['math', 'mermaid'] },
       remarkPlugins: [[remarkMath, { singleDollarTextMath: false }]],

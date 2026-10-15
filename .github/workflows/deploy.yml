@@ -77,6 +77,12 @@ jobs:
     env:
       HAS_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
     steps:
+      - name: The IndexNow script
+        uses: actions/checkout@v7
+        with:
+          sparse-checkout: scripts/indexnow.sh
+          sparse-checkout-cone-mode: false
+
       - name: The build
         if: env.HAS_TOKEN == 'true'
         uses: actions/download-artifact@v4
@@ -94,6 +100,10 @@ jobs:
           command: pages project create rgdevment --production-branch=main
         continue-on-error: true
 
+      - name: What search engines were told last
+        if: env.HAS_TOKEN == 'true'
+        run: curl -fsSL https://rgdevment.com/sitemap.xml -o live-sitemap.xml || touch live-sitemap.xml
+
       - name: Deploy to Cloudflare Pages
         if: env.HAS_TOKEN == 'true'
         uses: cloudflare/wrangler-action@v3
@@ -103,12 +113,9 @@ jobs:
           command: pages deploy dist --project-name=rgdevment --branch=main
 
       - name: Tell search engines what changed
-        if: github.event_name == 'push'
+        if: env.HAS_TOKEN == 'true'
         continue-on-error: true
-        run: |
-          urls=$(curl -fsSL https://rgdevment.com/sitemap.xml | grep -o '<loc>[^<]*' | sed 's/<loc>//' | jq -R . | jq -s .)
-          jq -n --argjson urls "$urls" '{host: "rgdevment.com", key: "c039190381f3501448bba3a377e80147", keyLocation: "https://rgdevment.com/c039190381f3501448bba3a377e80147.txt", urlList: $urls}' \
-            | curl -fsS -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json; charset=utf-8' --data-binary @-
+        run: bash scripts/indexnow.sh rgdevment.com dist/sitemap.xml live-sitemap.xml ${{ github.event_name }}
 
   cloudflare-apps:
     needs: build
@@ -124,6 +131,12 @@ jobs:
     env:
       HAS_TOKEN: ${{ secrets.CLOUDFLARE_API_TOKEN != '' }}
     steps:
+      - name: The IndexNow script
+        uses: actions/checkout@v7
+        with:
+          sparse-checkout: scripts/indexnow.sh
+          sparse-checkout-cone-mode: false
+
       - name: The builds
         if: env.HAS_TOKEN == 'true'
         uses: actions/download-artifact@v4
@@ -140,6 +153,10 @@ jobs:
           command: pages project create ${{ matrix.app }} --production-branch=main
         continue-on-error: true
 
+      - name: What search engines were told last
+        if: env.HAS_TOKEN == 'true'
+        run: curl -fsSL https://${{ matrix.host }}/sitemap.xml -o live-sitemap.xml || touch live-sitemap.xml
+
       - name: Deploy to Cloudflare Pages
         if: env.HAS_TOKEN == 'true'
         uses: cloudflare/wrangler-action@v3
@@ -149,11 +166,6 @@ jobs:
           command: pages deploy dist-${{ matrix.app }} --project-name=${{ matrix.app }} --branch=main
 
       - name: Tell search engines what changed
-        if: env.HAS_TOKEN == 'true' && github.event_name == 'push'
+        if: env.HAS_TOKEN == 'true'
         continue-on-error: true
-        env:
-          HOST: ${{ matrix.host }}
-        run: |
-          urls=$(grep -o '<loc>[^<]*' dist-${{ matrix.app }}/sitemap.xml | sed 's/<loc>//' | jq -R . | jq -s .)
-          jq -n --arg host "$HOST" --argjson urls "$urls" '{host: $host, key: "c039190381f3501448bba3a377e80147", keyLocation: "https://\($host)/c039190381f3501448bba3a377e80147.txt", urlList: $urls}' \
-            | curl -fsS -X POST https://api.indexnow.org/indexnow -H 'Content-Type: application/json; charset=utf-8' --data-binary @-
+        run: bash scripts/indexnow.sh ${{ matrix.host }} dist-${{ matrix.app }}/sitemap.xml live-sitemap.xml ${{ github.event_name }}
