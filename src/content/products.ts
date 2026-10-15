@@ -54,15 +54,20 @@ export const PRODUCTS: Product[] = [
     shot: {
       src: "/tisty-social.png",
       srcEs: "/tisty-social-es.png",
-      width: 1280,
-      height: 640,
-      en: "Tisty: the day's tasks beside the documents they left behind, kept as files on disk",
-      es: "Tisty: las tareas del dia junto a los documentos que dejaron, guardados como archivos en disco",
+      width: 1920,
+      height: 1080,
+      en: "Tisty: the day's tasks with their steps, the documents beside them and the days ahead, kept as files on disk",
+      es: "Tisty: las tareas del día con sus pasos, los documentos al lado y los días que vienen, guardados como archivos en disco",
     },
     accent: "#6F4BD8",
     icon: "/icons/tisty.png",
+    mascot: "/tisty-head.svg",
     en: {
       tagline: "Notes, documents and tasks. The record of what you learned solving them.",
+      mascot: {
+        title: "A beaver that keeps what you build.",
+        body: "A beaver gathers every branch it finds and builds with it, and what it builds stays. Tisty keeps what you work out the same way: the steps, the journal and the documents, there to find again months later.",
+      },
       title: "Tisty - Notes, documents and tasks on your own disk",
       meta: "Notes, documents and tasks as plain files on your own disk, for Windows and macOS. Free and open source: no Tisty account, no server, no subscription.",
       problem:
@@ -97,6 +102,10 @@ export const PRODUCTS: Product[] = [
     },
     es: {
       tagline: "Notas, documentos y tareas. El historial de lo que aprendiste resolviendo.",
+      mascot: {
+        title: "Un castor que guarda lo que construyes.",
+        body: "El castor junta cada rama que encuentra y construye con ella, y lo que construye se queda. Tisty guarda así lo que resuelves: los pasos, el diario y los documentos, listos para encontrarlos meses después.",
+      },
       title: "Tisty - Notas, documentos y tareas en tu propio disco",
       meta: "Notas, documentos y tareas en archivos de tu propio disco, para Windows y macOS. Gratis y de código abierto: sin cuenta de Tisty, sin servidor y sin suscripción.",
       problem:
@@ -141,15 +150,20 @@ export const PRODUCTS: Product[] = [
     shot: {
       src: "/linkunbound-social.png",
       srcEs: "/linkunbound-social-es.png",
-      width: 1280,
-      height: 640,
+      width: 1920,
+      height: 1080,
       en: "LinkUnbound: the picker beside a link, listing the installed browsers with the profile each one opens",
       es: "LinkUnbound: el selector junto a un enlace, con los navegadores instalados y el perfil en que abre cada uno",
     },
     accent: "#2F62D8",
     icon: "/icons/linkunbound.png",
+    mascot: "/linkunbound-head.svg",
     en: {
       tagline: "Choose which browser opens every link.",
+      mascot: {
+        title: "A bear that looks after your links.",
+        body: "Steady and calm, the bear stands between the link and the browser, so every link opens where you decide.",
+      },
       meta: "Free, open source browser picker for Windows and macOS. Choose which browser or profile opens every link, with rules per site and per application.",
       problem:
         "A link from Teams opens in Edge. One from Slack lands wherever Windows decided last. You keep three browsers and four profiles, and nobody asks you which one you meant.",
@@ -187,6 +201,10 @@ export const PRODUCTS: Product[] = [
     },
     es: {
       tagline: "Elige con qué navegador se abre cada enlace.",
+      mascot: {
+        title: "Un oso que cuida tus enlaces.",
+        body: "Firme y tranquilo, el oso se para entre el enlace y el navegador, para que cada enlace se abra donde tú decides.",
+      },
       meta: "Selector de navegador gratuito y de código abierto para Windows y macOS. Elige qué navegador o perfil abre cada enlace, con reglas por sitio y aplicación.",
       problem:
         "Un enlace de Teams se abre en Edge. Uno de Slack, donde Windows decidiera la última vez. Tienes tres navegadores y cuatro perfiles, y a ti no te pregunta nadie.",
