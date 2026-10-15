@@ -1,3 +1,4 @@
+import { copyFileSync } from 'node:fs';
 import tailwind from '@astrojs/tailwind';
 import rehypeKatex from 'rehype-katex';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
@@ -37,9 +38,21 @@ export function shared({ product = null } = {}) {
   };
 }
 
-export function ownSite(product) {
+// Browsers and search engines ask for /favicon.ico on their own, so each app's site needs its own at the root.
+function favicon(product) {
   return {
-    ...shared({ product }),
+    name: 'favicon',
+    hooks: {
+      'astro:build:done': ({ dir }) => copyFileSync(`./public/icons/${product}.ico`, new URL('favicon.ico', dir)),
+    },
+  };
+}
+
+export function ownSite(product) {
+  const base = shared({ product });
+  return {
+    ...base,
+    integrations: [...base.integrations, favicon(product)],
     site: homeOf(product),
     srcDir: './src/sites/app',
     outDir: `./dist-${product}`,
