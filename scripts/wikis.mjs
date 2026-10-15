@@ -16,9 +16,14 @@ const CALLOUT = {
 
 function fetchWiki({ repo, product }) {
   const dir = join(CACHE, product);
-  if (existsSync(dir)) execFileSync("git", ["-C", dir, "pull", "--ff-only", "-q"], { stdio: "inherit" });
-  else execFileSync("git", ["clone", "-q", "--depth", "1", `https://github.com/rgdevment/${repo}.wiki.git`, dir], { stdio: "inherit" });
+  if (!existsSync(dir)) execFileSync("git", ["clone", "-q", `https://github.com/rgdevment/${repo}.wiki.git`, dir], { stdio: "inherit" });
+  else if (existsSync(join(dir, ".git", "shallow"))) execFileSync("git", ["-C", dir, "pull", "--ff-only", "-q", "--unshallow"], { stdio: "inherit" });
+  else execFileSync("git", ["-C", dir, "pull", "--ff-only", "-q"], { stdio: "inherit" });
   return dir;
+}
+
+function updatedOn(dir, file) {
+  return execFileSync("git", ["-C", dir, "log", "-1", "--format=%cs", "--", file], { encoding: "utf8" }).trim();
 }
 
 export function slugify(text) {
@@ -169,6 +174,7 @@ function syncWiki(wiki) {
       twin: twin ? twin.slug : null,
       section: entry.section,
       order: entry.order,
+      updated: updatedOn(dir, file),
       source: `https://github.com/rgdevment/${wiki.repo}/wiki/${page}`,
     };
     const target = join(OUT, wiki.product, entry.locale);

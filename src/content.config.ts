@@ -12,6 +12,7 @@ const docs = defineCollection({
     twin: z.string().nullable(),
     section: z.string(),
     order: z.number(),
+    updated: z.string(),
     source: z.string().url(),
   }),
 });

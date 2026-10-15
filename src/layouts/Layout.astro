@@ -4,7 +4,7 @@ import Icon from "../components/Icon.astro";
 import Logo from "../components/Logo.astro";
 import Nav from "../components/Nav.astro";
 import ProductNav from "../components/ProductNav.astro";
-import { PRODUCTS, shotSrc } from "../content/products";
+import { PRODUCTS, cardOf } from "../content/products";
 import { MAIN } from "../hosts";
 import { AUTHOR, DOMAIN, HOME_PRODUCT, LOCALES, PERSON_ID, WEBSITE_ID, canonical, href, mainHref, type Locale } from "../site";
 
@@ -16,12 +16,13 @@ interface Props {
   paths?: Partial<Record<Locale, string>>;
   image?: { src: string; width: number; height: number };
   published?: string;
+  modified?: string;
   here?: string;
   schema?: Record<string, unknown> | Record<string, unknown>[];
   noindex?: boolean;
 }
 
-const { title, description, locale, path = "", paths, image, published, here, schema, noindex } = Astro.props;
+const { title, description, locale, path = "", paths, image, published, modified, here, schema, noindex } = Astro.props;
 const es = locale === "es";
 
 /// A guide keeps a different slug in each language, so the twin of a page is looked up rather
@@ -31,7 +32,7 @@ const url = canonical(locale, at(locale));
 const owner = PRODUCTS.find((one) => one.slug === HOME_PRODUCT);
 const brand = owner?.name ?? "rgdevment";
 const full = title.includes(brand) || title.length > 44 ? title : `${title} · ${brand}`;
-const ownCard = owner?.shot && { src: shotSrc(owner, locale)!, width: owner.shot.width, height: owner.shot.height };
+const ownCard = owner && cardOf(owner, locale);
 const card = image ?? ownCard ?? { src: es ? "/social-es.png" : "/social.png", width: 1200, height: 630 };
 const social = new URL(card.src, DOMAIN).toString();
 
@@ -102,7 +103,7 @@ const say = es
     }
     {!noindex && <link rel="alternate" hreflang="x-default" href={canonical("en", at("en"))} />}
 
-    <meta property="og:type" content={published ? "article" : "website"} />
+    <meta property="og:type" content={published || modified ? "article" : "website"} />
     <meta property="og:site_name" content={brand} />
     <meta property="og:url" content={url} />
     <meta property="og:title" content={full} />
@@ -115,7 +116,8 @@ const say = es
     <meta property="og:locale" content={es ? "es_LA" : "en_US"} />
     <meta property="og:locale:alternate" content={es ? "en_US" : "es_LA"} />
     {published && <meta property="article:published_time" content={published} />}
-    {published && <meta property="article:author" content={AUTHOR.name} />}
+    {modified && <meta property="article:modified_time" content={modified} />}
+    {(published || modified) && <meta property="article:author" content={AUTHOR.name} />}
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={full} />
     <meta name="twitter:description" content={description} />

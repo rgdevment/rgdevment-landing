@@ -4,6 +4,7 @@
   "version": "0.0.1",
   "scripts": {
     "wikis": "node scripts/wikis.mjs",
+    "assets": "node scripts/assets.mjs",
     "dev": "astro dev",
     "check": "astro check",
     "build": "astro build",
@@ -24,6 +25,7 @@
     "rehype-katex": "^7.0.1",
     "rehype-sanitize": "^6.0.0",
     "remark-math": "^6.0.0",
+    "sharp": "^0.34.5",
     "tailwindcss": "^3.4.19"
   },
   "devDependencies": {

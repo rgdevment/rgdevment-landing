@@ -358,6 +358,11 @@ export function shotSrc(product: Product, locale: Locale): string | undefined {
   return shot && (locale === "es" && shot.srcEs ? shot.srcEs : shot.src);
 }
 
+/// The hero cropped to the 1.91:1 card link previews expect, so they show it whole.
+export function cardOf(product: Product, locale: Locale) {
+  return product.shot && { src: `/og/${product.slug}-${locale}.png`, width: 1200, height: 630 };
+}
+
 export function releasesUrl(product: Product): string {
   return `${product.repo}/releases`;
 }

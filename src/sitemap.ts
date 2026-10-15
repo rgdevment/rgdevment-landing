@@ -8,15 +8,20 @@ export type Entry = { en: string; es: string; priority: string; lastmod?: string
 const BREAK = "\n";
 
 export async function docEntries(product?: string): Promise<Entry[]> {
-  const docs = await getCollection(
-    "docs",
-    (one) => one.data.locale === "en" && one.data.twin !== null && (product ? one.data.product === product : !homeOf(one.data.product)),
-  );
-  return docs.map((one) => ({
-    en: docPath("en", one.data.product, one.data.page),
-    es: docPath("es", one.data.product, one.data.twin!),
-    priority: one.data.page ? "0.6" : "0.7",
-  }));
+  const all = await getCollection("docs", (one) => (product ? one.data.product === product : !homeOf(one.data.product)));
+  const spanish = new Map(all.filter((one) => one.data.locale === "es").map((one) => [`${one.data.product}/${one.data.page}`, one]));
+  return all
+    .filter((one) => one.data.locale === "en" && one.data.twin !== null)
+    .map((one) => {
+      const twin = spanish.get(`${one.data.product}/${one.data.twin}`);
+      const dates = [one.data.updated, twin?.data.updated ?? ""].sort();
+      return {
+        en: docPath("en", one.data.product, one.data.page),
+        es: docPath("es", one.data.product, one.data.twin!),
+        priority: one.data.page ? "0.6" : "0.7",
+        lastmod: dates.at(-1),
+      };
+    });
 }
 
 /// Every page is declared once per language, each one naming its twin, so the two versions are
