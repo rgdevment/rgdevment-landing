@@ -53,14 +53,14 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
       - name: Keep the build for Cloudflare
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: site
           path: ./dist
           retention-days: 1
 
       - name: Keep the apps' builds for Cloudflare
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@v7
         with:
           name: site-apps
           path: |
@@ -85,20 +85,10 @@ jobs:
 
       - name: The build
         if: env.HAS_TOKEN == 'true'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: site
           path: ./dist
-
-      # A project that does not exist yet is made once; every later run finds it.
-      - name: The Pages project
-        if: env.HAS_TOKEN == 'true'
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages project create rgdevment --production-branch=main
-        continue-on-error: true
 
       - name: What search engines were told last
         if: env.HAS_TOKEN == 'true'
@@ -106,11 +96,11 @@ jobs:
 
       - name: Deploy to Cloudflare Pages
         if: env.HAS_TOKEN == 'true'
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist --project-name=rgdevment --branch=main
+          command: pages deploy dist --project-name=rgdevment --branch=main --commit-dirty=true
 
       - name: Tell search engines what changed
         if: env.HAS_TOKEN == 'true'
@@ -139,19 +129,10 @@ jobs:
 
       - name: The builds
         if: env.HAS_TOKEN == 'true'
-        uses: actions/download-artifact@v4
+        uses: actions/download-artifact@v8
         with:
           name: site-apps
           path: .
-
-      - name: The Pages project
-        if: env.HAS_TOKEN == 'true'
-        uses: cloudflare/wrangler-action@v3
-        with:
-          apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
-          accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages project create ${{ matrix.app }} --production-branch=main
-        continue-on-error: true
 
       - name: What search engines were told last
         if: env.HAS_TOKEN == 'true'
@@ -159,11 +140,11 @@ jobs:
 
       - name: Deploy to Cloudflare Pages
         if: env.HAS_TOKEN == 'true'
-        uses: cloudflare/wrangler-action@v3
+        uses: cloudflare/wrangler-action@v4
         with:
           apiToken: ${{ secrets.CLOUDFLARE_API_TOKEN }}
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
-          command: pages deploy dist-${{ matrix.app }} --project-name=${{ matrix.app }} --branch=main
+          command: pages deploy dist-${{ matrix.app }} --project-name=${{ matrix.app }} --branch=main --commit-dirty=true
 
       - name: Tell search engines what changed
         if: env.HAS_TOKEN == 'true'
