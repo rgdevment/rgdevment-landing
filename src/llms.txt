@@ -15,6 +15,7 @@ Motto: software out of conviction, not subscription.
 Built from each project's GitHub wiki, in English and Spanish.
 
 - [Tisty docs](https://www.tisty.app/docs/): installation, the Markdown editor, tasks, the archive, sync and backup, the MCP server and its tools.
+- [The Tisty language](https://markdown.tisty.app/): every word a Tisty document understands, CommonMark and GitHub's additions plus Tisty's own, one page each ([summary](https://markdown.tisty.app/llms.txt), [full](https://markdown.tisty.app/llms-full.txt), [español](https://markdown.tisty.app/es/)).
 - [LinkUnbound docs](https://www.linkunbound.app/docs/): installation, the picker, rules, browsers and profiles, links from other apps, troubleshooting.
 - [CoPanda docs](https://www.copanda.app/docs/): installation, the panel, content kinds, paste as, backup and migration, troubleshooting.
 - Each app's own summary for assistants, and all its docs in one file: [Tisty](https://www.tisty.app/llms.txt) ([full](https://www.tisty.app/llms-full.txt)), [LinkUnbound](https://www.linkunbound.app/llms.txt) ([full](https://www.linkunbound.app/llms-full.txt)), [CoPanda](https://www.copanda.app/llms.txt) ([full](https://www.copanda.app/llms-full.txt)).

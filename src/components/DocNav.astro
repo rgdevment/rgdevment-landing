@@ -1,4 +1,5 @@
 ---
+import Icon from "./Icon.astro";
 import type { Doc } from "../content/docs";
 
 interface Props {
@@ -6,10 +7,11 @@ interface Props {
   overview: { label: string; href: string; on: boolean };
   sections: [string, Doc[]][];
   linkOf: (one: Doc) => string;
+  language?: { eyebrow: string; label: string; href: string };
   source?: { label: string; href: string };
 }
 
-const { current, overview, sections, linkOf, source } = Astro.props;
+const { current, overview, sections, linkOf, language, source } = Astro.props;
 const item = (on: boolean) =>
   `block rounded-lg px-3 py-1.5 ${on ? "bg-fg/[0.06] font-medium text-fg" : "text-body hover:text-fg"}`;
 ---
@@ -32,6 +34,17 @@ const item = (on: boolean) =>
       </ul>
     </div>
   ))
+}
+{
+  language && (
+    <div class="mt-5">
+      <p class="eyebrow px-3 text-[11px]">{language.eyebrow}</p>
+      <a href={language.href} class={`${item(false)} mt-2 flex items-center gap-2`}>
+        {language.label}
+        <Icon name="arrow" class="h-3.5 w-3.5 -rotate-45 text-muted" />
+      </a>
+    </div>
+  )
 }
 {
   source && (
