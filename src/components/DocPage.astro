@@ -37,6 +37,8 @@ const say = {
   next: es ? "Siguiente" : "Next",
   menu: es ? "Índice de la ayuda" : "Docs contents",
   source: es ? "Código fuente" : "Source code",
+  reference: es ? "Referencia" : "Reference",
+  open: es ? "Abrir la referencia" : "Open the reference",
 };
 
 const index = docPath(locale, product.slug);
@@ -54,6 +56,10 @@ const toc = headings.filter((one) => one.depth === 2);
 const linkOf = (one: Doc) => href(locale, docPath(locale, product.slug, one.data.page));
 const overview = { label: say.overview, href: href(locale, index), on: !data.page };
 const source = HOME_PRODUCT === product.slug ? { label: say.source, href: product.repo } : undefined;
+const words = product[locale].language;
+const language = words && { eyebrow: say.reference, label: words.title, href: words.url };
+// The wiki names its Markdown section the same in both languages.
+const promote = words && (!data.page || data.section === "Markdown");
 
 const schema = [
   {
@@ -68,6 +74,7 @@ const schema = [
     isPartOf: { "@id": WEBSITE_ID },
     mainEntityOfPage: canonical(locale, path),
     about: { "@type": "SoftwareApplication", name: product.name, url: canonical(locale, product.slug) },
+    ...(promote ? { mentions: { "@type": "TechArticle", headline: words.title, url: words.url, inLanguage: locale } } : {}),
   },
   crumbs(locale, trail),
 ];
@@ -95,7 +102,7 @@ const schema = [
             <Icon name="chevron" class="ml-auto h-4 w-4 text-muted transition group-open:rotate-180" />
           </summary>
           <nav aria-label={say.menu} class="px-1 pb-4 text-[15px]">
-            <DocNav current={doc.id} overview={overview} sections={sections} linkOf={linkOf} source={source} />
+            <DocNav current={doc.id} overview={overview} sections={sections} linkOf={linkOf} language={language} source={source} />
           </nav>
         </details>
         <div class="hidden lg:block">
@@ -104,7 +111,7 @@ const schema = [
             <span class="font-display font-semibold text-fg">{product.name}</span>
           </a>
           <nav aria-label={say.menu} class="mt-6 text-[15px]">
-            <DocNav current={doc.id} overview={overview} sections={sections} linkOf={linkOf} source={source} />
+            <DocNav current={doc.id} overview={overview} sections={sections} linkOf={linkOf} language={language} source={source} />
           </nav>
         </div>
       </aside>
@@ -119,6 +126,27 @@ const schema = [
         <div class="prose prose-lg mt-8">
           <Content />
         </div>
+
+        {
+          promote && (
+            <a class="card-link group mt-12 flex items-start gap-5 p-6 sm:p-7" href={words.url} style={`--accent: ${product.accent}`}>
+              <span class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl text-white" style="background: var(--accent)">
+                <Icon name="code" class="h-5 w-5" />
+              </span>
+              <span class="min-w-0">
+                <span class="eyebrow text-[11px]">{say.reference}</span>
+                <span class="mt-1 block font-display text-xl font-semibold text-fg">{words.title}</span>
+                <span class="mt-2 block text-body">{words.line}</span>
+                <span class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-fg">
+                  {say.open}
+                  <span style="color: var(--accent)">
+                    <Icon name="arrow" class="h-4 w-4 transition group-hover:translate-x-0.5" />
+                  </span>
+                </span>
+              </span>
+            </a>
+          )
+        }
 
         <nav class="mt-16 grid gap-4 border-t border-line pt-8 sm:grid-cols-2" aria-label={es ? "Paginación" : "Pagination"}>
           {

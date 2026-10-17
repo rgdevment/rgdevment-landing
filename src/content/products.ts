@@ -14,6 +14,8 @@ type Words = {
   formerly?: string;
   /// The story behind its name, told beside its mascot.
   mascot?: { title: string; body: string };
+  /// Its own site spelling out the words its documents understand, offered beside the docs.
+  language?: { url: string; title: string; line: string };
   faq: { q: string; a: string }[];
 };
 
@@ -67,6 +69,11 @@ export const PRODUCTS: Product[] = [
         title: "A beaver that keeps what you build.",
         body: "A beaver gathers every branch it finds and builds with it, and what it builds stays. Tisty keeps what you work out the same way: the steps, the journal and the documents, there to find again months later.",
       },
+      language: {
+        url: "https://markdown.tisty.app/",
+        title: "The Tisty language",
+        line: "Every word a Tisty document understands, one page each: CommonMark and GitHub's additions, plus the few of Tisty's own. For writing by hand, from a script or from an assistant.",
+      },
       title: "Tisty - Notes, documents and tasks on your own disk",
       meta: "Notes, documents and tasks as plain files on your own disk, for Windows and macOS. Free and open source: no Tisty account, no server, no subscription.",
       problem:
@@ -104,6 +111,11 @@ export const PRODUCTS: Product[] = [
       mascot: {
         title: "Un castor que guarda lo que construyes.",
         body: "El castor junta cada rama que encuentra y construye con ella, y lo que construye se queda. Tisty guarda así lo que resuelves: los pasos, el diario y los documentos, listos para encontrarlos meses después.",
+      },
+      language: {
+        url: "https://markdown.tisty.app/es/",
+        title: "El lenguaje de Tisty",
+        line: "Cada palabra que entiende un documento de Tisty, una página por cada una: CommonMark y lo que agrega GitHub, más las pocas propias de Tisty. Para escribir a mano, desde un script o desde un asistente.",
       },
       title: "Tisty - Notas, documentos y tareas en tu propio disco",
       meta: "Notas, documentos y tareas en archivos de tu propio disco, para Windows y macOS. Gratis y de código abierto: sin cuenta de Tisty, sin servidor y sin suscripción.",

@@ -26,6 +26,19 @@ export async function appLlms(): Promise<Response> {
   const t = product.en;
   const docs = (await docsOf(product.slug, "en")).filter((one) => one.data.page);
   const link = (title: string, path: string, note = "") => `- [${title}](${canonical("en", path)})${note ? `: ${note}` : ""}`;
+  const language = t.language
+    ? [
+        `## ${t.language.title}`,
+        "",
+        t.language.line,
+        "",
+        `- [${t.language.title}](${t.language.url})`,
+        `- [Its summary for assistants](${t.language.url}llms.txt)`,
+        `- [The whole language in one file](${t.language.url}llms-full.txt)`,
+        `- [${product.es.language!.title}](${product.es.language!.url})`,
+        "",
+      ]
+    : [];
   const lines = [
     `# ${product.name}`,
     "",
@@ -56,6 +69,7 @@ export async function appLlms(): Promise<Response> {
     ...docs.map((one) => link(one.data.title, docPath("en", product.slug, one.data.page), one.data.description)),
     `- [Every page in one file](${canonical("en", "")}llms-full.txt)`,
     "",
+    ...language,
     "## Questions",
     "",
     ...t.faq.map((one) => `- ${one.q} ${one.a}`),
