@@ -14,6 +14,13 @@ const { product, locale, other } = Astro.props;
 const there: Locale = locale === "es" ? "en" : "es";
 const es = locale === "es";
 const link = "rounded-full px-3 py-1.5 text-muted transition-colors hover:text-fg";
+const items: [string, string, boolean][] = [
+  [href(locale, docPath(locale, product.slug)), es ? "Ayuda" : "Docs", false],
+  [href(locale, privacyPath(locale, product.slug)), es ? "Privacidad" : "Privacy", false],
+  [href(locale, es ? "precios" : "pricing"), es ? "Precios" : "Pricing", false],
+  [href(locale, es ? "apoyar" : "support"), es ? "Apoyar" : "Support", false],
+  [product.repo, es ? "Repositorio" : "Repository", true],
+];
 ---
 
 <header class="sticky top-0 z-40 border-b border-line/70 bg-canvas/80 backdrop-blur-xl backdrop-saturate-150">
@@ -23,12 +30,16 @@ const link = "rounded-full px-3 py-1.5 text-muted transition-colors hover:text-f
       <span class="font-display text-lg font-semibold text-fg">{product.name}</span>
     </a>
 
-    <ul class="ml-auto flex items-center gap-1 text-[15px]">
-      <li><a class={link} href={href(locale, docPath(locale, product.slug))}>{es ? "Ayuda" : "Docs"}</a></li>
-      <li class="hidden sm:inline"><a class={link} href={href(locale, privacyPath(locale, product.slug))}>{es ? "Privacidad" : "Privacy"}</a></li>
-      <li class="hidden sm:inline"><a class={link} href={href(locale, es ? "precios" : "pricing")}>{es ? "Precios" : "Pricing"}</a></li>
-      <li class="hidden sm:inline"><a class={link} href={href(locale, es ? "apoyar" : "support")}>{es ? "Apoyar" : "Support"}</a></li>
-      <li class="hidden sm:inline"><a class={link} href={product.repo} rel="noopener">{es ? "Repositorio" : "Repository"}</a></li>
+    <ul class="ml-auto hidden items-center gap-1 text-[15px] sm:flex">
+      {
+        items.map(([to, label, external]) => (
+          <li>
+            <a class={link} href={to} rel={external ? "noopener" : undefined}>
+              {label}
+            </a>
+          </li>
+        ))
+      }
       <li class="ml-2">
         <a
           class="rounded-full border border-line px-3 py-1 font-mono text-xs text-muted transition-colors hover:border-fg/30 hover:text-fg"
@@ -41,5 +52,39 @@ const link = "rounded-full px-3 py-1.5 text-muted transition-colors hover:text-f
         </a>
       </li>
     </ul>
+
+    <details class="group ml-auto sm:hidden">
+      <summary
+        class="grid h-10 w-10 cursor-pointer list-none place-items-center rounded-full border border-line text-fg [&::-webkit-details-marker]:hidden"
+        aria-label={es ? "Menú" : "Menu"}
+      >
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="h-5 w-5 group-open:hidden" aria-hidden="true">
+          <path d="M4 8h16M4 16h16" />
+        </svg>
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" class="hidden h-5 w-5 group-open:block" aria-hidden="true">
+          <path d="M6 6l12 12M18 6L6 18" />
+        </svg>
+      </summary>
+
+      <div class="absolute inset-x-0 top-16 border-b border-line bg-canvas/95 shadow-xl backdrop-blur-xl">
+        <ul class="shell grid gap-1 py-4 text-lg">
+          {
+            items.map(([to, label, external]) => (
+              <li>
+                <a class="block rounded-2xl px-3 py-2.5 text-body" href={to} rel={external ? "noopener" : undefined}>
+                  {label}
+                </a>
+              </li>
+            ))
+          }
+          <li class="my-2 h-px bg-line" aria-hidden="true"></li>
+          <li>
+            <a class="block rounded-2xl px-3 py-2.5 text-muted" href={href(there, other)} lang={there} hreflang={there}>
+              {es ? "English" : "Español"}
+            </a>
+          </li>
+        </ul>
+      </div>
+    </details>
   </nav>
 </header>
