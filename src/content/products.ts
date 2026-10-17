@@ -71,7 +71,7 @@ export const PRODUCTS: Product[] = [
       },
       language: {
         url: "https://markdown.tisty.app/",
-        title: "The Tisty language",
+        title: "Tisty Markdown",
         line: "Every word a Tisty document understands, one page each: CommonMark and GitHub's additions, plus the few of Tisty's own. For writing by hand, from a script or from an assistant.",
       },
       title: "Tisty - Notes, documents and tasks on your own disk",
@@ -114,7 +114,7 @@ export const PRODUCTS: Product[] = [
       },
       language: {
         url: "https://markdown.tisty.app/es/",
-        title: "El lenguaje de Tisty",
+        title: "Markdown de Tisty",
         line: "Cada palabra que entiende un documento de Tisty, una página por cada una: CommonMark y lo que agrega GitHub, más las pocas propias de Tisty. Para escribir a mano, desde un script o desde un asistente.",
       },
       title: "Tisty - Notas, documentos y tareas en tu propio disco",
