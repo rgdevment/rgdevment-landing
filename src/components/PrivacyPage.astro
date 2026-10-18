@@ -39,6 +39,7 @@ const trail: [string, string][] = [
   title={say.title}
   description={say.lede}
   locale={locale}
+  contentLang="en"
   path={path}
   paths={paths}
   here={product.slug}
@@ -51,7 +52,7 @@ const trail: [string, string][] = [
         <h1 class="text-4xl font-semibold tracking-[-0.02em] sm:text-5xl">{say.title}</h1>
         <p class="mt-5 text-lg text-body">{say.lede}</p>
       </header>
-      <div class="prose prose-lg mt-8" lang="en">
+      <div class="prose prose-lg mt-8">
         <Content />
       </div>
       <p class="mt-8 text-sm">
