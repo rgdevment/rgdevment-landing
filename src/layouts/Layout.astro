@@ -12,6 +12,9 @@ interface Props {
   title: string;
   description: string;
   locale: Locale;
+  /// The language of the page's actual text, when it differs from the site chrome around it —
+  /// a privacy policy taken as-is from English, shown with a Spanish nav and breadcrumbs.
+  contentLang?: Locale;
   path?: string;
   paths?: Partial<Record<Locale, string>>;
   image?: { src: string; width: number; height: number };
@@ -22,7 +25,7 @@ interface Props {
   noindex?: boolean;
 }
 
-const { title, description, locale, path = "", paths, image, published, modified, here, schema, noindex } = Astro.props;
+const { title, description, locale, contentLang = locale, path = "", paths, image, published, modified, here, schema, noindex } = Astro.props;
 const es = locale === "es";
 
 /// A guide keeps a different slug in each language, so the twin of a page is looked up rather
@@ -88,7 +91,7 @@ const say = es
 ---
 
 <!doctype html>
-<html lang={locale} class="scroll-smooth">
+<html lang={contentLang} class="scroll-smooth">
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
