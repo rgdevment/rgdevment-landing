@@ -16,6 +16,15 @@ type Words = {
   mascot?: { title: string; body: string };
   /// Its own site spelling out the words its documents understand, offered beside the docs.
   language?: { url: string; title: string; line: string };
+  kinds?: {
+    title: string;
+    lede: string;
+    cards: { title: string; body: string }[];
+    spike: { title: string; lede: string; steps: string[] };
+    more: string;
+    page: string;
+    anchor: string;
+  };
   faq: { q: string; a: string }[];
 };
 
@@ -74,6 +83,33 @@ export const PRODUCTS: Product[] = [
         title: "Tisty Markdown",
         line: "Every word a Tisty document understands, one page each: CommonMark and GitHub's additions, plus the few of Tisty's own. For writing by hand, from a script or from an assistant.",
       },
+      kinds: {
+        title: "A task or a document?",
+        lede: "Tisty keeps two kinds of things, and telling them apart is most of using it well. Something you will do is a task. Something you will come back to is a document.",
+        cards: [
+          {
+            title: "A task",
+            body: "Something to do. It ends, often soon, and goes to the archive, but it does not go away: its page, its steps and its notes stay, and months later a search tells you how you solved it. Knowledge with a date.",
+          },
+          {
+            title: "A document",
+            body: "Something to keep. A manual, a recipe, the notes on a client or a machine, a year of minutes: read again and again, corrected and added to, and growing for years.",
+          },
+        ],
+        spike: {
+          title: "A task is also a document, one with an end",
+          lede: "That is why a task has a page of its own. Take a spike, finding out how something can be done before doing it:",
+          steps: [
+            "It starts as a task, «Find out how to sync with OneDrive». Its page gathers what you read, tried and ruled out, with the meeting recording, a video of the fault and the vendor's PDF attached.",
+            "When the way is clear, it is split into parts: «Sign in», «Upload large files», «Resume a cut upload», each with its own steps and notes.",
+            "The parts are completed one by one, then the spike itself, and it goes to the archive.",
+            "A year later, «how did we solve the OneDrive uploads?» finds it: its page, its parts and every step, as they were left.",
+          ],
+        },
+        more: "The whole idea, in the docs",
+        page: "tasks",
+        anchor: "a-task-or-a-document",
+      },
       title: "Tisty - Notes, documents and tasks on your own disk",
       meta: "Notes, documents and tasks as plain files on your own disk, for Windows and macOS. Free and open source: no Tisty account, no server, no subscription.",
       problem:
@@ -90,7 +126,7 @@ export const PRODUCTS: Product[] = [
         line: "On your disk or in your own cloud.",
         checks: [
           "Stays on this computer",
-          "Syncs through your Google Drive or a folder you choose",
+          "Syncs through your Google Drive, your OneDrive or a folder you choose",
           "No telemetry, no ads",
           "Export everything whenever you want",
         ],
@@ -117,6 +153,33 @@ export const PRODUCTS: Product[] = [
         title: "Markdown de Tisty",
         line: "Cada palabra que entiende un documento de Tisty, una página por cada una: CommonMark y lo que agrega GitHub, más las pocas propias de Tisty. Para escribir a mano, desde un script o desde un asistente.",
       },
+      kinds: {
+        title: "¿Tarea o documento?",
+        lede: "Tisty guarda dos tipos de cosas, y distinguirlas es buena parte de usarlo bien. Lo que vas a hacer es una tarea. Lo que vas a volver a consultar es un documento.",
+        cards: [
+          {
+            title: "Una tarea",
+            body: "Algo por hacer. Termina, muchas veces pronto, y pasa al archivo, pero no desaparece: su página, sus pasos y sus notas se quedan, y meses después una búsqueda te cuenta cómo lo resolviste. Conocimiento con fecha.",
+          },
+          {
+            title: "Un documento",
+            body: "Algo para guardar. Un manual, una receta, las notas de un cliente o de una máquina, las actas de un año: se lee una y otra vez, se corrige y se amplía, y crece durante años.",
+          },
+        ],
+        spike: {
+          title: "Una tarea también es un documento, uno que termina",
+          lede: "Por eso una tarea tiene una página propia. Piensa en un spike, una investigación para saber cómo se puede hacer algo antes de hacerlo:",
+          steps: [
+            "Empieza como una tarea, «Averiguar cómo sincronizar con OneDrive». Su página reúne lo que leíste, probaste y descartaste, con la grabación de la reunión, un video de la falla y el PDF del proveedor adjuntos.",
+            "Cuando el camino está claro, se divide en partes: «Iniciar sesión», «Subir archivos grandes», «Retomar una subida cortada», cada una con sus propios pasos y notas.",
+            "Las partes se completan una a una, después el spike, y pasa al archivo.",
+            "Un año después, «¿cómo resolvimos las subidas a OneDrive?» lo encuentra: su página, sus partes y cada paso, tal como quedaron.",
+          ],
+        },
+        more: "La idea completa, en la ayuda",
+        page: "tareas",
+        anchor: "tarea-o-documento",
+      },
       title: "Tisty - Notas, documentos y tareas en tu propio disco",
       meta: "Notas, documentos y tareas en archivos de tu propio disco, para Windows y macOS. Gratis y de código abierto: sin cuenta de Tisty, sin servidor y sin suscripción.",
       problem:
@@ -133,7 +196,7 @@ export const PRODUCTS: Product[] = [
         line: "En tu disco o en tu propia nube.",
         checks: [
           "Se quedan en este equipo",
-          "Se sincronizan por tu Google Drive o por una carpeta que eliges",
+          "Se sincronizan por tu Google Drive, tu OneDrive o una carpeta que eliges",
           "Sin telemetría ni anuncios",
           "Exportas todo cuando quieras",
         ],
