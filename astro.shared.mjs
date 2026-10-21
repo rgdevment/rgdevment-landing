@@ -31,6 +31,7 @@ function rehypeRelocate(product) {
 export function shared({ product = null } = {}) {
   return {
     trailingSlash: 'always',
+    redirects: { '/es/apoyar/': '/es/colaborar/' },
     integrations: [tailwind({ applyBaseStyles: false })],
     // Mermaid's diagram chunks are large, but a page only downloads them when it draws a diagram.
     vite: { build: { chunkSizeWarningLimit: 1600 } },

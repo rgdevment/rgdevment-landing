@@ -47,7 +47,7 @@ Built from each project's GitHub wiki, in English and Spanish.
 - [Ayuda de LinkUnbound](https://www.linkunbound.app/es/ayuda/)
 - [Ayuda de CoPanda](https://www.copanda.app/es/ayuda/)
 - [Precios](https://rgdevment.com/es/precios/)
-- [Apoyar](https://rgdevment.com/es/apoyar/)
+- [Colaborar](https://rgdevment.com/es/colaborar/)
 
 ## Source
 

@@ -70,7 +70,7 @@ const say = es
       site: "Sitio",
       guides: "Guías",
       pricing: "Precios",
-      support: "Apoyar",
+      support: "Colaborar",
       foot: "MHG (rgdevment). Código abierto, cada programa con su licencia.",
       footer: "Pie de página",
       visits: "Este sitio cuenta visitas con Cloudflare Web Analytics, sin cookies ni identificadores.",
@@ -207,7 +207,7 @@ const say = es
             <ul class="mt-4 space-y-2.5 text-sm">
               {!owner && <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "guias" : "guides")}>{say.guides}</a></li>}
               <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "precios" : "pricing")}>{say.pricing}</a></li>
-              <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "apoyar" : "support")}>{say.support}</a></li>
+              <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "colaborar" : "support")}>{say.support}</a></li>
               <li><a class="text-body transition-colors hover:text-fg" href={href(es ? "en" : "es", at(es ? "en" : "es"))} lang={es ? "en" : "es"} hreflang={es ? "en" : "es"}>{es ? "English" : "Español"}</a></li>
             </ul>
           </div>
