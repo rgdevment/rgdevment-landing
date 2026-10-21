@@ -19,9 +19,9 @@ const items: [string, string, boolean][] = [
   [href(locale, docPath(locale, product.slug)), es ? "Ayuda" : "Docs", false],
   [href(locale, privacyPath(locale, product.slug)), es ? "Privacidad" : "Privacy", false],
   [href(locale, es ? "precios" : "pricing"), es ? "Precios" : "Pricing", false],
-  [href(locale, es ? "apoyar" : "support"), es ? "Apoyar" : "Support", false],
   ...(words ? ([[words.url, "Markdown", true]] as [string, string, boolean][]) : []),
   [product.repo, es ? "Repositorio" : "Repository", true],
+  [href(locale, es ? "colaborar" : "support"), es ? "Colaborar" : "Support", false],
 ];
 ---
 

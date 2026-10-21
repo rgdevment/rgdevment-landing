@@ -13,15 +13,15 @@ interface Props {
 const { locale, only } = Astro.props;
 const shown = only ? PRODUCTS.filter((one) => one.slug === only) : PRODUCTS;
 const es = locale === "es";
-const paths = { en: "support", es: "apoyar" };
+const paths = { en: "support", es: "colaborar" };
 
 const SPONSOR = "https://github.com/sponsors/rgdevment";
 const COFFEE = "https://buymeacoffee.com/rgdevment";
 
 const say = es
   ? {
-      title: "Cómo apoyar",
-      seo: "Cómo apoyar software libre, gratis y sin telemetría",
+      title: "Cómo colaborar",
+      seo: "Cómo colaborar con software libre, gratis y sin telemetría",
       description:
         "Formas de ayudar a que estas herramientas sigan existiendo. La mayoría no cuesta dinero, y son las que más sirven.",
       lede: "Sin telemetría no sé cuánta gente usa esto, y sin publicidad nadie lo encuentra por su cuenta. Así que lo que más ayuda no es el dinero: es que alguien diga que existe.",

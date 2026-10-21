@@ -17,6 +17,7 @@ export default defineConfig({
   integrations: [...base.integrations, moved],
   site: 'https://rgdevment.com',
   redirects: {
+    ...base.redirects,
     '/en/': '/',
   },
 });
