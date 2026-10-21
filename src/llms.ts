@@ -1,4 +1,3 @@
-import { getCollection } from "astro:content";
 import { docPath, docsOf } from "./content/docs";
 import { PRODUCTS, type Product, releasesUrl, storeUrl } from "./content/products";
 import { privacyPath } from "./content/privacy";
@@ -89,10 +88,7 @@ export async function appLlms(): Promise<Response> {
 
 export async function appLlmsFull(): Promise<Response> {
   const product = owner();
-  const all = await getCollection("docs", (one) => one.data.product === product.slug);
-  const ordered = ["en", "es"].flatMap((locale) =>
-    all.filter((one) => one.data.locale === locale).sort((a, b) => a.data.order - b.data.order),
-  );
+  const ordered = await docsOf(product.slug, "en");
   const pages = ordered.map((one) =>
     [
       `# ${one.data.title}`,
@@ -103,6 +99,6 @@ export async function appLlmsFull(): Promise<Response> {
       (one.body ?? "").trim(),
     ].join("\n"),
   );
-  const head = `# ${product.name} documentation\n\n> ${product.en.meta}\n\nEvery page of the ${product.name} docs, English first and then Spanish.`;
+  const head = `# ${product.name} documentation\n\n> ${product.en.meta}\n\nEvery page of the ${product.name} docs, in English. The same pages in Spanish live at ${canonical("es", docPath("es", product.slug))}.`;
   return new Response(`${[head, ...pages].join("\n\n---\n\n")}\n`, { headers: TEXT });
 }
