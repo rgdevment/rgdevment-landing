@@ -35,6 +35,12 @@ export function canonical(locale: Locale, path = ""): string {
   return to.startsWith("/") ? `${DOMAIN}${to}` : to;
 }
 
+/// Umami Cloud counts a site's visits; a site without an id here loads no counter.
+const UMAMI: Record<string, string> = {
+  "https://www.tisty.app": "6b714210-1097-45df-aa18-443eaa6ff419",
+};
+export const UMAMI_ID: string | null = UMAMI[DOMAIN] ?? null;
+
 export const PERSON_ID = `${MAIN}/#person`;
 export const WEBSITE_ID = `${DOMAIN}/#website`;
 
