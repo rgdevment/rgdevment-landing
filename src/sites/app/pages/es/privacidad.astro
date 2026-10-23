@@ -1,9 +1,9 @@
 ---
 import { getEntry } from "astro:content";
-import PrivacyPage from "../../../../components/PrivacyPage.astro";
+import PolicyPage from "../../../../components/PolicyPage.astro";
 import { HOME_PRODUCT } from "../../../../site";
 
 const policy = (await getEntry("privacy", HOME_PRODUCT!))!;
 ---
 
-<PrivacyPage policy={policy} locale="es" />
+<PolicyPage policy={policy} locale="es" />

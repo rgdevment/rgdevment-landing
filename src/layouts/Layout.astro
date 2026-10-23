@@ -1,10 +1,13 @@
 ---
 import "../styles/global.css";
+import { getEntry } from "astro:content";
 import Icon from "../components/Icon.astro";
 import Logo from "../components/Logo.astro";
 import Nav from "../components/Nav.astro";
 import ProductNav from "../components/ProductNav.astro";
 import { PRODUCTS, cardOf } from "../content/products";
+import { privacyPath } from "../content/privacy";
+import { termsPath } from "../content/terms";
 import { MAIN } from "../hosts";
 import { AUTHOR, DOMAIN, HOME_PRODUCT, LOCALES, PERSON_ID, UMAMI_ID, WEBSITE_ID, canonical, href, mainHref, type Locale } from "../site";
 
@@ -36,6 +39,8 @@ const owner = PRODUCTS.find((one) => one.slug === HOME_PRODUCT);
 const brand = owner?.name ?? "rgdevment";
 const full = title.includes(brand) || title.length > 44 ? title : `${title} · ${brand}`;
 const ownCard = owner && cardOf(owner, locale);
+// An app's own site points at its policies from the foot, where people look for them.
+const terms = owner && (await getEntry("terms", owner.slug));
 const card = image ?? ownCard ?? { src: es ? "/social-es.png" : "/social.png", width: 1200, height: 630 };
 const social = new URL(card.src, DOMAIN).toString();
 
@@ -71,6 +76,8 @@ const say = es
       guides: "Guías",
       pricing: "Precios",
       support: "Colaborar",
+      privacy: "Privacidad",
+      terms: "Términos de uso",
       foot: "MHG (rgdevment). Código abierto, cada programa con su licencia.",
       footer: "Pie de página",
       visits: UMAMI_ID
@@ -86,6 +93,8 @@ const say = es
       guides: "Guides",
       pricing: "Pricing",
       support: "Support",
+      privacy: "Privacy",
+      terms: "Terms of use",
       foot: "MHG (rgdevment). Open source, each program under its own licence.",
       footer: "Footer",
       visits: UMAMI_ID
@@ -217,6 +226,8 @@ const say = es
               {!owner && <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "guias" : "guides")}>{say.guides}</a></li>}
               <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "precios" : "pricing")}>{say.pricing}</a></li>
               <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "colaborar" : "support")}>{say.support}</a></li>
+              {owner && <li><a class="text-body transition-colors hover:text-fg" href={href(locale, privacyPath(locale, owner.slug))}>{say.privacy}</a></li>}
+              {terms && <li><a class="text-body transition-colors hover:text-fg" href={href(locale, termsPath(locale, owner.slug))}>{say.terms}</a></li>}
               <li><a class="text-body transition-colors hover:text-fg" href={href(es ? "en" : "es", at(es ? "en" : "es"))} lang={es ? "en" : "es"} hreflang={es ? "en" : "es"}>{es ? "English" : "Español"}</a></li>
             </ul>
           </div>

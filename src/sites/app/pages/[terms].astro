@@ -1,0 +1,15 @@
+---
+import { getEntry } from "astro:content";
+import PolicyPage from "../../../components/PolicyPage.astro";
+import { HOME_PRODUCT } from "../../../site";
+
+// Only an app whose repository keeps a TERMS.md has this page.
+export async function getStaticPaths() {
+  const policy = await getEntry("terms", HOME_PRODUCT!);
+  return policy ? [{ params: { terms: "terms" }, props: { policy } }] : [];
+}
+
+const { policy } = Astro.props;
+---
+
+<PolicyPage policy={policy} locale="en" kind="terms" />

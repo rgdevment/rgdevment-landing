@@ -6,29 +6,42 @@ import Icon from "./Icon.astro";
 import Layout from "../layouts/Layout.astro";
 import { PRODUCTS } from "../content/products";
 import { privacyPath } from "../content/privacy";
+import { termsPath } from "../content/terms";
 import { crumbs, type Locale } from "../site";
 
 interface Props {
-  policy: CollectionEntry<"privacy">;
+  policy: CollectionEntry<"privacy"> | CollectionEntry<"terms">;
   locale: Locale;
+  kind?: "privacy" | "terms";
 }
 
-const { policy, locale } = Astro.props;
+const { policy, locale, kind = "privacy" } = Astro.props;
 const es = locale === "es";
 const product = PRODUCTS.find((one) => one.slug === policy.data.product)!;
 const { Content } = await render(policy);
 
-const say = {
-  title: es ? `Política de privacidad de ${product.name}` : `${product.name} privacy policy`,
-  crumb: es ? "Privacidad" : "Privacy",
-  lede: es
-    ? `Qué hace ${product.name} con tus datos, sacado tal cual del repositorio. Se publica en inglés, que es la versión que rige.`
-    : `What ${product.name} does with your data, taken as it stands from its repository.`,
-  source: es ? "Ver en GitHub" : "View on GitHub",
-};
+const say =
+  kind === "terms"
+    ? {
+        title: es ? `Términos de uso de ${product.name}` : `${product.name} terms of use`,
+        crumb: es ? "Términos" : "Terms",
+        lede: es
+          ? `Las condiciones para usar ${product.name}, sacadas tal cual del repositorio. Se publican en inglés, que es la versión que rige.`
+          : `The terms for using ${product.name}, taken as they stand from its repository.`,
+        source: es ? "Ver en GitHub" : "View on GitHub",
+      }
+    : {
+        title: es ? `Política de privacidad de ${product.name}` : `${product.name} privacy policy`,
+        crumb: es ? "Privacidad" : "Privacy",
+        lede: es
+          ? `Qué hace ${product.name} con tus datos, sacado tal cual del repositorio. Se publica en inglés, que es la versión que rige.`
+          : `What ${product.name} does with your data, taken as it stands from its repository.`,
+        source: es ? "Ver en GitHub" : "View on GitHub",
+      };
 
-const path = privacyPath(locale, product.slug);
-const paths = { en: privacyPath("en", product.slug), es: privacyPath("es", product.slug) };
+const pathOf = kind === "terms" ? termsPath : privacyPath;
+const path = pathOf(locale, product.slug);
+const paths = { en: pathOf("en", product.slug), es: pathOf("es", product.slug) };
 const trail: [string, string][] = [
   [product.name, product.slug],
   [say.crumb, path],
