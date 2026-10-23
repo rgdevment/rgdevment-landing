@@ -17,13 +17,20 @@ const docs = defineCollection({
   }),
 });
 
-const privacy = defineCollection({
-  loader: glob({ pattern: "*.md", base: "./.wikis/privacy" }),
-  schema: z.object({
-    title: z.string(),
-    product: z.string(),
-    source: z.string().url(),
-  }),
+const policy = z.object({
+  title: z.string(),
+  product: z.string(),
+  source: z.string().url(),
 });
 
-export const collections = { docs, privacy };
+const privacy = defineCollection({
+  loader: glob({ pattern: "*.md", base: "./.wikis/privacy" }),
+  schema: policy,
+});
+
+const terms = defineCollection({
+  loader: glob({ pattern: "*.md", base: "./.wikis/terms" }),
+  schema: policy,
+});
+
+export const collections = { docs, privacy, terms };

@@ -7,6 +7,7 @@ import { APPS } from "./apps.mjs";
 const CACHE = ".wikis/src";
 const OUT = ".wikis/out";
 const PRIVACY = ".wikis/privacy";
+const TERMS = ".wikis/terms";
 const ASSETS = "public/docs-assets";
 const SECTION = { en: "docs", es: "ayuda" };
 const CALLOUT = {
@@ -185,22 +186,27 @@ function syncWiki(wiki) {
 }
 
 // A policy that failed to arrive stops the deploy: the page Google points people at must never go missing.
-function syncPrivacy({ repo, product }) {
+function syncPolicy({ repo, product }, { file, dir, fallback, route }) {
   const blob = `https://github.com/rgdevment/${repo}/blob/main/`;
-  const raw = execFileSync("curl", ["-fsSL", `https://raw.githubusercontent.com/rgdevment/${repo}/main/PRIVACY.md`], {
+  const raw = execFileSync("curl", ["-fsSL", `https://raw.githubusercontent.com/rgdevment/${repo}/main/${file}`], {
     encoding: "utf8",
   });
   const body = raw
     .replace(/^\uFEFF?#\s+.+\n/, "")
-    .replace(/\]\(([^)\s:#]+)(#[^)]*)?\)/g, (_, file, hash = "") => `](${blob}${file}${hash})`);
-  const meta = { product, title: titleOf(raw, "Privacy policy"), source: `${blob}PRIVACY.md` };
-  writeFileSync(join(PRIVACY, `${product}.md`), `---\n${JSON.stringify(meta, null, 2)}\n---\n${body}`);
-  console.log(`privacy: ${repo} → /${product}/privacy/`);
+    .replace(/\]\(([^)\s:#]+)(#[^)]*)?\)/g, (_, linked, hash = "") => `](${blob}${linked}${hash})`);
+  const meta = { product, title: titleOf(raw, fallback), source: `${blob}${file}` };
+  writeFileSync(join(dir, `${product}.md`), `---\n${JSON.stringify(meta, null, 2)}\n---\n${body}`);
+  console.log(`${route}: ${repo} → /${product}/${route}/`);
 }
 
 rmSync(OUT, { recursive: true, force: true });
 rmSync(PRIVACY, { recursive: true, force: true });
+rmSync(TERMS, { recursive: true, force: true });
 mkdirSync(ASSETS, { recursive: true });
 mkdirSync(PRIVACY, { recursive: true });
+mkdirSync(TERMS, { recursive: true });
 for (const wiki of APPS) syncWiki(wiki);
-for (const app of APPS) syncPrivacy(app);
+for (const app of APPS) {
+  syncPolicy(app, { file: "PRIVACY.md", dir: PRIVACY, fallback: "Privacy policy", route: "privacy" });
+  if (app.terms) syncPolicy(app, { file: "TERMS.md", dir: TERMS, fallback: "Terms of use", route: "terms" });
+}
