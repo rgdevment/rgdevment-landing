@@ -6,7 +6,7 @@ import Nav from "../components/Nav.astro";
 import ProductNav from "../components/ProductNav.astro";
 import { PRODUCTS, cardOf } from "../content/products";
 import { MAIN } from "../hosts";
-import { AUTHOR, DOMAIN, HOME_PRODUCT, LOCALES, PERSON_ID, WEBSITE_ID, canonical, href, mainHref, type Locale } from "../site";
+import { AUTHOR, DOMAIN, HOME_PRODUCT, LOCALES, PERSON_ID, UMAMI_ID, WEBSITE_ID, canonical, href, mainHref, type Locale } from "../site";
 
 interface Props {
   title: string;
@@ -73,7 +73,9 @@ const say = es
       support: "Colaborar",
       foot: "MHG (rgdevment). Código abierto, cada programa con su licencia.",
       footer: "Pie de página",
-      visits: "Este sitio cuenta visitas con Cloudflare Web Analytics, sin cookies ni identificadores.",
+      visits: UMAMI_ID
+        ? "Este sitio cuenta visitas con Umami, sin cookies ni identificadores."
+        : "Este sitio cuenta visitas con Cloudflare Web Analytics, sin cookies ni identificadores.",
     }
   : {
       skip: "Skip to content",
@@ -86,7 +88,9 @@ const say = es
       support: "Support",
       foot: "MHG (rgdevment). Open source, each program under its own licence.",
       footer: "Footer",
-      visits: "This site counts visits with Cloudflare Web Analytics, without cookies or identifiers.",
+      visits: UMAMI_ID
+        ? "This site counts visits with Umami, without cookies or identifiers."
+        : "This site counts visits with Cloudflare Web Analytics, without cookies or identifiers.",
     };
 ---
 
@@ -149,6 +153,11 @@ const say = es
     <meta name="generator" content={Astro.generator} />
 
     {graphs.map((graph) => <script type="application/ld+json" set:html={JSON.stringify(graph)} />)}
+    {
+      UMAMI_ID && (
+        <script is:inline defer src="https://cloud.umami.is/script.js" data-website-id={UMAMI_ID} data-domains={new URL(DOMAIN).host} />
+      )
+    }
   </head>
   <body class="min-h-screen">
     <a
