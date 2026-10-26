@@ -131,7 +131,7 @@ export const TISTY_GUIDES: Guide[] = [
       tool: [
         "The Model Context Protocol lets an assistant talk to a program on your own machine, with your permission, rather than to a copy of your data in the cloud.",
         "Tisty runs an MCP server, so the assistant reads and writes your notes, documents and tasks where they already are.",
-        "The files never leave the machine: what travels is the answer to the question you asked.",
+        "The assistant never takes the files off the machine: what travels is the answer to the question you asked.",
         "Free and open source, for Windows and macOS.",
       ],
       faq: [
@@ -141,7 +141,7 @@ export const TISTY_GUIDES: Guide[] = [
         },
         {
           q: "Do my notes reach the model provider?",
-          a: "Only what the assistant reads in order to answer a given question travels, inside the conversation itself. The files stay on your disk; nothing is uploaded or synchronised in the background.",
+          a: "Only what the assistant reads in order to answer a given question travels, inside the conversation itself. The files stay on your disk; the assistant uploads nothing and syncs nothing in the background.",
         },
       ],
     },
@@ -176,7 +176,7 @@ export const TISTY_GUIDES: Guide[] = [
       tool: [
         "El Model Context Protocol permite que un asistente hable con un programa de tu propio equipo, con tu permiso, en lugar de con una copia de tus datos en la nube.",
         "Tisty levanta un servidor MCP, así que el asistente lee y escribe tus notas, documentos y tareas donde ya están.",
-        "Los archivos no salen del equipo: lo que viaja es la respuesta a lo que preguntaste.",
+        "El asistente no saca los archivos del equipo: lo que viaja es la respuesta a lo que preguntaste.",
         "Gratuito y de código abierto, para Windows y macOS.",
       ],
       faq: [
@@ -186,7 +186,7 @@ export const TISTY_GUIDES: Guide[] = [
         },
         {
           q: "¿Mis notas llegan al proveedor del modelo?",
-          a: "Solo viaja lo que el asistente lee para responder a una pregunta concreta, dentro de la propia conversación. Los archivos se quedan en tu disco; no se sube ni se sincroniza nada por detrás.",
+          a: "Solo viaja lo que el asistente lee para responder a una pregunta concreta, dentro de la propia conversación. Los archivos se quedan en tu disco; el asistente no sube ni sincroniza nada por detrás.",
         },
       ],
     },

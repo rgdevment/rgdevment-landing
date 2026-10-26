@@ -117,7 +117,7 @@ export const PRODUCTS: Product[] = [
       what: [
         "What you finish stays: the steps you took, the dated journal, the files and the documents you leaned on. Months later you search for how you solved it, and it is there.",
         "Notes, documents and tasks kept as plain files on your own disk, readable without Tisty running.",
-        "No accounts, no subscription, no telemetry. You choose how your data travels: your own cloud, your NAS or just this computer. Free and open source.",
+        "No accounts, no subscription, no telemetry. You choose how your data travels: through your Google Drive, OneDrive or WebDAV server, encrypted if you want with a phrase only you know, through a folder you already sync, or nowhere beyond this computer. Free and open source.",
         "An MCP door your assistant can knock on, so a model can read and write what you keep, with your permission.",
       ],
       privacy:
@@ -126,7 +126,8 @@ export const PRODUCTS: Product[] = [
         line: "On your disk or in your own cloud.",
         checks: [
           "Stays on this computer",
-          "Syncs through your Google Drive, your OneDrive or a folder you choose",
+          "Syncs through your Google Drive, your OneDrive, your WebDAV server or a folder you choose",
+          "Your cloud encrypted, if you want, with a phrase only you know",
           "No telemetry, no ads",
           "Export everything whenever you want",
         ],
@@ -187,7 +188,7 @@ export const PRODUCTS: Product[] = [
       what: [
         "Lo que cierras se queda: los pasos que diste, el diario con su fecha, los archivos y los documentos en que te apoyaste. Meses después buscas cómo lo resolviste, y está.",
         "Notas, documentos y tareas guardados como archivos corrientes en tu propio disco, legibles sin Tisty abierto.",
-        "Sin cuentas, sin suscripción y sin telemetría. Tú eliges cómo viajan tus datos: tu nube, tu NAS o solo este equipo. Gratis y de código abierto.",
+        "Sin cuentas, sin suscripción y sin telemetría. Tú eliges cómo viajan tus datos: por tu Google Drive, OneDrive o servidor WebDAV, cifrados si quieres con una frase que solo tú conoces, por una carpeta que ya sincronizas o a ninguna parte fuera de este equipo. Gratis y de código abierto.",
         "Una puerta MCP a la que tu asistente puede llamar, para que un modelo lea y escriba lo que guardas, con tu permiso.",
       ],
       privacy:
@@ -196,7 +197,8 @@ export const PRODUCTS: Product[] = [
         line: "En tu disco o en tu propia nube.",
         checks: [
           "Se quedan en este equipo",
-          "Se sincronizan por tu Google Drive, tu OneDrive o una carpeta que eliges",
+          "Se sincronizan por tu Google Drive, tu OneDrive, tu servidor WebDAV o una carpeta que eliges",
+          "Tu nube cifrada, si quieres, con una frase que solo tú conoces",
           "Sin telemetría ni anuncios",
           "Exportas todo cuando quieras",
         ],
