@@ -21,7 +21,7 @@
   }
 
   @media (prefers-color-scheme: dark) {
-    :root {
+    :root:not([data-theme="light"]) {
       --canvas: 14 13 11;
       --surface: 24 22 20;
       --sunken: 33 31 28;
@@ -33,6 +33,19 @@
       --flame-tint: 46 28 18;
       color-scheme: dark;
     }
+  }
+
+  :root[data-theme="dark"] {
+    --canvas: 14 13 11;
+    --surface: 24 22 20;
+    --sunken: 33 31 28;
+    --fg: 246 243 238;
+    --body: 208 202 193;
+    --muted: 152 145 135;
+    --line: 48 45 41;
+    --flame-ink: 251 150 98;
+    --flame-tint: 46 28 18;
+    color-scheme: dark;
   }
 
   html {
@@ -67,6 +80,66 @@
 }
 
 @layer components {
+  .code-box {
+    position: relative;
+  }
+
+  .code-box .copy {
+    @apply absolute right-3 top-3 rounded-full border border-line bg-surface px-2.5 py-1 font-sans text-xs font-medium text-muted opacity-0 transition hover:text-fg focus-visible:opacity-100;
+  }
+
+  .code-box:hover .copy {
+    opacity: 1;
+  }
+
+  @media (hover: none) {
+    .code-box .copy {
+      opacity: 1;
+    }
+  }
+
+  .doc-search {
+    --pagefind-ui-scale: 0.78;
+    --pagefind-ui-primary: rgb(var(--fg));
+    --pagefind-ui-text: rgb(var(--body));
+    --pagefind-ui-background: rgb(var(--surface));
+    --pagefind-ui-border: rgb(var(--line));
+    --pagefind-ui-tag: rgb(var(--sunken));
+    --pagefind-ui-border-width: 1px;
+    --pagefind-ui-border-radius: 14px;
+    --pagefind-ui-font: inherit;
+  }
+
+  .heading-anchor {
+    @apply ml-2 font-normal text-muted no-underline opacity-0 transition-opacity hover:text-fg;
+  }
+
+  :is(h2, h3, h4):hover > .heading-anchor {
+    opacity: 1;
+  }
+
+  .on-dark {
+    display: none;
+  }
+
+  :root[data-theme="dark"] .on-dark {
+    display: block;
+  }
+
+  :root[data-theme="dark"] .on-light {
+    display: none;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) .on-dark {
+      display: block;
+    }
+
+    :root:not([data-theme="light"]) .on-light {
+      display: none;
+    }
+  }
+
   .shell {
     @apply mx-auto w-full max-w-shell px-5 sm:px-8;
   }

@@ -2,6 +2,7 @@
 import Logo from "./Logo.astro";
 import { PRODUCTS } from "../content/products";
 import { href, type Locale } from "../site";
+import ThemeSwitch from "./ThemeSwitch.astro";
 
 interface Props {
   locale: Locale;
@@ -78,9 +79,13 @@ const link = (key: string) =>
           {es ? "EN" : "ES"}
         </a>
       </li>
+      <li>
+        <ThemeSwitch locale={locale} />
+      </li>
     </ul>
 
-    <details class="group ml-auto lg:hidden">
+    <ThemeSwitch locale={locale} class="ml-auto lg:hidden" />
+    <details class="group lg:hidden">
       <summary
         class="grid h-10 w-10 cursor-pointer list-none place-items-center rounded-full border border-line text-fg [&::-webkit-details-marker]:hidden"
         aria-label={es ? "Menú" : "Menu"}

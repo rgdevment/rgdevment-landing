@@ -6,7 +6,5 @@ interface Props {
 const { class: klass = "h-6 w-auto" } = Astro.props;
 ---
 
-<picture>
-  <source srcset="/rgdevment-white.svg" media="(prefers-color-scheme: dark)" />
-  <img src="/rgdevment.svg" alt="rgdevment" width="660" height="108" class={klass} />
-</picture>
+<img src="/rgdevment.svg" alt="rgdevment" width="660" height="108" class={`on-light ${klass}`} />
+<img src="/rgdevment-white.svg" alt="rgdevment" width="660" height="108" class={`on-dark ${klass}`} />
