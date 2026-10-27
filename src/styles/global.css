@@ -110,6 +110,11 @@
     --pagefind-ui-font: inherit;
   }
 
+  .doc-search .pagefind-ui__drawer {
+    max-height: 50vh;
+    overflow-y: auto;
+  }
+
   .heading-anchor {
     @apply ml-2 font-normal text-muted no-underline opacity-0 transition-opacity hover:text-fg;
   }

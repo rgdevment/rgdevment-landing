@@ -17,12 +17,12 @@ const es = locale === "es";
 const link = "rounded-full px-3 py-1.5 text-muted transition-colors hover:text-fg";
 const words = product[locale].language;
 const items: [string, string, boolean][] = [
-  [href(locale, docPath(locale, product.slug)), es ? "Ayuda" : "Docs", false],
   [href(locale, privacyPath(locale, product.slug)), es ? "Privacidad" : "Privacy", false],
   [href(locale, es ? "precios" : "pricing"), es ? "Precios" : "Pricing", false],
-  ...(words ? ([[words.url, "Markdown", true]] as [string, string, boolean][]) : []),
   [product.repo, es ? "Repositorio" : "Repository", true],
   [href(locale, es ? "colaborar" : "support"), es ? "Colaborar" : "Support", false],
+  [href(locale, docPath(locale, product.slug)), es ? "Ayuda" : "Docs", false],
+  ...(words ? ([[words.url, "Markdown", true]] as [string, string, boolean][]) : []),
 ];
 ---
 
