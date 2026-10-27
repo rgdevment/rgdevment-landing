@@ -140,6 +140,12 @@ const say = es
     <meta name="twitter:image" content={social} />
     <meta name="twitter:image:alt" content={title} />
 
+    <script is:inline>
+      try {
+        const chosen = localStorage.getItem("theme");
+        if (chosen === "dark" || chosen === "light") document.documentElement.dataset.theme = chosen;
+      } catch {}
+    </script>
     <meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0e0d0b" media="(prefers-color-scheme: dark)" />
     {

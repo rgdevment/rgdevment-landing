@@ -1,5 +1,7 @@
 import { appendFileSync, copyFileSync, readdirSync, rmSync } from 'node:fs';
+import { rehypeHeadingIds } from '@astrojs/markdown-remark';
 import tailwind from '@astrojs/tailwind';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeKatex from 'rehype-katex';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import remarkMath from 'remark-math';
@@ -38,7 +40,21 @@ export function shared({ product = null } = {}) {
     markdown: {
       syntaxHighlight: { type: 'shiki', excludeLangs: ['math', 'mermaid'] },
       remarkPlugins: [[remarkMath, { singleDollarTextMath: false }]],
-      rehypePlugins: [[rehypeSanitize, wikiSafe], rehypeKatex, rehypeRelocate(product)],
+      rehypePlugins: [
+        [rehypeSanitize, wikiSafe],
+        rehypeKatex,
+        rehypeRelocate(product),
+        rehypeHeadingIds,
+        [
+          rehypeAutolinkHeadings,
+          {
+            behavior: 'append',
+            test: ['h2', 'h3', 'h4'],
+            properties: { className: ['heading-anchor'], ariaHidden: 'true', tabIndex: -1 },
+            content: { type: 'text', value: '#' },
+          },
+        ],
+      ],
     },
   };
 }

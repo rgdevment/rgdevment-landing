@@ -3,6 +3,7 @@ import { docPath } from "../content/docs";
 import { privacyPath } from "../content/privacy";
 import type { Product } from "../content/products";
 import { href, type Locale } from "../site";
+import ThemeSwitch from "./ThemeSwitch.astro";
 
 interface Props {
   product: Product;
@@ -53,9 +54,13 @@ const items: [string, string, boolean][] = [
           {es ? "EN" : "ES"}
         </a>
       </li>
+      <li>
+        <ThemeSwitch locale={locale} />
+      </li>
     </ul>
 
-    <details class="group ml-auto sm:hidden">
+    <ThemeSwitch locale={locale} class="ml-auto sm:hidden" />
+    <details class="group sm:hidden">
       <summary
         class="grid h-10 w-10 cursor-pointer list-none place-items-center rounded-full border border-line text-fg [&::-webkit-details-marker]:hidden"
         aria-label={es ? "Menú" : "Menu"}
