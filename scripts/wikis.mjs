@@ -1,6 +1,6 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { basename, extname, join } from "node:path";
 import { APPS } from "./apps.mjs";
 
@@ -14,6 +14,29 @@ const CALLOUT = {
   en: { NOTE: "Note", TIP: "Tip", IMPORTANT: "Important", WARNING: "Warning", CAUTION: "Caution" },
   es: { NOTE: "Nota", TIP: "Consejo", IMPORTANT: "Importante", WARNING: "Atención", CAUTION: "Cuidado" },
 };
+
+function carries(dir, tag, help) {
+  try {
+    execFileSync("git", ["-C", dir, "cat-file", "-e", `${tag}:${help}/_Sidebar.md`], { stdio: "ignore" });
+    return true;
+  } catch {
+    return false;
+  }
+}
+
+// The site describes the app people can install, so the help comes from the latest release, not from main.
+function fetchHelp({ repo, product, help }) {
+  const dir = join(CACHE, `${product}-repo`);
+  if (!existsSync(dir)) {
+    execFileSync("git", ["clone", "-q", "--filter=blob:none", "--sparse", "--no-checkout", `https://github.com/rgdevment/${repo}.git`, dir], { stdio: "inherit" });
+    execFileSync("git", ["-C", dir, "sparse-checkout", "set", help], { stdio: "inherit" });
+  } else execFileSync("git", ["-C", dir, "fetch", "-q", "--tags", "origin"], { stdio: "inherit" });
+  const tags = execFileSync("git", ["-C", dir, "tag", "--list", "v*", "--sort=-v:refname"], { encoding: "utf8" });
+  const tag = tags.split("\n").find((one) => one && !one.includes("-"));
+  if (!tag || !carries(dir, tag, help)) return null;
+  execFileSync("git", ["-C", dir, "checkout", "-q", "--detach", tag], { stdio: "inherit" });
+  return { dir: join(dir, help), tag };
+}
 
 function fetchWiki({ repo, product }) {
   const dir = join(CACHE, product);
@@ -154,7 +177,12 @@ function twinOf(page, sidebar) {
 }
 
 function syncWiki(wiki) {
-  const dir = fetchWiki(wiki);
+  const released = wiki.help ? fetchHelp(wiki) : null;
+  const dir = released ? released.dir : fetchWiki(wiki);
+  const sourceOf = (page) =>
+    released
+      ? `https://github.com/rgdevment/${wiki.repo}/blob/main/${wiki.help}/${encodeURIComponent(page)}.md`
+      : `https://github.com/rgdevment/${wiki.repo}/wiki/${page}`;
   const sidebar = readSidebar(readFileSync(join(dir, "_Sidebar.md"), "utf8"));
   const pages = buildIndex(sidebar);
 
@@ -176,13 +204,15 @@ function syncWiki(wiki) {
       section: entry.section,
       order: entry.order,
       updated: updatedOn(dir, file),
-      source: `https://github.com/rgdevment/${wiki.repo}/wiki/${page}`,
+      source: sourceOf(page),
     };
     const target = join(OUT, wiki.product, entry.locale);
     mkdirSync(target, { recursive: true });
     writeFileSync(join(target, `${entry.slug || "index"}.md`), `---\n${JSON.stringify(meta, null, 2)}\n---\n${body}`);
   }
-  console.log(`wikis: ${wiki.repo} → ${pages.size} pages`);
+  const from = released ? `${wiki.help} at ${released.tag}` : "wiki";
+  console.log(`wikis: ${wiki.repo} → ${pages.size} pages from ${from}`);
+  if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `- ${wiki.repo}: ${pages.size} pages from ${from}\n`);
 }
 
 // A policy that failed to arrive stops the deploy: the page Google points people at must never go missing.

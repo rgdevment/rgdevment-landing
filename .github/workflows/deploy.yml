@@ -30,7 +30,7 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Fetch wikis
+      - name: Fetch each app's docs, Tisty's from its latest release
         run: npm run wikis
 
       - name: Fetch each app's hero, mascot and icon
