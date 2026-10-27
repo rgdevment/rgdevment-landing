@@ -15,6 +15,15 @@ const CALLOUT = {
   es: { NOTE: "Nota", TIP: "Consejo", IMPORTANT: "Importante", WARNING: "Atención", CAUTION: "Cuidado" },
 };
 
+function fetchHelp({ repo, product, help }) {
+  const dir = join(CACHE, `${product}-repo`);
+  if (!existsSync(dir)) {
+    execFileSync("git", ["clone", "-q", "--filter=blob:none", "--sparse", `https://github.com/rgdevment/${repo}.git`, dir], { stdio: "inherit" });
+    execFileSync("git", ["-C", dir, "sparse-checkout", "set", help], { stdio: "inherit" });
+  } else execFileSync("git", ["-C", dir, "pull", "--ff-only", "-q"], { stdio: "inherit" });
+  return join(dir, help);
+}
+
 function fetchWiki({ repo, product }) {
   const dir = join(CACHE, product);
   if (!existsSync(dir)) execFileSync("git", ["clone", "-q", `https://github.com/rgdevment/${repo}.wiki.git`, dir], { stdio: "inherit" });
@@ -154,7 +163,11 @@ function twinOf(page, sidebar) {
 }
 
 function syncWiki(wiki) {
-  const dir = fetchWiki(wiki);
+  const dir = wiki.help ? fetchHelp(wiki) : fetchWiki(wiki);
+  const sourceOf = (page) =>
+    wiki.help
+      ? `https://github.com/rgdevment/${wiki.repo}/blob/main/${wiki.help}/${encodeURIComponent(page)}.md`
+      : `https://github.com/rgdevment/${wiki.repo}/wiki/${page}`;
   const sidebar = readSidebar(readFileSync(join(dir, "_Sidebar.md"), "utf8"));
   const pages = buildIndex(sidebar);
 
@@ -176,7 +189,7 @@ function syncWiki(wiki) {
       section: entry.section,
       order: entry.order,
       updated: updatedOn(dir, file),
-      source: `https://github.com/rgdevment/${wiki.repo}/wiki/${page}`,
+      source: sourceOf(page),
     };
     const target = join(OUT, wiki.product, entry.locale);
     mkdirSync(target, { recursive: true });
