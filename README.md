@@ -18,7 +18,7 @@ npm run check   # types, also run by the deploy
 ## Where the content lives
 
 - `src/content/products.ts` and `src/content/guides*.ts`: product pages and guides, in English and Spanish.
-- The docs under `/<app>/docs/` and `/es/<app>/ayuda/` come from each project: Tisty's from `docs/help/` in its repo, which the app also carries offline, and the others' from their GitHub wiki. Edit them there, not in this repo: `scripts/wikis.mjs` pairs the languages by their order in `_Sidebar.md`, and the deploy rebuilds every six hours, which also picks up each new app release.
+- The docs under `/<app>/docs/` and `/es/<app>/ayuda/` come from each project: Tisty's from `docs/help/` in its latest release, which the app also carries offline (its wiki until a release carries it), and the others' from their GitHub wiki. Edit them there, not in this repo: `scripts/wikis.mjs` pairs the languages by their order in `_Sidebar.md`, and the deploy rebuilds every six hours, which also picks up each new app release.
 - Each app's hero, mascot and `.ico` are copied from its repo on every deploy, by the paths in `scripts/apps.mjs`. A file that moved keeps the last copy and leaves a warning in the Actions run.
 - Link previews use a 1200×630 crop of each hero, built under `/og/`. Each app's site has its own `llms.txt` and `llms-full.txt`, built from its data and docs.
 - Each deploy tells IndexNow (Bing and others) what changed, once it is live: a push sends every page, and the scheduled runs only the pages whose `lastmod` moved since the live sitemap (`scripts/indexnow.sh`).
