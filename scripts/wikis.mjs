@@ -1,6 +1,6 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
-import { existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
+import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { basename, extname, join } from "node:path";
 import { APPS } from "./apps.mjs";
 
@@ -212,6 +212,7 @@ function syncWiki(wiki) {
   }
   const from = released ? `${wiki.help} at ${released.tag}` : "wiki";
   console.log(`wikis: ${wiki.repo} → ${pages.size} pages from ${from}`);
+  if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `- ${wiki.repo}: ${pages.size} pages from ${from}\n`);
 }
 
 // A policy that failed to arrive stops the deploy: the page Google points people at must never go missing.
