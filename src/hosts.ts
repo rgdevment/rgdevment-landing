@@ -39,6 +39,16 @@ function away(url: string): string {
   return home ? `${home}${relocate(path.replace(named, first), first)}` : url;
 }
 
+/// Pages renamed on every site; a 301 is what search engines follow, not a page that refreshes itself.
+const RENAMED: Record<string, string> = { "/es/apoyar/": "/es/colaborar/" };
+
+export function renamed(more: Record<string, string> = {}): string {
+  return Object.entries({ ...RENAMED, ...more })
+    .flatMap(([from, to]) => [`${from} ${to} 301`, `${from.replace(/\/$/, "")} ${to} 301`])
+    .join("\n")
+    .concat("\n");
+}
+
 /// Cloudflare Pages rules sending the main site's old pages of each moved product to its domain.
 export function redirects(): string {
   const formers = Object.entries(FORMER).map(([old, product]) => [homeOf(product), old]);

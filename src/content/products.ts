@@ -37,6 +37,10 @@ export type Product = {
   storeId?: string;
   winget?: string;
   cask?: string;
+  /** Directories and registries with a page of their own for it. */
+  listings?: string[];
+  /** Its MCP server: the registry name and, per assistant, the command that connects it. */
+  mcp?: { registry: string; connect: [string, string][] };
   shot?: {
     src: string;
     srcEs?: string;
@@ -61,6 +65,20 @@ export const PRODUCTS: Product[] = [
     platforms: ["Windows", "macOS"],
     storeId: "9PGVWXD8X93N",
     cask: "tisty",
+    listings: [
+      "https://github.com/mcp/rgdevment/tisty",
+      "https://www.npmjs.com/package/tisty-mcp",
+      "https://glama.ai/mcp/servers/rgdevment/Tisty",
+      "https://mcpmarket.com/server/tisty",
+    ],
+    mcp: {
+      registry: "io.github.rgdevment/tisty",
+      connect: [
+        ["Claude Code", "/plugin install tisty --marketplace rgdevment/mcp-plugins"],
+        ["Gemini CLI", "gemini extensions install https://github.com/rgdevment/mcp-plugins"],
+        ["Any other client, such as VS Code or Cursor", "npx -y tisty-mcp"],
+      ],
+    },
     shot: {
       src: "/tisty-social.png",
       srcEs: "/tisty-social-es.png",

@@ -72,12 +72,15 @@ const schema = [
     downloadUrl: releases,
     ...(release ? { softwareVersion: release.version, dateModified: release.date } : {}),
     ...(store ? { installUrl: store } : {}),
-    sameAs: [product.repo, ...(store ? [store] : [])],
+    sameAs: [product.repo, ...(store ? [store] : []), ...(product.listings ?? [])],
     license: `${product.repo}/blob/main/LICENSE`,
     isAccessibleForFree: true,
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     author: { "@id": PERSON_ID },
-    softwareHelp: { "@type": "CreativeWork", url: product.repo },
+    softwareHelp: {
+      "@type": "CreativeWork",
+      url: docs.length > 0 ? canonical(locale, docPath(locale, product.slug)) : product.repo,
+    },
   },
   {
     "@context": "https://schema.org",

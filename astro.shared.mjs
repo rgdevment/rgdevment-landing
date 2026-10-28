@@ -1,11 +1,11 @@
-import { appendFileSync, copyFileSync, readdirSync, rmSync } from 'node:fs';
+import { appendFileSync, copyFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { rehypeHeadingIds } from '@astrojs/markdown-remark';
 import tailwind from '@astrojs/tailwind';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
 import rehypeKatex from 'rehype-katex';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import remarkMath from 'remark-math';
-import { HOMES, homeOf, relocate } from './src/hosts.ts';
+import { HOMES, homeOf, relocate, renamed } from './src/hosts.ts';
 
 const PRODUCTS = Object.values(HOMES);
 
@@ -33,7 +33,6 @@ function rehypeRelocate(product) {
 export function shared({ product = null } = {}) {
   return {
     trailingSlash: 'always',
-    redirects: { '/es/apoyar/': '/es/colaborar/' },
     integrations: [tailwind({ applyBaseStyles: false })],
     // Mermaid's diagram chunks are large, but a page only downloads them when it draws a diagram.
     vite: { build: { chunkSizeWarningLimit: 1600 } },
@@ -78,6 +77,7 @@ function ownFiles(product) {
           ...readdirSync(at('docs-assets/')).filter((name) => !name.startsWith(`${product}-`)).map((name) => `docs-assets/${name}`),
         ];
         copyFileSync(`./public/icons/${product}.ico`, at('favicon.ico'));
+        writeFileSync(at('_redirects'), renamed());
         appendFileSync(at('_headers'), '\n/llms-full.txt\n  Content-Type: text/plain; charset=utf-8\n');
         drop.forEach((path) => rmSync(at(path), { force: true }));
       },
