@@ -20,6 +20,19 @@ function install(product: Product): string[] {
   ];
 }
 
+function assistants(product: Product): string[] {
+  if (!product.mcp) return [];
+  return [
+    "## Connect an assistant",
+    "",
+    `Its MCP server comes inside the app, listed in the MCP Registry as \`${product.mcp.registry}\`. With ${product.name} installed, Settings › Assistants connects the assistants it finds; by hand:`,
+    "",
+    ...product.mcp.connect.map(([who, command]) => `- ${who}: \`${command}\``),
+    ...(product.listings?.length ? ["", "Also listed at:", "", ...product.listings.map((url) => `- ${url}`)] : []),
+    "",
+  ];
+}
+
 export async function appLlms(): Promise<Response> {
   const product = owner();
   const t = product.en;
@@ -62,6 +75,7 @@ export async function appLlms(): Promise<Response> {
     "",
     ...install(product),
     "",
+    ...assistants(product),
     "## Documentation",
     "",
     link("Overview", docPath("en", product.slug)),
