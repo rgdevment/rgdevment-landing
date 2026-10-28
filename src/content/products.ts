@@ -70,6 +70,7 @@ export const PRODUCTS: Product[] = [
       "https://www.npmjs.com/package/tisty-mcp",
       "https://glama.ai/mcp/servers/rgdevment/Tisty",
       "https://mcpmarket.com/server/tisty",
+      "https://m8ven.ai/mcp/rgdevment-tisty-15kwqt",
     ],
     mcp: {
       registry: "io.github.rgdevment/tisty",
@@ -129,12 +130,14 @@ export const PRODUCTS: Product[] = [
         anchor: "a-task-or-a-document",
       },
       title: "Tisty - Notes, documents and tasks on your own disk",
-      meta: "Notes, documents and tasks as plain files on your own disk, for Windows and macOS. Free and open source: no Tisty account, no server, no subscription.",
+      meta: "Notes, documents with diagrams and typed tables, and tasks as plain files on your own disk, for Windows and macOS. Free and open source: no Tisty account, no server, no subscription.",
       problem:
         "A task list forgets the moment you tick the box. Six months later the same problem comes back and all that is left is knowing you solved it once, somehow.",
       what: [
         "What you finish stays: the steps you took, the dated journal, the files and the documents you leaned on. Months later you search for how you solved it, and it is there.",
         "Notes, documents and tasks kept as plain files on your own disk, readable without Tisty running.",
+        "Today puts the urgent first: overdue only past its deadline, late when the day you planned slipped by, underway once started. A thin bar shows the time gone against the parts closed.",
+        "Documents that do more than text: tables whose columns know they hold dates, money, options or ratings and add themselves up, diagrams drawn by hand in a window of their own, formulas, pages and their own PDF. Still plain Markdown any editor opens.",
         "No accounts, no subscription, no telemetry. You choose how your data travels: through your Google Drive, OneDrive or WebDAV server, encrypted if you want with a phrase only you know, through a folder you already sync, or nowhere beyond this computer. Free and open source.",
         "An MCP door your assistant can knock on, so a model can read and write what you keep, with your permission.",
       ],
@@ -158,6 +161,10 @@ export const PRODUCTS: Product[] = [
         {
           q: "What is the MCP door for?",
           a: "It lets an assistant read and write your notes and tasks through the Model Context Protocol, on your machine and with your permission.",
+        },
+        {
+          q: "Can I draw diagrams?",
+          a: "Yes. A mermaid block draws it, and mind maps, database schemas, flowcharts and class diagrams are also drawn by hand in a window of their own, saved as the same text and exported as PNG, JPG or SVG.",
         },
       ],
     },
@@ -200,12 +207,14 @@ export const PRODUCTS: Product[] = [
         anchor: "tarea-o-documento",
       },
       title: "Tisty - Notas, documentos y tareas en tu propio disco",
-      meta: "Notas, documentos y tareas en archivos de tu propio disco, para Windows y macOS. Gratis y de código abierto: sin cuenta de Tisty, sin servidor y sin suscripción.",
+      meta: "Notas, documentos con diagramas y tablas con tipos, y tareas en archivos de tu propio disco, para Windows y macOS. Gratis y de código abierto: sin cuenta de Tisty, sin servidor y sin suscripción.",
       problem:
         "Una lista de tareas olvida en cuanto marcas la casilla. Seis meses después vuelve el mismo problema y lo único que queda es saber que ya lo resolviste una vez, de alguna manera.",
       what: [
         "Lo que cierras se queda: los pasos que diste, el diario con su fecha, los archivos y los documentos en que te apoyaste. Meses después buscas cómo lo resolviste, y está.",
         "Notas, documentos y tareas guardados como archivos corrientes en tu propio disco, legibles sin Tisty abierto.",
+        "Hoy pone primero lo urgente: vence solo lo que pasó su límite, se atrasa lo que no hiciste el día que planeaste y queda en curso lo que ya empezó. Una barra fina compara el plazo que pasó con las partes cerradas.",
+        "Documentos que hacen más que texto: tablas cuyas columnas saben si guardan fechas, montos, opciones o estrellas y se suman solas, diagramas que dibujas a mano en su propia ventana, fórmulas, páginas y su propio PDF. Y siguen siendo Markdown que abre cualquier editor.",
         "Sin cuentas, sin suscripción y sin telemetría. Tú eliges cómo viajan tus datos: por tu Google Drive, OneDrive o servidor WebDAV, cifrados si quieres con una frase que solo tú conoces, por una carpeta que ya sincronizas o a ninguna parte fuera de este equipo. Gratis y de código abierto.",
         "Una puerta MCP a la que tu asistente puede llamar, para que un modelo lea y escriba lo que guardas, con tu permiso.",
       ],
@@ -229,6 +238,10 @@ export const PRODUCTS: Product[] = [
         {
           q: "¿Para qué sirve la puerta MCP?",
           a: "Permite que un asistente lea y escriba tus notas y tareas por el Model Context Protocol, en tu equipo y con tu permiso.",
+        },
+        {
+          q: "¿Puedo dibujar diagramas?",
+          a: "Sí. Un bloque mermaid lo dibuja, y los mapas mentales, los esquemas de base de datos y los diagramas de flujo y de clases también se dibujan a mano en su propia ventana, se guardan como el mismo texto y se exportan como PNG, JPG o SVG.",
         },
       ],
     },
