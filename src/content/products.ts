@@ -164,7 +164,7 @@ export const PRODUCTS: Product[] = [
         },
         {
           q: "Can I draw diagrams?",
-          a: "Yes. A mermaid block draws it, and mind maps, database schemas, flowcharts and class diagrams are also drawn by hand in a window of their own, saved as the same text and exported as PNG, JPG or SVG.",
+          a: "Yes. A mermaid block draws it, and mind maps, database schemas, freeform diagrams with every Mermaid shape and class diagrams are also drawn by hand in a window of their own, saved as the same text, shown on the page as you drew them and exported as PNG, JPG or SVG.",
         },
       ],
     },
@@ -241,7 +241,7 @@ export const PRODUCTS: Product[] = [
         },
         {
           q: "¿Puedo dibujar diagramas?",
-          a: "Sí. Un bloque mermaid lo dibuja, y los mapas mentales, los esquemas de base de datos y los diagramas de flujo y de clases también se dibujan a mano en su propia ventana, se guardan como el mismo texto y se exportan como PNG, JPG o SVG.",
+          a: "Sí. Un bloque mermaid lo dibuja, y los mapas mentales, los esquemas de base de datos, los diagramas libres con todas las formas de Mermaid y los de clases también se dibujan a mano en su propia ventana, se guardan como el mismo texto, se ven en la página tal como los dibujaste y se exportan como PNG, JPG o SVG.",
         },
       ],
     },
