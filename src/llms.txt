@@ -6,15 +6,15 @@ Motto: software out of conviction, not subscription.
 
 ## Tools
 
-- [Tisty](https://www.tisty.app/): Notes, documents and tasks, and the record of what you learned solving them: what you finish keeps its steps, its dated journal and the documents you leaned on. Plain files on disk, readable without the application. Syncs between computers through the user's own Google Drive, OneDrive or WebDAV server, encrypted if they want with a 24-word phrase only they know, or through a folder they already sync, with no server in between. Exposes an MCP server so an assistant can read and write them with permission. Windows and macOS. AGPL-3.0.
+- [Tisty](https://www.tisty.app/): Notes, documents and tasks, and the record of what you learned solving them: what you finish keeps its steps, its dated journal and the documents you leaned on. Documents carry typed tables and diagrams drawn by hand. Plain files on disk, readable without the application. Syncs between computers through the user's own Google Drive, OneDrive or WebDAV server, encrypted if they want with a 24-word phrase only they know, or through a folder they already sync, with no server in between. Exposes an MCP server so an assistant can read and write them with permission. Windows and macOS. AGPL-3.0.
 - [LinkUnbound](https://www.linkunbound.app/): Chooses which browser opens every link. Registers as the default browser on Windows and macOS; a rule can match the site, a browser profile, or the application the link came from. Unwraps Microsoft SafeLinks. GPL-3.0-only.
 - [CoPanda](https://www.copanda.app/): Formerly CopyPaste. Clipboard manager keeping a searchable local history. Ignores clipboard content from password managers. Windows and macOS. GPL-3.0.
 
 ## Documentation
 
-Built from each project's GitHub wiki, in English and Spanish.
+Built from each project's own help pages, in English and Spanish.
 
-- [Tisty docs](https://www.tisty.app/docs/): installation, the Markdown editor, tasks, the archive, sync and backup, the MCP server and its tools.
+- [Tisty docs](https://www.tisty.app/docs/): installation, the Markdown editor, diagrams, tasks, the archive, sync and backup, the MCP server and its tools.
 - [Tisty Markdown](https://markdown.tisty.app/): every word a Tisty document understands, CommonMark and GitHub's additions plus Tisty's own, one page each ([summary](https://markdown.tisty.app/llms.txt), [full](https://markdown.tisty.app/llms-full.txt), [español](https://markdown.tisty.app/es/)).
 - [LinkUnbound docs](https://www.linkunbound.app/docs/): installation, the picker, rules, browsers and profiles, links from other apps, troubleshooting.
 - [CoPanda docs](https://www.copanda.app/docs/): installation, the panel, content kinds, paste as, backup and migration, troubleshooting.

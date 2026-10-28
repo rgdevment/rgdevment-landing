@@ -60,8 +60,7 @@ const overview = { label: say.overview, href: href(locale, index), on: !data.pag
 const source = HOME_PRODUCT === product.slug ? { label: say.source, href: product.repo } : undefined;
 const words = product[locale].language;
 const language = words && { eyebrow: say.reference, label: words.title, href: words.url };
-// The wiki names its Markdown section the same in both languages.
-const promote = words && (!data.page || data.section === "Markdown");
+const promote = words && (!data.page || ["Documents", "Documentos"].includes(data.section));
 
 const schema = [
   {
