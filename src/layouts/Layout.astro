@@ -10,6 +10,7 @@ import { privacyPath } from "../content/privacy";
 import { termsPath } from "../content/terms";
 import { MAIN } from "../hosts";
 import { AUTHOR, DOMAIN, HOME_PRODUCT, LOCALES, PERSON_ID, UMAMI_ID, WEBSITE_ID, canonical, href, mainHref, type Locale } from "../site";
+import ProductIcon from "../components/ProductIcon.astro";
 
 interface Props {
   title: string;
@@ -153,7 +154,8 @@ const say = es
         <>
           <link rel="icon" type="image/x-icon" href="/favicon.ico" sizes="any" />
           <link rel="icon" type="image/png" href={owner.icon} />
-          <link rel="apple-touch-icon" href={owner.icon} />
+          {owner.iconDark && <link rel="icon" type="image/png" href={owner.iconDark} media="(prefers-color-scheme: dark)" />}
+          <link rel="apple-touch-icon" href={owner.iconDark ?? owner.icon} />
         </>
       ) : (
         <>
@@ -218,7 +220,7 @@ const say = es
                 PRODUCTS.map((one) => (
                   <li>
                     <a class="inline-flex items-center gap-2.5 text-body transition-colors hover:text-fg" href={href(locale, one.slug)}>
-                      <img src={one.icon} alt="" width="20" height="20" class="h-5 w-5 rounded-md" loading="lazy" />
+                      <ProductIcon product={one} size={20} class="h-5 w-5 rounded-md" loading="lazy" />
                       {one.name}
                     </a>
                   </li>

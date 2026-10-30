@@ -9,6 +9,7 @@ import { GUIDES, written } from "../content/guides";
 import { PRODUCTS, type Product, cardOf, releasesUrl, shotSrc, storeUrl, words } from "../content/products";
 import { latestRelease, releaseDate } from "../content/releases";
 import { DOMAIN, HOME_PRODUCT, PERSON_ID, canonical, crumbs, href, type Locale } from "../site";
+import ProductIcon from "./ProductIcon.astro";
 
 interface Props {
   product: Product;
@@ -116,11 +117,9 @@ const schema = [
       <Crumbs locale={locale} trail={[[product.name, path]]} />
 
       <header class="mx-auto mt-12 max-w-3xl text-center">
-        <img
-          src={product.icon}
-          alt=""
-          width="96"
-          height="96"
+        <ProductIcon
+          product={product}
+          size={96}
           class="mx-auto h-20 w-20 rounded-[1.4rem] shadow-[0_18px_40px_-16px_rgb(0_0_0/0.5)] sm:h-24 sm:w-24"
         />
         <h1 class="mt-7 text-5xl font-semibold tracking-[-0.03em] sm:text-6xl">{product.name}</h1>
@@ -487,7 +486,7 @@ brew install --cask ${product.cask}`}
         others.map((one) => (
           <li>
             <a class="card-link group flex items-center gap-4 p-5" href={href(locale, one.slug)}>
-              <img src={one.icon} alt="" width="48" height="48" class="h-12 w-12 rounded-xl" loading="lazy" />
+              <ProductIcon product={one} size={48} class="h-12 w-12 rounded-xl" loading="lazy" />
               <span class="min-w-0">
                 <span class="block font-display text-lg font-semibold text-fg">{one.name}</span>
                 <span class="block text-sm text-muted">{words(one, locale).tagline}</span>

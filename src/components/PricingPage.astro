@@ -5,6 +5,7 @@ import Layout from "../layouts/Layout.astro";
 import { privacyPath } from "../content/privacy";
 import { PRODUCTS, type Product, words } from "../content/products";
 import { crumbs, href, type Locale } from "../site";
+import ProductIcon from "./ProductIcon.astro";
 
 interface Props {
   locale: Locale;
@@ -185,7 +186,7 @@ const schema = [
               aria-hidden="true"
             />
             <div class="relative flex items-center gap-3">
-              <img src={product.icon} alt="" width="44" height="44" class="h-11 w-11 rounded-xl" loading="lazy" />
+              <ProductIcon product={product} size={44} class="h-11 w-11 rounded-xl" loading="lazy" />
               <h2 class="text-2xl font-semibold">{product.name}</h2>
             </div>
             <p class="relative mt-3 text-[15px] leading-snug text-muted">{words(product, locale).tagline}</p>

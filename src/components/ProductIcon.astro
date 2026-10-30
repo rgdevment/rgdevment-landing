@@ -1,0 +1,24 @@
+---
+import type { Product } from "../content/products";
+
+interface Props {
+  product: Pick<Product, "icon" | "iconDark">;
+  size: number;
+  class: string;
+  alt?: string;
+  loading?: "lazy";
+}
+
+const { product, size, class: klass, alt = "", loading } = Astro.props;
+---
+
+{
+  product.iconDark ? (
+    <>
+      <img src={product.icon} alt={alt} width={size} height={size} class={`on-light ${klass}`} loading={loading} />
+      <img src={product.iconDark} alt={alt} width={size} height={size} class={`on-dark ${klass}`} loading={loading} />
+    </>
+  ) : (
+    <img src={product.icon} alt={alt} width={size} height={size} class={klass} loading={loading} />
+  )
+}
