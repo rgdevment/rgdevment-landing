@@ -8,6 +8,7 @@ import Layout from "../layouts/Layout.astro";
 import { bySection, type Doc, docPath, docsOf } from "../content/docs";
 import { PRODUCTS } from "../content/products";
 import { AUTHOR, HOME_PRODUCT, PERSON_ID, WEBSITE_ID, canonical, crumbs, href, type Locale } from "../site";
+import ProductIcon from "./ProductIcon.astro";
 
 interface Props {
   doc: Doc;
@@ -99,7 +100,7 @@ const schema = [
         <div class="doc-search mb-6 hidden shrink-0 lg:pr-3" data-search></div>
         <details class="group card lg:hidden">
           <summary class="flex cursor-pointer list-none items-center gap-3 p-4 [&::-webkit-details-marker]:hidden">
-            <img src={product.icon} alt="" width="28" height="28" class="h-7 w-7 rounded-lg" />
+            <ProductIcon product={product} size={28} class="h-7 w-7 rounded-lg" />
             <span class="font-display font-semibold text-fg">{say.title}</span>
             <Icon name="chevron" class="ml-auto h-4 w-4 text-muted transition group-open:rotate-180" />
           </summary>
@@ -109,7 +110,7 @@ const schema = [
         </details>
         <div class="hidden min-h-0 lg:block lg:overflow-y-auto lg:pb-6 lg:pr-3">
           <a href={href(locale, product.slug)} class="flex items-center gap-3">
-            <img src={product.icon} alt="" width="28" height="28" class="h-7 w-7 rounded-lg" />
+            <ProductIcon product={product} size={28} class="h-7 w-7 rounded-lg" />
             <span class="font-display font-semibold text-fg">{product.name}</span>
           </a>
           <nav aria-label={say.menu} class="mt-6 text-[15px]">
