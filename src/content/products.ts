@@ -51,8 +51,6 @@ export type Product = {
   };
   accent: string;
   icon: string;
-  /** The same icon drawn for a dark page, when it has one. */
-  iconDark?: string;
   mascot?: string;
   en: Words;
   es: Words;
@@ -91,8 +89,7 @@ export const PRODUCTS: Product[] = [
       es: "Tisty: las tareas del día con sus pasos, los documentos al lado y los días que vienen, guardados como archivos en disco",
     },
     accent: "#6F4BD8",
-    icon: "/icons/tisty.png",
-    iconDark: "/icons/tisty-dark.png",
+    icon: "/icons/tisty-mark.png",
     mascot: "/tisty-head.svg",
     en: {
       tagline: "Notes, documents and tasks. The record of what you learned solving them.",

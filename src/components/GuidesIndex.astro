@@ -6,7 +6,6 @@ import { docPath } from "../content/docs";
 import { GUIDES, written } from "../content/guides";
 import { PRODUCTS, words } from "../content/products";
 import { canonical, crumbs, href, type Locale } from "../site";
-import ProductIcon from "./ProductIcon.astro";
 
 interface Props {
   locale: Locale;
@@ -88,7 +87,7 @@ const schema = [
             PRODUCTS.map((one) => (
               <li>
                 <a class="chip transition hover:border-fg/25 hover:text-fg" href={href(locale, docPath(locale, one.slug))}>
-                  <ProductIcon product={one} size={18} class="h-[18px] w-[18px] rounded-[5px]" />
+                  <img src={one.icon} alt="" width="18" height="18" class="h-[18px] w-[18px] rounded-[5px]" />
                   {say.help} {one.name}
                 </a>
               </li>
@@ -104,7 +103,7 @@ const schema = [
       groups.map(({ product, guides }) => (
         <section aria-labelledby={`g-${product.slug}`}>
           <div class="flex items-center gap-3 border-b border-line pb-4">
-            <ProductIcon product={product} size={32} class="h-8 w-8 rounded-lg" loading="lazy" />
+            <img src={product.icon} alt="" width="32" height="32" class="h-8 w-8 rounded-lg" loading="lazy" />
             <h2 id={`g-${product.slug}`} class="text-2xl font-semibold tracking-tight">
               <a class="transition-colors hover:text-flame-ink" href={href(locale, product.slug)}>{product.name}</a>
             </h2>
