@@ -4,6 +4,7 @@ import Icon from "./Icon.astro";
 import Layout from "../layouts/Layout.astro";
 import { PRODUCTS, storeUrl } from "../content/products";
 import { crumbs, type Locale } from "../site";
+import ProductIcon from "./ProductIcon.astro";
 
 interface Props {
   locale: Locale;
@@ -119,7 +120,7 @@ const icons = ["star", "store", "heart", "code"] as const;
           const store = storeUrl(product);
           return (
             <li class="card flex items-center gap-3 p-4">
-              <img src={product.icon} alt="" width="36" height="36" class="h-9 w-9 rounded-xl" loading="lazy" />
+              <ProductIcon product={product} size={36} class="h-9 w-9 rounded-xl" loading="lazy" />
               <span class="flex-1 font-medium text-fg">{product.name}</span>
               <a class="grid h-9 w-9 place-items-center rounded-full border border-line text-muted transition hover:border-fg/25 hover:text-fg" href={product.repo} rel="noopener" aria-label={`${product.name} · GitHub`} title="GitHub">
                 <Icon name="star" class="h-4 w-4" />
