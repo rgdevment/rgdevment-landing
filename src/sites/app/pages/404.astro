@@ -3,9 +3,52 @@ import Icon from "../../../components/Icon.astro";
 import Layout from "../../../layouts/Layout.astro";
 import { docPath } from "../../../content/docs";
 import { PRODUCTS } from "../../../content/products";
-import { HOME_PRODUCT, href } from "../../../site";
+import { HOME_PRODUCT, href, type Locale } from "../../../site";
 
 const product = PRODUCTS.find((one) => one.slug === HOME_PRODUCT)!;
+// Tisty is the only app that hands out links to notes, and those links expire or close.
+const shares = product.slug === "tisty";
+
+const COPY = {
+  en: {
+    eyebrow: "Nothing to read here",
+    title: shares ? "This note has gone to rest." : "This page wandered off.",
+    lede: shares
+      ? "If someone shared it with you from Tisty, the link may have expired or gone private again. You did nothing wrong."
+      : "The address may have changed, or it lost a letter on the way. You did nothing wrong.",
+    looking: "You were looking for",
+    reasons: [
+      { icon: "clock", title: "It expired", text: "A shared note can come with an end date. When it arrives, the link goes quiet." },
+      { icon: "lock", title: "Its author closed it", text: "Whoever shares a note can make it private again at any time." },
+      { icon: "cut", title: "The link came cut short", text: "Some chat apps clip long links. Check that it reached you whole." },
+    ],
+    ask: "The easiest fix: ask whoever sent it for a fresh link. It takes them a second.",
+    meet: `While you are here, ${product.name} keeps your tasks and documents on your own machine. No account, no telemetry.`,
+    home: `Meet ${product.name}`,
+    docs: "Read the docs",
+    other: "Ver en español",
+  },
+  es: {
+    eyebrow: "Aquí no hay nada que leer",
+    title: shares ? "Esta nota se fue a descansar." : "Esta página se fue a dar una vuelta.",
+    lede: shares
+      ? "Si alguien te la compartió desde Tisty, puede que el enlace haya caducado o que la nota vuelva a ser privada. No hiciste nada mal."
+      : "Puede que la dirección haya cambiado o que perdiera una letra en el camino. No hiciste nada mal.",
+    looking: "Buscabas",
+    reasons: [
+      { icon: "clock", title: "Caducó", text: "Una nota compartida puede tener fecha de término. Cuando llega, el enlace se apaga." },
+      { icon: "lock", title: "Su autor la cerró", text: "Quien comparte una nota puede volver a hacerla privada cuando quiera." },
+      { icon: "cut", title: "El enlace llegó cortado", text: "Algunas apps de chat recortan los enlaces largos. Revisa que te haya llegado completo." },
+    ],
+    ask: "Lo más fácil: pídele a quien te lo envió un enlace nuevo. Le toma un segundo.",
+    meet: `Ya que estás aquí: ${product.name} guarda tus tareas y documentos en tu propio equipo. Sin cuentas ni telemetría.`,
+    home: `Conoce ${product.name}`,
+    docs: "Lee la documentación",
+    other: "See in English",
+  },
+} as const;
+
+const locales = Object.keys(COPY) as Locale[];
 ---
 
 <Layout
@@ -16,15 +59,165 @@ const product = PRODUCTS.find((one) => one.slug === HOME_PRODUCT)!;
 >
   <section class="relative isolate overflow-hidden">
     <div class="halo absolute inset-0 -z-10" aria-hidden="true"></div>
-    <div class="shell py-24 text-center sm:py-32">
-      <p class="font-mono text-sm text-muted">404</p>
-      <h1 class="mt-4 text-5xl font-semibold tracking-[-0.03em] sm:text-6xl">This page is not here.</h1>
-      <p class="mt-3 font-display text-2xl text-muted" lang="es">Esta página no está aquí.</p>
-      <div class="mt-10 flex flex-wrap justify-center gap-3">
-        <a class="btn-primary" href={href("en")}>Home <Icon name="arrow" class="h-4 w-4" /></a>
-        <a class="btn-ghost" href={href("es")} lang="es">Inicio en español</a>
-        <a class="btn-ghost" href={href("en", docPath("en", HOME_PRODUCT!))}>Docs</a>
-      </div>
+    <div class="dotgrid absolute inset-0 -z-10" aria-hidden="true"></div>
+    <div class="shell py-16 sm:py-24" data-lost>
+      {
+        locales.map((locale) => {
+          const say = COPY[locale];
+          const other = locale === "en" ? "es" : "en";
+          return (
+            <div lang={locale} data-lang={locale} class="lost-copy mx-auto max-w-2xl text-center">
+              <svg viewBox="0 0 220 170" class="mx-auto h-36 w-auto sm:h-44" aria-hidden="true">
+                <g class="text-line" transform="rotate(7 120 90)">
+                  <rect x="70" y="22" width="104" height="128" rx="14" fill="rgb(var(--sunken))" stroke="currentColor" stroke-width="1.5" />
+                </g>
+                <g class="note text-line" transform="rotate(-6 100 90)">
+                  <path d="M58 24h74l26 26v86a14 14 0 0 1-14 14H58a14 14 0 0 1-14-14V38a14 14 0 0 1 14-14Z" fill="rgb(var(--surface))" stroke="currentColor" stroke-width="1.5" />
+                  <path d="M132 24v14a12 12 0 0 0 12 12h14" fill="none" stroke="currentColor" stroke-width="1.5" />
+                  <g stroke="rgb(var(--muted) / 0.35)" stroke-width="5" stroke-linecap="round">
+                    <path d="M62 66h60" />
+                    <path d="M62 84h76" />
+                    <path d="M62 102h48" />
+                  </g>
+                  <path d="M62 120h30" stroke="#f97c3d" stroke-width="5" stroke-linecap="round" />
+                </g>
+                <g class="zzz font-display" fill="rgb(var(--muted))">
+                  <text x="164" y="46" font-size="24" font-weight="700">z</text>
+                  <text x="184" y="28" font-size="18" font-weight="700">z</text>
+                  <text x="200" y="14" font-size="13" font-weight="700">z</text>
+                </g>
+                <circle cx="150" cy="134" r="20" fill="rgb(var(--flame-tint))" stroke="#f97c3d" stroke-width="1.5" />
+                <circle cx="149" cy="135" r="10" fill="#f97c3d" />
+                <circle cx="154" cy="130" r="8.5" fill="rgb(var(--flame-tint))" />
+              </svg>
+
+              <p class="eyebrow mt-8">404 · {say.eyebrow}</p>
+              <h1 class="mt-4 text-balance text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">{say.title}</h1>
+              <p class="mx-auto mt-5 max-w-xl text-pretty text-lg text-body">{say.lede}</p>
+              <p class="lost-path mt-6 hidden">
+                <span class="chip font-mono text-xs">
+                  <span class="text-muted">{say.looking}</span>
+                  <span class="lost-where max-w-[16rem] truncate text-fg"></span>
+                </span>
+              </p>
+
+              {
+                shares && (
+                  <>
+                    <ul class="mt-12 grid gap-3 text-left sm:grid-cols-3">
+                      {say.reasons.map((reason) => (
+                        <li class="card p-5">
+                          <span class="grid h-9 w-9 place-items-center rounded-full bg-flame-tint text-flame-ink">
+                            {reason.icon === "lock" ? (
+                              <Icon name="lock" class="h-4 w-4" />
+                            ) : (
+                              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+                                {reason.icon === "clock" ? (
+                                  <>
+                                    <circle cx="12" cy="12" r="9" />
+                                    <path d="M12 7v5l3 2" />
+                                  </>
+                                ) : (
+                                  <>
+                                    <circle cx="6" cy="6" r="3" />
+                                    <circle cx="6" cy="18" r="3" />
+                                    <path d="M20 4 8.1 15.9M14.5 14.5 20 20M8.1 8.1 12 12" />
+                                  </>
+                                )}
+                              </svg>
+                            )}
+                          </span>
+                          <p class="mt-4 font-display font-semibold text-fg">{reason.title}</p>
+                          <p class="mt-1.5 text-sm leading-relaxed text-muted">{reason.text}</p>
+                        </li>
+                      ))}
+                    </ul>
+                    <p class="mx-auto mt-6 max-w-xl rounded-2xl bg-flame-tint px-5 py-4 text-sm text-fg">
+                      <Icon name="heart" class="mr-1.5 inline h-4 w-4 -translate-y-px text-flame-ink" />
+                      {say.ask}
+                    </p>
+                  </>
+                )
+              }
+
+              <div class="mt-14 border-t border-line pt-10">
+                <p class="mx-auto max-w-lg text-pretty text-muted">{say.meet}</p>
+                <div class="mt-6 flex flex-wrap justify-center gap-3">
+                  <a class="btn-primary" href={href(locale)}>
+                    {say.home} <Icon name="arrow" class="h-4 w-4" />
+                  </a>
+                  <a class="btn-ghost" href={href(locale, docPath(locale, HOME_PRODUCT!))}>
+                    <Icon name="book" class="h-4 w-4" /> {say.docs}
+                  </a>
+                </div>
+                <button type="button" data-swap={other} class="lost-swap mt-6 hidden text-sm text-muted underline decoration-line underline-offset-4 hover:text-fg">
+                  {say.other}
+                </button>
+              </div>
+            </div>
+          );
+        })
+      }
     </div>
   </section>
 </Layout>
+
+<style>
+  /* Without script both languages stay on the page, one after the other. */
+  [data-lost] .lost-copy + .lost-copy {
+    margin-top: 6rem;
+  }
+  [data-lost][data-show] .lost-copy {
+    display: none;
+  }
+  [data-lost][data-show="en"] .lost-copy[data-lang="en"],
+  [data-lost][data-show="es"] .lost-copy[data-lang="es"] {
+    display: block;
+    margin-top: 0;
+  }
+  [data-lost][data-show] .lost-swap {
+    display: inline-block;
+  }
+  [data-lost][data-show] .lost-path {
+    display: flex;
+    justify-content: center;
+  }
+  .zzz text {
+    animation: doze 3.2s ease-in-out infinite;
+  }
+  .zzz text:nth-child(2) {
+    animation-delay: 0.4s;
+  }
+  .zzz text:nth-child(3) {
+    animation-delay: 0.8s;
+  }
+  @keyframes doze {
+    0%, 100% { opacity: 0.25; transform: translateY(0); }
+    50% { opacity: 1; transform: translateY(-3px); }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .zzz text {
+      animation: none;
+      opacity: 0.7;
+    }
+  }
+</style>
+
+<script is:inline>
+  (() => {
+    const lost = document.querySelector("[data-lost]");
+    if (!lost) return;
+    const show = (lang) => {
+      lost.dataset.show = lang;
+      document.documentElement.lang = lang;
+    };
+    show(/^es\b/i.test(navigator.language) ? "es" : "en");
+    let where = location.pathname;
+    try {
+      where = decodeURIComponent(where);
+    } catch {}
+    where = where.replace(/\/$/, "") || "/";
+    for (const slot of lost.querySelectorAll(".lost-where")) slot.textContent = location.host + where;
+    for (const swap of lost.querySelectorAll("[data-swap]")) swap.addEventListener("click", () => show(swap.dataset.swap));
+  })();
+</script>
