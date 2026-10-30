@@ -3,7 +3,6 @@ import Icon from "../components/Icon.astro";
 import Layout from "../layouts/Layout.astro";
 import { PRODUCTS } from "../content/products";
 import { href } from "../site";
-import ProductIcon from "../components/ProductIcon.astro";
 ---
 
 <Layout
@@ -27,7 +26,7 @@ import ProductIcon from "../components/ProductIcon.astro";
           PRODUCTS.map((one) => (
             <li>
               <a class="group flex flex-col items-center gap-2 text-sm text-muted hover:text-fg" href={href("en", one.slug)}>
-                <ProductIcon product={one} size={56} class="h-14 w-14 rounded-2xl transition group-hover:-translate-y-0.5" />
+                <img src={one.icon} alt="" width="56" height="56" class="h-14 w-14 rounded-2xl transition group-hover:-translate-y-0.5" />
                 {one.name}
               </a>
             </li>

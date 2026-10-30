@@ -3,7 +3,6 @@ import Logo from "./Logo.astro";
 import { PRODUCTS } from "../content/products";
 import { href, type Locale } from "../site";
 import ThemeSwitch from "./ThemeSwitch.astro";
-import ProductIcon from "./ProductIcon.astro";
 
 interface Props {
   locale: Locale;
@@ -53,7 +52,7 @@ const link = (key: string) =>
               aria-current={here === one.slug ? "page" : undefined}
               href={href(locale, one.slug)}
             >
-              <ProductIcon product={one} size={18} class="h-[18px] w-[18px] rounded-[5px]" />
+              <img src={one.icon} alt="" width="18" height="18" class="h-[18px] w-[18px] rounded-[5px]" />
               {one.name}
             </a>
           </li>
@@ -118,7 +117,7 @@ const link = (key: string) =>
                   aria-current={here === one.slug ? "page" : undefined}
                   href={href(locale, one.slug)}
                 >
-                  <ProductIcon product={one} size={28} class="h-7 w-7 rounded-lg" />
+                  <img src={one.icon} alt="" width="28" height="28" class="h-7 w-7 rounded-lg" />
                   {one.name}
                 </a>
               </li>
