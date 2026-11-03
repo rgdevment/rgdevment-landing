@@ -1,5 +1,7 @@
 ---
 import "../styles/global.css";
+import displayFont from "@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url";
+import textFont from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 import { getEntry } from "astro:content";
 import Icon from "../components/Icon.astro";
 import Logo from "../components/Logo.astro";
@@ -167,6 +169,12 @@ const say = es
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
     <meta name="generator" content={Astro.generator} />
 
+    <link rel="preload" href={textFont} as="font" type="font/woff2" crossorigin />
+    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
+    <slot name="head" />
+    <script type="speculationrules" is:inline>
+      { "prefetch": [{ "source": "document", "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
+    </script>
     {graphs.map((graph) => <script type="application/ld+json" set:html={JSON.stringify(graph)} />)}
     {
       UMAMI_ID && (

@@ -1,5 +1,4 @@
 ---
-import "katex/dist/katex.min.css";
 import { render } from "astro:content";
 import Crumbs from "./Crumbs.astro";
 import DocNav from "./DocNav.astro";
@@ -17,6 +16,7 @@ interface Props {
 const { doc, locale } = Astro.props;
 const es = locale === "es";
 const data = doc.data;
+const hasMath = /\$\$|^```math/m.test(doc.body ?? "");
 const product = PRODUCTS.find((one) => one.slug === data.product)!;
 const { Content, headings } = await render(doc);
 
@@ -91,12 +91,13 @@ const schema = [
   modified={data.updated}
   schema={schema}
 >
+  {hasMath && <link slot="head" rel="stylesheet" href={import.meta.env.KATEX_CSS} />}
   <div class="shell pt-10 sm:pt-14">
     <Crumbs locale={locale} trail={trail} />
 
     <div class="mt-10 grid gap-10 lg:grid-cols-[15rem_minmax(0,1fr)] xl:grid-cols-[15rem_minmax(0,1fr)_12rem]">
       <aside class="lg:sticky lg:top-24 lg:flex lg:max-h-[calc(100vh-7rem)] lg:flex-col lg:self-start">
-        <div class="doc-search mb-6 hidden shrink-0 lg:pr-3" data-search></div>
+        <div class="doc-search invisible mb-6 min-h-[3.25rem] shrink-0 lg:pr-3" data-search></div>
         <details class="group card lg:hidden">
           <summary class="flex cursor-pointer list-none items-center gap-3 p-4 [&::-webkit-details-marker]:hidden">
             <img src={product.icon} alt="" width="28" height="28" class="h-7 w-7 rounded-lg" />
@@ -223,41 +224,86 @@ const schema = [
 
     const search = document.querySelector<HTMLElement>("[data-search]");
     if (search) {
-      const sheet = document.createElement("link");
-      sheet.rel = "stylesheet";
-      sheet.href = "/pagefind/pagefind-ui.css";
-      const code = document.createElement("script");
-      code.src = "/pagefind/pagefind-ui.js";
-      code.onload = () => {
-        const { PagefindUI } = window as unknown as { PagefindUI: new (options: object) => unknown };
-        new PagefindUI({ element: search, showSubResults: true, showImages: false, resetStyles: false });
-        search.classList.remove("hidden");
+      const load = () => {
+        const sheet = document.createElement("link");
+        sheet.rel = "stylesheet";
+        sheet.href = "/pagefind/pagefind-ui.css";
+        const code = document.createElement("script");
+        code.src = "/pagefind/pagefind-ui.js";
+        code.onload = () => {
+          const { PagefindUI } = window as unknown as { PagefindUI: new (options: object) => unknown };
+          new PagefindUI({ element: search, showSubResults: true, showImages: false, resetStyles: false });
+          search.classList.remove("invisible");
+        };
+        document.head.append(sheet, code);
       };
-      document.head.append(sheet, code);
+      if ("requestIdleCallback" in window) requestIdleCallback(load, { timeout: 2000 });
+      else setTimeout(load, 200);
     }
 
     const blocks = [...document.querySelectorAll<HTMLElement>("pre > code.language-mermaid")];
     if (blocks.length) {
-      const { default: mermaid } = await import("mermaid");
+      // Held in a variable so the bundler leaves it to the browser instead of trying to resolve it.
+      const mermaidUrl: string = import.meta.env.MERMAID_URL;
       const root = document.documentElement;
       const dark = () => (root.dataset.theme ?? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")) === "dark";
-      const nodes = blocks.map((code) => {
-        const box = document.createElement("div");
-        box.className = "mermaid not-prose my-8 flex justify-center overflow-x-auto rounded-2xl border border-line bg-surface p-6";
-        box.dataset.source = code.textContent ?? "";
-        code.parentElement!.replaceWith(box);
-        return box;
+      const arrival = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+      // A jump counts until the reader takes over; a reload or going back restores their own position instead.
+      let jumping = location.hash !== "" && arrival?.type === "navigate";
+      addEventListener("hashchange", () => (jumping = true));
+      document.addEventListener("click", (event) => {
+        if ((event.target as Element).closest?.('a[href^="#"]')) jumping = true;
       });
-      const draw = async () => {
-        mermaid.initialize({ startOnLoad: false, theme: dark() ? "dark" : "neutral", fontFamily: "Inter Variable, sans-serif" });
-        for (const box of nodes) {
-          box.removeAttribute("data-processed");
-          box.textContent = box.dataset.source ?? "";
+      for (const input of ["wheel", "touchstart", "pointerdown", "keydown"]) {
+        addEventListener(input, () => (jumping = false), { capture: true, passive: true });
+      }
+      // A diagram that grows moves everything below it: a jump in progress must land again, and browsers without scroll anchoring need the place held.
+      const holdingPlace = async (change: () => void | Promise<void>) => {
+        const anchored = CSS.supports("overflow-anchor", "auto");
+        const anchor = [...(prose?.children ?? [])].find((one) => !one.matches("pre, .mermaid") && one.getBoundingClientRect().bottom > 0);
+        const offset = () => (anchor?.getBoundingClientRect().top ?? 0) + scrollY;
+        const before = offset();
+        try {
+          await change();
+        } finally {
+          const target = jumping ? document.querySelector(":target") : null;
+          jumping = false;
+          if (target) target.scrollIntoView();
+          else if (!anchored && offset() !== before) scrollBy({ top: offset() - before, behavior: "instant" });
         }
-        await mermaid.run({ nodes });
       };
-      await draw();
-      addEventListener("themechange", draw);
+      const near = new IntersectionObserver(
+        async (seen) => {
+          if (!seen.some((one) => one.isIntersecting)) return;
+          near.disconnect();
+          // The source stays on the page until the module arrives, so a failed download leaves it readable.
+          const mermaid = await import(/* @vite-ignore */ mermaidUrl).then((one) => one.default, () => null);
+          if (!mermaid) return;
+          let nodes: HTMLElement[] = [];
+          const draw = () =>
+            holdingPlace(async () => {
+              nodes = nodes.length
+                ? nodes
+                : blocks.map((code) => {
+                    const box = document.createElement("div");
+                    box.className = "mermaid not-prose my-8 flex justify-center overflow-x-auto rounded-2xl border border-line bg-surface p-6";
+                    box.dataset.source = code.textContent ?? "";
+                    code.parentElement!.replaceWith(box);
+                    return box;
+                  });
+              mermaid.initialize({ startOnLoad: false, theme: dark() ? "dark" : "neutral", fontFamily: "Inter Variable, sans-serif" });
+              for (const box of nodes) {
+                box.removeAttribute("data-processed");
+                box.textContent = box.dataset.source ?? "";
+              }
+              await mermaid.run({ nodes });
+            });
+          await draw();
+          addEventListener("themechange", draw);
+        },
+        { rootMargin: "800px" },
+      );
+      blocks.forEach((code) => near.observe(code.parentElement!));
     }
   </script>
 </Layout>

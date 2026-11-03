@@ -276,7 +276,7 @@ const schema = [
     product.mascot && t.mascot && (
       <section class="shell mt-16">
         <div class="card flex flex-col items-center gap-6 p-7 text-center sm:flex-row sm:p-9 sm:text-left">
-          <img src={product.mascot} alt="" width="120" height="108" class="h-24 w-auto shrink-0 sm:h-28" />
+          <img src={product.mascot} alt="" width="120" height="108" loading="lazy" class="h-24 w-auto shrink-0 sm:h-28" />
           <div>
             <h2 class="font-display text-2xl font-semibold">{t.mascot.title}</h2>
             <p class="mt-2 text-body">{t.mascot.body}</p>

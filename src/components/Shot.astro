@@ -6,16 +6,18 @@ interface Props {
   product: Product;
   locale: Locale;
   eager?: boolean;
+  sizes?: string;
   class?: string;
 }
 
-const { product, locale, eager = false, class: klass = "" } = Astro.props;
+const { product, locale, eager = false, sizes = "(min-width: 1088px) 1000px, calc(100vw - 3.5rem)", class: klass = "" } = Astro.props;
 const shot = product.shot!;
 const src = shotSrc(product, locale)!;
+const webp = src.replace(/\.png$/, "");
 ---
 
 <picture>
-  <source srcset={src.replace(/\.png$/, ".webp")} type="image/webp" />
+  <source srcset={`${webp}-720.webp 720w, ${webp}-1280.webp 1280w, ${webp}.webp ${shot.width}w`} sizes={sizes} type="image/webp" />
   <img
     src={src}
     width={shot.width}
