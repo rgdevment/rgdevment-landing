@@ -2,6 +2,7 @@ import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
 import { basename, extname, join } from "node:path";
+import sharp from "sharp";
 import { APPS } from "./apps.mjs";
 
 const CACHE = ".wikis/src";
@@ -126,14 +127,18 @@ function rewriteCallouts(text, locale) {
   return text.replace(/^> \[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*$/gm, (_, kind) => `> **${CALLOUT[locale][kind]}**`);
 }
 
-function localiseImages(text, product) {
+async function localiseImages(text, product) {
   const found = text.match(/https:\/\/raw\.githubusercontent\.com\/rgdevment\/[^\s)"']+\.(?:png|gif|jpe?g|webp|svg)/g) ?? [];
   for (const url of new Set(found)) {
     const hash = createHash("sha1").update(url).digest("hex").slice(0, 8);
-    const name = `${product}-${hash}-${basename(new URL(url).pathname)}`;
+    const shot = /\.(?:png|jpe?g)$/.test(url);
+    const name = `${product}-${hash}-${basename(new URL(url).pathname)}`.replace(/\.(?:png|jpe?g)$/, ".webp");
     const file = join(ASSETS, name);
     try {
-      if (!existsSync(file)) execFileSync("curl", ["-fsSL", "-o", file, url]);
+      if (!existsSync(file)) {
+        const raw = execFileSync("curl", ["-fsSL", url], { maxBuffer: 1 << 26 });
+        writeFileSync(file, shot ? await sharp(raw).resize({ width: 1600, withoutEnlargement: true }).webp({ quality: 85 }).toBuffer() : raw);
+      }
       text = text.replaceAll(url, `/docs-assets/${name}`);
     } catch {
       rmSync(file, { force: true });
@@ -176,7 +181,7 @@ function twinOf(page, sidebar) {
   return null;
 }
 
-function syncWiki(wiki) {
+async function syncWiki(wiki) {
   const released = wiki.help ? fetchHelp(wiki) : null;
   const dir = released ? released.dir : fetchWiki(wiki);
   const sourceOf = (page) =>
@@ -192,7 +197,7 @@ function syncWiki(wiki) {
     if (!entry) continue;
     const raw = readFileSync(join(dir, file), "utf8");
     let body = rewriteCallouts(rewriteLinks(stripHeader(raw), wiki.product, pages), entry.locale);
-    body = localiseImages(body, wiki.product);
+    body = await localiseImages(body, wiki.product);
     const twin = pages.get(twinOf(page, sidebar));
     const meta = {
       title: titleOf(raw, entry.label || page),
@@ -235,7 +240,7 @@ rmSync(TERMS, { recursive: true, force: true });
 mkdirSync(ASSETS, { recursive: true });
 mkdirSync(PRIVACY, { recursive: true });
 mkdirSync(TERMS, { recursive: true });
-for (const wiki of APPS) syncWiki(wiki);
+for (const wiki of APPS) await syncWiki(wiki);
 for (const app of APPS) {
   syncPolicy(app, { file: "PRIVACY.md", dir: PRIVACY, fallback: "Privacy policy", route: "privacy" });
   if (app.terms) syncPolicy(app, { file: "TERMS.md", dir: TERMS, fallback: "Terms of use", route: "terms" });

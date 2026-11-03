@@ -1,5 +1,4 @@
 ---
-import "katex/dist/katex.min.css";
 import { render } from "astro:content";
 import Crumbs from "./Crumbs.astro";
 import DocNav from "./DocNav.astro";
@@ -17,6 +16,7 @@ interface Props {
 const { doc, locale } = Astro.props;
 const es = locale === "es";
 const data = doc.data;
+const hasMath = /\$\$|^```math/m.test(doc.body ?? "");
 const product = PRODUCTS.find((one) => one.slug === data.product)!;
 const { Content, headings } = await render(doc);
 
@@ -91,6 +91,7 @@ const schema = [
   modified={data.updated}
   schema={schema}
 >
+  {hasMath && <link slot="head" rel="stylesheet" href={import.meta.env.KATEX_CSS} />}
   <div class="shell pt-10 sm:pt-14">
     <Crumbs locale={locale} trail={trail} />
 
@@ -223,32 +224,38 @@ const schema = [
 
     const search = document.querySelector<HTMLElement>("[data-search]");
     if (search) {
-      const sheet = document.createElement("link");
-      sheet.rel = "stylesheet";
-      sheet.href = "/pagefind/pagefind-ui.css";
-      const code = document.createElement("script");
-      code.src = "/pagefind/pagefind-ui.js";
-      code.onload = () => {
-        const { PagefindUI } = window as unknown as { PagefindUI: new (options: object) => unknown };
-        new PagefindUI({ element: search, showSubResults: true, showImages: false, resetStyles: false });
-        search.classList.remove("hidden");
+      const load = () => {
+        const sheet = document.createElement("link");
+        sheet.rel = "stylesheet";
+        sheet.href = "/pagefind/pagefind-ui.css";
+        const code = document.createElement("script");
+        code.src = "/pagefind/pagefind-ui.js";
+        code.onload = () => {
+          const { PagefindUI } = window as unknown as { PagefindUI: new (options: object) => unknown };
+          new PagefindUI({ element: search, showSubResults: true, showImages: false, resetStyles: false });
+          search.classList.remove("hidden");
+        };
+        document.head.append(sheet, code);
       };
-      document.head.append(sheet, code);
+      if ("requestIdleCallback" in window) requestIdleCallback(load);
+      else setTimeout(load, 200);
     }
 
     const blocks = [...document.querySelectorAll<HTMLElement>("pre > code.language-mermaid")];
     if (blocks.length) {
-      const { default: mermaid } = await import("mermaid");
+      // Held in a variable so the bundler leaves it to the browser instead of trying to resolve it.
+      const mermaidUrl: string = import.meta.env.MERMAID_URL;
       const root = document.documentElement;
       const dark = () => (root.dataset.theme ?? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")) === "dark";
       const nodes = blocks.map((code) => {
         const box = document.createElement("div");
-        box.className = "mermaid not-prose my-8 flex justify-center overflow-x-auto rounded-2xl border border-line bg-surface p-6";
+        box.className = "mermaid not-prose my-8 flex min-h-48 justify-center overflow-x-auto rounded-2xl border border-line bg-surface p-6";
         box.dataset.source = code.textContent ?? "";
         code.parentElement!.replaceWith(box);
         return box;
       });
       const draw = async () => {
+        const { default: mermaid } = await import(/* @vite-ignore */ mermaidUrl);
         mermaid.initialize({ startOnLoad: false, theme: dark() ? "dark" : "neutral", fontFamily: "Inter Variable, sans-serif" });
         for (const box of nodes) {
           box.removeAttribute("data-processed");
@@ -256,8 +263,16 @@ const schema = [
         }
         await mermaid.run({ nodes });
       };
-      await draw();
-      addEventListener("themechange", draw);
+      const near = new IntersectionObserver(
+        (seen) => {
+          if (!seen.some((one) => one.isIntersecting)) return;
+          near.disconnect();
+          draw();
+          addEventListener("themechange", draw);
+        },
+        { rootMargin: "800px" },
+      );
+      nodes.forEach((box) => near.observe(box));
     }
   </script>
 </Layout>
