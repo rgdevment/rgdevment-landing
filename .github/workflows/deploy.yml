@@ -83,6 +83,7 @@ jobs:
         with:
           sparse-checkout: |
             scripts/indexnow.sh
+            scripts/build-digest.sh
             scripts/purge-cache.sh
           sparse-checkout-cone-mode: false
 
@@ -97,6 +98,10 @@ jobs:
         if: env.HAS_TOKEN == 'true'
         run: curl -fsSL https://rgdevment.com/sitemap.xml -o live-sitemap.xml || touch live-sitemap.xml
 
+      - name: Whether this build differs from the live site
+        if: env.HAS_TOKEN == 'true'
+        run: bash scripts/build-digest.sh dist rgdevment.com
+
       - name: Deploy to Cloudflare Pages
         if: env.HAS_TOKEN == 'true'
         uses: cloudflare/wrangler-action@v4
@@ -106,8 +111,10 @@ jobs:
           command: pages deploy dist --project-name=rgdevment --branch=main --commit-dirty=true
 
       - name: Drop the pages the edge kept from the last deploy
+        id: purge
         if: env.HAS_TOKEN == 'true' && env.HAS_PURGE_TOKEN == 'true'
-        run: bash scripts/purge-cache.sh rgdevment.com
+        continue-on-error: true
+        run: bash scripts/purge-cache.sh rgdevment.com dist/build-digest.txt live-digest.txt
         env:
           CLOUDFLARE_PURGE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
 
@@ -115,6 +122,10 @@ jobs:
         if: env.HAS_TOKEN == 'true'
         continue-on-error: true
         run: bash scripts/indexnow.sh rgdevment.com dist/sitemap.xml live-sitemap.xml ${{ github.event_name }}
+
+      - name: A failed purge still fails the run, once search engines were told
+        if: steps.purge.outcome == 'failure'
+        run: exit 1
 
   cloudflare-apps:
     needs: build
@@ -136,6 +147,7 @@ jobs:
         with:
           sparse-checkout: |
             scripts/indexnow.sh
+            scripts/build-digest.sh
             scripts/purge-cache.sh
           sparse-checkout-cone-mode: false
 
@@ -150,6 +162,10 @@ jobs:
         if: env.HAS_TOKEN == 'true'
         run: curl -fsSL https://${{ matrix.host }}/sitemap.xml -o live-sitemap.xml || touch live-sitemap.xml
 
+      - name: Whether this build differs from the live site
+        if: env.HAS_TOKEN == 'true'
+        run: bash scripts/build-digest.sh dist-${{ matrix.app }} ${{ matrix.host }}
+
       - name: Deploy to Cloudflare Pages
         if: env.HAS_TOKEN == 'true'
         uses: cloudflare/wrangler-action@v4
@@ -159,8 +175,10 @@ jobs:
           command: pages deploy dist-${{ matrix.app }} --project-name=${{ matrix.app }} --branch=main --commit-dirty=true
 
       - name: Drop the pages the edge kept from the last deploy
+        id: purge
         if: env.HAS_TOKEN == 'true' && env.HAS_PURGE_TOKEN == 'true'
-        run: bash scripts/purge-cache.sh ${{ matrix.host }}
+        continue-on-error: true
+        run: bash scripts/purge-cache.sh ${{ matrix.host }} dist-${{ matrix.app }}/build-digest.txt live-digest.txt
         env:
           CLOUDFLARE_PURGE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
 
@@ -168,3 +186,7 @@ jobs:
         if: env.HAS_TOKEN == 'true'
         continue-on-error: true
         run: bash scripts/indexnow.sh ${{ matrix.host }} dist-${{ matrix.app }}/sitemap.xml live-sitemap.xml ${{ github.event_name }}
+
+      - name: A failed purge still fails the run, once search engines were told
+        if: steps.purge.outcome == 'failure'
+        run: exit 1

@@ -45,8 +45,12 @@ function rehypeImages() {
         properties.decoding = 'async';
         if (at > 0) properties.loading = 'lazy';
         if (properties.width || !String(properties.src).startsWith('/docs-assets/')) return;
-        const { width, height } = await sharp(`./public${properties.src}`).metadata();
-        Object.assign(properties, { width, height });
+        try {
+          const { width, height } = await sharp(`./public${properties.src}`).metadata();
+          Object.assign(properties, { width, height });
+        } catch (error) {
+          console.warn(`docs: ${properties.src} has no reserved size: ${error.message}`);
+        }
       }),
     );
   };
@@ -92,7 +96,7 @@ function vendored() {
 export function shared({ product = null } = {}) {
   return {
     trailingSlash: 'always',
-    integrations: [tailwind({ applyBaseStyles: false }), vendored()],
+    integrations: [tailwind({ applyBaseStyles: false })],
     markdown: {
       syntaxHighlight: { type: 'shiki', excludeLangs: ['math', 'mermaid'] },
       remarkPlugins: [[remarkMath, { singleDollarTextMath: false }]],
@@ -147,7 +151,7 @@ export function ownSite(product) {
   const base = shared({ product });
   return {
     ...base,
-    integrations: [...base.integrations, ownFiles(product)],
+    integrations: [...base.integrations, vendored(), ownFiles(product)],
     site: homeOf(product),
     srcDir: './src/sites/app',
     outDir: `./dist-${product}`,
