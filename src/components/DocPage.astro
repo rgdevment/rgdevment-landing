@@ -247,8 +247,16 @@ const schema = [
       const mermaidUrl: string = import.meta.env.MERMAID_URL;
       const root = document.documentElement;
       const dark = () => (root.dataset.theme ?? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")) === "dark";
-      let jumped = 0;
-      addEventListener("hashchange", () => (jumped = performance.now()));
+      const arrival = performance.getEntriesByType("navigation")[0] as PerformanceNavigationTiming | undefined;
+      // A jump counts until the reader takes over; a reload or going back restores their own position instead.
+      let jumping = location.hash !== "" && arrival?.type === "navigate";
+      addEventListener("hashchange", () => (jumping = true));
+      document.addEventListener("click", (event) => {
+        if ((event.target as Element).closest?.('a[href^="#"]')) jumping = true;
+      });
+      for (const input of ["wheel", "touchstart", "pointerdown", "keydown"]) {
+        addEventListener(input, () => (jumping = false), { capture: true, passive: true });
+      }
       // A diagram that grows moves everything below it: a jump in progress must land again, and browsers without scroll anchoring need the place held.
       const holdingPlace = async (change: () => void | Promise<void>) => {
         const anchored = CSS.supports("overflow-anchor", "auto");
@@ -258,7 +266,8 @@ const schema = [
         try {
           await change();
         } finally {
-          const target = performance.now() - jumped < 5000 ? document.querySelector(":target") : null;
+          const target = jumping ? document.querySelector(":target") : null;
+          jumping = false;
           if (target) target.scrollIntoView();
           else if (!anchored && offset() !== before) scrollBy({ top: offset() - before, behavior: "instant" });
         }

@@ -83,7 +83,6 @@ jobs:
         with:
           sparse-checkout: |
             scripts/indexnow.sh
-            scripts/build-digest.sh
             scripts/purge-cache.sh
           sparse-checkout-cone-mode: false
 
@@ -98,10 +97,6 @@ jobs:
         if: env.HAS_TOKEN == 'true'
         run: curl -fsSL https://rgdevment.com/sitemap.xml -o live-sitemap.xml || touch live-sitemap.xml
 
-      - name: Whether this build differs from the live site
-        if: env.HAS_TOKEN == 'true'
-        run: bash scripts/build-digest.sh dist rgdevment.com
-
       - name: Deploy to Cloudflare Pages
         if: env.HAS_TOKEN == 'true'
         uses: cloudflare/wrangler-action@v4
@@ -110,13 +105,29 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist --project-name=rgdevment --branch=main --commit-dirty=true
 
+      - name: Which build the edge last dropped
+        if: env.HAS_TOKEN == 'true' && env.HAS_PURGE_TOKEN == 'true'
+        uses: actions/cache/restore@v6
+        with:
+          path: purged-digest.txt
+          key: purged-digest-rgdevment-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: purged-digest-rgdevment-
+
       - name: Drop the pages the edge kept from the last deploy
         id: purge
         if: env.HAS_TOKEN == 'true' && env.HAS_PURGE_TOKEN == 'true'
         continue-on-error: true
-        run: bash scripts/purge-cache.sh rgdevment.com dist/build-digest.txt live-digest.txt
+        run: bash scripts/purge-cache.sh rgdevment.com dist purged-digest.txt
         env:
           CLOUDFLARE_PURGE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
+
+      - name: Remember the build the edge just dropped
+        if: steps.purge.outputs.purged == 'true'
+        continue-on-error: true
+        uses: actions/cache/save@v6
+        with:
+          path: purged-digest.txt
+          key: purged-digest-rgdevment-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Tell search engines what changed
         if: env.HAS_TOKEN == 'true'
@@ -147,7 +158,6 @@ jobs:
         with:
           sparse-checkout: |
             scripts/indexnow.sh
-            scripts/build-digest.sh
             scripts/purge-cache.sh
           sparse-checkout-cone-mode: false
 
@@ -162,10 +172,6 @@ jobs:
         if: env.HAS_TOKEN == 'true'
         run: curl -fsSL https://${{ matrix.host }}/sitemap.xml -o live-sitemap.xml || touch live-sitemap.xml
 
-      - name: Whether this build differs from the live site
-        if: env.HAS_TOKEN == 'true'
-        run: bash scripts/build-digest.sh dist-${{ matrix.app }} ${{ matrix.host }}
-
       - name: Deploy to Cloudflare Pages
         if: env.HAS_TOKEN == 'true'
         uses: cloudflare/wrangler-action@v4
@@ -174,13 +180,29 @@ jobs:
           accountId: ${{ secrets.CLOUDFLARE_ACCOUNT_ID }}
           command: pages deploy dist-${{ matrix.app }} --project-name=${{ matrix.app }} --branch=main --commit-dirty=true
 
+      - name: Which build the edge last dropped
+        if: env.HAS_TOKEN == 'true' && env.HAS_PURGE_TOKEN == 'true'
+        uses: actions/cache/restore@v6
+        with:
+          path: purged-digest.txt
+          key: purged-digest-${{ matrix.app }}-${{ github.run_id }}-${{ github.run_attempt }}
+          restore-keys: purged-digest-${{ matrix.app }}-
+
       - name: Drop the pages the edge kept from the last deploy
         id: purge
         if: env.HAS_TOKEN == 'true' && env.HAS_PURGE_TOKEN == 'true'
         continue-on-error: true
-        run: bash scripts/purge-cache.sh ${{ matrix.host }} dist-${{ matrix.app }}/build-digest.txt live-digest.txt
+        run: bash scripts/purge-cache.sh ${{ matrix.host }} dist-${{ matrix.app }} purged-digest.txt
         env:
           CLOUDFLARE_PURGE_TOKEN: ${{ secrets.CLOUDFLARE_PURGE_TOKEN }}
+
+      - name: Remember the build the edge just dropped
+        if: steps.purge.outputs.purged == 'true'
+        continue-on-error: true
+        uses: actions/cache/save@v6
+        with:
+          path: purged-digest.txt
+          key: purged-digest-${{ matrix.app }}-${{ github.run_id }}-${{ github.run_attempt }}
 
       - name: Tell search engines what changed
         if: env.HAS_TOKEN == 'true'
