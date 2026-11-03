@@ -22,7 +22,11 @@ async function syncAssets({ repo, assets }) {
     }
     if (Buffer.compare(fresh, readFileSync(file)) === 0) continue;
     writeFileSync(file, fresh);
-    if (file.endsWith(".png")) await sharp(fresh).webp({ quality: 80 }).toFile(file.replace(/\.png$/, ".webp"));
+    if (file.endsWith(".png")) {
+      const name = file.replace(/\.png$/, "");
+      await sharp(fresh).webp({ quality: 80 }).toFile(`${name}.webp`);
+      for (const width of [720, 1280]) await sharp(fresh).resize({ width }).webp({ quality: 80 }).toFile(`${name}-${width}.webp`);
+    }
     console.log(`assets: ${file} updated from ${repo}/${source}`);
   }
 }
