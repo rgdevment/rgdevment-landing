@@ -64,6 +64,7 @@ export const PRODUCTS: Product[] = [
     licence: "AGPL-3.0",
     platforms: ["Windows", "macOS"],
     storeId: "9PGVWXD8X93N",
+    winget: "rgdevment.Tisty",
     cask: "tisty",
     listings: [
       "https://github.com/mcp/rgdevment/tisty",
