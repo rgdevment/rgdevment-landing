@@ -253,6 +253,7 @@ export const PRODUCTS: Product[] = [
     licence: "GPL-3.0-only",
     platforms: ["Windows", "macOS"],
     storeId: "9N9F7C8Q43KC",
+    winget: "rgdevment.LinkUnbound",
     cask: "linkunbound",
     shot: {
       src: "/linkunbound-social.png",
