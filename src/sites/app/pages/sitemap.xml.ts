@@ -19,7 +19,6 @@ export const GET: APIRoute = async () => {
       ? [{ en: termsPath("en", product), es: termsPath("es", product), priority: "0.3" }]
       : []),
     { en: "pricing", es: "precios", priority: "0.5" },
-    { en: "support", es: "colaborar", priority: "0.5" },
     ...(compares(product) ? [{ en: COMPARE_PATH.en, es: COMPARE_PATH.es, priority: "0.6" }] : []),
     ...(await docEntries(product)),
   ]);
