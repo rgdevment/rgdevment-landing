@@ -2,21 +2,21 @@
 
 ## Our Pledge
 
-We as contributors and maintainers of **rgdevment.com** pledge to make participation in
+We as contributors and maintainers of **rgdevment.dev** pledge to make participation in
 our community a welcoming, respectful, and harassment-free experience for
 everyone—regardless of age, body size, visible or invisible disability,
 ethnicity, sex characteristics, gender identity and expression, level of
 experience, education, socioeconomic status, nationality, personal appearance,
 race, caste, color, religion, or sexual identity and orientation.
 
-**rgdevment.com** is a community project—built by people, for people. This code of
+**rgdevment.dev** is a community project—built by people, for people. This code of
 conduct reflects our core values: transparency, collaboration, and respect.
 
 ---
 
 ## Our Philosophy
 
-**rgdevment.com** is a community effort, not a corporate product. We believe:
+**rgdevment.dev** is a community effort, not a corporate product. We believe:
 
 - **Collaboration over competition** — We're building _with_ you, not _for_ you.
 - **Respect over ego** — Good ideas can come from anywhere, regardless of
@@ -171,7 +171,7 @@ community.
 
 ## A Personal Project, Shared with the Community
 
-**rgdevment.com** is my personal project, still in development, shared in the open
+**rgdevment.dev** is my personal project, still in development, shared in the open
 so others can follow it and take part. That means:
 
 - **We're all equals here** — Maintainer, contributors, and users build
@@ -191,7 +191,7 @@ space where people feel safe to contribute, learn, and build together.
 
 This Code of Conduct is adapted from the
 [Contributor Covenant](https://www.contributor-covenant.org/), version 2.1, with
-modifications to reflect the values and spirit of the **rgdevment.com** project.
+modifications to reflect the values and spirit of the **rgdevment.dev** project.
 
 For answers to common questions about this code of conduct, see the FAQ at
 [https://www.contributor-covenant.org/faq](https://www.contributor-covenant.org/faq).
@@ -206,7 +206,7 @@ If you have questions about this Code of Conduct:
   publicly, I'm happy to clarify.
 - [Email me](mailto:github@apirest.cl) — If it's sensitive, reach out privately.
 
-### Thank you for helping make rgdevment.com a welcoming and inclusive project
+### Thank you for helping make rgdevment.dev a welcoming and inclusive project
 
 ---
 

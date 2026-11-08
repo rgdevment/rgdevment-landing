@@ -22,32 +22,32 @@ Built from each project's own help pages, in English and Spanish.
 
 ## Pricing and support
 
-- [Pricing](https://rgdevment.com/pricing/): Every program is free in full. No paid tier, no trial, no feature behind a wall, no account. Why there is no catch: no company, no investors, no payroll.
-- [Support](https://rgdevment.com/support/): Ways to help that cost nothing (a star, a Store rating, naming it where somebody asks, reporting what breaks) and, after those, sponsoring.
+- [Pricing](https://rgdevment.dev/pricing/): Every program is free in full. No paid tier, no trial, no feature behind a wall, no account. Why there is no catch: no company, no investors, no payroll.
+- [Support](https://rgdevment.dev/support/): Ways to help that cost nothing (a star, a Store rating, naming it where somebody asks, reporting what breaks) and, after those, sponsoring.
 
 ## Guides
 
-- [Notes you can read without the app](https://rgdevment.com/guides/notes-you-can-read-without-the-app/): How to find out what an export really gives you back, and why plain files avoid the question.
-- [Let an assistant read your notes](https://rgdevment.com/guides/let-an-assistant-read-your-notes/): Using MCP so a model reads your notes where they are instead of uploading them.
-- [Open Teams links in another browser](https://rgdevment.com/guides/open-teams-links-in-another-browser/): The setting Teams carries, what it does not fix, and routing per link.
-- [Open Outlook links in Chrome or Firefox](https://rgdevment.com/guides/open-outlook-links-in-chrome-or-firefox/): The classic Outlook setting under File, Options, Advanced, and what it leaves out.
-- [Send work links to a Chrome profile](https://rgdevment.com/guides/send-work-links-to-a-chrome-profile/): Why Chrome opens the wrong profile and how to route by profile.
-- [A Browserosaurus alternative still maintained](https://rgdevment.com/guides/browserosaurus-alternative/): What happened to Browserosaurus and what the alternatives are on each platform.
-- [Windows clipboard history](https://rgdevment.com/guides/windows-clipboard-history/): How to enable Win+V, and the limits of 25 entries, 4 MB and being wiped on restart.
-- [Clipboard history on macOS](https://rgdevment.com/guides/clipboard-history-on-mac/): macOS keeps only the last item copied; what the Finder shows and what it does not.
+- [Notes you can read without the app](https://rgdevment.dev/guides/notes-you-can-read-without-the-app/): How to find out what an export really gives you back, and why plain files avoid the question.
+- [Let an assistant read your notes](https://rgdevment.dev/guides/let-an-assistant-read-your-notes/): Using MCP so a model reads your notes where they are instead of uploading them.
+- [Open Teams links in another browser](https://rgdevment.dev/guides/open-teams-links-in-another-browser/): The setting Teams carries, what it does not fix, and routing per link.
+- [Open Outlook links in Chrome or Firefox](https://rgdevment.dev/guides/open-outlook-links-in-chrome-or-firefox/): The classic Outlook setting under File, Options, Advanced, and what it leaves out.
+- [Send work links to a Chrome profile](https://rgdevment.dev/guides/send-work-links-to-a-chrome-profile/): Why Chrome opens the wrong profile and how to route by profile.
+- [A Browserosaurus alternative still maintained](https://rgdevment.dev/guides/browserosaurus-alternative/): What happened to Browserosaurus and what the alternatives are on each platform.
+- [Windows clipboard history](https://rgdevment.dev/guides/windows-clipboard-history/): How to enable Win+V, and the limits of 25 entries, 4 MB and being wiped on restart.
+- [Clipboard history on macOS](https://rgdevment.dev/guides/clipboard-history-on-mac/): macOS keeps only the last item copied; what the Finder shows and what it does not.
 
 ## Spanish
 
-- [Inicio](https://rgdevment.com/es/)
+- [Inicio](https://rgdevment.dev/es/)
 - [Tisty](https://www.tisty.app/es/)
 - [LinkUnbound](https://www.linkunbound.app/es/)
 - [CoPanda](https://www.copanda.app/es/)
-- [Guías](https://rgdevment.com/es/guias/)
+- [Guías](https://rgdevment.dev/es/guias/)
 - [Ayuda de Tisty](https://www.tisty.app/es/ayuda/)
 - [Ayuda de LinkUnbound](https://www.linkunbound.app/es/ayuda/)
 - [Ayuda de CoPanda](https://www.copanda.app/es/ayuda/)
-- [Precios](https://rgdevment.com/es/precios/)
-- [Colaborar](https://rgdevment.com/es/colaborar/)
+- [Precios](https://rgdevment.dev/es/precios/)
+- [Colaborar](https://rgdevment.dev/es/colaborar/)
 
 ## Source
 

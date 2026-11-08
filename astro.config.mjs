@@ -16,5 +16,5 @@ const base = shared();
 export default defineConfig({
   ...base,
   integrations: [...base.integrations, moved],
-  site: 'https://rgdevment.com',
+  site: 'https://rgdevment.dev',
 });
