@@ -36,7 +36,7 @@ const trail: [string, string][] = [[product.name, ""], [t.title, path]];
       <table class="w-full min-w-[56rem] border-collapse text-left text-sm">
         <thead>
           <tr class="border-b border-line">
-            <th class="sticky left-0 z-10 w-40 bg-surface p-4" aria-hidden="true"></th>
+            <th class="sticky left-0 z-10 w-28 bg-surface p-4 sm:w-40" aria-hidden="true"></th>
             {
               RIVALS.map((one, at) => (
                 <th scope="col" class:list={["p-4 font-display text-base font-semibold text-fg", { "bg-[color-mix(in_srgb,var(--accent)_10%,transparent)]": at === 0 }]}>
