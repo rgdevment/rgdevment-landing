@@ -140,7 +140,7 @@ function ownFiles(product) {
         ];
         copyFileSync(`./public/icons/${product}.ico`, at('favicon.ico'));
         writeFileSync(at('_redirects'), renamed());
-        appendFileSync(at('_headers'), '\n/llms-full.txt\n  Content-Type: text/plain; charset=utf-8\n');
+        appendFileSync(at('_headers'), '\n/llms-full.txt\n  Content-Type: text/plain; charset=utf-8\n  X-Robots-Tag: noindex\n');
         drop.forEach((path) => rmSync(at(path), { force: true }));
       },
     },
