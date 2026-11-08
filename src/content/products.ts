@@ -22,7 +22,8 @@ type Words = {
   title?: string;
   meta: string;
   problem: string;
-  what: string[];
+  what?: string[];
+  groups?: { title: string; points: string[] }[];
   privacy: string;
   /// What its own site's pricing page promises about the data, beside the price.
   data?: { line: string; checks: string[] };
@@ -184,13 +185,36 @@ export const PRODUCTS: Product[] = [
       meta: "Notes, documents with diagrams and typed tables, and tasks on your own disk: documents in Markdown, tasks in a log you can read. For Windows and macOS. Free and open source: no Tisty account, no server, no subscription.",
       problem:
         "A task list forgets the moment you tick the box. Six months later the same problem comes back and all that is left is knowing you solved it once, somehow.",
-      what: [
-        "What you finish stays: the steps you took, the dated journal, the files and the documents you leaned on. Months later you search for how you solved it, and it is there.",
-        "Your documents are Markdown; your tasks, a log any tool can read, one line per change. All of it on your own disk, readable without Tisty running.",
-        "Today puts the urgent first: overdue only past its deadline, late when the day you planned slipped by, underway once started. A thin bar shows the time gone against the parts closed.",
-        "Documents that do more than text: tables whose columns know they hold dates, money, options or ratings and add themselves up, diagrams drawn by hand in a window of their own, formulas, pages and their own PDF. Still plain Markdown any editor opens.",
-        "No accounts, no subscription, no telemetry. You choose how your data travels: through your Google Drive, OneDrive or WebDAV server, encrypted if you want with a phrase only you know, through a folder you already sync, or nowhere beyond this computer. Free and open source.",
-        "An MCP door your assistant can knock on, so a model can read and write what you keep, with your permission.",
+      groups: [
+        {
+          title: "Capture",
+          points: [
+            "Type «call the bank at 3» in the quick capture, open from anywhere, and it is a task with its hour.",
+            "Documents with tables that add themselves up, diagrams drawn by hand, formulas, pages and their own PDF.",
+          ],
+        },
+        {
+          title: "Plan",
+          points: [
+            "Today puts the urgent first: overdue only past its deadline, late when the day you planned slipped by.",
+            "Steps, parts and the Eisenhower matrix by its name, with a thin bar weighing the time gone against the parts closed.",
+          ],
+        },
+        {
+          title: "Find",
+          points: [
+            "A finished task goes to the archive whole: its page, steps, dated journal and files.",
+            "One search across open tasks, the archive and every document, even what you closed two years ago.",
+          ],
+        },
+        {
+          title: "Your data is yours",
+          points: [
+            "Documents in Markdown and tasks in a log you can read, on your own disk.",
+            "Synced through your Google Drive, OneDrive, WebDAV server or a folder you already sync, encrypted with a phrase only you know if you want.",
+            "No account, no subscription, no telemetry. Free and open source.",
+          ],
+        },
       ],
       privacy:
         "Local-first by design. The files are yours and readable without Tisty running.",
@@ -296,13 +320,36 @@ export const PRODUCTS: Product[] = [
       meta: "Notas, documentos con diagramas y tablas con tipos, y tareas en tu propio disco: los documentos en Markdown, las tareas en un registro legible. Para Windows y macOS. Gratis y de código abierto: sin cuenta de Tisty, sin servidor y sin suscripción.",
       problem:
         "Una lista de tareas olvida en cuanto marcas la casilla. Seis meses después vuelve el mismo problema y lo único que queda es saber que ya lo resolviste una vez, de alguna manera.",
-      what: [
-        "Lo que cierras se queda: los pasos que diste, el diario con su fecha, los archivos y los documentos en que te apoyaste. Meses después buscas cómo lo resolviste, y está.",
-        "Tus documentos son Markdown; tus tareas, un registro que lee cualquier herramienta, una línea por cambio. Todo en tu propio disco, legible sin Tisty abierto.",
-        "Hoy pone primero lo urgente: vence solo lo que pasó su límite, se atrasa lo que no hiciste el día que planeaste y queda en curso lo que ya empezó. Una barra fina compara el plazo que pasó con las partes cerradas.",
-        "Documentos que hacen más que texto: tablas cuyas columnas saben si guardan fechas, montos, opciones o estrellas y se suman solas, diagramas que dibujas a mano en su propia ventana, fórmulas, páginas y su propio PDF. Y siguen siendo Markdown que abre cualquier editor.",
-        "Sin cuentas, sin suscripción y sin telemetría. Tú eliges cómo viajan tus datos: por tu Google Drive, OneDrive o servidor WebDAV, cifrados si quieres con una frase que solo tú conoces, por una carpeta que ya sincronizas o a ninguna parte fuera de este equipo. Gratis y de código abierto.",
-        "Una puerta MCP a la que tu asistente puede llamar, para que un modelo lea y escriba lo que guardas, con tu permiso.",
+      groups: [
+        {
+          title: "Capturar",
+          points: [
+            "Escribe «llamar al banco a las 3» en la captura rápida, que se abre desde cualquier parte, y es una tarea con su hora.",
+            "Documentos con tablas que se suman solas, diagramas dibujados a mano, fórmulas, páginas y su propio PDF.",
+          ],
+        },
+        {
+          title: "Planificar",
+          points: [
+            "Hoy pone primero lo urgente: vence solo lo que pasó su límite, se atrasa lo que no hiciste el día que planeaste.",
+            "Pasos, partes y la matriz de Eisenhower por su nombre, con una barra fina que compara el plazo que pasó con las partes cerradas.",
+          ],
+        },
+        {
+          title: "Encontrar",
+          points: [
+            "Una tarea terminada pasa entera al archivo: su página, sus pasos, su bitácora con fecha y sus archivos.",
+            "Una sola búsqueda en las tareas abiertas, el archivo y todos los documentos, aunque lo hayas cerrado hace dos años.",
+          ],
+        },
+        {
+          title: "Tus datos son tuyos",
+          points: [
+            "Documentos en Markdown y tareas en un registro legible, en tu propio disco.",
+            "Se sincronizan por tu Google Drive, OneDrive, servidor WebDAV o una carpeta que ya sincronizas, cifrados si quieres con una frase que solo tú conoces.",
+            "Sin cuenta, sin suscripción y sin telemetría. Gratis y de código abierto.",
+          ],
+        },
       ],
       privacy:
         "Local por diseño. Los archivos son tuyos y se leen sin que Tisty esté abierto.",
