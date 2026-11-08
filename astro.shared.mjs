@@ -6,7 +6,7 @@ import rehypeKatex from 'rehype-katex';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import remarkMath from 'remark-math';
 import sharp from 'sharp';
-import { HOMES, homeOf, relocate, renamed } from './src/hosts.ts';
+import { HOMES, MAIN, homeOf, relocate, renamed } from './src/hosts.ts';
 
 const PRODUCTS = Object.values(HOMES);
 
@@ -125,6 +125,13 @@ export function shared({ product = null } = {}) {
   };
 }
 
+// Supporting is the same for every app, so each app's site sends it to the one page on the main site.
+const SUPPORT_MOVED = {
+  '/support/': `${MAIN}/support/`,
+  '/es/colaborar/': `${MAIN}/es/colaborar/`,
+  '/es/apoyar/': `${MAIN}/es/colaborar/`,
+};
+
 const MAIN_ONLY = ['favicon.svg', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'social.png', 'social-es.png'];
 
 // public/ is shared, so each app's site drops what belongs to the others and takes its own /favicon.ico,
@@ -144,7 +151,7 @@ function ownFiles(product) {
           ...readdirSync(at('docs-assets/')).filter((name) => !name.startsWith(`${product}-`)).map((name) => `docs-assets/${name}`),
         ];
         copyFileSync(`./public/icons/${product}.ico`, at('favicon.ico'));
-        writeFileSync(at('_redirects'), renamed());
+        writeFileSync(at('_redirects'), renamed(SUPPORT_MOVED));
         appendFileSync(at('_headers'), '\n/llms-full.txt\n  Content-Type: text/plain; charset=utf-8\n  X-Robots-Tag: noindex\n');
         drop.forEach((path) => rmSync(at(path), { force: true }));
       },
