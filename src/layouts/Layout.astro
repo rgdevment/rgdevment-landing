@@ -11,7 +11,7 @@ import { PRODUCTS, cardOf } from "../content/products";
 import { privacyPath } from "../content/privacy";
 import { termsPath } from "../content/terms";
 import { MAIN } from "../hosts";
-import { AUTHOR, DOMAIN, HOME_PRODUCT, LOCALES, PERSON_ID, UMAMI_ID, WEBSITE_ID, canonical, href, mainHref, type Locale } from "../site";
+import { AUTHOR, DOMAIN, HOME_PRODUCT, LOCALES, PERSON_ID, COUNTS_VISITS, WEBSITE_ID, canonical, href, mainHref, type Locale } from "../site";
 
 interface Props {
   title: string;
@@ -82,9 +82,9 @@ const say = es
       terms: "Términos de uso",
       foot: "MHG (rgdevment). Código abierto, cada programa con su licencia.",
       footer: "Pie de página",
-      visits: UMAMI_ID
-        ? "Este sitio cuenta visitas con Umami, sin cookies ni identificadores."
-        : "Este sitio cuenta visitas con Cloudflare Web Analytics, sin cookies ni identificadores.",
+      visits: COUNTS_VISITS
+        ? "Este sitio cuenta visitas con Cloudflare Web Analytics, sin cookies ni identificadores."
+        : "Este sitio no cuenta visitas: sin analítica, sin cookies y sin identificadores.",
     }
   : {
       skip: "Skip to content",
@@ -99,9 +99,9 @@ const say = es
       terms: "Terms of use",
       foot: "MHG (rgdevment). Open source, each program under its own licence.",
       footer: "Footer",
-      visits: UMAMI_ID
-        ? "This site counts visits with Umami, without cookies or identifiers."
-        : "This site counts visits with Cloudflare Web Analytics, without cookies or identifiers.",
+      visits: COUNTS_VISITS
+        ? "This site counts visits with Cloudflare Web Analytics, without cookies or identifiers."
+        : "This site counts no visits: no analytics, no cookies and no identifiers.",
     };
 ---
 
@@ -176,11 +176,6 @@ const say = es
       { "prefetch": [{ "source": "document", "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
     </script>
     {graphs.map((graph) => <script type="application/ld+json" set:html={JSON.stringify(graph)} />)}
-    {
-      UMAMI_ID && (
-        <script is:inline defer src="https://cloud.umami.is/script.js" data-website-id={UMAMI_ID} data-domains={new URL(DOMAIN).host} />
-      )
-    }
   </head>
   <body class="min-h-screen">
     <a

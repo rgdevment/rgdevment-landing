@@ -1,0 +1,11 @@
+---
+import ComparePage from "../../../components/ComparePage.astro";
+import { COMPARE_PATH, compares } from "../../../content/compare";
+import { HOME_PRODUCT } from "../../../site";
+
+export function getStaticPaths() {
+  return compares(HOME_PRODUCT) ? [{ params: { compare: COMPARE_PATH.en } }] : [];
+}
+---
+
+<ComparePage locale="en" />

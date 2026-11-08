@@ -1,4 +1,34 @@
 import type { Locale } from "../site";
+import { ASSISTANT_EN, ASSISTANT_ES, PROOF_EN, PROOF_ES } from "./tisty";
+
+export type JourneyStep = {
+  label: string;
+  body: string;
+  shows: ["todo" | "done" | "note" | "archived" | "search" | "found", string][];
+};
+
+export type Proof = {
+  title: string;
+  lede: string;
+  doc: { name: string; body: string };
+  tree: { title: string; body: string; note: string };
+  log: { name: string; body: string; note: string };
+  editors: string;
+  share: { line: string; link: string; url: string };
+};
+
+export type Assistant = {
+  title: string;
+  lede: string;
+  settings: string;
+  other: string;
+  can: { title: string; items: string[] };
+  never: { title: string; items: string[] };
+  door: string;
+  listed: string;
+  more: string;
+  page: string;
+};
 
 type Words = {
   tagline: string;
@@ -6,7 +36,8 @@ type Words = {
   title?: string;
   meta: string;
   problem: string;
-  what: string[];
+  what?: string[];
+  groups?: { title: string; points: string[] }[];
   privacy: string;
   /// What its own site's pricing page promises about the data, beside the price.
   data?: { line: string; checks: string[] };
@@ -20,12 +51,16 @@ type Words = {
     title: string;
     lede: string;
     cards: { title: string; body: string }[];
-    spike: { title: string; lede: string; steps: string[] };
+    spike: { title: string; lede: string; steps: JourneyStep[] };
     more: string;
     page: string;
     anchor: string;
   };
-  faq: { q: string; a: string }[];
+  faq: { q: string; a: string; link?: { label: string; path: string } }[];
+  compare?: { label: string; path: string };
+  firstRun?: { title: string; body: string; link: string; anchor: string };
+  proof?: Proof;
+  assistant?: Assistant;
 };
 
 export type Product = {
@@ -35,12 +70,14 @@ export type Product = {
   licence: string;
   platforms: string[];
   storeId?: string;
+  requires?: { windows: string; macos: string };
+  signals?: { producthunt: { url: string; post: string } };
   winget?: string;
   cask?: string;
   /** Directories and registries with a page of their own for it. */
-  listings?: string[];
+  listings?: [string, string][];
   /** Its MCP server: the registry name and, per assistant, the command that connects it. */
-  mcp?: { registry: string; connect: [string, string][] };
+  mcp?: { registry: string; connect: { who?: string; command: string }[] };
   shot?: {
     src: string;
     srcEs?: string;
@@ -64,21 +101,23 @@ export const PRODUCTS: Product[] = [
     licence: "AGPL-3.0",
     platforms: ["Windows", "macOS"],
     storeId: "9PGVWXD8X93N",
+    requires: { windows: "Windows 10 (1809)", macos: "macOS 13.3" },
+    signals: { producthunt: { url: "https://www.producthunt.com/products/tisty", post: "1290086" } },
     winget: "rgdevment.Tisty",
     cask: "tisty",
     listings: [
-      "https://github.com/mcp/rgdevment/tisty",
-      "https://www.npmjs.com/package/tisty-mcp",
-      "https://glama.ai/mcp/servers/rgdevment/Tisty",
-      "https://mcpmarket.com/server/tisty",
-      "https://m8ven.ai/mcp/rgdevment-tisty-15kwqt",
+      ["GitHub MCP Registry", "https://github.com/mcp/rgdevment/tisty"],
+      ["npm", "https://www.npmjs.com/package/tisty-mcp"],
+      ["Glama", "https://glama.ai/mcp/servers/rgdevment/Tisty"],
+      ["MCP Market", "https://mcpmarket.com/server/tisty"],
+      ["M8ven", "https://m8ven.ai/mcp/rgdevment-tisty-15kwqt"],
     ],
     mcp: {
       registry: "io.github.rgdevment/tisty",
       connect: [
-        ["Claude Code", "/plugin install tisty --marketplace rgdevment/mcp-plugins"],
-        ["Gemini CLI", "gemini extensions install https://github.com/rgdevment/mcp-plugins"],
-        ["Any other client, such as VS Code or Cursor", "npx -y tisty-mcp"],
+        { who: "Claude Code", command: "/plugin install tisty --marketplace rgdevment/mcp-plugins" },
+        { who: "Gemini CLI", command: "gemini extensions install https://github.com/rgdevment/mcp-plugins" },
+        { command: "npx -y tisty-mcp" },
       ],
     },
     shot: {
@@ -120,10 +159,38 @@ export const PRODUCTS: Product[] = [
           title: "A task is also a document, one with an end",
           lede: "That is why a task has a page of its own. Take a spike, finding out how something can be done before doing it:",
           steps: [
-            "It starts as a task, «Find out how to sync with OneDrive». Its page gathers what you read, tried and ruled out, with the meeting recording, a video of the fault and the vendor's PDF attached.",
-            "When the way is clear, it is split into parts: «Sign in», «Upload large files», «Resume a cut upload», each with its own steps and notes.",
-            "The parts are completed one by one, then the spike itself, and it goes to the archive.",
-            "A year later, «how did we solve the OneDrive uploads?» finds it: its page, its parts and every step, as they were left.",
+            {
+              label: "A task",
+              body: "It starts like any other task: something to do, filed in its list.",
+              shows: [["todo", "Find out how to sync with OneDrive"]],
+            },
+            {
+              label: "Steps and journal",
+              body: "Its page gathers what you read, tried and ruled out, with the vendor's PDF attached. When the way is clear it splits into parts, each with its steps.",
+              shows: [
+                ["done", "Sign in"],
+                ["done", "Upload large files"],
+                ["todo", "Resume a cut upload"],
+                ["note", "12 Mar · large files go up in pieces"],
+              ],
+            },
+            {
+              label: "The archive",
+              body: "The parts are completed one by one, then the task itself, and it goes to the archive whole: page, parts, steps and journal.",
+              shows: [
+                ["archived", "Find out how to sync with OneDrive"],
+                ["note", "Closed 14 Mar · 3 parts · journal kept"],
+              ],
+            },
+            {
+              label: "A year later",
+              body: "The same question comes back, and a search finds the task as it was left, with everything you worked out.",
+              shows: [
+                ["search", "onedrive uploads"],
+                ["found", "Find out how to sync with OneDrive"],
+                ["note", "in the archive · 3 parts · 9 steps"],
+              ],
+            },
           ],
         },
         more: "The whole idea, in the docs",
@@ -131,16 +198,39 @@ export const PRODUCTS: Product[] = [
         anchor: "a-task-or-a-document",
       },
       title: "Tisty - Notes, documents and tasks on your own disk",
-      meta: "Notes, documents with diagrams and typed tables, and tasks as plain files on your own disk, for Windows and macOS. Free and open source: no Tisty account, no server, no subscription.",
+      meta: "Notes, documents with diagrams and typed tables, and tasks on your own disk: documents in Markdown, tasks in a log you can read. For Windows and macOS. Free and open source: no Tisty account, no server, no subscription.",
       problem:
         "A task list forgets the moment you tick the box. Six months later the same problem comes back and all that is left is knowing you solved it once, somehow.",
-      what: [
-        "What you finish stays: the steps you took, the dated journal, the files and the documents you leaned on. Months later you search for how you solved it, and it is there.",
-        "Notes, documents and tasks kept as plain files on your own disk, readable without Tisty running.",
-        "Today puts the urgent first: overdue only past its deadline, late when the day you planned slipped by, underway once started. A thin bar shows the time gone against the parts closed.",
-        "Documents that do more than text: tables whose columns know they hold dates, money, options or ratings and add themselves up, diagrams drawn by hand in a window of their own, formulas, pages and their own PDF. Still plain Markdown any editor opens.",
-        "No accounts, no subscription, no telemetry. You choose how your data travels: through your Google Drive, OneDrive or WebDAV server, encrypted if you want with a phrase only you know, through a folder you already sync, or nowhere beyond this computer. Free and open source.",
-        "An MCP door your assistant can knock on, so a model can read and write what you keep, with your permission.",
+      groups: [
+        {
+          title: "Capture",
+          points: [
+            "Type «call the bank at 3» in the quick capture, open from anywhere, and it is a task with its hour.",
+            "Documents with tables that add themselves up, diagrams drawn by hand, formulas, pages and their own PDF.",
+          ],
+        },
+        {
+          title: "Plan",
+          points: [
+            "Today puts the urgent first: overdue only past its deadline, late when the day you planned slipped by.",
+            "Steps, parts and the Eisenhower matrix by its name, with a thin bar weighing the time gone against the parts closed.",
+          ],
+        },
+        {
+          title: "Find",
+          points: [
+            "A finished task goes to the archive whole: its page, steps, dated journal and files.",
+            "One search across open tasks, the archive and every document, even what you closed two years ago.",
+          ],
+        },
+        {
+          title: "Your data is yours",
+          points: [
+            "Documents in Markdown and tasks in a log you can read, on your own disk.",
+            "Synced through your Google Drive, OneDrive, WebDAV server or a folder you already sync, encrypted with a phrase only you know if you want.",
+            "No account, no subscription, no telemetry. Free and open source.",
+          ],
+        },
       ],
       privacy:
         "Local-first by design. The files are yours and readable without Tisty running.",
@@ -157,7 +247,12 @@ export const PRODUCTS: Product[] = [
       faq: [
         {
           q: "What happens to my notes if Tisty disappears?",
-          a: "Nothing. They are plain files on your disk and any editor opens them.",
+          a: "Nothing. Your documents are Markdown files any editor opens, and your tasks a log of JSON lines that cat, grep or jq read. Both stay on your disk.",
+        },
+        {
+          q: "How is it different from Obsidian, Notion or Todoist?",
+          a: "Tisty keeps tasks and documents in one store and one search on your own disk, and finishing a task keeps everything it gathered instead of hiding it. Each of the others is stronger at something, and the comparison says where.",
+          link: { label: "Read the comparison", path: "compare" },
         },
         {
           q: "What is the MCP door for?",
@@ -168,6 +263,15 @@ export const PRODUCTS: Product[] = [
           a: "Yes. A mermaid block draws it, and mind maps, database schemas, freeform diagrams with every Mermaid shape and class diagrams are also drawn by hand in a window of their own, saved as the same text, shown on the page as you drew them and exported as PNG, JPG or SVG.",
         },
       ],
+      proof: PROOF_EN,
+      assistant: ASSISTANT_EN,
+      compare: { label: "Why Tisty? How it compares with Obsidian, Notion, Todoist and Logseq", path: "compare" },
+      firstRun: {
+        title: "The first time you open Tisty",
+        body: "It asks two things: your language, and where your copies should go, a folder to sync through or nowhere beyond this computer. Then it sets up your starting lists and writes you a guide, an ordinary document of yours to read, edit or throw away, that shows from the inside what a document can hold.",
+        link: "Start here, in the docs",
+        anchor: "start-here",
+      },
     },
     es: {
       tagline: "Notas, documentos y tareas. El historial de lo que aprendiste resolviendo.",
@@ -197,10 +301,38 @@ export const PRODUCTS: Product[] = [
           title: "Una tarea también es un documento, uno que termina",
           lede: "Por eso una tarea tiene una página propia. Piensa en un spike, una investigación para saber cómo se puede hacer algo antes de hacerlo:",
           steps: [
-            "Empieza como una tarea, «Averiguar cómo sincronizar con OneDrive». Su página reúne lo que leíste, probaste y descartaste, con la grabación de la reunión, un video de la falla y el PDF del proveedor adjuntos.",
-            "Cuando el camino está claro, se divide en partes: «Iniciar sesión», «Subir archivos grandes», «Retomar una subida cortada», cada una con sus propios pasos y notas.",
-            "Las partes se completan una a una, después el spike, y pasa al archivo.",
-            "Un año después, «¿cómo resolvimos las subidas a OneDrive?» lo encuentra: su página, sus partes y cada paso, tal como quedaron.",
+            {
+              label: "Una tarea",
+              body: "Empieza como cualquier otra tarea: algo por hacer, guardado en su lista.",
+              shows: [["todo", "Averiguar cómo sincronizar con OneDrive"]],
+            },
+            {
+              label: "Pasos y bitácora",
+              body: "Su página reúne lo que leíste, probaste y descartaste, con el PDF del proveedor adjunto. Cuando el camino está claro se divide en partes, cada una con sus pasos.",
+              shows: [
+                ["done", "Iniciar sesión"],
+                ["done", "Subir archivos grandes"],
+                ["todo", "Retomar una subida cortada"],
+                ["note", "12 mar · los archivos grandes suben por partes"],
+              ],
+            },
+            {
+              label: "El archivo",
+              body: "Las partes se completan una a una, después la tarea, y pasa al archivo entera: página, partes, pasos y bitácora.",
+              shows: [
+                ["archived", "Averiguar cómo sincronizar con OneDrive"],
+                ["note", "Cerrada el 14 mar · 3 partes · bitácora guardada"],
+              ],
+            },
+            {
+              label: "Un año después",
+              body: "Vuelve la misma pregunta, y una búsqueda encuentra la tarea tal como quedó, con todo lo que resolviste.",
+              shows: [
+                ["search", "subidas onedrive"],
+                ["found", "Averiguar cómo sincronizar con OneDrive"],
+                ["note", "en el archivo · 3 partes · 9 pasos"],
+              ],
+            },
           ],
         },
         more: "La idea completa, en la ayuda",
@@ -208,16 +340,39 @@ export const PRODUCTS: Product[] = [
         anchor: "tarea-o-documento",
       },
       title: "Tisty - Notas, documentos y tareas en tu propio disco",
-      meta: "Notas, documentos con diagramas y tablas con tipos, y tareas en archivos de tu propio disco, para Windows y macOS. Gratis y de código abierto: sin cuenta de Tisty, sin servidor y sin suscripción.",
+      meta: "Notas, documentos con diagramas y tablas con tipos, y tareas en tu propio disco: los documentos en Markdown, las tareas en un registro legible. Para Windows y macOS. Gratis y de código abierto: sin cuenta de Tisty, sin servidor y sin suscripción.",
       problem:
         "Una lista de tareas olvida en cuanto marcas la casilla. Seis meses después vuelve el mismo problema y lo único que queda es saber que ya lo resolviste una vez, de alguna manera.",
-      what: [
-        "Lo que cierras se queda: los pasos que diste, el diario con su fecha, los archivos y los documentos en que te apoyaste. Meses después buscas cómo lo resolviste, y está.",
-        "Notas, documentos y tareas guardados como archivos corrientes en tu propio disco, legibles sin Tisty abierto.",
-        "Hoy pone primero lo urgente: vence solo lo que pasó su límite, se atrasa lo que no hiciste el día que planeaste y queda en curso lo que ya empezó. Una barra fina compara el plazo que pasó con las partes cerradas.",
-        "Documentos que hacen más que texto: tablas cuyas columnas saben si guardan fechas, montos, opciones o estrellas y se suman solas, diagramas que dibujas a mano en su propia ventana, fórmulas, páginas y su propio PDF. Y siguen siendo Markdown que abre cualquier editor.",
-        "Sin cuentas, sin suscripción y sin telemetría. Tú eliges cómo viajan tus datos: por tu Google Drive, OneDrive o servidor WebDAV, cifrados si quieres con una frase que solo tú conoces, por una carpeta que ya sincronizas o a ninguna parte fuera de este equipo. Gratis y de código abierto.",
-        "Una puerta MCP a la que tu asistente puede llamar, para que un modelo lea y escriba lo que guardas, con tu permiso.",
+      groups: [
+        {
+          title: "Capturar",
+          points: [
+            "Escribe «llamar al banco a las 3» en la captura rápida, que se abre desde cualquier parte, y es una tarea con su hora.",
+            "Documentos con tablas que se suman solas, diagramas dibujados a mano, fórmulas, páginas y su propio PDF.",
+          ],
+        },
+        {
+          title: "Planificar",
+          points: [
+            "Hoy pone primero lo urgente: vence solo lo que pasó su límite, se atrasa lo que no hiciste el día que planeaste.",
+            "Pasos, partes y la matriz de Eisenhower por su nombre, con una barra fina que compara el plazo que pasó con las partes cerradas.",
+          ],
+        },
+        {
+          title: "Encontrar",
+          points: [
+            "Una tarea terminada pasa entera al archivo: su página, sus pasos, su bitácora con fecha y sus archivos.",
+            "Una sola búsqueda en las tareas abiertas, el archivo y todos los documentos, aunque lo hayas cerrado hace dos años.",
+          ],
+        },
+        {
+          title: "Tus datos son tuyos",
+          points: [
+            "Documentos en Markdown y tareas en un registro legible, en tu propio disco.",
+            "Se sincronizan por tu Google Drive, OneDrive, servidor WebDAV o una carpeta que ya sincronizas, cifrados si quieres con una frase que solo tú conoces.",
+            "Sin cuenta, sin suscripción y sin telemetría. Gratis y de código abierto.",
+          ],
+        },
       ],
       privacy:
         "Local por diseño. Los archivos son tuyos y se leen sin que Tisty esté abierto.",
@@ -234,7 +389,12 @@ export const PRODUCTS: Product[] = [
       faq: [
         {
           q: "¿Qué pasa con mis notas si Tisty desaparece?",
-          a: "Nada. Son archivos corrientes en tu disco y los abre cualquier editor.",
+          a: "Nada. Tus documentos son archivos Markdown que abre cualquier editor, y tus tareas, un registro de líneas JSON que leen cat, grep o jq. Los dos se quedan en tu disco.",
+        },
+        {
+          q: "¿En qué se diferencia de Obsidian, Notion o Todoist?",
+          a: "Tisty guarda tareas y documentos en un mismo lugar y una misma búsqueda, en tu propio disco, y terminar una tarea conserva todo lo que reunió en vez de esconderlo. Cada uno de los otros es más fuerte en algo, y la comparación dice en qué.",
+          link: { label: "Leer la comparación", path: "comparar" },
         },
         {
           q: "¿Para qué sirve la puerta MCP?",
@@ -245,6 +405,15 @@ export const PRODUCTS: Product[] = [
           a: "Sí. Un bloque mermaid lo dibuja, y los mapas mentales, los esquemas de base de datos, los diagramas libres con todas las formas de Mermaid y los de clases también se dibujan a mano en su propia ventana, se guardan como el mismo texto, se ven en la página tal como los dibujaste y se exportan como PNG, JPG o SVG.",
         },
       ],
+      proof: PROOF_ES,
+      assistant: ASSISTANT_ES,
+      compare: { label: "¿Por qué Tisty? Cómo se compara con Obsidian, Notion, Todoist y Logseq", path: "comparar" },
+      firstRun: {
+        title: "Al abrir Tisty por primera vez",
+        body: "Te pregunta dos cosas: tu idioma y adónde van tus copias, a una carpeta para sincronizar o a ninguna parte fuera de este equipo. Luego crea tus listas iniciales y te escribe una guía, un documento tuyo como cualquier otro, para leer, editar o tirar, que muestra desde dentro todo lo que cabe en un documento.",
+        link: "Empieza aquí, en la ayuda",
+        anchor: "para-empezar",
+      },
     },
   },
   {
@@ -474,6 +643,13 @@ export function cardOf(product: Product, locale: Locale) {
 
 export function releasesUrl(product: Product): string {
   return `${product.repo}/releases`;
+}
+
+const TAP = "rgdevment/tap";
+
+/// Homebrew loads a tap that is not its own only once it is trusted, and the trust is the tap's, so every cask in it needs it.
+export function brewSteps(product: Product): string[] {
+  return product.cask ? [`brew tap ${TAP}`, `brew trust ${TAP}`, `brew install --cask ${product.cask}`] : [];
 }
 
 export function storeUrl(product: Product): string | null {

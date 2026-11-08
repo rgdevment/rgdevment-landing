@@ -1,6 +1,6 @@
 # Privacy policy
 
-**Last updated:** October 27, 2026
+**Last updated:** November 8, 2026
 
 This policy covers the websites built from this repository: rgdevment.com,
 www.tisty.app, www.linkunbound.app and www.copanda.app. Each app has its own
@@ -13,10 +13,8 @@ static pages; nothing you do on them is stored by us.
 
 ## Counting visits
 
-- **www.tisty.app** counts visits with Umami Cloud: no cookies and no
-  identifiers, only the page, the referring site, the country and the browser
-  type, in aggregate.
-- **The other sites** count visits with Cloudflare Web Analytics, also without
+- **www.tisty.app** counts no visits: it loads no analytics of any kind.
+- **The other sites** count visits with Cloudflare Web Analytics, without
   cookies or identifiers.
 
 ## What stays in your browser

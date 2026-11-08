@@ -1,13 +1,17 @@
 ---
 import Crumbs from "./Crumbs.astro";
 import Icon from "./Icon.astro";
+import Journey from "./Journey.astro";
+import Assistant from "./Assistant.astro";
+import OnDisk from "./OnDisk.astro";
+import ProductHunt from "./ProductHunt.astro";
 import Shot from "./Shot.astro";
 import Layout from "../layouts/Layout.astro";
 import { bySection, docPath, docsOf } from "../content/docs";
 import { privacyPath } from "../content/privacy";
 import { GUIDES, written } from "../content/guides";
-import { PRODUCTS, type Product, cardOf, releasesUrl, shotSrc, storeUrl, words } from "../content/products";
-import { latestRelease, releaseDate } from "../content/releases";
+import { PRODUCTS, type Product, brewSteps, cardOf, releasesUrl, shotSrc, storeUrl, words } from "../content/products";
+import { installers, latestRelease, megabytes, releaseDate, stars } from "../content/releases";
 import { DOMAIN, HOME_PRODUCT, PERSON_ID, canonical, crumbs, href, type Locale } from "../site";
 
 interface Props {
@@ -22,9 +26,15 @@ const store = storeUrl(product);
 const releases = releasesUrl(product);
 const path = product.slug;
 const shot = shotSrc(product, locale);
+const brew = brewSteps(product);
 const social = cardOf(product, locale);
 
 const release = await latestRelease(product);
+const kit = installers(release);
+const starCount = product.signals ? await stars(product) : null;
+const macDirect = product.requires ? kit.macArm : undefined;
+const licence = `${product.repo}/blob/main/LICENSE`;
+const quiet ="underline decoration-line underline-offset-4 transition hover:text-fg";
 const docs = await docsOf(product.slug, locale);
 const docIndex = docPath(locale, product.slug);
 const docSections = bySection(docs);
@@ -48,6 +58,12 @@ const say = {
   copied: es ? "Copiado" : "Copied",
   getWin: es ? "Descargar para Windows" : "Download for Windows",
   getMac: es ? "Descargar para macOS" : "Download for macOS",
+  onGithub: es ? "Código fuente en GitHub" : "Source code on GitHub",
+  onProductHunt: es ? `${product.name} en Product Hunt` : `${product.name} on Product Hunt`,
+  stars: es ? "Estrellas en GitHub" : "Stars on GitHub",
+  orLater: es ? "o posterior" : "or later",
+  or: es ? "o el" : "or the",
+  installer: es ? "instalador" : "installer",
   others: es ? "Del mismo taller" : "From the same workshop",
   notes: es ? "Notas de la versión" : "Release notes",
   docs: es ? "Ayuda" : "Documentation",
@@ -72,8 +88,8 @@ const schema = [
     downloadUrl: releases,
     ...(release ? { softwareVersion: release.version, dateModified: release.date } : {}),
     ...(store ? { installUrl: store } : {}),
-    sameAs: [product.repo, ...(store ? [store] : []), ...(product.listings ?? [])],
-    license: `${product.repo}/blob/main/LICENSE`,
+    sameAs: [product.repo, ...(store ? [store] : []), ...(product.listings ?? []).map(([, url]) => url)],
+    license: licence,
     isAccessibleForFree: true,
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     author: { "@id": PERSON_ID },
@@ -155,40 +171,87 @@ const schema = [
           }
           <li class="chip"><Icon name="lock" class="h-3.5 w-3.5" />{say.noAccount}</li>
           <li class="chip"><Icon name="eye" class="h-3.5 w-3.5" />{say.noTelemetry}</li>
-          <li class="chip"><Icon name="licence" class="h-3.5 w-3.5" />{product.licence}</li>
+          <li>
+            <a class="chip transition hover:border-fg/25 hover:text-fg" href={licence} rel="noopener">
+              <Icon name="licence" class="h-3.5 w-3.5" />{product.licence}
+            </a>
+          </li>
           <li class="chip border-flame/30 bg-flame-tint font-medium text-flame-ink">
             <Icon name="free" class="h-3.5 w-3.5" />{say.free}
           </li>
+          {
+            product.signals && (
+              <li>
+                <a class="chip transition hover:border-fg/25 hover:text-fg" href={product.repo} rel="noopener">
+                  <Icon name="github" class="h-3.5 w-3.5" />
+                  {say.onGithub}
+                  {starCount !== null && (
+                    <span class="inline-flex items-center gap-1 border-l border-line pl-2 font-mono text-xs" title={say.stars}>
+                      <Icon name="star" class="h-3 w-3" />
+                      {starCount}
+                    </span>
+                  )}
+                </a>
+              </li>
+            )
+          }
         </ul>
 
         <!-- Both links ship in the HTML; the script only decides which one is dressed as the main one,
              so a reader without scripts, and any crawler, still sees every platform. -->
         <div id="download" class="group mt-10">
-          <p class="flex flex-wrap items-center justify-center gap-3">
+          <div class="flex flex-wrap items-start justify-center gap-3 sm:gap-6">
             {
               store && (
-                <a
-                  class="btn-ghost px-6 py-3.5 group-data-[os=win]:border-transparent group-data-[os=win]:bg-fg group-data-[os=win]:text-canvas group-data-[os=win]:hover:bg-fg/85"
-                  href={store}
-                  rel="noopener"
-                >
-                  <Icon name="windows" class="h-4 w-4" />
-                  {say.getWin}
-                </a>
+                <div class="flex max-w-[18rem] flex-col items-center gap-2.5">
+                  <a
+                    class="btn-ghost px-6 py-3.5 group-data-[os=win]:border-transparent group-data-[os=win]:bg-fg group-data-[os=win]:text-canvas group-data-[os=win]:hover:bg-fg/85"
+                    href={store}
+                    rel="noopener"
+                  >
+                    <Icon name="windows" class="h-4 w-4" />
+                    {say.getWin}
+                  </a>
+                  {product.requires && (
+                    <p class="text-xs leading-relaxed text-muted">
+                      <span class="block">Microsoft Store · {product.requires.windows} {say.orLater}</span>
+                      {kit.win && (
+                        <span class="block">
+                          {say.or} <a class={quiet} href={kit.win.url}>{say.installer} .exe · {megabytes(kit.win, locale)}</a>
+                        </span>
+                      )}
+                    </p>
+                  )}
+                </div>
               )
             }
             {
               product.cask && (
-                <a
-                  class="btn-ghost px-6 py-3.5 group-data-[os=mac]:border-transparent group-data-[os=mac]:bg-fg group-data-[os=mac]:text-canvas group-data-[os=mac]:hover:bg-fg/85"
-                  href="#install"
-                >
-                  <Icon name="apple" class="h-4 w-4" />
-                  {say.getMac}
-                </a>
+                <div class="flex max-w-[18rem] flex-col items-center gap-2.5">
+                  <a
+                    class="btn-ghost px-6 py-3.5 group-data-[os=mac]:border-transparent group-data-[os=mac]:bg-fg group-data-[os=mac]:text-canvas group-data-[os=mac]:hover:bg-fg/85"
+                    href={macDirect?.url ?? "#install"}
+                  >
+                    <Icon name="apple" class="h-4 w-4" />
+                    {say.getMac}
+                  </a>
+                  {macDirect && (
+                    <p class="text-xs leading-relaxed text-muted">
+                      <span class="block">Apple Silicon · .dmg · {megabytes(macDirect, locale)} · {product.requires!.macos} {say.orLater}</span>
+                      <span class="block">
+                        {kit.macIntel && (
+                          <>
+                            Intel: <a class={quiet} href={kit.macIntel.url}>.dmg · {megabytes(kit.macIntel, locale)}</a> ·{" "}
+                          </>
+                        )}
+                        <a class={quiet} href="#install">Homebrew</a>
+                      </span>
+                    </p>
+                  )}
+                </div>
               )
             }
-          </p>
+          </div>
           <p class="mt-4 text-sm text-muted">
             <a class="underline decoration-line underline-offset-4 transition hover:text-fg" href="#install">{say.ways}</a>
             {docs.length > 0 && (
@@ -198,6 +261,13 @@ const schema = [
               </>
             )}
           </p>
+          {
+            product.signals && (
+              <p class="mt-6">
+                <ProductHunt url={product.signals.producthunt.url} post={product.signals.producthunt.post} label={say.onProductHunt} />
+              </p>
+            )
+          }
         </div>
       </header>
 
@@ -220,18 +290,47 @@ const schema = [
 
   <section class="shell mt-24 sm:mt-32">
     <h2 class="section-title">{say.what}</h2>
-    <ol class="mt-10 grid gap-4 sm:grid-cols-2">
-      {
-        t.what.map((one, at) => (
-          <li class="card relative p-6 sm:p-7">
-            <span class="font-mono text-sm font-medium" style={`color: ${product.accent}`}>
-              {String(at + 1).padStart(2, "0")}
-            </span>
-            <p class="mt-3 text-body">{one}</p>
-          </li>
-        ))
-      }
-    </ol>
+    {
+      t.groups && (
+        <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {t.groups.map((group) => (
+            <div class="card p-6">
+              <h3 class="font-display text-xl font-semibold" style={`color: ${product.accent}`}>{group.title}</h3>
+              <ul class="mt-4 space-y-3">
+                {group.points.map((one) => (
+                  <li class="flex gap-2.5 text-body">
+                    <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full" style={`background: ${product.accent}`} aria-hidden="true" />
+                    <span>{one}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )
+    }
+    {
+      t.compare && (
+        <a class="mt-6 inline-flex items-center gap-1.5 font-medium text-fg hover:underline" href={href(locale, t.compare.path)}>
+          {t.compare.label}
+          <Icon name="arrow" class="h-4 w-4" />
+        </a>
+      )
+    }
+    {
+      t.what && (
+        <ol class="mt-10 grid gap-4 sm:grid-cols-2">
+          {t.what.map((one, at) => (
+            <li class="card relative p-6 sm:p-7">
+              <span class="font-mono text-sm font-medium" style={`color: ${product.accent}`}>
+                {String(at + 1).padStart(2, "0")}
+              </span>
+              <p class="mt-3 text-body">{one}</p>
+            </li>
+          ))}
+        </ol>
+      )
+    }
   </section>
 
   {
@@ -250,16 +349,7 @@ const schema = [
         <div class="card mt-4 p-6 sm:p-7">
           <h3 class="font-display text-xl font-semibold">{t.kinds.spike.title}</h3>
           <p class="mt-2 text-body">{t.kinds.spike.lede}</p>
-          <ol class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {t.kinds.spike.steps.map((one, at) => (
-              <li>
-                <span class="font-mono text-sm font-medium" style={`color: ${product.accent}`}>
-                  {String(at + 1).padStart(2, "0")}
-                </span>
-                <p class="mt-2 text-body">{one}</p>
-              </li>
-            ))}
-          </ol>
+          <Journey steps={t.kinds.spike.steps} accent={product.accent} />
         </div>
         <a
           class="mt-6 inline-flex items-center gap-1.5 font-medium text-fg hover:underline"
@@ -271,6 +361,8 @@ const schema = [
       </section>
     )
   }
+
+  {t.proof && <OnDisk proof={t.proof} />}
 
   {
     product.mascot && t.mascot && (
@@ -285,6 +377,8 @@ const schema = [
       </section>
     )
   }
+
+  {t.assistant && product.mcp && <Assistant product={product} words={t.assistant} locale={locale} />}
 
   <section class="shell mt-16">
     <div class="flex flex-col gap-5 rounded-3xl border border-flame/25 bg-flame-tint p-7 sm:flex-row sm:items-center sm:p-9">
@@ -335,18 +429,16 @@ const schema = [
             </div>
             <div class="mt-4 flex items-start gap-2 rounded-2xl bg-night py-3 pr-2 pl-4">
               <code class="flex-1 overflow-x-auto font-mono text-[13px] text-stone-100">
-                <span class="block whitespace-nowrap">
-                  <span class="select-none text-stone-400">$ </span>brew tap rgdevment/tap
-                </span>
-                <span class="mt-1 block whitespace-nowrap">
-                  <span class="select-none text-stone-400">$ </span>brew install --cask {product.cask}
-                </span>
+                {brew.map((line, at) => (
+                  <span class:list={["block whitespace-nowrap", { "mt-1": at > 0 }]}>
+                    <span class="select-none text-stone-400">$ </span>{line}
+                  </span>
+                ))}
               </code>
               <button
                 type="button"
                 class="copy shrink-0 rounded-lg p-1.5 text-stone-400 transition hover:bg-night-soft hover:text-white"
-                data-copy={`brew tap rgdevment/tap
-brew install --cask ${product.cask}`}
+                data-copy={brew.join("\n")}
                 aria-label={say.copy}
                 data-done={say.copied}
               >
@@ -398,6 +490,24 @@ brew install --cask ${product.cask}`}
         <Icon name="arrow" class="ml-auto h-4 w-4 shrink-0 text-muted transition group-hover:translate-x-0.5" />
       </a>
     </div>
+
+    {
+      t.firstRun && (
+        <div class="mt-4 flex flex-col gap-4 rounded-3xl border border-dashed border-line p-6 sm:flex-row sm:items-start sm:p-7">
+          <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-sunken text-fg">
+            <Icon name="book" class="h-5 w-5" />
+          </span>
+          <div>
+            <h3 class="font-display text-lg font-semibold text-fg">{t.firstRun.title}</h3>
+            <p class="mt-1.5 text-body">{t.firstRun.body}</p>
+            <a class="mt-3 inline-flex items-center gap-1.5 font-medium text-fg hover:underline" href={`${href(locale, docIndex)}#${t.firstRun.anchor}`}>
+              {t.firstRun.link}
+              <Icon name="arrow" class="h-4 w-4" />
+            </a>
+          </div>
+        </div>
+      )
+    }
   </section>
 
   {
@@ -444,7 +554,15 @@ brew install --cask ${product.cask}`}
                 <h3>{one.q}</h3>
                 <Icon name="chevron" class="h-5 w-5 shrink-0 text-muted transition group-open:rotate-180" />
               </summary>
-              <p class="pb-5 text-body">{one.a}</p>
+              <p class="pb-5 text-body">
+                {one.a}
+                {one.link && (
+                  <a class="ml-1 inline-flex items-center gap-1 font-medium text-fg hover:underline" href={href(locale, one.link.path)}>
+                    {one.link.label}
+                    <Icon name="arrow" class="h-3.5 w-3.5" />
+                  </a>
+                )}
+              </p>
             </details>
           ))
         }

@@ -1,0 +1,105 @@
+---
+import Crumbs from "./Crumbs.astro";
+import Icon from "./Icon.astro";
+import Layout from "../layouts/Layout.astro";
+import { COMPARE_PATH, RIVALS, SOURCES, comparison } from "../content/compare";
+import { PRODUCTS } from "../content/products";
+import { HOME_PRODUCT, crumbs, href, type Locale } from "../site";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const t = comparison(locale);
+const path = COMPARE_PATH[locale];
+const product = PRODUCTS.find((one) => one.slug === HOME_PRODUCT)!;
+const trail: [string, string][] = [[product.name, ""], [t.title, path]];
+---
+
+<Layout
+  title={t.title}
+  description={t.meta}
+  locale={locale}
+  paths={COMPARE_PATH}
+  schema={crumbs(locale, trail)}
+>
+  <section class="shell pt-10 sm:pt-14" style={`--accent: ${product.accent}`}>
+    <Crumbs locale={locale} trail={trail} />
+    <header class="mt-10 max-w-3xl">
+      <h1 class="text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">{t.title}</h1>
+      <p class="mt-5 text-lg text-body">{t.lede}</p>
+      <p class="mt-4 text-sm text-muted">{t.checked}</p>
+    </header>
+
+    <div class="mt-10 overflow-x-auto rounded-3xl border border-line bg-surface">
+      <table class="w-full min-w-[56rem] border-collapse text-left text-sm">
+        <thead>
+          <tr class="border-b border-line">
+            <th class="sticky left-0 z-10 w-28 bg-surface p-4 sm:w-40" aria-hidden="true"></th>
+            {
+              RIVALS.map((one, at) => (
+                <th scope="col" class:list={["p-4 font-display text-base font-semibold text-fg", { "bg-[color-mix(in_srgb,var(--accent)_10%,transparent)]": at === 0 }]}>
+                  <a class="hover:underline" href={one.url} rel="noopener">{one.name}</a>
+                </th>
+              ))
+            }
+          </tr>
+        </thead>
+        <tbody>
+          {
+            t.rows.map((row) => (
+              <tr class="border-b border-line last:border-0">
+                <th scope="row" class="sticky left-0 z-10 bg-surface p-4 align-top font-medium text-fg">{row.label}</th>
+                {row.cells.map((cell, at) => (
+                  <td class:list={["p-4 align-top text-body", { "bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] text-fg": at === 0 }]}>{cell}</td>
+                ))}
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <section class="shell mt-20">
+    <h2 class="section-title">{t.stronger.title}</h2>
+    <p class="mt-3 text-muted">{t.stronger.lede}</p>
+    <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+      {
+        t.stronger.items.map(([name, text]) => (
+          <li class="card p-6">
+            <h3 class="font-display text-lg font-semibold text-fg">{name}</h3>
+            <p class="mt-2 text-body">{text}</p>
+          </li>
+        ))
+      }
+    </ul>
+    <a class="btn-primary mt-10" href={`${href(locale)}#download`}>
+      <Icon name="download" class="h-4 w-4" />
+      {t.back}
+    </a>
+  </section>
+
+  <section class="shell mt-20">
+    <h2 class="eyebrow">{t.sources}</h2>
+    <div class="mt-4 grid gap-6 text-sm sm:grid-cols-2 lg:grid-cols-4">
+      {
+        SOURCES.map(([name, urls]) => (
+          <div>
+            <h3 class="font-medium text-fg">{name}</h3>
+            <ul class="mt-2 space-y-1">
+              {urls.map((url) => (
+                <li class="break-all">
+                  <a class="text-muted underline decoration-line underline-offset-4 hover:text-fg" href={url} rel="noopener">
+                    {url.replace(/^https:\/\/(www\.)?/, "")}
+                  </a>
+                </li>
+              ))}
+            </ul>
+          </div>
+        ))
+      }
+    </div>
+  </section>
+</Layout>
