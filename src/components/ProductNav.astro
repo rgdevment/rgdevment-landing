@@ -1,4 +1,5 @@
 ---
+import { COMPARE_PATH, compares } from "../content/compare";
 import { docPath } from "../content/docs";
 import { privacyPath } from "../content/privacy";
 import type { Product } from "../content/products";
@@ -19,6 +20,7 @@ const words = product[locale].language;
 const items: [string, string, boolean][] = [
   [href(locale, privacyPath(locale, product.slug)), es ? "Privacidad" : "Privacy", false],
   [href(locale, es ? "precios" : "pricing"), es ? "Precios" : "Pricing", false],
+  ...(compares(product.slug) ? ([[href(locale, COMPARE_PATH[locale]), es ? "Comparar" : "Compare", false]] as [string, string, boolean][]) : []),
   [product.repo, es ? "Repositorio" : "Repository", true],
   [href(locale, es ? "colaborar" : "support"), es ? "Colaborar" : "Support", false],
   [href(locale, docPath(locale, product.slug)), es ? "Ayuda" : "Docs", false],

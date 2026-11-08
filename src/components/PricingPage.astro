@@ -20,6 +20,19 @@ const paths = { en: "pricing", es: "precios" };
 const account = (name: string) => (es ? `Sin cuenta de ${name}` : `No ${name} account`);
 const home = only ? shown[0] : undefined;
 const data = home && words(home, locale).data;
+const named = home
+  ? es
+    ? {
+        seo: `¿${home.name} es gratis? Sí, sin versión de pago`,
+        description: `${home.name} es gratis por completo: sin versión de pago, sin prueba limitada, sin funciones detrás de un muro y sin cuenta. Qué significa exactamente y por qué no hay trampa.`,
+        hero: `${home.name} es gratis, sin letra pequeña.`,
+      }
+    : {
+        seo: `Is ${home.name} free? Yes, with no paid tier`,
+        description: `${home.name} is free in full: no paid tier, no trial, no feature behind a wall and no account. What that means exactly, and why there is no catch.`,
+        hero: `${home.name} is free, with no small print.`,
+      }
+  : null;
 
 const say = es
   ? {
@@ -151,8 +164,8 @@ const schema = [
 
 
 <Layout
-  title={say.seo}
-  description={say.description}
+  title={named?.seo ?? say.seo}
+  description={named?.description ?? say.description}
   locale={locale}
   path={paths[locale]}
   paths={paths}
@@ -166,7 +179,7 @@ const schema = [
       <Crumbs locale={locale} trail={[[say.title, paths[locale]]]} />
       <div class="mt-14 text-center">
         <p class="eyebrow">{say.title}</p>
-        <h1 class="mx-auto mt-4 max-w-4xl text-5xl font-semibold tracking-[-0.03em] sm:text-7xl">{say.hero}</h1>
+        <h1 class="mx-auto mt-4 max-w-4xl text-5xl font-semibold tracking-[-0.03em] sm:text-7xl">{named?.hero ?? say.hero}</h1>
         <p class="mx-auto mt-6 max-w-xl text-xl text-muted sm:text-2xl">
           {say.sub.map((one) => <span class="block">{one}</span>)}
         </p>

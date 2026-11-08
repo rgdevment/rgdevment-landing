@@ -16,7 +16,7 @@ const caption = "flex items-center justify-between gap-3 border-b border-night-l
   <h2 class="section-title">{proof.title}</h2>
   <p class="mt-3 max-w-3xl text-muted">{proof.lede}</p>
 
-  <div class="mt-10 grid gap-4 lg:grid-cols-2">
+  <div class="mt-10 grid grid-cols-1 gap-4 lg:grid-cols-2">
     <figure class={panel}>
       <figcaption class={caption}>
         <span>{proof.doc.name}</span>
@@ -25,7 +25,7 @@ const caption = "flex items-center justify-between gap-3 border-b border-night-l
       <Code code={proof.doc.body} lang="md" theme="github-dark" class="!bg-transparent px-5 py-4 text-[13px] leading-relaxed" />
     </figure>
 
-    <div class="grid gap-4">
+    <div class="grid min-w-0 grid-cols-1 gap-4">
       <figure class={panel}>
         <figcaption class={caption}>
           <span>{proof.tree.title}</span>

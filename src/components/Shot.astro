@@ -24,7 +24,6 @@ const webp = src.replace(/\.png$/, "");
     height={shot.height}
     alt={locale === "es" ? shot.es : shot.en}
     loading={eager ? "eager" : "lazy"}
-    fetchpriority={eager ? "high" : undefined}
     decoding="async"
     class={klass}
   />

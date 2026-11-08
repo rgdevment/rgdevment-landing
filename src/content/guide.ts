@@ -20,9 +20,14 @@ export type Guide = {
   id: string;
   product: string;
   published: string;
+  updated?: string;
   en: Written;
   es: Written;
 };
+
+export function lastChanged(guide: Guide): string {
+  return guide.updated ?? guide.published;
+}
 
 export function written(guide: Guide, locale: Locale): Written {
   return locale === "es" ? guide.es : guide.en;

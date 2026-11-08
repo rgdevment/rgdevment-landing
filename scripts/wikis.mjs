@@ -127,6 +127,8 @@ function rewriteCallouts(text, locale) {
   return text.replace(/^> \[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*$/gm, (_, kind) => `> **${CALLOUT[locale][kind]}**`);
 }
 
+const smallerOf = (file) => file.replace(/\.webp$/, "-720.webp");
+
 async function localiseImages(text, product) {
   const found = text.match(/https:\/\/raw\.githubusercontent\.com\/rgdevment\/[^\s)"']+\.(?:png|gif|jpe?g|webp|svg)/g) ?? [];
   for (const url of new Set(found)) {
@@ -143,9 +145,23 @@ async function localiseImages(text, product) {
     } catch {
       rmSync(file, { force: true });
       console.warn(`wikis: kept remote image, download failed: ${url}`);
+      continue;
     }
+    if (shot) await addSmaller(file);
   }
   return text;
+}
+
+// A phone gets the smaller copy; without one it still gets the full image, so a failure here only warns.
+async function addSmaller(file) {
+  const small = smallerOf(file);
+  if (existsSync(small)) return;
+  try {
+    writeFileSync(small, await sharp(file).resize({ width: 720, withoutEnlargement: true }).webp({ quality: 80 }).toBuffer());
+  } catch (error) {
+    rmSync(small, { force: true });
+    console.warn(`wikis: no 720px copy of ${basename(file)}: ${error.message}`);
+  }
 }
 
 function stripHeader(text) {
@@ -162,13 +178,36 @@ function titleOf(text, fallback) {
   return (html?.[1] ?? md?.[1] ?? fallback).trim();
 }
 
-function describe(body) {
-  const para = body
+const QUESTIONS = { en: "Answers to: ", es: "Respuestas a: " };
+const CONNECTOR = /^(But|And|So|That|Also|Pero|Y|Así|Eso|También)(?!\p{L})/u;
+
+const plainText = (text) =>
+  text.replace(/\[([^\]]+)\]\([^)]*\)/g, "$1").replace(/[*_`]/g, "").replace(/\s+/g, " ").trim();
+
+const clip = (text) => (text.length > 158 ? `${text.slice(0, 155).replace(/\s\S*$/, "")}…` : text);
+
+function askedOn(body, locale) {
+  const questions = [...body.matchAll(/^\*\*([^*\n]+\?)\*\*\s*$/gm)].map((one) => plainText(one[1]));
+  if (questions.length < 3) return null;
+  const lead = QUESTIONS[locale];
+  const picked = [];
+  for (const one of questions) {
+    if ((lead + [...picked, one].join(" ")).length > 158) break;
+    picked.push(one);
+  }
+  return picked.length > 0 ? lead + picked.join(" ") : null;
+}
+
+function describe(body, locale) {
+  const asked = askedOn(body, locale);
+  if (asked) return asked;
+  const paragraphs = body
     .split(/\n\s*\n/)
     .map((one) => one.trim())
-    .find((one) => one && !/^[#>|`<!\-*\d]/.test(one));
-  const plain = (para ?? "").replace(/\[([^\]]+)\]\([^)]*\)/g, "$1").replace(/[*_`]/g, "").replace(/\s+/g, " ");
-  return plain.length > 158 ? `${plain.slice(0, 155).replace(/\s\S*$/, "")}…` : plain;
+    .filter((one) => one && !/^([#>|`<!\-\d]|\* )/.test(one))
+    .map(plainText);
+  const standing = paragraphs.find((one) => one.length >= 60 && !CONNECTOR.test(one));
+  return clip(standing ?? paragraphs[0] ?? "");
 }
 
 function twinOf(page, sidebar) {
@@ -201,7 +240,7 @@ async function syncWiki(wiki) {
     const twin = pages.get(twinOf(page, sidebar));
     const meta = {
       title: titleOf(raw, entry.label || page),
-      description: describe(body),
+      description: describe(body, entry.locale),
       product: wiki.product,
       locale: entry.locale,
       page: entry.slug,

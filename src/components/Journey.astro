@@ -9,7 +9,7 @@ interface Props {
 const { steps, accent } = Astro.props;
 ---
 
-<ol class="mt-8 grid gap-10 lg:grid-cols-4 lg:gap-8">
+<ol class="mt-8 grid grid-cols-1 gap-10 lg:grid-cols-4 lg:gap-8">
   {
     steps.map((step, at) => (
       <li class="relative flex flex-col">

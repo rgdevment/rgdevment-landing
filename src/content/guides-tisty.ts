@@ -5,9 +5,10 @@ export const TISTY_GUIDES: Guide[] = [
     id: "notes-outlive-the-app",
     product: "tisty",
     published: "2026-09-24",
+    updated: "2026-11-08",
     en: {
       slug: "guides/notes-you-can-read-without-the-app",
-      title: "Notes you can still read if the app disappears",
+      title: "Markdown notes you can read even if the app disappears",
       description:
         "Most note applications keep your writing in a format only they understand. How to find out what you would actually keep, and how to stop depending on it.",
       lede: "The question is not whether you trust the application today. It is what is left the day it shuts down, changes its terms, or the subscription lapses and your notes end up behind a wall you wrote yourself.",
@@ -52,7 +53,7 @@ export const TISTY_GUIDES: Guide[] = [
     },
     es: {
       slug: "guias/notas-que-puedes-leer-sin-la-aplicacion",
-      title: "Notas que podrás leer aunque la aplicación desaparezca",
+      title: "Notas en Markdown que podrás leer aunque la app desaparezca",
       description:
         "Casi todas las aplicaciones de notas guardan lo que escribes en un formato que solo entienden ellas. Cómo saber qué te quedaría y cómo no depender de eso.",
       lede: "La pregunta no es si te fías de la aplicación hoy. Es qué queda el día que cierre, cambie sus condiciones, o se acabe la suscripción y tus notas se queden detrás de un muro que escribiste tú.",

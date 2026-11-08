@@ -94,7 +94,7 @@ function compared(product: Product): string[] {
   const t = comparison("en");
   const row = (cells: string[]) => `| ${cells.join(" | ")} |`;
   return [
-    `# ${t.title}`,
+    `# ${t.heading}`,
     "",
     `Source: ${canonical("en", COMPARE_PATH.en)}`,
     "",

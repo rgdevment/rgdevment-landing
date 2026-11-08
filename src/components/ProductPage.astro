@@ -10,7 +10,7 @@ import Layout from "../layouts/Layout.astro";
 import { bySection, docPath, docsOf } from "../content/docs";
 import { privacyPath } from "../content/privacy";
 import { GUIDES, written } from "../content/guides";
-import { PRODUCTS, type Product, brewSteps, cardOf, releasesUrl, shotSrc, storeUrl, words } from "../content/products";
+import { PRODUCTS, type Product, brewSteps, cardOf, inkOf, releasesUrl, shotSrc, storeUrl, words } from "../content/products";
 import { installers, latestRelease, megabytes, releaseDate, stars } from "../content/releases";
 import { DOMAIN, HOME_PRODUCT, PERSON_ID, canonical, crumbs, href, type Locale } from "../site";
 
@@ -27,6 +27,7 @@ const releases = releasesUrl(product);
 const path = product.slug;
 const shot = shotSrc(product, locale);
 const brew = brewSteps(product);
+const ink = inkOf(product);
 const social = cardOf(product, locale);
 
 const release = await latestRelease(product);
@@ -38,7 +39,7 @@ const quiet ="underline decoration-line underline-offset-4 transition hover:text
 const docs = await docsOf(product.slug, locale);
 const docIndex = docPath(locale, product.slug);
 const docSections = bySection(docs);
-const guides = HOME_PRODUCT ? [] : GUIDES.filter((one) => one.product === product.slug);
+const guides = GUIDES.filter((one) => one.product === product.slug);
 const others = PRODUCTS.filter((one) => one.slug !== product.slug);
 
 const say = {
@@ -77,7 +78,9 @@ const schema = [
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
+    "@id": `${canonical(locale, path)}#app`,
     name: product.name,
+    ...(product.formerName ? { alternateName: product.formerName } : {}),
     description: t.meta,
     applicationCategory: "UtilitiesApplication",
     operatingSystem: product.platforms.join(", "),
@@ -88,7 +91,12 @@ const schema = [
     downloadUrl: releases,
     ...(release ? { softwareVersion: release.version, dateModified: release.date } : {}),
     ...(store ? { installUrl: store } : {}),
-    sameAs: [product.repo, ...(store ? [store] : []), ...(product.listings ?? []).map(([, url]) => url)],
+    sameAs: [
+      product.repo,
+      ...(store ? [store] : []),
+      ...(product.signals ? [product.signals.producthunt.url] : []),
+      ...(product.listings ?? []).map(([, url]) => url),
+    ],
     license: licence,
     isAccessibleForFree: true,
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
@@ -107,7 +115,7 @@ const schema = [
       acceptedAnswer: { "@type": "Answer", text: one.a },
     })),
   },
-  crumbs(locale, [[product.name, path]]),
+  ...(HOME_PRODUCT ? [] : [crumbs(locale, [[product.name, path]])]),
 ];
 ---
 
@@ -139,7 +147,10 @@ const schema = [
           height="96"
           class="mx-auto h-20 w-20 rounded-[1.4rem] shadow-[0_18px_40px_-16px_rgb(0_0_0/0.5)] sm:h-24 sm:w-24"
         />
-        <h1 class="mt-7 text-5xl font-semibold tracking-[-0.03em] sm:text-6xl">{product.name}</h1>
+        <h1 class="mt-7 text-5xl font-semibold tracking-[-0.03em] sm:text-6xl">
+          {product.name}<span class="sr-only">: </span>
+          <span class="mt-3 block font-display text-base font-medium tracking-normal text-muted sm:text-lg">{t.category}</span>
+        </h1>
         <p class="mt-4 font-display text-xl text-fg sm:text-2xl">{t.tagline}</p>
         {t.formerly && <p class="mt-3 text-sm text-muted">{t.formerly}</p>}
         <p class="mx-auto mt-5 max-w-2xl text-lg text-body">{t.problem}</p>
@@ -292,10 +303,10 @@ const schema = [
     <h2 class="section-title">{say.what}</h2>
     {
       t.groups && (
-        <div class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {t.groups.map((group) => (
             <div class="card p-6">
-              <h3 class="font-display text-xl font-semibold" style={`color: ${product.accent}`}>{group.title}</h3>
+              <h3 class="accent-ink font-display text-xl font-semibold" style={ink}>{group.title}</h3>
               <ul class="mt-4 space-y-3">
                 {group.points.map((one) => (
                   <li class="flex gap-2.5 text-body">
@@ -319,10 +330,10 @@ const schema = [
     }
     {
       t.what && (
-        <ol class="mt-10 grid gap-4 sm:grid-cols-2">
+        <ol class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {t.what.map((one, at) => (
             <li class="card relative p-6 sm:p-7">
-              <span class="font-mono text-sm font-medium" style={`color: ${product.accent}`}>
+              <span class="accent-ink font-mono text-sm font-medium" style={ink}>
                 {String(at + 1).padStart(2, "0")}
               </span>
               <p class="mt-3 text-body">{one}</p>
@@ -338,10 +349,10 @@ const schema = [
       <section class="shell mt-24 sm:mt-32">
         <h2 class="section-title">{t.kinds.title}</h2>
         <p class="mt-3 max-w-3xl text-muted">{t.kinds.lede}</p>
-        <div class="mt-10 grid gap-4 sm:grid-cols-2">
+        <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {t.kinds.cards.map((one) => (
             <div class="card p-6 sm:p-7">
-              <h3 class="font-display text-xl font-semibold" style={`color: ${product.accent}`}>{one.title}</h3>
+              <h3 class="accent-ink font-display text-xl font-semibold" style={ink}>{one.title}</h3>
               <p class="mt-2 text-body">{one.body}</p>
             </div>
           ))}
@@ -399,7 +410,7 @@ const schema = [
     <h2 class="section-title">{say.install}</h2>
     <p class="mt-3 text-muted">{say.installLede}</p>
 
-    <div class="mt-10 grid gap-4 sm:grid-cols-2">
+    <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
       {
         store && (
           <a class="card-link group flex items-center gap-4 p-5" href={store} rel="noopener">
@@ -523,7 +534,7 @@ const schema = [
             <Icon name="arrow" class="h-4 w-4" />
           </a>
         </div>
-        <div class="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {docSections.map(([section, list]) => (
             <div class="card p-6">
               <h3 class="eyebrow">{section}</h3>
@@ -575,7 +586,7 @@ const schema = [
       <section class="shell mt-24 sm:mt-32">
         <h2 class="section-title">{say.guides}</h2>
         <p class="mt-3 text-muted">{say.guidesLede}</p>
-        <ul class="mt-8 grid gap-4 sm:grid-cols-2">
+        <ul class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {guides.map((one) => (
             <li>
               <a class="card-link group block h-full p-6" href={href(locale, written(one, locale).slug)}>
@@ -600,7 +611,7 @@ const schema = [
         {say.source}
       </a>
     </div>
-    <ul class="mt-6 grid gap-4 sm:grid-cols-2">
+    <ul class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
       {
         others.map((one) => (
           <li>
