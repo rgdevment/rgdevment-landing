@@ -3,6 +3,7 @@ import Crumbs from "./Crumbs.astro";
 import Icon from "./Icon.astro";
 import Layout from "../layouts/Layout.astro";
 import { docPath, docsOf } from "../content/docs";
+import { lastChanged } from "../content/guide";
 import { GUIDES, type Guide, written } from "../content/guides";
 import { PRODUCTS, shotSrc, words } from "../content/products";
 import { AUTHOR, DOMAIN, PERSON_ID, WEBSITE_ID, canonical, crumbs, href, type Locale } from "../site";
@@ -25,14 +26,13 @@ const say = {
   help: es ? "Ayuda de" : "Docs for",
   kin: es ? "Sigue por aquí" : "Carry on with",
   by: es ? "Por" : "By",
+  updated: es ? "Actualizada el" : "Updated",
   free: es ? "Gratis, de código abierto, sin cuenta ni telemetría." : "Free, open source, no account, no telemetry.",
 };
 
-const date = new Date(`${guide.published}T12:00:00Z`).toLocaleDateString(es ? "es-CL" : "en-US", {
-  year: "numeric",
-  month: "long",
-  day: "numeric",
-});
+const day = (iso: string) =>
+  new Date(`${iso}T12:00:00Z`).toLocaleDateString(es ? "es-CL" : "en-US", { year: "numeric", month: "long", day: "numeric" });
+const date = day(guide.published);
 
 const paths = { en: guide.en.slug, es: guide.es.slug };
 const kin = GUIDES.filter((one) => one.id !== guide.id && one.product === guide.product);
@@ -47,7 +47,7 @@ const schema = [
     description: t.description,
     inLanguage: locale,
     datePublished: guide.published,
-    dateModified: guide.published,
+    dateModified: lastChanged(guide),
     author: { "@id": PERSON_ID, "@type": "Person", name: AUTHOR.name },
     publisher: { "@id": PERSON_ID },
     isPartOf: { "@id": WEBSITE_ID },
@@ -92,6 +92,7 @@ const schema = [
   paths={paths}
   here="guides"
   published={guide.published}
+  modified={guide.updated}
   schema={schema}
 >
   <article class="shell pt-10 sm:pt-14">
@@ -112,6 +113,12 @@ const schema = [
         <span>{say.by} <span class="text-fg">{AUTHOR.name}</span></span>
         <span aria-hidden="true">·</span>
         <time datetime={guide.published}>{date}</time>
+        {guide.updated && (
+          <>
+            <span aria-hidden="true">·</span>
+            <span>{say.updated} <time datetime={guide.updated}>{day(guide.updated)}</time></span>
+          </>
+        )}
       </p>
     </header>
 

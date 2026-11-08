@@ -1,4 +1,5 @@
 import type { APIRoute } from "astro";
+import { lastChanged } from "../content/guide";
 import { GUIDES } from "../content/guides";
 import { privacyPath } from "../content/privacy";
 import { PRODUCTS } from "../content/products";
@@ -7,7 +8,7 @@ import { type Entry, docEntries, sitemap } from "../sitemap";
 
 const STAYING = PRODUCTS.filter((p) => !homeOf(p.slug));
 
-const NEWEST = GUIDES.map((g) => g.published).sort().at(-1);
+const NEWEST = GUIDES.map(lastChanged).sort().at(-1);
 
 const ENTRIES: Entry[] = [
   { en: "", es: "", priority: "1.0", lastmod: NEWEST },
@@ -20,7 +21,7 @@ const ENTRIES: Entry[] = [
     en: g.en.slug,
     es: g.es.slug,
     priority: "0.8",
-    lastmod: g.published,
+    lastmod: lastChanged(g),
   })),
 ];
 

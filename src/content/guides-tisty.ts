@@ -5,6 +5,7 @@ export const TISTY_GUIDES: Guide[] = [
     id: "notes-outlive-the-app",
     product: "tisty",
     published: "2026-09-24",
+    updated: "2026-11-08",
     en: {
       slug: "guides/notes-you-can-read-without-the-app",
       title: "Notes you can still read if the app disappears",
