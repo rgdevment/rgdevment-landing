@@ -446,6 +446,24 @@ const schema = [
         <Icon name="arrow" class="ml-auto h-4 w-4 shrink-0 text-muted transition group-hover:translate-x-0.5" />
       </a>
     </div>
+
+    {
+      t.firstRun && (
+        <div class="mt-4 flex flex-col gap-4 rounded-3xl border border-dashed border-line p-6 sm:flex-row sm:items-start sm:p-7">
+          <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-sunken text-fg">
+            <Icon name="book" class="h-5 w-5" />
+          </span>
+          <div>
+            <h3 class="font-display text-lg font-semibold text-fg">{t.firstRun.title}</h3>
+            <p class="mt-1.5 text-body">{t.firstRun.body}</p>
+            <a class="mt-3 inline-flex items-center gap-1.5 font-medium text-fg hover:underline" href={`${href(locale, docIndex)}#${t.firstRun.anchor}`}>
+              {t.firstRun.link}
+              <Icon name="arrow" class="h-4 w-4" />
+            </a>
+          </div>
+        </div>
+      )
+    }
   </section>
 
   {
