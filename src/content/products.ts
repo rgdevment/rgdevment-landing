@@ -32,6 +32,7 @@ export type Assistant = {
 
 type Words = {
   tagline: string;
+  category: string;
   /// Only where name plus tagline runs past what a result page shows.
   title?: string;
   meta: string;
@@ -69,6 +70,7 @@ export type Product = {
   repo: string;
   licence: string;
   platforms: string[];
+  formerName?: string;
   storeId?: string;
   requires?: { windows: string; macos: string };
   signals?: { producthunt: { url: string; post: string } };
@@ -134,6 +136,7 @@ export const PRODUCTS: Product[] = [
     icon: "/icons/tisty-mark.png",
     mascot: "/tisty-head.svg",
     en: {
+      category: "Local-first notes, documents and tasks for Windows and macOS",
       tagline: "Notes, documents and tasks. The record of what you learned solving them.",
       mascot: {
         title: "A beaver that keeps what you build.",
@@ -199,8 +202,8 @@ export const PRODUCTS: Product[] = [
         page: "tasks",
         anchor: "a-task-or-a-document",
       },
-      title: "Tisty - Notes, documents and tasks on your own disk",
-      meta: "Notes, documents with diagrams and typed tables, and tasks on your own disk: documents in Markdown, tasks in a log you can read. For Windows and macOS. Free and open source: no Tisty account, no server, no subscription.",
+      title: "Tisty: local-first notes, documents and tasks app",
+      meta: "Local-first notes and tasks app for Windows and macOS: Markdown documents, tasks that keep their history, MCP for assistants. Free, open source, no account.",
       problem:
         "A task list forgets the moment you tick the box. Six months later the same problem comes back and all that is left is knowing you solved it once, somehow.",
       groups: [
@@ -276,6 +279,7 @@ export const PRODUCTS: Product[] = [
       },
     },
     es: {
+      category: "Notas, documentos y tareas en tu propio disco, para Windows y macOS",
       tagline: "Notas, documentos y tareas. El historial de lo que aprendiste resolviendo.",
       mascot: {
         title: "Un castor que guarda lo que construyes.",
@@ -341,8 +345,8 @@ export const PRODUCTS: Product[] = [
         page: "tareas",
         anchor: "tarea-o-documento",
       },
-      title: "Tisty - Notas, documentos y tareas en tu propio disco",
-      meta: "Notas, documentos con diagramas y tablas con tipos, y tareas en tu propio disco: los documentos en Markdown, las tareas en un registro legible. Para Windows y macOS. Gratis y de código abierto: sin cuenta de Tisty, sin servidor y sin suscripción.",
+      title: "Tisty: app de notas, documentos y tareas en tu disco",
+      meta: "App de notas y tareas local para Windows y macOS: documentos en Markdown, tareas que guardan su historial y MCP para asistentes. Gratis, libre y sin cuenta.",
       problem:
         "Una lista de tareas olvida en cuanto marcas la casilla. Seis meses después vuelve el mismo problema y lo único que queda es saber que ya lo resolviste una vez, de alguna manera.",
       groups: [
@@ -440,12 +444,14 @@ export const PRODUCTS: Product[] = [
     icon: "/icons/linkunbound.png",
     mascot: "/linkunbound-head.svg",
     en: {
+      category: "Browser picker for Windows and macOS",
+      title: "LinkUnbound: browser picker for Windows and macOS",
       tagline: "Choose which browser opens every link.",
       mascot: {
         title: "A bear that looks after your links.",
         body: "Steady and calm, the bear stands between the link and the browser, so every link opens where you decide.",
       },
-      meta: "Free, open source browser picker for Windows and macOS. Choose which browser or profile opens every link, with rules per site and per application.",
+      meta: "Free, open source browser picker for Windows and macOS: choose the browser or browser profile that opens each link, with rules per site and per app.",
       problem:
         "A link from Teams opens in Edge. One from Slack lands wherever Windows decided last. You keep three browsers and four profiles, and nobody asks you which one you meant.",
       what: [
@@ -481,12 +487,14 @@ export const PRODUCTS: Product[] = [
       ],
     },
     es: {
+      category: "Selector de navegador para Windows y macOS",
+      title: "LinkUnbound: selector de navegador para Windows y macOS",
       tagline: "Elige con qué navegador se abre cada enlace.",
       mascot: {
         title: "Un oso que cuida tus enlaces.",
         body: "Firme y tranquilo, el oso se para entre el enlace y el navegador, para que cada enlace se abra donde tú decides.",
       },
-      meta: "Selector de navegador gratuito y de código abierto para Windows y macOS. Elige qué navegador o perfil abre cada enlace, con reglas por sitio y aplicación.",
+      meta: "Selector de navegador gratis y de código abierto para Windows y macOS: elige qué navegador o perfil abre cada enlace, con reglas por sitio y por aplicación.",
       problem:
         "Un enlace de Teams se abre en Edge. Uno de Slack, donde Windows decidiera la última vez. Tienes tres navegadores y cuatro perfiles, y a ti no te pregunta nadie.",
       what: [
@@ -525,6 +533,7 @@ export const PRODUCTS: Product[] = [
   {
     slug: "copanda",
     name: "CoPanda",
+    formerName: "CopyPaste",
     repo: "https://github.com/rgdevment/CopyPaste",
     licence: "GPL-3.0",
     platforms: ["Windows", "macOS"],
@@ -543,9 +552,10 @@ export const PRODUCTS: Product[] = [
     icon: "/icons/copanda.png",
     mascot: "/copanda-head.svg",
     en: {
+      category: "Clipboard manager for Windows and macOS",
       tagline: "An extra thumb for your clipboard.",
-      title: "CoPanda - Clipboard history that stays on your machine",
-      meta: "CoPanda, formerly CopyPaste: a free, open source clipboard manager for Windows and macOS. A searchable local history that ignores your password manager.",
+      title: "CoPanda: free clipboard manager for Windows and macOS",
+      meta: "Free, open source clipboard manager for Windows and macOS, formerly CopyPaste. A searchable local history that skips your password manager. No account.",
       formerly: "Formerly CopyPaste. The same app and the same history, with a name of its own.",
       mascot: {
         title: "An extra thumb for your clipboard.",
@@ -586,9 +596,10 @@ export const PRODUCTS: Product[] = [
       ],
     },
     es: {
+      category: "Gestor de portapapeles para Windows y macOS",
       tagline: "Un pulgar extra para tu portapapeles.",
-      title: "CoPanda - Historial del portapapeles que se queda en tu equipo",
-      meta: "CoPanda, antes CopyPaste: gestor de portapapeles gratuito y de código abierto para Windows y macOS. Historial local y buscable que ignora tu gestor de contraseñas.",
+      title: "CoPanda: gestor de portapapeles gratis para Windows y macOS",
+      meta: "Gestor de portapapeles gratis y libre para Windows y macOS, antes CopyPaste. Historial local con búsqueda que ignora tu gestor de contraseñas. Sin cuenta.",
       formerly: "Antes se llamaba CopyPaste. La misma aplicación y el mismo historial, con un nombre propio.",
       mascot: {
         title: "Un pulgar extra para tu portapapeles.",
