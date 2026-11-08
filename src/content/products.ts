@@ -42,7 +42,8 @@ type Words = {
     page: string;
     anchor: string;
   };
-  faq: { q: string; a: string }[];
+  faq: { q: string; a: string; link?: { label: string; path: string } }[];
+  compare?: { label: string; path: string };
   firstRun?: { title: string; body: string; link: string; anchor: string };
   proof?: Proof;
 };
@@ -234,6 +235,11 @@ export const PRODUCTS: Product[] = [
           a: "Nothing. Your documents are Markdown files any editor opens, and your tasks a log of JSON lines that cat, grep or jq read. Both stay on your disk.",
         },
         {
+          q: "How is it different from Obsidian, Notion or Todoist?",
+          a: "Tisty keeps tasks and documents in one store and one search on your own disk, and finishing a task keeps everything it gathered instead of hiding it. Each of the others is stronger at something, and the comparison says where.",
+          link: { label: "Read the comparison", path: "compare" },
+        },
+        {
           q: "What is the MCP door for?",
           a: "It lets an assistant read and write your notes and tasks through the Model Context Protocol, on your machine and with your permission.",
         },
@@ -243,6 +249,7 @@ export const PRODUCTS: Product[] = [
         },
       ],
       proof: PROOF_EN,
+      compare: { label: "Why Tisty? How it compares with Obsidian, Notion, Todoist and Logseq", path: "compare" },
       firstRun: {
         title: "The first time you open Tisty",
         body: "It asks two things: your language, and where your copies should go, a folder to sync through or nowhere beyond this computer. Then it sets up your starting lists and writes you a guide, an ordinary document of yours to read, edit or throw away, that shows from the inside what a document can hold.",
@@ -369,6 +376,11 @@ export const PRODUCTS: Product[] = [
           a: "Nada. Tus documentos son archivos Markdown que abre cualquier editor, y tus tareas, un registro de líneas JSON que leen cat, grep o jq. Los dos se quedan en tu disco.",
         },
         {
+          q: "¿En qué se diferencia de Obsidian, Notion o Todoist?",
+          a: "Tisty guarda tareas y documentos en un mismo lugar y una misma búsqueda, en tu propio disco, y terminar una tarea conserva todo lo que reunió en vez de esconderlo. Cada uno de los otros es más fuerte en algo, y la comparación dice en qué.",
+          link: { label: "Leer la comparación", path: "comparar" },
+        },
+        {
           q: "¿Para qué sirve la puerta MCP?",
           a: "Permite que un asistente lea y escriba tus notas y tareas por el Model Context Protocol, en tu equipo y con tu permiso.",
         },
@@ -378,6 +390,7 @@ export const PRODUCTS: Product[] = [
         },
       ],
       proof: PROOF_ES,
+      compare: { label: "¿Por qué Tisty? Cómo se compara con Obsidian, Notion, Todoist y Logseq", path: "comparar" },
       firstRun: {
         title: "Al abrir Tisty por primera vez",
         body: "Te pregunta dos cosas: tu idioma y adónde van tus copias, a una carpeta para sincronizar o a ninguna parte fuera de este equipo. Luego crea tus listas iniciales y te escribe una guía, un documento tuyo como cualquier otro, para leer, editar o tirar, que muestra desde dentro todo lo que cabe en un documento.",

@@ -4,6 +4,7 @@ import { getEntry } from "astro:content";
 import { privacyPath } from "../../../content/privacy";
 import { termsPath } from "../../../content/terms";
 import { latestRelease } from "../../../content/releases";
+import { COMPARE_PATH, compares } from "../../../content/compare";
 import { docEntries, sitemap } from "../../../sitemap";
 import { HOME_PRODUCT } from "../../../site";
 
@@ -19,6 +20,7 @@ export const GET: APIRoute = async () => {
       : []),
     { en: "pricing", es: "precios", priority: "0.5" },
     { en: "support", es: "colaborar", priority: "0.5" },
+    ...(compares(product) ? [{ en: COMPARE_PATH.en, es: COMPARE_PATH.es, priority: "0.6" }] : []),
     ...(await docEntries(product)),
   ]);
 };

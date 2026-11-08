@@ -292,6 +292,14 @@ const schema = [
       )
     }
     {
+      t.compare && (
+        <a class="mt-6 inline-flex items-center gap-1.5 font-medium text-fg hover:underline" href={href(locale, t.compare.path)}>
+          {t.compare.label}
+          <Icon name="arrow" class="h-4 w-4" />
+        </a>
+      )
+    }
+    {
       t.what && (
         <ol class="mt-10 grid gap-4 sm:grid-cols-2">
           {t.what.map((one, at) => (
@@ -526,7 +534,15 @@ const schema = [
                 <h3>{one.q}</h3>
                 <Icon name="chevron" class="h-5 w-5 shrink-0 text-muted transition group-open:rotate-180" />
               </summary>
-              <p class="pb-5 text-body">{one.a}</p>
+              <p class="pb-5 text-body">
+                {one.a}
+                {one.link && (
+                  <a class="ml-1 inline-flex items-center gap-1 font-medium text-fg hover:underline" href={href(locale, one.link.path)}>
+                    {one.link.label}
+                    <Icon name="arrow" class="h-3.5 w-3.5" />
+                  </a>
+                )}
+              </p>
             </details>
           ))
         }
