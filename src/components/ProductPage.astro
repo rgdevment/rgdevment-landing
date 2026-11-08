@@ -39,7 +39,7 @@ const quiet ="underline decoration-line underline-offset-4 transition hover:text
 const docs = await docsOf(product.slug, locale);
 const docIndex = docPath(locale, product.slug);
 const docSections = bySection(docs);
-const guides = HOME_PRODUCT ? [] : GUIDES.filter((one) => one.product === product.slug);
+const guides = GUIDES.filter((one) => one.product === product.slug);
 const others = PRODUCTS.filter((one) => one.slug !== product.slug);
 
 const say = {

@@ -233,7 +233,7 @@ const say = es
           <div>
             <p class="eyebrow">{say.site}</p>
             <ul class="mt-4 space-y-2.5 text-sm">
-              {!owner && <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "guias" : "guides")}>{say.guides}</a></li>}
+              <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "guias" : "guides")}>{say.guides}</a></li>
               <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "precios" : "pricing")}>{say.pricing}</a></li>
               {owner && compares(owner.slug) && <li><a class="text-body transition-colors hover:text-fg" href={href(locale, COMPARE_PATH[locale])}>{comparison(locale).short}</a></li>}
               <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "colaborar" : "support")}>{say.support}</a></li>

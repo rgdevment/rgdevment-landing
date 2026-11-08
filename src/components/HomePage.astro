@@ -103,7 +103,7 @@ const say = es
     };
 
 const release = await newestRelease();
-const latest = [...GUIDES].sort((a, b) => b.published.localeCompare(a.published)).slice(0, 4);
+const latest = [...GUIDES].sort((a, b) => b.published.localeCompare(a.published));
 
 const schema = {
   "@context": "https://schema.org",

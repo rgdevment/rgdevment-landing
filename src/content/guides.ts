@@ -206,9 +206,10 @@ const LINKUNBOUND_GUIDES: Guide[] = [
     id: "chrome-profile",
     product: "linkunbound",
     published: "2026-09-24",
+    updated: "2026-11-08",
     en: {
       slug: "guides/send-work-links-to-a-chrome-profile",
-      title: "Send work links to a specific Chrome profile",
+      title: "Open links in a specific Chrome profile, work or personal",
       description:
         "Chrome opens links in whichever profile was last used. Here is why that happens and how to route a link to the profile you meant.",
       lede: "If you keep a work profile and a personal one, Chrome does not ask which you meant. It opens the last one used, and you find out when the page says you are signed in as the wrong person.",
@@ -248,7 +249,7 @@ const LINKUNBOUND_GUIDES: Guide[] = [
     },
     es: {
       slug: "guias/enviar-enlaces-de-trabajo-a-un-perfil-de-chrome",
-      title: "Enviar los enlaces del trabajo a un perfil concreto de Chrome",
+      title: "Abrir enlaces en un perfil concreto de Chrome, trabajo o personal",
       description:
         "Chrome abre los enlaces en el perfil que se usó la última vez. Por qué pasa y cómo mandar cada enlace al perfil que corresponde.",
       lede: "Si tienes un perfil del trabajo y otro personal, Chrome no pregunta cuál querías. Abre el último que usaste, y te enteras cuando la página te saluda con el nombre equivocado.",

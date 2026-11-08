@@ -57,19 +57,6 @@ const schema = [
   },
   {
     "@context": "https://schema.org",
-    "@type": "HowTo",
-    name: t.nativeTitle,
-    description: t.description,
-    inLanguage: locale,
-    step: t.nativeSteps.map((one, at) => ({
-      "@type": "HowToStep",
-      position: at + 1,
-      name: one.title,
-      text: one.body,
-    })),
-  },
-  {
-    "@context": "https://schema.org",
     "@type": "FAQPage",
     mainEntity: t.faq.map((one) => ({
       "@type": "Question",
@@ -110,7 +97,7 @@ const schema = [
       <h1 class="mt-6 text-4xl font-semibold leading-[1.1] tracking-[-0.02em] sm:text-5xl">{t.title}</h1>
       <p class="mt-6 text-xl leading-relaxed text-body">{t.lede}</p>
       <p class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-1 border-b border-line pb-8 text-sm text-muted">
-        <span>{say.by} <span class="text-fg">{AUTHOR.name}</span></span>
+        <span>{say.by} <a class="text-fg underline decoration-line underline-offset-4 hover:decoration-fg" href={AUTHOR.github} rel="author noopener">{AUTHOR.name}</a></span>
         <span aria-hidden="true">·</span>
         <time datetime={guide.published}>{date}</time>
         {guide.updated && (
