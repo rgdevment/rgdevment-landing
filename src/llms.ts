@@ -27,8 +27,8 @@ function assistants(product: Product): string[] {
     "",
     `Its MCP server comes inside the app, listed in the MCP Registry as \`${product.mcp.registry}\`. With ${product.name} installed, Settings › Assistants connects the assistants it finds; by hand:`,
     "",
-    ...product.mcp.connect.map(([who, command]) => `- ${who}: \`${command}\``),
-    ...(product.listings?.length ? ["", "Also listed at:", "", ...product.listings.map((url) => `- ${url}`)] : []),
+    ...product.mcp.connect.map(({ who, command }) => `- ${who ?? "Any other client, such as VS Code or Cursor"}: \`${command}\``),
+    ...(product.listings?.length ? ["", "Also listed at:", "", ...product.listings.map(([name, url]) => `- [${name}](${url})`)] : []),
     "",
   ];
 }

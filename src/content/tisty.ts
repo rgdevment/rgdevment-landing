@@ -1,4 +1,4 @@
-import type { Proof } from "./products";
+import type { Assistant, Proof } from "./products";
 
 const LOG = (title: string, entry: string) =>
   [
@@ -101,4 +101,64 @@ Peso: ==11,4 kg=={green} ::heart red::`,
     link: "Folio",
     url: "https://folio.tisty.app",
   },
+};
+
+export const ASSISTANT_EN: Assistant = {
+  title: "Connect your assistant",
+  lede: "Tisty has no AI inside. It leaves a door, MCP, for the assistant you already use: on this machine only, with no port, no account and no token. Your assistant files the tasks, writes the plans and ticks the steps, all where you can follow and audit them.",
+  settings: "Or open Settings › Assistants: it finds the assistants installed on this computer and connects them with one click.",
+  other: "Any other client, such as VS Code or Cursor",
+  can: {
+    title: "It can",
+    items: [
+      "File a task with its steps, date and list",
+      "Add to a task's journal",
+      "Write documents, correct a passage and file them in folders",
+      "Read and search everything, the archive included",
+      "Say a task is done, for you to confirm",
+    ],
+  },
+  never: {
+    title: "It never",
+    items: [
+      "Closes or deletes a task",
+      "Ticks a step of yours or finishes a task of yours",
+      "Moves a day you set",
+      "Deletes a document, or renames or empties a folder",
+    ],
+  },
+  door: "The door is open when you install Tisty, and Settings › Assistants closes it with one click. While it is closed, everything an assistant tries is refused.",
+  listed: "Listed in",
+  more: "What an assistant may do, in the docs",
+  page: "mcp-permissions",
+};
+
+export const ASSISTANT_ES: Assistant = {
+  title: "Conecta tu asistente",
+  lede: "Tisty no tiene IA dentro. Deja una puerta, MCP, para el asistente que ya usas: solo en este equipo, sin puerto, sin cuenta y sin token. Tu asistente anota las tareas, escribe los planes y marca los pasos, todo donde puedes seguirlo y revisarlo.",
+  settings: "O abre Configuración › Asistentes: encuentra los asistentes instalados en este equipo y los conecta con un clic.",
+  other: "Cualquier otro cliente, como VS Code o Cursor",
+  can: {
+    title: "Puede",
+    items: [
+      "Anotar una tarea con sus pasos, fecha y lista",
+      "Agregar a la bitácora de una tarea",
+      "Escribir documentos, corregir un pasaje y ordenarlos en carpetas",
+      "Leer y buscar en todo, también en el archivo",
+      "Decir que una tarea está hecha, para que tú lo confirmes",
+    ],
+  },
+  never: {
+    title: "Nunca",
+    items: [
+      "Cierra ni borra una tarea",
+      "Marca un paso tuyo ni termina una tarea tuya",
+      "Mueve un día que pusiste tú",
+      "Borra un documento, ni renombra ni vacía una carpeta",
+    ],
+  },
+  door: "La puerta viene abierta al instalar Tisty, y Configuración › Asistentes la cierra con un clic. Mientras está cerrada, todo lo que intente un asistente se rechaza.",
+  listed: "Está en",
+  more: "Qué puede hacer un asistente, en la ayuda",
+  page: "que-puede-hacer-un-asistente",
 };

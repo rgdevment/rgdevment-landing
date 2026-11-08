@@ -1,5 +1,5 @@
 import type { Locale } from "../site";
-import { PROOF_EN, PROOF_ES } from "./tisty";
+import { ASSISTANT_EN, ASSISTANT_ES, PROOF_EN, PROOF_ES } from "./tisty";
 
 export type JourneyStep = {
   label: string;
@@ -15,6 +15,19 @@ export type Proof = {
   log: { name: string; body: string; note: string };
   editors: string;
   share: { line: string; link: string; url: string };
+};
+
+export type Assistant = {
+  title: string;
+  lede: string;
+  settings: string;
+  other: string;
+  can: { title: string; items: string[] };
+  never: { title: string; items: string[] };
+  door: string;
+  listed: string;
+  more: string;
+  page: string;
 };
 
 type Words = {
@@ -47,6 +60,7 @@ type Words = {
   compare?: { label: string; path: string };
   firstRun?: { title: string; body: string; link: string; anchor: string };
   proof?: Proof;
+  assistant?: Assistant;
 };
 
 export type Product = {
@@ -61,9 +75,9 @@ export type Product = {
   winget?: string;
   cask?: string;
   /** Directories and registries with a page of their own for it. */
-  listings?: string[];
+  listings?: [string, string][];
   /** Its MCP server: the registry name and, per assistant, the command that connects it. */
-  mcp?: { registry: string; connect: [string, string][] };
+  mcp?: { registry: string; connect: { who?: string; command: string }[] };
   shot?: {
     src: string;
     srcEs?: string;
@@ -92,18 +106,18 @@ export const PRODUCTS: Product[] = [
     winget: "rgdevment.Tisty",
     cask: "tisty",
     listings: [
-      "https://github.com/mcp/rgdevment/tisty",
-      "https://www.npmjs.com/package/tisty-mcp",
-      "https://glama.ai/mcp/servers/rgdevment/Tisty",
-      "https://mcpmarket.com/server/tisty",
-      "https://m8ven.ai/mcp/rgdevment-tisty-15kwqt",
+      ["GitHub MCP Registry", "https://github.com/mcp/rgdevment/tisty"],
+      ["npm", "https://www.npmjs.com/package/tisty-mcp"],
+      ["Glama", "https://glama.ai/mcp/servers/rgdevment/Tisty"],
+      ["MCP Market", "https://mcpmarket.com/server/tisty"],
+      ["M8ven", "https://m8ven.ai/mcp/rgdevment-tisty-15kwqt"],
     ],
     mcp: {
       registry: "io.github.rgdevment/tisty",
       connect: [
-        ["Claude Code", "/plugin install tisty --marketplace rgdevment/mcp-plugins"],
-        ["Gemini CLI", "gemini extensions install https://github.com/rgdevment/mcp-plugins"],
-        ["Any other client, such as VS Code or Cursor", "npx -y tisty-mcp"],
+        { who: "Claude Code", command: "/plugin install tisty --marketplace rgdevment/mcp-plugins" },
+        { who: "Gemini CLI", command: "gemini extensions install https://github.com/rgdevment/mcp-plugins" },
+        { command: "npx -y tisty-mcp" },
       ],
     },
     shot: {
@@ -250,6 +264,7 @@ export const PRODUCTS: Product[] = [
         },
       ],
       proof: PROOF_EN,
+      assistant: ASSISTANT_EN,
       compare: { label: "Why Tisty? How it compares with Obsidian, Notion, Todoist and Logseq", path: "compare" },
       firstRun: {
         title: "The first time you open Tisty",
@@ -391,6 +406,7 @@ export const PRODUCTS: Product[] = [
         },
       ],
       proof: PROOF_ES,
+      assistant: ASSISTANT_ES,
       compare: { label: "¿Por qué Tisty? Cómo se compara con Obsidian, Notion, Todoist y Logseq", path: "comparar" },
       firstRun: {
         title: "Al abrir Tisty por primera vez",
