@@ -35,6 +35,7 @@ export type Product = {
   licence: string;
   platforms: string[];
   storeId?: string;
+  requires?: { windows: string; macos: string };
   winget?: string;
   cask?: string;
   /** Directories and registries with a page of their own for it. */
@@ -64,6 +65,7 @@ export const PRODUCTS: Product[] = [
     licence: "AGPL-3.0",
     platforms: ["Windows", "macOS"],
     storeId: "9PGVWXD8X93N",
+    requires: { windows: "Windows 10 (1809)", macos: "macOS 13.3" },
     winget: "rgdevment.Tisty",
     cask: "tisty",
     listings: [
