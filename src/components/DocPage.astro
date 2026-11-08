@@ -48,7 +48,7 @@ const path = docPath(locale, product.slug, data.page);
 const other: Locale = es ? "en" : "es";
 const paths = { [locale]: path, [other]: docPath(other, product.slug, data.twin ?? "") };
 const heading = data.page ? data.title : say.title;
-const title = data.page ? `${data.title} · ${product.name}` : say.title;
+const title = data.page ? `${data.title} · ${es ? `Ayuda de ${product.name}` : `${product.name} docs`}` : say.title;
 const trail: [string, string][] = [
   [product.name, product.slug],
   [say.docs, index],

@@ -162,13 +162,33 @@ function titleOf(text, fallback) {
   return (html?.[1] ?? md?.[1] ?? fallback).trim();
 }
 
-function describe(body) {
-  const para = body
+const QUESTIONS = { en: "Answers to: ", es: "Respuestas a: " };
+const CONNECTOR = /^(But|And|So|That|Also|Pero|Y|Así|Eso|También)\b/;
+
+const plainText = (text) =>
+  text.replace(/\[([^\]]+)\]\([^)]*\)/g, "$1").replace(/[*_`]/g, "").replace(/\s+/g, " ").trim();
+
+const clip = (text) => (text.length > 158 ? `${text.slice(0, 155).replace(/\s\S*$/, "")}…` : text);
+
+// A page of questions is best described by them; elsewhere, by its first paragraph that stands on its own.
+function describe(body, locale) {
+  const questions = [...body.matchAll(/^\*\*([^*\n]+\?)\*\*\s*$/gm)].map((one) => one[1].trim());
+  if (questions.length >= 3) {
+    const lead = QUESTIONS[locale];
+    const picked = [];
+    for (const one of questions) {
+      if ((lead + [...picked, one].join(" ")).length > 158) break;
+      picked.push(one);
+    }
+    return lead + picked.join(" ");
+  }
+  const paragraphs = body
     .split(/\n\s*\n/)
     .map((one) => one.trim())
-    .find((one) => one && !/^[#>|`<!\-*\d]/.test(one));
-  const plain = (para ?? "").replace(/\[([^\]]+)\]\([^)]*\)/g, "$1").replace(/[*_`]/g, "").replace(/\s+/g, " ");
-  return plain.length > 158 ? `${plain.slice(0, 155).replace(/\s\S*$/, "")}…` : plain;
+    .filter((one) => one && !/^([#>|`<!\-\d]|\* )/.test(one))
+    .map(plainText);
+  const standing = paragraphs.find((one) => one.length >= 60 && !CONNECTOR.test(one));
+  return clip(standing ?? paragraphs[0] ?? "");
 }
 
 function twinOf(page, sidebar) {
@@ -201,7 +221,7 @@ async function syncWiki(wiki) {
     const twin = pages.get(twinOf(page, sidebar));
     const meta = {
       title: titleOf(raw, entry.label || page),
-      description: describe(body),
+      description: describe(body, entry.locale),
       product: wiki.product,
       locale: entry.locale,
       page: entry.slug,
