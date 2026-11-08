@@ -1,9 +1,19 @@
 import type { Locale } from "../site";
+import { PROOF_EN, PROOF_ES } from "./tisty";
 
 export type JourneyStep = {
   label: string;
   body: string;
   shows: ["todo" | "done" | "note" | "archived" | "search" | "found", string][];
+};
+
+export type Proof = {
+  title: string;
+  lede: string;
+  doc: { name: string; body: string };
+  tree: { title: string; body: string; note: string };
+  log: { name: string; body: string; note: string };
+  editors: string;
 };
 
 type Words = {
@@ -33,6 +43,7 @@ type Words = {
   };
   faq: { q: string; a: string }[];
   firstRun?: { title: string; body: string; link: string; anchor: string };
+  proof?: Proof;
 };
 
 export type Product = {
@@ -207,6 +218,7 @@ export const PRODUCTS: Product[] = [
           a: "Yes. A mermaid block draws it, and mind maps, database schemas, freeform diagrams with every Mermaid shape and class diagrams are also drawn by hand in a window of their own, saved as the same text, shown on the page as you drew them and exported as PNG, JPG or SVG.",
         },
       ],
+      proof: PROOF_EN,
       firstRun: {
         title: "The first time you open Tisty",
         body: "It asks two things: your language, and where your copies should go, a folder to sync through or nowhere beyond this computer. Then it sets up your starting lists and writes you a guide, an ordinary document of yours to read, edit or throw away, that shows from the inside what a document can hold.",
@@ -318,6 +330,7 @@ export const PRODUCTS: Product[] = [
           a: "Sí. Un bloque mermaid lo dibuja, y los mapas mentales, los esquemas de base de datos, los diagramas libres con todas las formas de Mermaid y los de clases también se dibujan a mano en su propia ventana, se guardan como el mismo texto, se ven en la página tal como los dibujaste y se exportan como PNG, JPG o SVG.",
         },
       ],
+      proof: PROOF_ES,
       firstRun: {
         title: "Al abrir Tisty por primera vez",
         body: "Te pregunta dos cosas: tu idioma y adónde van tus copias, a una carpeta para sincronizar o a ninguna parte fuera de este equipo. Luego crea tus listas iniciales y te escribe una guía, un documento tuyo como cualquier otro, para leer, editar o tirar, que muestra desde dentro todo lo que cabe en un documento.",

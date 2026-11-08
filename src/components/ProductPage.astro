@@ -2,6 +2,7 @@
 import Crumbs from "./Crumbs.astro";
 import Icon from "./Icon.astro";
 import Journey from "./Journey.astro";
+import OnDisk from "./OnDisk.astro";
 import Shot from "./Shot.astro";
 import Layout from "../layouts/Layout.astro";
 import { bySection, docPath, docsOf } from "../content/docs";
@@ -313,6 +314,8 @@ const schema = [
       </section>
     )
   }
+
+  {t.proof && <OnDisk proof={t.proof} />}
 
   {
     product.mascot && t.mascot && (
