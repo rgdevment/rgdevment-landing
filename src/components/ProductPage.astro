@@ -28,7 +28,8 @@ const social = cardOf(product, locale);
 const release = await latestRelease(product);
 const kit = installers(release);
 const macDirect = product.requires ? kit.macArm : undefined;
-const quiet = "underline decoration-line underline-offset-4 transition hover:text-fg";
+const licence = `${product.repo}/blob/main/LICENSE`;
+const quiet ="underline decoration-line underline-offset-4 transition hover:text-fg";
 const docs = await docsOf(product.slug, locale);
 const docIndex = docPath(locale, product.slug);
 const docSections = bySection(docs);
@@ -52,6 +53,7 @@ const say = {
   copied: es ? "Copiado" : "Copied",
   getWin: es ? "Descargar para Windows" : "Download for Windows",
   getMac: es ? "Descargar para macOS" : "Download for macOS",
+  onGithub: es ? "Código fuente en GitHub" : "Source code on GitHub",
   orLater: es ? "o posterior" : "or later",
   or: es ? "o el" : "or the",
   installer: es ? "instalador" : "installer",
@@ -80,7 +82,7 @@ const schema = [
     ...(release ? { softwareVersion: release.version, dateModified: release.date } : {}),
     ...(store ? { installUrl: store } : {}),
     sameAs: [product.repo, ...(store ? [store] : []), ...(product.listings ?? [])],
-    license: `${product.repo}/blob/main/LICENSE`,
+    license: licence,
     isAccessibleForFree: true,
     offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
     author: { "@id": PERSON_ID },
@@ -162,10 +164,24 @@ const schema = [
           }
           <li class="chip"><Icon name="lock" class="h-3.5 w-3.5" />{say.noAccount}</li>
           <li class="chip"><Icon name="eye" class="h-3.5 w-3.5" />{say.noTelemetry}</li>
-          <li class="chip"><Icon name="licence" class="h-3.5 w-3.5" />{product.licence}</li>
+          <li>
+            <a class="chip transition hover:border-fg/25 hover:text-fg" href={licence} rel="noopener">
+              <Icon name="licence" class="h-3.5 w-3.5" />{product.licence}
+            </a>
+          </li>
           <li class="chip border-flame/30 bg-flame-tint font-medium text-flame-ink">
             <Icon name="free" class="h-3.5 w-3.5" />{say.free}
           </li>
+          {
+            product.signals && (
+              <li>
+                <a class="chip transition hover:border-fg/25 hover:text-fg" href={product.repo} rel="noopener">
+                  <Icon name="github" class="h-3.5 w-3.5" />
+                  {say.onGithub}
+                </a>
+              </li>
+            )
+          }
         </ul>
 
         <!-- Both links ship in the HTML; the script only decides which one is dressed as the main one,

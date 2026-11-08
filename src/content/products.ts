@@ -36,6 +36,7 @@ export type Product = {
   platforms: string[];
   storeId?: string;
   requires?: { windows: string; macos: string };
+  signals?: { producthunt: { url: string; post: string } };
   winget?: string;
   cask?: string;
   /** Directories and registries with a page of their own for it. */
@@ -66,6 +67,7 @@ export const PRODUCTS: Product[] = [
     platforms: ["Windows", "macOS"],
     storeId: "9PGVWXD8X93N",
     requires: { windows: "Windows 10 (1809)", macos: "macOS 13.3" },
+    signals: { producthunt: { url: "https://www.producthunt.com/products/tisty", post: "1290086" } },
     winget: "rgdevment.Tisty",
     cask: "tisty",
     listings: [
