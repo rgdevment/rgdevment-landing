@@ -642,7 +642,6 @@ export const PRODUCTS: Product[] = [
   },
 ];
 
-/// The accent as text: the brand colour on light pages and a lighter tone that stays legible on dark ones.
 export function inkOf(product: Product): string {
   return `--ink: ${product.accent}; --ink-dark: ${product.accentDark}`;
 }

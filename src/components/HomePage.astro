@@ -103,7 +103,7 @@ const say = es
     };
 
 const release = await newestRelease();
-const latest = [...GUIDES].sort((a, b) => b.published.localeCompare(a.published));
+const newestFirst = [...GUIDES].sort((a, b) => b.published.localeCompare(a.published));
 
 const schema = {
   "@context": "https://schema.org",
@@ -353,7 +353,7 @@ const schema = {
     </div>
     <ul class="mt-8 grid gap-4 sm:grid-cols-2">
       {
-        latest.map((one) => {
+        newestFirst.map((one) => {
           const t = written(one, locale);
           const product = PRODUCTS.find((p) => p.slug === one.product)!;
           return (

@@ -141,17 +141,27 @@ async function localiseImages(text, product) {
         const raw = execFileSync("curl", ["-fsSL", url], { maxBuffer: 1 << 26 });
         writeFileSync(file, shot ? await sharp(raw).resize({ width: 1600, withoutEnlargement: true }).webp({ quality: 85 }).toBuffer() : raw);
       }
-      const small = smallerOf(file);
-      if (shot && !existsSync(small)) {
-        writeFileSync(small, await sharp(file).resize({ width: 720, withoutEnlargement: true }).webp({ quality: 80 }).toBuffer());
-      }
       text = text.replaceAll(url, `/docs-assets/${name}`);
     } catch {
       rmSync(file, { force: true });
       console.warn(`wikis: kept remote image, download failed: ${url}`);
+      continue;
     }
+    if (shot) await addSmaller(file);
   }
   return text;
+}
+
+// A phone gets the smaller copy; without one it still gets the full image, so a failure here only warns.
+async function addSmaller(file) {
+  const small = smallerOf(file);
+  if (existsSync(small)) return;
+  try {
+    writeFileSync(small, await sharp(file).resize({ width: 720, withoutEnlargement: true }).webp({ quality: 80 }).toBuffer());
+  } catch (error) {
+    rmSync(small, { force: true });
+    console.warn(`wikis: no 720px copy of ${basename(file)}: ${error.message}`);
+  }
 }
 
 function stripHeader(text) {
@@ -169,25 +179,28 @@ function titleOf(text, fallback) {
 }
 
 const QUESTIONS = { en: "Answers to: ", es: "Respuestas a: " };
-const CONNECTOR = /^(But|And|So|That|Also|Pero|Y|Así|Eso|También)\b/;
+const CONNECTOR = /^(But|And|So|That|Also|Pero|Y|Así|Eso|También)(?!\p{L})/u;
 
 const plainText = (text) =>
   text.replace(/\[([^\]]+)\]\([^)]*\)/g, "$1").replace(/[*_`]/g, "").replace(/\s+/g, " ").trim();
 
 const clip = (text) => (text.length > 158 ? `${text.slice(0, 155).replace(/\s\S*$/, "")}…` : text);
 
-// A page of questions is best described by them; elsewhere, by its first paragraph that stands on its own.
-function describe(body, locale) {
-  const questions = [...body.matchAll(/^\*\*([^*\n]+\?)\*\*\s*$/gm)].map((one) => one[1].trim());
-  if (questions.length >= 3) {
-    const lead = QUESTIONS[locale];
-    const picked = [];
-    for (const one of questions) {
-      if ((lead + [...picked, one].join(" ")).length > 158) break;
-      picked.push(one);
-    }
-    return lead + picked.join(" ");
+function askedOn(body, locale) {
+  const questions = [...body.matchAll(/^\*\*([^*\n]+\?)\*\*\s*$/gm)].map((one) => plainText(one[1]));
+  if (questions.length < 3) return null;
+  const lead = QUESTIONS[locale];
+  const picked = [];
+  for (const one of questions) {
+    if ((lead + [...picked, one].join(" ")).length > 158) break;
+    picked.push(one);
   }
+  return picked.length > 0 ? lead + picked.join(" ") : null;
+}
+
+function describe(body, locale) {
+  const asked = askedOn(body, locale);
+  if (asked) return asked;
   const paragraphs = body
     .split(/\n\s*\n/)
     .map((one) => one.trim())
