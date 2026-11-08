@@ -131,12 +131,12 @@ export const PRODUCTS: Product[] = [
         anchor: "a-task-or-a-document",
       },
       title: "Tisty - Notes, documents and tasks on your own disk",
-      meta: "Notes, documents with diagrams and typed tables, and tasks as plain files on your own disk, for Windows and macOS. Free and open source: no Tisty account, no server, no subscription.",
+      meta: "Notes, documents with diagrams and typed tables, and tasks on your own disk: documents in Markdown, tasks in a log you can read. For Windows and macOS. Free and open source: no Tisty account, no server, no subscription.",
       problem:
         "A task list forgets the moment you tick the box. Six months later the same problem comes back and all that is left is knowing you solved it once, somehow.",
       what: [
         "What you finish stays: the steps you took, the dated journal, the files and the documents you leaned on. Months later you search for how you solved it, and it is there.",
-        "Notes, documents and tasks kept as plain files on your own disk, readable without Tisty running.",
+        "Your documents are Markdown; your tasks, a log any tool can read, one line per change. All of it on your own disk, readable without Tisty running.",
         "Today puts the urgent first: overdue only past its deadline, late when the day you planned slipped by, underway once started. A thin bar shows the time gone against the parts closed.",
         "Documents that do more than text: tables whose columns know they hold dates, money, options or ratings and add themselves up, diagrams drawn by hand in a window of their own, formulas, pages and their own PDF. Still plain Markdown any editor opens.",
         "No accounts, no subscription, no telemetry. You choose how your data travels: through your Google Drive, OneDrive or WebDAV server, encrypted if you want with a phrase only you know, through a folder you already sync, or nowhere beyond this computer. Free and open source.",
@@ -157,7 +157,7 @@ export const PRODUCTS: Product[] = [
       faq: [
         {
           q: "What happens to my notes if Tisty disappears?",
-          a: "Nothing. They are plain files on your disk and any editor opens them.",
+          a: "Nothing. Your documents are Markdown files any editor opens, and your tasks a log of JSON lines that cat, grep or jq read. Both stay on your disk.",
         },
         {
           q: "What is the MCP door for?",
@@ -208,12 +208,12 @@ export const PRODUCTS: Product[] = [
         anchor: "tarea-o-documento",
       },
       title: "Tisty - Notas, documentos y tareas en tu propio disco",
-      meta: "Notas, documentos con diagramas y tablas con tipos, y tareas en archivos de tu propio disco, para Windows y macOS. Gratis y de código abierto: sin cuenta de Tisty, sin servidor y sin suscripción.",
+      meta: "Notas, documentos con diagramas y tablas con tipos, y tareas en tu propio disco: los documentos en Markdown, las tareas en un registro legible. Para Windows y macOS. Gratis y de código abierto: sin cuenta de Tisty, sin servidor y sin suscripción.",
       problem:
         "Una lista de tareas olvida en cuanto marcas la casilla. Seis meses después vuelve el mismo problema y lo único que queda es saber que ya lo resolviste una vez, de alguna manera.",
       what: [
         "Lo que cierras se queda: los pasos que diste, el diario con su fecha, los archivos y los documentos en que te apoyaste. Meses después buscas cómo lo resolviste, y está.",
-        "Notas, documentos y tareas guardados como archivos corrientes en tu propio disco, legibles sin Tisty abierto.",
+        "Tus documentos son Markdown; tus tareas, un registro que lee cualquier herramienta, una línea por cambio. Todo en tu propio disco, legible sin Tisty abierto.",
         "Hoy pone primero lo urgente: vence solo lo que pasó su límite, se atrasa lo que no hiciste el día que planeaste y queda en curso lo que ya empezó. Una barra fina compara el plazo que pasó con las partes cerradas.",
         "Documentos que hacen más que texto: tablas cuyas columnas saben si guardan fechas, montos, opciones o estrellas y se suman solas, diagramas que dibujas a mano en su propia ventana, fórmulas, páginas y su propio PDF. Y siguen siendo Markdown que abre cualquier editor.",
         "Sin cuentas, sin suscripción y sin telemetría. Tú eliges cómo viajan tus datos: por tu Google Drive, OneDrive o servidor WebDAV, cifrados si quieres con una frase que solo tú conoces, por una carpeta que ya sincronizas o a ninguna parte fuera de este equipo. Gratis y de código abierto.",
@@ -234,7 +234,7 @@ export const PRODUCTS: Product[] = [
       faq: [
         {
           q: "¿Qué pasa con mis notas si Tisty desaparece?",
-          a: "Nada. Son archivos corrientes en tu disco y los abre cualquier editor.",
+          a: "Nada. Tus documentos son archivos Markdown que abre cualquier editor, y tus tareas, un registro de líneas JSON que leen cat, grep o jq. Los dos se quedan en tu disco.",
         },
         {
           q: "¿Para qué sirve la puerta MCP?",
