@@ -127,6 +127,8 @@ function rewriteCallouts(text, locale) {
   return text.replace(/^> \[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*$/gm, (_, kind) => `> **${CALLOUT[locale][kind]}**`);
 }
 
+const smallerOf = (file) => file.replace(/\.webp$/, "-720.webp");
+
 async function localiseImages(text, product) {
   const found = text.match(/https:\/\/raw\.githubusercontent\.com\/rgdevment\/[^\s)"']+\.(?:png|gif|jpe?g|webp|svg)/g) ?? [];
   for (const url of new Set(found)) {
@@ -138,6 +140,10 @@ async function localiseImages(text, product) {
       if (!existsSync(file)) {
         const raw = execFileSync("curl", ["-fsSL", url], { maxBuffer: 1 << 26 });
         writeFileSync(file, shot ? await sharp(raw).resize({ width: 1600, withoutEnlargement: true }).webp({ quality: 85 }).toBuffer() : raw);
+      }
+      const small = smallerOf(file);
+      if (shot && !existsSync(small)) {
+        writeFileSync(small, await sharp(file).resize({ width: 720, withoutEnlargement: true }).webp({ quality: 80 }).toBuffer());
       }
       text = text.replaceAll(url, `/docs-assets/${name}`);
     } catch {

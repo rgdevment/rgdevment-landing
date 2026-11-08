@@ -1,4 +1,4 @@
-import { appendFileSync, copyFileSync, cpSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { appendFileSync, copyFileSync, cpSync, existsSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { rehypeHeadingIds } from '@astrojs/markdown-remark';
 import tailwind from '@astrojs/tailwind';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -48,6 +48,11 @@ function rehypeImages() {
         try {
           const { width, height } = await sharp(`./public${properties.src}`).metadata();
           Object.assign(properties, { width, height });
+          const small = String(properties.src).replace(/\.webp$/, '-720.webp');
+          if (small !== properties.src && width > 720 && existsSync(`./public${small}`)) {
+            properties.srcSet = `${small} 720w, ${properties.src} ${width}w`;
+            properties.sizes = '(min-width: 820px) 768px, calc(100vw - 2.5rem)';
+          }
         } catch (error) {
           console.warn(`docs: ${properties.src} has no reserved size: ${error.message}`);
         }
