@@ -1,5 +1,11 @@
 import type { Locale } from "../site";
 
+export type JourneyStep = {
+  label: string;
+  body: string;
+  shows: ["todo" | "done" | "note" | "archived" | "search" | "found", string][];
+};
+
 type Words = {
   tagline: string;
   /// Only where name plus tagline runs past what a result page shows.
@@ -20,7 +26,7 @@ type Words = {
     title: string;
     lede: string;
     cards: { title: string; body: string }[];
-    spike: { title: string; lede: string; steps: string[] };
+    spike: { title: string; lede: string; steps: JourneyStep[] };
     more: string;
     page: string;
     anchor: string;
@@ -125,10 +131,38 @@ export const PRODUCTS: Product[] = [
           title: "A task is also a document, one with an end",
           lede: "That is why a task has a page of its own. Take a spike, finding out how something can be done before doing it:",
           steps: [
-            "It starts as a task, «Find out how to sync with OneDrive». Its page gathers what you read, tried and ruled out, with the meeting recording, a video of the fault and the vendor's PDF attached.",
-            "When the way is clear, it is split into parts: «Sign in», «Upload large files», «Resume a cut upload», each with its own steps and notes.",
-            "The parts are completed one by one, then the spike itself, and it goes to the archive.",
-            "A year later, «how did we solve the OneDrive uploads?» finds it: its page, its parts and every step, as they were left.",
+            {
+              label: "A task",
+              body: "It starts like any other task: something to do, filed in its list.",
+              shows: [["todo", "Find out how to sync with OneDrive"]],
+            },
+            {
+              label: "Steps and journal",
+              body: "Its page gathers what you read, tried and ruled out, with the vendor's PDF attached. When the way is clear it splits into parts, each with its steps.",
+              shows: [
+                ["done", "Sign in"],
+                ["done", "Upload large files"],
+                ["todo", "Resume a cut upload"],
+                ["note", "12 Mar · large files go up in pieces"],
+              ],
+            },
+            {
+              label: "The archive",
+              body: "The parts are completed one by one, then the task itself, and it goes to the archive whole: page, parts, steps and journal.",
+              shows: [
+                ["archived", "Find out how to sync with OneDrive"],
+                ["note", "Closed 14 Mar · 3 parts · journal kept"],
+              ],
+            },
+            {
+              label: "A year later",
+              body: "The same question comes back, and a search finds the task as it was left, with everything you worked out.",
+              shows: [
+                ["search", "onedrive uploads"],
+                ["found", "Find out how to sync with OneDrive"],
+                ["note", "in the archive · 3 parts · 9 steps"],
+              ],
+            },
           ],
         },
         more: "The whole idea, in the docs",
@@ -208,10 +242,38 @@ export const PRODUCTS: Product[] = [
           title: "Una tarea también es un documento, uno que termina",
           lede: "Por eso una tarea tiene una página propia. Piensa en un spike, una investigación para saber cómo se puede hacer algo antes de hacerlo:",
           steps: [
-            "Empieza como una tarea, «Averiguar cómo sincronizar con OneDrive». Su página reúne lo que leíste, probaste y descartaste, con la grabación de la reunión, un video de la falla y el PDF del proveedor adjuntos.",
-            "Cuando el camino está claro, se divide en partes: «Iniciar sesión», «Subir archivos grandes», «Retomar una subida cortada», cada una con sus propios pasos y notas.",
-            "Las partes se completan una a una, después el spike, y pasa al archivo.",
-            "Un año después, «¿cómo resolvimos las subidas a OneDrive?» lo encuentra: su página, sus partes y cada paso, tal como quedaron.",
+            {
+              label: "Una tarea",
+              body: "Empieza como cualquier otra tarea: algo por hacer, guardado en su lista.",
+              shows: [["todo", "Averiguar cómo sincronizar con OneDrive"]],
+            },
+            {
+              label: "Pasos y bitácora",
+              body: "Su página reúne lo que leíste, probaste y descartaste, con el PDF del proveedor adjunto. Cuando el camino está claro se divide en partes, cada una con sus pasos.",
+              shows: [
+                ["done", "Iniciar sesión"],
+                ["done", "Subir archivos grandes"],
+                ["todo", "Retomar una subida cortada"],
+                ["note", "12 mar · los archivos grandes suben por partes"],
+              ],
+            },
+            {
+              label: "El archivo",
+              body: "Las partes se completan una a una, después la tarea, y pasa al archivo entera: página, partes, pasos y bitácora.",
+              shows: [
+                ["archived", "Averiguar cómo sincronizar con OneDrive"],
+                ["note", "Cerrada el 14 mar · 3 partes · bitácora guardada"],
+              ],
+            },
+            {
+              label: "Un año después",
+              body: "Vuelve la misma pregunta, y una búsqueda encuentra la tarea tal como quedó, con todo lo que resolviste.",
+              shows: [
+                ["search", "subidas onedrive"],
+                ["found", "Averiguar cómo sincronizar con OneDrive"],
+                ["note", "en el archivo · 3 partes · 9 pasos"],
+              ],
+            },
           ],
         },
         more: "La idea completa, en la ayuda",

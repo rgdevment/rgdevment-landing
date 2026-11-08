@@ -1,6 +1,7 @@
 ---
 import Crumbs from "./Crumbs.astro";
 import Icon from "./Icon.astro";
+import Journey from "./Journey.astro";
 import Shot from "./Shot.astro";
 import Layout from "../layouts/Layout.astro";
 import { bySection, docPath, docsOf } from "../content/docs";
@@ -300,16 +301,7 @@ const schema = [
         <div class="card mt-4 p-6 sm:p-7">
           <h3 class="font-display text-xl font-semibold">{t.kinds.spike.title}</h3>
           <p class="mt-2 text-body">{t.kinds.spike.lede}</p>
-          <ol class="mt-6 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-            {t.kinds.spike.steps.map((one, at) => (
-              <li>
-                <span class="font-mono text-sm font-medium" style={`color: ${product.accent}`}>
-                  {String(at + 1).padStart(2, "0")}
-                </span>
-                <p class="mt-2 text-body">{one}</p>
-              </li>
-            ))}
-          </ol>
+          <Journey steps={t.kinds.spike.steps} accent={product.accent} />
         </div>
         <a
           class="mt-6 inline-flex items-center gap-1.5 font-medium text-fg hover:underline"
