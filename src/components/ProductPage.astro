@@ -3,13 +3,14 @@ import Crumbs from "./Crumbs.astro";
 import Icon from "./Icon.astro";
 import Journey from "./Journey.astro";
 import OnDisk from "./OnDisk.astro";
+import ProductHunt from "./ProductHunt.astro";
 import Shot from "./Shot.astro";
 import Layout from "../layouts/Layout.astro";
 import { bySection, docPath, docsOf } from "../content/docs";
 import { privacyPath } from "../content/privacy";
 import { GUIDES, written } from "../content/guides";
 import { PRODUCTS, type Product, brewSteps, cardOf, releasesUrl, shotSrc, storeUrl, words } from "../content/products";
-import { installers, latestRelease, megabytes, releaseDate } from "../content/releases";
+import { installers, latestRelease, megabytes, releaseDate, stars } from "../content/releases";
 import { DOMAIN, HOME_PRODUCT, PERSON_ID, canonical, crumbs, href, type Locale } from "../site";
 
 interface Props {
@@ -29,6 +30,7 @@ const social = cardOf(product, locale);
 
 const release = await latestRelease(product);
 const kit = installers(release);
+const starCount = product.signals ? await stars(product) : null;
 const macDirect = product.requires ? kit.macArm : undefined;
 const licence = `${product.repo}/blob/main/LICENSE`;
 const quiet ="underline decoration-line underline-offset-4 transition hover:text-fg";
@@ -56,6 +58,8 @@ const say = {
   getWin: es ? "Descargar para Windows" : "Download for Windows",
   getMac: es ? "Descargar para macOS" : "Download for macOS",
   onGithub: es ? "Código fuente en GitHub" : "Source code on GitHub",
+  onProductHunt: es ? `${product.name} en Product Hunt` : `${product.name} on Product Hunt`,
+  stars: es ? "Estrellas en GitHub" : "Stars on GitHub",
   orLater: es ? "o posterior" : "or later",
   or: es ? "o el" : "or the",
   installer: es ? "instalador" : "installer",
@@ -180,6 +184,12 @@ const schema = [
                 <a class="chip transition hover:border-fg/25 hover:text-fg" href={product.repo} rel="noopener">
                   <Icon name="github" class="h-3.5 w-3.5" />
                   {say.onGithub}
+                  {starCount !== null && (
+                    <span class="inline-flex items-center gap-1 border-l border-line pl-2 font-mono text-xs" title={say.stars}>
+                      <Icon name="star" class="h-3 w-3" />
+                      {starCount}
+                    </span>
+                  )}
                 </a>
               </li>
             )
@@ -250,6 +260,13 @@ const schema = [
               </>
             )}
           </p>
+          {
+            product.signals && (
+              <p class="mt-6">
+                <ProductHunt url={product.signals.producthunt.url} post={product.signals.producthunt.post} label={say.onProductHunt} />
+              </p>
+            )
+          }
         </div>
       </header>
 

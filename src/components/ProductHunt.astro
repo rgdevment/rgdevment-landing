@@ -1,0 +1,37 @@
+---
+interface Props {
+  url: string;
+  post: string;
+  label: string;
+}
+
+const { url, post, label: alt } = Astro.props;
+
+// Fetched while building and carried as an image, so a visitor's browser never calls Product Hunt.
+async function badge(theme: "light" | "dark"): Promise<string | null> {
+  try {
+    const response = await fetch(`https://api.producthunt.com/widgets/embed-image/v1/featured.svg?post_id=${post}&theme=${theme}`, {
+      signal: AbortSignal.timeout(8000),
+    });
+    const svg = response.ok ? await response.text() : "";
+    return svg.includes("<svg") ? `data:image/svg+xml;base64,${Buffer.from(svg).toString("base64")}` : null;
+  } catch {
+    return null;
+  }
+}
+
+const [light, dark] = await Promise.all([badge("light"), badge("dark")]);
+---
+
+<a class="inline-block transition hover:opacity-85" href={url} rel="noopener">
+  {
+    light && dark ? (
+      <>
+        <img class="on-light h-[54px] w-[250px]" src={light} alt={alt} width="250" height="54" loading="lazy" decoding="async" />
+        <img class="on-dark h-[54px] w-[250px]" src={dark} alt={alt} width="250" height="54" loading="lazy" decoding="async" />
+      </>
+    ) : (
+      <span class="chip">{alt}</span>
+    )
+  }
+</a>

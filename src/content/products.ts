@@ -14,6 +14,7 @@ export type Proof = {
   tree: { title: string; body: string; note: string };
   log: { name: string; body: string; note: string };
   editors: string;
+  share: { line: string; link: string; url: string };
 };
 
 type Words = {

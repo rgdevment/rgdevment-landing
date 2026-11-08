@@ -1,5 +1,6 @@
 ---
 import { Code } from "astro:components";
+import Icon from "./Icon.astro";
 import type { Proof } from "../content/products";
 
 interface Props {
@@ -45,4 +46,11 @@ const caption = "flex items-center justify-between gap-3 border-b border-night-l
   </div>
 
   <p class="mt-6 max-w-3xl font-display text-lg text-fg">{proof.editors}</p>
+  <p class="mt-2 max-w-3xl text-body">
+    {proof.share.line}
+    <a class="ml-1 inline-flex items-center gap-1 font-medium text-fg hover:underline" href={proof.share.url} rel="noopener">
+      {proof.share.link}
+      <Icon name="arrow" class="h-3.5 w-3.5" />
+    </a>
+  </p>
 </section>

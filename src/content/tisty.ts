@@ -48,6 +48,11 @@ Weight: ==11.4 kg=={green} ::heart red::`,
     note: "Abridged. Every change to a task is one more line that only adds: cat, grep and jq read it.",
   },
   editors: "Any editor opens them, and they stay where they are even if you uninstall Tisty.",
+  share: {
+    line: "And when someone else needs to read one, Folio shares a document through an encrypted link that expires on its own.",
+    link: "Folio",
+    url: "https://folio.tisty.app",
+  },
 };
 
 export const PROOF_ES: Proof = {
@@ -91,4 +96,9 @@ Peso: ==11,4 kg=={green} ::heart red::`,
     note: "Resumido. Cada cambio en una tarea es una línea más, que solo se agrega: lo leen cat, grep y jq.",
   },
   editors: "Los abre cualquier editor, y se quedan donde están aunque desinstales Tisty.",
+  share: {
+    line: "Y cuando otra persona necesita leer uno, Folio comparte un documento con un enlace cifrado que caduca solo.",
+    link: "Folio",
+    url: "https://folio.tisty.app",
+  },
 };
