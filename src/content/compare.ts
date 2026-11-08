@@ -8,6 +8,8 @@ export function compares(product: string | null): boolean {
 
 type Comparison = {
   title: string;
+  heading: string;
+  short: string;
   meta: string;
   lede: string;
   checked: string;
@@ -70,8 +72,10 @@ export const SOURCES: [string, string[]][] = [
 ];
 
 const EN: Comparison = {
-  title: "Why Tisty?",
-  meta: "Tisty next to Obsidian, Notion, Todoist and Logseq: where your data lives, accounts, telemetry, tasks and documents together, finished tasks, open source, price and MCP.",
+  title: "Tisty vs Obsidian, Notion, Todoist and Logseq compared",
+  heading: "Tisty compared with Obsidian, Notion, Todoist and Logseq",
+  short: "Why Tisty?",
+  meta: "Where your data lives, accounts, telemetry, tasks with notes, price and MCP: Tisty side by side with Obsidian, Notion, Todoist and Logseq, with sources.",
   lede: "Tisty keeps tasks and documents in one store and one search on your own disk, and a finished task keeps everything it gathered instead of disappearing. Here is how that compares, including where the others are stronger.",
   checked: "Checked on 8 November 2026 against each project's own pages, listed at the foot. Prices in US dollars, billed monthly unless said. These change, so go and look.",
   rows: [
@@ -174,8 +178,10 @@ const EN: Comparison = {
 };
 
 const ES: Comparison = {
-  title: "¿Por qué Tisty?",
-  meta: "Tisty junto a Obsidian, Notion, Todoist y Logseq: dónde viven tus datos, cuentas, telemetría, tareas y documentos juntos, tareas terminadas, código abierto, precio y MCP.",
+  title: "Tisty frente a Obsidian, Notion, Todoist y Logseq",
+  heading: "Tisty frente a Obsidian, Notion, Todoist y Logseq",
+  short: "¿Por qué Tisty?",
+  meta: "Dónde viven tus datos, cuentas, telemetría, tareas y notas, precio y MCP: Tisty junto a Obsidian, Notion, Todoist y Logseq, con fuentes.",
   lede: "Tisty guarda tareas y documentos en un mismo lugar y una misma búsqueda, en tu propio disco, y una tarea terminada conserva todo lo que reunió en vez de desaparecer. Así se compara, incluido dónde los otros son más fuertes.",
   checked: "Revisado el 8 de noviembre de 2026 en las páginas de cada proyecto, enlazadas al pie. Precios en dólares estadounidenses, con pago mensual salvo que se diga. Esto cambia, así que conviene ir a mirar.",
   rows: [
