@@ -476,6 +476,13 @@ export function releasesUrl(product: Product): string {
   return `${product.repo}/releases`;
 }
 
+const TAP = "rgdevment/tap";
+
+/// Homebrew loads a tap that is not its own only once it is trusted, and the trust is the tap's, so every cask in it needs it.
+export function brewSteps(product: Product): string[] {
+  return product.cask ? [`brew tap ${TAP}`, `brew trust ${TAP}`, `brew install --cask ${product.cask}`] : [];
+}
+
 export function storeUrl(product: Product): string | null {
   return product.storeId ? `https://apps.microsoft.com/detail/${product.storeId}` : null;
 }

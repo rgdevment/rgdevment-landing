@@ -1,5 +1,5 @@
 import { docPath, docsOf } from "./content/docs";
-import { PRODUCTS, type Product, releasesUrl, storeUrl } from "./content/products";
+import { PRODUCTS, type Product, brewSteps, releasesUrl, storeUrl } from "./content/products";
 import { privacyPath } from "./content/privacy";
 import { MAIN } from "./hosts";
 import { AUTHOR, HOME_PRODUCT, canonical } from "./site";
@@ -15,7 +15,7 @@ function install(product: Product): string[] {
   return [
     ...(store ? [`- Microsoft Store: ${store}`] : []),
     ...(product.winget ? [`- winget: \`winget install ${product.winget}\``] : []),
-    ...(product.cask ? [`- Homebrew: \`brew tap rgdevment/tap && brew install --cask ${product.cask}\``] : []),
+    ...(product.cask ? [`- Homebrew: \`${brewSteps(product).join(" && ")}\``] : []),
     `- Direct download: ${releasesUrl(product)}`,
   ];
 }
