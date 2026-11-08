@@ -2,7 +2,7 @@
 
 **Last updated:** November 8, 2026
 
-This policy covers the websites built from this repository: rgdevment.com,
+This policy covers the websites built from this repository: rgdevment.dev,
 www.tisty.app, www.linkunbound.app and www.copanda.app. Each app has its own
 privacy policy in its repository.
 

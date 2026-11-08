@@ -1,4 +1,4 @@
-export const MAIN = "https://rgdevment.com";
+export const MAIN = "https://rgdevment.dev";
 
 /// A product that owns a domain is its home page there, and everything else lives on the main site.
 export const HOMES: Record<string, string> = {

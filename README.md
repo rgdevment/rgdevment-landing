@@ -1,9 +1,9 @@
-# rgdevment.com
+# rgdevment.dev
 
 > [!NOTE]
 > Work in progress: the sites are live, but this repository is still being tidied up.
 
-The site for Tisty, LinkUnbound and CoPanda (formerly CopyPaste): free, open source desktop apps for Windows and macOS. Built with Astro and Tailwind, published to Cloudflare Pages. Each app gets its own site on www.tisty.app, www.linkunbound.app and www.copanda.app, built from `src/sites/app` with `npm run build:<app>`; rgdevment.com sends their old pages there.
+The site for Tisty, LinkUnbound and CoPanda (formerly CopyPaste): free, open source desktop apps for Windows and macOS. Built with Astro and Tailwind, published to Cloudflare Pages. Each app gets its own site on www.tisty.app, www.linkunbound.app and www.copanda.app, built from `src/sites/app` with `npm run build:<app>`; rgdevment.dev sends their old pages there.
 
 ## Run it
 

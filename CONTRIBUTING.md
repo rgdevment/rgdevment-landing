@@ -1,4 +1,4 @@
-# Contributing to rgdevment.com
+# Contributing to rgdevment.dev
 
 The sites are in development and change often. Typos and broken links are
 welcome as pull requests; for anything larger, open an issue first so we can
