@@ -87,6 +87,7 @@ export type Product = {
     es: string;
   };
   accent: string;
+  accentDark: string;
   icon: string;
   mascot?: string;
   en: Words;
@@ -129,6 +130,7 @@ export const PRODUCTS: Product[] = [
       es: "Tisty: las tareas del día con sus pasos, los documentos al lado y los días que vienen, guardados como archivos en disco",
     },
     accent: "#6F4BD8",
+    accentDark: "#9276E1",
     icon: "/icons/tisty-mark.png",
     mascot: "/tisty-head.svg",
     en: {
@@ -434,6 +436,7 @@ export const PRODUCTS: Product[] = [
       es: "LinkUnbound: el selector junto a un enlace, con los navegadores instalados y el perfil en que abre cada uno",
     },
     accent: "#2F62D8",
+    accentDark: "#5D85E1",
     icon: "/icons/linkunbound.png",
     mascot: "/linkunbound-head.svg",
     en: {
@@ -536,6 +539,7 @@ export const PRODUCTS: Product[] = [
       es: "CoPanda: el panel del portapapeles con su buscador, los filtros por tipo y un historial de textos e imágenes, junto al panda",
     },
     accent: "#3B34B8",
+    accentDark: "#847FD2",
     icon: "/icons/copanda.png",
     mascot: "/copanda-head.svg",
     en: {
@@ -626,6 +630,11 @@ export const PRODUCTS: Product[] = [
     },
   },
 ];
+
+/// The accent as text: the brand colour on light pages and a lighter tone that stays legible on dark ones.
+export function inkOf(product: Product): string {
+  return `--ink: ${product.accent}; --ink-dark: ${product.accentDark}`;
+}
 
 export function words(product: Product, locale: Locale): Words {
   return locale === "es" ? product.es : product.en;

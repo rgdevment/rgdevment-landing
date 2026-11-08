@@ -5,7 +5,7 @@ import DocNav from "./DocNav.astro";
 import Icon from "./Icon.astro";
 import Layout from "../layouts/Layout.astro";
 import { bySection, type Doc, docPath, docsOf } from "../content/docs";
-import { PRODUCTS } from "../content/products";
+import { PRODUCTS, inkOf } from "../content/products";
 import { AUTHOR, HOME_PRODUCT, PERSON_ID, WEBSITE_ID, canonical, crumbs, href, type Locale } from "../site";
 
 interface Props {
@@ -134,7 +134,7 @@ const schema = [
 
         {
           promote && (
-            <a class="card-link group mt-12 flex items-start gap-5 p-6 sm:p-7" href={words.url} style={`--accent: ${product.accent}`}>
+            <a class="card-link group mt-12 flex items-start gap-5 p-6 sm:p-7" href={words.url} style={`--accent: ${product.accent}; ${inkOf(product)}`}>
               <span class="grid h-11 w-11 shrink-0 place-items-center rounded-2xl text-white" style="background: var(--accent)">
                 <Icon name="code" class="h-5 w-5" />
               </span>
@@ -144,7 +144,7 @@ const schema = [
                 <span class="mt-2 block text-body">{words.line}</span>
                 <span class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-fg">
                   {say.open}
-                  <span style="color: var(--accent)">
+                  <span class="accent-ink">
                     <Icon name="arrow" class="h-4 w-4 transition group-hover:translate-x-0.5" />
                   </span>
                 </span>

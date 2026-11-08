@@ -127,6 +127,14 @@
     display: none;
   }
 
+  .accent-ink {
+    color: var(--ink);
+  }
+
+  :root[data-theme="dark"] .accent-ink {
+    color: var(--ink-dark);
+  }
+
   :root[data-theme="dark"] .on-dark {
     display: block;
   }
@@ -142,6 +150,10 @@
 
     :root:not([data-theme="light"]) .on-light {
       display: none;
+    }
+
+    :root:not([data-theme="light"]) .accent-ink {
+      color: var(--ink-dark);
     }
   }
 

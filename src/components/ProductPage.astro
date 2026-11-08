@@ -10,7 +10,7 @@ import Layout from "../layouts/Layout.astro";
 import { bySection, docPath, docsOf } from "../content/docs";
 import { privacyPath } from "../content/privacy";
 import { GUIDES, written } from "../content/guides";
-import { PRODUCTS, type Product, brewSteps, cardOf, releasesUrl, shotSrc, storeUrl, words } from "../content/products";
+import { PRODUCTS, type Product, brewSteps, cardOf, inkOf, releasesUrl, shotSrc, storeUrl, words } from "../content/products";
 import { installers, latestRelease, megabytes, releaseDate, stars } from "../content/releases";
 import { DOMAIN, HOME_PRODUCT, PERSON_ID, canonical, crumbs, href, type Locale } from "../site";
 
@@ -27,6 +27,7 @@ const releases = releasesUrl(product);
 const path = product.slug;
 const shot = shotSrc(product, locale);
 const brew = brewSteps(product);
+const ink = inkOf(product);
 const social = cardOf(product, locale);
 
 const release = await latestRelease(product);
@@ -295,7 +296,7 @@ const schema = [
         <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {t.groups.map((group) => (
             <div class="card p-6">
-              <h3 class="font-display text-xl font-semibold" style={`color: ${product.accent}`}>{group.title}</h3>
+              <h3 class="accent-ink font-display text-xl font-semibold" style={ink}>{group.title}</h3>
               <ul class="mt-4 space-y-3">
                 {group.points.map((one) => (
                   <li class="flex gap-2.5 text-body">
@@ -322,7 +323,7 @@ const schema = [
         <ol class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {t.what.map((one, at) => (
             <li class="card relative p-6 sm:p-7">
-              <span class="font-mono text-sm font-medium" style={`color: ${product.accent}`}>
+              <span class="accent-ink font-mono text-sm font-medium" style={ink}>
                 {String(at + 1).padStart(2, "0")}
               </span>
               <p class="mt-3 text-body">{one}</p>
@@ -341,7 +342,7 @@ const schema = [
         <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {t.kinds.cards.map((one) => (
             <div class="card p-6 sm:p-7">
-              <h3 class="font-display text-xl font-semibold" style={`color: ${product.accent}`}>{one.title}</h3>
+              <h3 class="accent-ink font-display text-xl font-semibold" style={ink}>{one.title}</h3>
               <p class="mt-2 text-body">{one.body}</p>
             </div>
           ))}
