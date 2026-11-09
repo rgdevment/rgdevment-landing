@@ -191,6 +191,7 @@ export const SHARING_EN: Sharing = {
     },
   ],
   caveat: "The app has no server and collects nothing; Folio does run one. It keeps the encrypted copy until it expires and counts reads without keeping who read. After a serious report or an order, a document stops being served and may be kept for up to 180 days, or as long as the order asks.",
+  home: "To learn about Folio, visit its home:",
   site: "https://folio.tisty.app",
   papers: [
     ["Terms of use", `${FOLIO_PAPERS}TERMS.md`],
@@ -228,6 +229,7 @@ export const SHARING_ES: Sharing = {
     },
   ],
   caveat: "La aplicación no tiene servidor ni recoge nada; Folio sí tiene uno. Guarda la copia cifrada hasta que caduca y cuenta las lecturas sin guardar quién leyó. Con una denuncia seria o una orden, un documento deja de servirse y puede guardarse hasta 180 días, o lo que la orden pida.",
+  home: "Para conocer Folio, visita su sitio:",
   site: "https://folio.tisty.app",
   papers: [
     ["Términos de uso", `${FOLIO_PAPERS}TERMINOS.md`],

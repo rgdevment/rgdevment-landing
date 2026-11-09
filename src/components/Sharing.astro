@@ -35,8 +35,12 @@ const { product, words, locale } = Astro.props;
     <p class="text-body">{words.caveat}</p>
   </div>
 
-  <div class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
-    <a class="chip font-medium text-fg transition hover:border-fg/25" href={words.site} rel="noopener">{new URL(words.site).host}</a>
+  <p class="mt-6 text-body">
+    {words.home}
+    <a class="ml-1 font-medium text-fg underline decoration-line underline-offset-4 hover:decoration-fg" href={words.site} rel="noopener">{new URL(words.site).host}</a>
+  </p>
+
+  <div class="mt-4 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
     {
       words.papers.map(([name, url]) => (
         <a class="chip transition hover:border-fg/25 hover:text-fg" href={url} rel="noopener">{name}</a>

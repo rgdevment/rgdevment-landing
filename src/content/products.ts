@@ -35,6 +35,7 @@ export type Sharing = {
   lede: string;
   points: { title: string; body: string }[];
   caveat: string;
+  home: string;
   site: string;
   papers: [string, string][];
   more: string;
