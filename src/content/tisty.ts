@@ -1,4 +1,4 @@
-import type { Assistant, Proof } from "./products";
+import type { Assistant, Proof, Sharing } from "./products";
 
 const LOG = (title: string, entry: string) =>
   [
@@ -161,4 +161,80 @@ export const ASSISTANT_ES: Assistant = {
   listed: "Está en",
   more: "Qué puede hacer un asistente, en la ayuda",
   page: "que-puede-hacer-un-asistente",
+};
+
+const FOLIO_PAPERS = "https://github.com/rgdevment/Folio-by-Tisty/blob/main/docs/";
+
+export const SHARING_EN: Sharing = {
+  title: "Share a document with Folio",
+  lede: "Folio by Tisty turns one of your documents into a link, for someone who does not use Tisty. It is a service apart from the app, with a server of its own, and it keeps what you share without the key to read it.",
+  points: [
+    {
+      title: "The key travels in the link",
+      body: "Tisty encrypts the document before it leaves. The key goes in the link, after the #, which browsers never send, so Folio stores only bytes it cannot read.",
+    },
+    {
+      title: "Read in a browser, with no account",
+      body: "Whoever receives the link opens it in any browser. Nothing to install and nothing to sign up for.",
+    },
+    {
+      title: "Gone on its own",
+      body: "After the time without use you choose, 15 days at most, the link stops working and the copy is deleted. Your document stays in your Tisty, and you can stop sharing whenever you want.",
+    },
+    {
+      title: "It says who signed it",
+      body: "The page shows which key signed the document. Tisty's official documents are signed by rgdevment, shown as verified: that says who signed, not that the content is safe.",
+    },
+    {
+      title: "What should not be there gets reported",
+      body: "Anyone with the link can report what should not be there, from the same page where they read it.",
+    },
+  ],
+  caveat: "The app has no server and collects nothing; Folio does run one. It keeps the encrypted copy until it expires and counts reads without keeping who read. After a serious report or an order, a document stops being served and may be kept for up to 180 days, or as long as the order asks.",
+  site: "https://folio.tisty.app",
+  papers: [
+    ["Terms of use", `${FOLIO_PAPERS}TERMS.md`],
+    ["Privacy policy", `${FOLIO_PAPERS}PRIVACY.md`],
+    ["Security policy", `${FOLIO_PAPERS}SECURITY.md`],
+  ],
+  more: "How to share, in the docs",
+  page: "documents",
+  anchor: "sharing",
+};
+
+export const SHARING_ES: Sharing = {
+  title: "Comparte un documento con Folio",
+  lede: "Folio by Tisty convierte uno de tus documentos en un enlace, para alguien que no usa Tisty. Es un servicio aparte de la aplicación, con un servidor propio, y guarda lo que compartes sin la llave para leerlo.",
+  points: [
+    {
+      title: "La llave va en el enlace",
+      body: "Tisty cifra el documento antes de que salga. La llave va en el enlace, después del #, que los navegadores nunca envían, así que Folio guarda solo bytes que no puede leer.",
+    },
+    {
+      title: "Se lee en el navegador, sin cuenta",
+      body: "Quien recibe el enlace lo abre en cualquier navegador. Nada que instalar y nada en lo que registrarse.",
+    },
+    {
+      title: "Se va solo",
+      body: "Tras el plazo sin uso que elijas, 15 días como mucho, el enlace deja de funcionar y la copia se borra. Tu documento sigue en tu Tisty, y puedes dejar de compartirlo cuando quieras.",
+    },
+    {
+      title: "Dice quién lo firmó",
+      body: "La página muestra qué llave firmó el documento. Los documentos oficiales de Tisty los firma rgdevment, que aparece como verificado: eso dice quién firmó, no que el contenido sea seguro.",
+    },
+    {
+      title: "Lo que no debería estar se denuncia",
+      body: "Cualquiera con el enlace puede denunciar lo que no debería estar ahí, desde la misma página donde lo lee.",
+    },
+  ],
+  caveat: "La aplicación no tiene servidor ni recoge nada; Folio sí tiene uno. Guarda la copia cifrada hasta que caduca y cuenta las lecturas sin guardar quién leyó. Con una denuncia seria o una orden, un documento deja de servirse y puede guardarse hasta 180 días, o lo que la orden pida.",
+  site: "https://folio.tisty.app",
+  papers: [
+    ["Términos de uso", `${FOLIO_PAPERS}TERMINOS.md`],
+    ["Política de privacidad", `${FOLIO_PAPERS}PRIVACIDAD.md`],
+    ["Política de seguridad", `${FOLIO_PAPERS}SEGURIDAD.md`],
+  ],
+  more: "Cómo compartir, en la ayuda",
+  page: "documentos",
+  anchor: "compartir",
 };

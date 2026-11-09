@@ -1,5 +1,5 @@
 import type { Locale } from "../site";
-import { ASSISTANT_EN, ASSISTANT_ES, PROOF_EN, PROOF_ES } from "./tisty";
+import { ASSISTANT_EN, ASSISTANT_ES, PROOF_EN, PROOF_ES, SHARING_EN, SHARING_ES } from "./tisty";
 
 export type JourneyStep = {
   label: string;
@@ -28,6 +28,18 @@ export type Assistant = {
   listed: string;
   more: string;
   page: string;
+};
+
+export type Sharing = {
+  title: string;
+  lede: string;
+  points: { title: string; body: string }[];
+  caveat: string;
+  site: string;
+  papers: [string, string][];
+  more: string;
+  page: string;
+  anchor: string;
 };
 
 type Words = {
@@ -61,6 +73,7 @@ type Words = {
   firstRun?: { title: string; body: string; link: string; anchor: string };
   proof?: Proof;
   assistant?: Assistant;
+  sharing?: Sharing;
 };
 
 export type Product = {
@@ -265,6 +278,7 @@ export const PRODUCTS: Product[] = [
       ],
       proof: PROOF_EN,
       assistant: ASSISTANT_EN,
+      sharing: SHARING_EN,
       compare: { label: "Why Tisty? How it compares with Obsidian, Notion, Todoist and Logseq", path: "compare" },
       firstRun: {
         title: "The first time you open Tisty",
@@ -407,6 +421,7 @@ export const PRODUCTS: Product[] = [
       ],
       proof: PROOF_ES,
       assistant: ASSISTANT_ES,
+      sharing: SHARING_ES,
       compare: { label: "¿Por qué Tisty? Cómo se compara con Obsidian, Notion, Todoist y Logseq", path: "comparar" },
       firstRun: {
         title: "Al abrir Tisty por primera vez",
