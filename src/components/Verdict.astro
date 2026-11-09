@@ -1,0 +1,21 @@
+---
+import Icon from "./Icon.astro";
+import type { Cell, Mark } from "../content/compare";
+
+interface Props {
+  cell: Cell;
+  label: string;
+  ink?: string;
+  to?: string;
+}
+
+const { cell, label, ink, to } = Astro.props;
+const icon: Record<Mark, "free" | "part" | "cross" | "soon"> = { yes: "free", part: "part", no: "cross", soon: "soon" };
+const tone: Record<Mark, string> = { yes: "text-fg", part: "text-body", no: "text-muted", soon: "text-body" };
+const lit = ink !== undefined && cell.mark === "yes";
+---
+
+<span class:list={["inline-flex items-center gap-1.5 font-medium", lit ? "accent-ink" : tone[cell.mark]]} style={lit ? ink : undefined}>
+  <Icon name={icon[cell.mark]} class="h-4 w-4 shrink-0" />
+  {to ? <a class="underline decoration-line underline-offset-4 hover:decoration-fg" href={to}>{label}</a> : label}
+</span>

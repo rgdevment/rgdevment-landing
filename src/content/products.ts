@@ -105,6 +105,7 @@ export type Product = {
   accent: string;
   accentDark: string;
   icon: string;
+  writes?: boolean;
   mascot?: string;
   en: Words;
   es: Words;
@@ -148,6 +149,7 @@ export const PRODUCTS: Product[] = [
     accent: "#6F4BD8",
     accentDark: "#9276E1",
     icon: "/icons/tisty-mark.png",
+    writes: true,
     mascot: "/tisty-head.svg",
     en: {
       category: "Local-first notes, documents and tasks for Windows and macOS",

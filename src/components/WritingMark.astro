@@ -1,0 +1,182 @@
+---
+interface Props {
+  class?: string;
+}
+
+const { class: klass } = Astro.props;
+---
+
+<svg viewBox="31.5 8.5 156 156" class:list={["writing-mark", klass]} aria-hidden="true">
+  <g stroke-linecap="round" stroke-linejoin="round">
+    <rect class="back" x="70" y="22" width="104" height="128" rx="14" transform="rotate(7 120 90)"></rect>
+    <g transform="rotate(-6 100 90)">
+      <path class="sheet" d="M58 24h74l26 26v86a14 14 0 0 1-14 14H58a14 14 0 0 1-14-14V38a14 14 0 0 1 14-14Z"></path>
+      <path class="fold" d="M132 24v14a12 12 0 0 0 12 12h14"></path>
+      <path class="line first" pathLength="1" d="M62 68h56"></path>
+      <path class="line second" pathLength="1" d="M62 86h72"></path>
+      <path class="line third" pathLength="1" d="M62 104h44"></path>
+      <path class="line last" pathLength="1" d="M62 122h28"></path>
+    </g>
+    <g class="seal">
+      <circle cx="150" cy="134" r="20"></circle>
+      <path d="M140.5 134.5l6.5 6.5 12.5-13"></path>
+    </g>
+  </g>
+</svg>
+
+<style>
+  .writing-mark {
+    display: block;
+    filter: drop-shadow(0 18px 22px rgb(0 0 0 / 0.35));
+  }
+
+  .back,
+  .fold {
+    fill: #f1ede6;
+    stroke: #b3ab9e;
+    stroke-width: 2;
+  }
+
+  .sheet {
+    fill: #ffffff;
+    stroke: #b3ab9e;
+    stroke-width: 2;
+  }
+
+  .line {
+    fill: none;
+    stroke: rgb(110 104 96 / 0.4);
+    stroke-width: 6;
+    stroke-dasharray: 1;
+    animation: write 7s ease-in-out infinite;
+  }
+
+  .second {
+    animation-name: write-second;
+  }
+
+  .third {
+    animation-name: write-third;
+  }
+
+  .last {
+    stroke: #f97c3d;
+    animation-name: write-last;
+  }
+
+  .seal {
+    transform-box: fill-box;
+    transform-origin: center;
+    animation: seal 7s ease-in-out infinite;
+  }
+
+  .seal circle {
+    fill: #f97c3d;
+  }
+
+  .seal path {
+    fill: none;
+    stroke: #ffffff;
+    stroke-width: 4.5;
+  }
+
+  @keyframes write {
+    0% {
+      stroke-dashoffset: 1;
+      opacity: 0;
+    }
+    12%,
+    90% {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+    100% {
+      stroke-dashoffset: 1;
+      opacity: 0;
+    }
+  }
+
+  @keyframes write-second {
+    0%,
+    12% {
+      stroke-dashoffset: 1;
+      opacity: 0;
+    }
+    24%,
+    90% {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+    100% {
+      stroke-dashoffset: 1;
+      opacity: 0;
+    }
+  }
+
+  @keyframes write-third {
+    0%,
+    24% {
+      stroke-dashoffset: 1;
+      opacity: 0;
+    }
+    34%,
+    90% {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+    100% {
+      stroke-dashoffset: 1;
+      opacity: 0;
+    }
+  }
+
+  @keyframes write-last {
+    0%,
+    34% {
+      stroke-dashoffset: 1;
+      opacity: 0;
+    }
+    42%,
+    90% {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+    100% {
+      stroke-dashoffset: 1;
+      opacity: 0;
+    }
+  }
+
+  @keyframes seal {
+    0%,
+    44% {
+      opacity: 0;
+      transform: scale(0.4);
+    }
+    50% {
+      opacity: 1;
+      transform: scale(1.08);
+    }
+    54%,
+    90% {
+      opacity: 1;
+      transform: scale(1);
+    }
+    100% {
+      opacity: 0;
+      transform: scale(0.9);
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .line,
+    .seal {
+      animation: none;
+    }
+
+    .line {
+      stroke-dashoffset: 0;
+      opacity: 1;
+    }
+  }
+</style>

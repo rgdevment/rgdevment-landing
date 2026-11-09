@@ -6,7 +6,7 @@ export function compares(product: string | null): boolean {
   return product === "tisty";
 }
 
-export type Mark = "yes" | "part" | "no";
+export type Mark = "yes" | "part" | "no" | "soon";
 
 export type Cell = { mark: Mark; note?: string };
 
@@ -28,6 +28,7 @@ type Comparison = {
 const yes = (note?: string): Cell => ({ mark: "yes", note });
 const part = (note?: string): Cell => ({ mark: "part", note });
 const no = (note?: string): Cell => ({ mark: "no", note });
+const soon = (note?: string): Cell => ({ mark: "soon", note });
 
 export const RIVALS = [
   { name: "Tisty", url: "https://github.com/rgdevment/Tisty" },
@@ -144,7 +145,7 @@ const EN: Comparison = {
   lede: "A finished task is kept, not ticked off. Tisty keeps tasks and documents in one store and one search on your own disk, and a finished task goes to the archive whole, with everything it gathered. Here is what it does that the apps you may already know do not, and where they are stronger.",
   only: "{only} of these {total} only Tisty does in full",
   checked: "Checked on 8 November 2026 against each project's own pages, listed at the foot. A no means its own pages do not offer it. These change, so go and look.",
-  marks: { yes: "Yes", part: "Partly", no: "No" },
+  marks: { yes: "Yes", part: "Partly", no: "No", soon: "Soon" },
   rows: [
     {
       label: "A finished task kept whole",
@@ -165,7 +166,7 @@ const EN: Comparison = {
     {
       label: "Share a document by an encrypted link that expires on its own",
       cells: [
-        yes("With Folio by Tisty, after up to 15 days without use"),
+        yes("With Folio by Tisty: no accounts, private, gone after up to 15 days without use"),
         part("Links can expire; not end-to-end encrypted"),
         part("Links can expire; not end-to-end encrypted"),
         no(),
@@ -257,7 +258,7 @@ const EN: Comparison = {
     },
     {
       label: "Phone apps",
-      cells: [no(), yes(), yes(), yes(), yes(), yes(), yes()],
+      cells: [soon(), yes(), yes(), yes(), yes(), yes(), yes()],
     },
     {
       label: "Linux",
@@ -289,7 +290,7 @@ const ES: Comparison = {
   lede: "Una tarea terminada se guarda, no se tacha. Tisty guarda tareas y documentos en un mismo lugar y una misma búsqueda, en tu propio disco, y una tarea terminada pasa entera al archivo, con todo lo que reunió. Aquí está lo que hace y que las apps que quizá ya conoces no hacen, y dónde ellas son más fuertes.",
   only: "{only} de estas {total} solo Tisty las hace por completo",
   checked: "Revisado el 8 de noviembre de 2026 en las páginas de cada proyecto, enlazadas al pie. Un no quiere decir que sus propias páginas no lo ofrecen. Esto cambia, así que conviene ir a mirar.",
-  marks: { yes: "Sí", part: "En parte", no: "No" },
+  marks: { yes: "Sí", part: "En parte", no: "No", soon: "Pronto" },
   rows: [
     {
       label: "Una tarea terminada se guarda entera",
@@ -310,7 +311,7 @@ const ES: Comparison = {
     {
       label: "Compartir un documento con un enlace cifrado que caduca solo",
       cells: [
-        yes("Con Folio by Tisty, tras hasta 15 días sin uso"),
+        yes("Con Folio by Tisty: sin cuentas, privado, se borra tras hasta 15 días sin uso"),
         part("El enlace puede caducar; sin cifrado de extremo a extremo"),
         part("El enlace puede caducar; sin cifrado de extremo a extremo"),
         no(),
@@ -402,7 +403,7 @@ const ES: Comparison = {
     },
     {
       label: "Apps para el teléfono",
-      cells: [no(), yes(), yes(), yes(), yes(), yes(), yes()],
+      cells: [soon(), yes(), yes(), yes(), yes(), yes(), yes()],
     },
     {
       label: "Linux",
