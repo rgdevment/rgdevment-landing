@@ -192,4 +192,111 @@ export const TISTY_GUIDES: Guide[] = [
       ],
     },
   },
+  {
+    id: "share-a-document",
+    product: "tisty",
+    published: "2026-11-08",
+    en: {
+      slug: "guides/share-a-document-with-someone-without-tisty",
+      title: "Share a document with someone who does not use Tisty",
+      description:
+        "Sending a copy is easy; getting it back is not. How to hand someone a document to read, encrypted, with no account and an end of its own.",
+      lede: "Someone needs to read one of your documents: the notes for a handover, a recipe, the minutes of a meeting. They do not use Tisty, and you would rather the copy did not outlive the reason you sent it.",
+      nativeTitle: "What people usually do",
+      nativeSteps: [
+        {
+          title: "Attach it to an email or a chat",
+          body: "Quick, and the file stays in their inbox and on the provider's servers for as long as they keep it. A Markdown file also arrives as raw text.",
+        },
+        {
+          title: "Upload it to a cloud drive and share a link",
+          body: "The link works until you remember to take it back, and the provider holds the file readable.",
+        },
+        {
+          title: "Paste it into a message",
+          body: "Fine for a paragraph. The tables, diagrams and pictures stay behind.",
+        },
+      ],
+      gapTitle: "What that leaves behind",
+      gap: [
+        "A copy you no longer control, readable by whoever stores it.",
+        "No end: it stays until somebody deletes it, if anybody does.",
+        "Nothing that tells the reader the copy really came from you.",
+      ],
+      toolTitle: "How to share it from Tisty",
+      tool: [
+        "Open the document and, in the panel beside it, press Share… in the Shared row.",
+        "The first time, Tisty makes the key that signs what you share, backed up with your 24-word phrase, and asks you to accept Folio's terms.",
+        "Choose what the other person can do and how long it lasts without use, 15 days at most, and copy the link.",
+        "Whoever gets it reads it in a browser, with no account. The page says which key signed it, and anything that should not be there can be reported.",
+        "Folio keeps only encrypted bytes: the key travels in the link, after the #. Your document stays in your Tisty.",
+      ],
+      also: { line: "To learn about Folio, the service behind the link, visit its home:", url: "https://folio.tisty.app" },
+      faq: [
+        {
+          q: "Does the other person need Tisty or an account?",
+          a: "No. The link opens in any browser, with no account and nothing to install.",
+        },
+        {
+          q: "Can Folio read what I share?",
+          a: "No. Tisty encrypts it before it leaves, and the key travels in the link, after the #, which browsers never send. The exception is a report that hands the operator the link to read it, in the cases Folio's terms list.",
+        },
+        {
+          q: "What if I lose the link?",
+          a: "Nobody can recover it, because the server never had its key. While the document is shared, Tisty keeps its links: copy them again from its Shared row.",
+        },
+      ],
+    },
+    es: {
+      slug: "guias/compartir-un-documento-con-quien-no-usa-tisty",
+      title: "Comparte un documento con alguien que no usa Tisty",
+      description:
+        "Mandar una copia es fácil; recuperarla, no. Cómo darle a alguien un documento para leer, cifrado, sin cuenta y con un final propio.",
+      lede: "Alguien necesita leer uno de tus documentos: las notas de una entrega, una receta, el acta de una reunión. No usa Tisty, y preferirías que la copia no durara más que el motivo por el que la mandaste.",
+      nativeTitle: "Lo que suele hacerse",
+      nativeSteps: [
+        {
+          title: "Adjuntarlo a un correo o a un chat",
+          body: "Es rápido, y el archivo queda en su bandeja y en los servidores del proveedor mientras lo conserve. Un archivo Markdown, además, llega como texto sin formato.",
+        },
+        {
+          title: "Subirlo a una nube y compartir un enlace",
+          body: "El enlace funciona hasta que te acuerdes de retirarlo, y el proveedor guarda el archivo legible.",
+        },
+        {
+          title: "Pegarlo en un mensaje",
+          body: "Vale para un párrafo. Las tablas, los diagramas y las imágenes se quedan por el camino.",
+        },
+      ],
+      gapTitle: "Lo que eso deja atrás",
+      gap: [
+        "Una copia que ya no controlas, legible para quien la guarda.",
+        "Sin final: se queda hasta que alguien la borre, si es que alguien lo hace.",
+        "Nada que le diga a quien lee que la copia salió de verdad de ti.",
+      ],
+      toolTitle: "Cómo compartirlo desde Tisty",
+      tool: [
+        "Abre el documento y, en el panel de al lado, pulsa Compartir… en la fila Compartido.",
+        "La primera vez, Tisty crea la llave que firma lo que compartes, respaldada con tu frase de 24 palabras, y te pide aceptar los términos de Folio.",
+        "Elige qué puede hacer la otra persona y cuánto dura sin uso, 15 días como mucho, y copia el enlace.",
+        "Quien lo recibe lo lee en el navegador, sin cuenta. La página dice qué llave lo firmó, y lo que no debería estar ahí se puede denunciar.",
+        "Folio guarda solo bytes cifrados: la llave va en el enlace, después del #. Tu documento sigue en tu Tisty.",
+      ],
+      also: { line: "Para conocer Folio, el servicio detrás del enlace, visita su sitio:", url: "https://folio.tisty.app" },
+      faq: [
+        {
+          q: "¿La otra persona necesita Tisty o una cuenta?",
+          a: "No. El enlace se abre en cualquier navegador, sin cuenta y sin instalar nada.",
+        },
+        {
+          q: "¿Folio puede leer lo que comparto?",
+          a: "No. Tisty lo cifra antes de que salga, y la llave va en el enlace, después del #, que los navegadores nunca envían. La excepción es una denuncia que le entrega al operador el enlace para leerlo, en los casos que señalan los términos de Folio.",
+        },
+        {
+          q: "¿Y si pierdo el enlace?",
+          a: "Nadie puede recuperarlo, porque el servidor nunca tuvo su llave. Mientras el documento siga compartido, Tisty guarda sus enlaces: vuelve a copiarlos desde su fila Compartido.",
+        },
+      ],
+    },
+  },
 ];

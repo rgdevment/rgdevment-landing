@@ -89,6 +89,26 @@ function assistants(product: Product): string[] {
   ];
 }
 
+function sharing(product: Product): string[] {
+  const said = product.en.sharing;
+  if (!said) return [];
+  return [
+    `## ${said.title}`,
+    "",
+    said.lede,
+    "",
+    ...said.points.map((one) => `- ${one.title}. ${one.body}`),
+    "",
+    said.caveat,
+    "",
+    `${said.home} ${said.site}`,
+    "",
+    ...said.papers.map(([name, url]) => `- [${name}](${url})`),
+    `- [${said.more}](${canonical("en", docPath("en", product.slug, said.page))}#${said.anchor})`,
+    "",
+  ];
+}
+
 function compared(product: Product): string[] {
   if (!compares(product.slug)) return [];
   const t = comparison("en");
@@ -162,6 +182,7 @@ export async function appLlms(): Promise<Response> {
     "",
     ...(t.firstRun ? [`### ${t.firstRun.title}`, "", t.firstRun.body, "", `- [${t.firstRun.link}](${canonical("en", docPath("en", product.slug))}#${t.firstRun.anchor})`, ""] : []),
     ...assistants(product),
+    ...sharing(product),
     "## Documentation",
     "",
     link("Overview", docPath("en", product.slug)),

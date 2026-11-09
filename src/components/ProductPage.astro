@@ -4,6 +4,7 @@ import Icon from "./Icon.astro";
 import Journey from "./Journey.astro";
 import Assistant from "./Assistant.astro";
 import OnDisk from "./OnDisk.astro";
+import Sharing from "./Sharing.astro";
 import ProductHunt from "./ProductHunt.astro";
 import Shot from "./Shot.astro";
 import Layout from "../layouts/Layout.astro";
@@ -390,6 +391,8 @@ const schema = [
   }
 
   {t.assistant && product.mcp && <Assistant product={product} words={t.assistant} locale={locale} />}
+
+  {t.sharing && <Sharing product={product} words={t.sharing} locale={locale} />}
 
   <section class="shell mt-16">
     <div class="flex flex-col gap-5 rounded-3xl border border-flame/25 bg-flame-tint p-7 sm:flex-row sm:items-center sm:p-9">

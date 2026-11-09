@@ -13,6 +13,7 @@ export type Written = {
   gap: string[];
   toolTitle: string;
   tool: string[];
+  also?: { line: string; url: string };
   faq: { q: string; a: string }[];
 };
 
