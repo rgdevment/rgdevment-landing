@@ -20,7 +20,8 @@ interface Props {
     | "star"
     | "chevron"
     | "cross"
-    | "part";
+    | "part"
+    | "soon";
   class?: string;
 }
 
@@ -169,6 +170,14 @@ const { name, class: klass = "h-4 w-4" } = Astro.props;
   name === "part" && (
     <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={klass} aria-hidden="true">
       <path d="M6 12h12" />
+    </svg>
+  )
+}
+{
+  name === "soon" && (
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class={klass} aria-hidden="true">
+      <circle cx="12" cy="12" r="8.5" />
+      <path d="M12 7.5V12l3 2" />
     </svg>
   )
 }
