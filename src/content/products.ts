@@ -271,7 +271,7 @@ export const PRODUCTS: Product[] = [
         {
           q: "How is it different from Obsidian, Notion or Todoist?",
           a: "Tisty keeps tasks and documents in one store and one search on your own disk, and finishing a task keeps everything it gathered instead of hiding it. Each of the others is stronger at something, and the comparison says where.",
-          link: { label: "Read the comparison", path: "compare" },
+          link: { label: "See how it differs", path: "compare" },
         },
         {
           q: "What is the MCP door for?",
@@ -285,7 +285,7 @@ export const PRODUCTS: Product[] = [
       proof: PROOF_EN,
       assistant: ASSISTANT_EN,
       sharing: SHARING_EN,
-      compare: { label: "Why Tisty? How it compares with Obsidian, Notion, Todoist and Logseq", path: "compare" },
+      compare: { label: "How Tisty differs from Notion, Craft, Todoist, Logseq, Obsidian and Joplin", path: "compare" },
       firstRun: {
         title: "The first time you open Tisty",
         body: "It asks two things: your language, and where your copies should go, a folder to sync through or nowhere beyond this computer. Then it sets up your starting lists and writes you a guide, an ordinary document of yours to read, edit or throw away, that shows from the inside what a document can hold.",
@@ -415,7 +415,7 @@ export const PRODUCTS: Product[] = [
         {
           q: "¿En qué se diferencia de Obsidian, Notion o Todoist?",
           a: "Tisty guarda tareas y documentos en un mismo lugar y una misma búsqueda, en tu propio disco, y terminar una tarea conserva todo lo que reunió en vez de esconderlo. Cada uno de los otros es más fuerte en algo, y la comparación dice en qué.",
-          link: { label: "Leer la comparación", path: "comparar" },
+          link: { label: "Ver en qué se diferencia", path: "comparar" },
         },
         {
           q: "¿Para qué sirve la puerta MCP?",
@@ -429,7 +429,7 @@ export const PRODUCTS: Product[] = [
       proof: PROOF_ES,
       assistant: ASSISTANT_ES,
       sharing: SHARING_ES,
-      compare: { label: "¿Por qué Tisty? Cómo se compara con Obsidian, Notion, Todoist y Logseq", path: "comparar" },
+      compare: { label: "En qué se diferencia Tisty de Notion, Craft, Todoist, Logseq, Obsidian y Joplin", path: "comparar" },
       firstRun: {
         title: "Al abrir Tisty por primera vez",
         body: "Te pregunta dos cosas: tu idioma y adónde van tus copias, a una carpeta para sincronizar o a ninguna parte fuera de este equipo. Luego crea tus listas iniciales y te escribe una guía, un documento tuyo como cualquier otro, para leer, editar o tirar, que muestra desde dentro todo lo que cabe en un documento.",
