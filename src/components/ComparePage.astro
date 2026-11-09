@@ -2,8 +2,8 @@
 import Crumbs from "./Crumbs.astro";
 import Icon from "./Icon.astro";
 import Layout from "../layouts/Layout.astro";
-import { COMPARE_PATH, RIVALS, SOURCES, comparison } from "../content/compare";
-import { PRODUCTS } from "../content/products";
+import { COMPARE_PATH, RIVALS, SOURCES, comparison, onlyTisty, type Mark } from "../content/compare";
+import { PRODUCTS, inkOf } from "../content/products";
 import { HOME_PRODUCT, crumbs, href, type Locale } from "../site";
 
 interface Props {
@@ -15,6 +15,10 @@ const t = comparison(locale);
 const path = COMPARE_PATH[locale];
 const product = PRODUCTS.find((one) => one.slug === HOME_PRODUCT)!;
 const trail: [string, string][] = [[product.name, ""], [t.short, path]];
+const ink = inkOf(product);
+const only = t.only.replace("{only}", String(onlyTisty(t.rows))).replace("{total}", String(t.rows.length));
+const icon: Record<Mark, "free" | "part" | "cross"> = { yes: "free", part: "part", no: "cross" };
+const tone: Record<Mark, string> = { yes: "text-fg", part: "text-body", no: "text-muted" };
 ---
 
 <Layout
@@ -30,11 +34,15 @@ const trail: [string, string][] = [[product.name, ""], [t.short, path]];
       <p class="eyebrow">{t.short}</p>
       <h1 class="mt-3 text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">{t.heading}</h1>
       <p class="mt-5 text-lg text-body">{t.lede}</p>
+      <p class="mt-6 inline-flex items-center gap-2 rounded-full border border-line px-4 py-1.5 font-display text-base font-semibold text-fg" style="border-color: color-mix(in srgb, var(--accent) 45%, transparent)">
+        <Icon name="star" class="h-4 w-4" />
+        {only}
+      </p>
       <p class="mt-4 text-sm text-muted">{t.checked}</p>
     </header>
 
     <div class="mt-10 overflow-x-auto rounded-3xl border border-line bg-surface">
-      <table class="w-full min-w-[56rem] border-collapse text-left text-sm">
+      <table class="w-full min-w-[72rem] border-collapse text-left text-sm">
         <thead>
           <tr class="border-b border-line">
             <th class="sticky left-0 z-10 w-28 bg-surface p-4 sm:w-40" aria-hidden="true"></th>
@@ -53,8 +61,12 @@ const trail: [string, string][] = [[product.name, ""], [t.short, path]];
               <tr class="border-b border-line last:border-0">
                 <th scope="row" class="sticky left-0 z-10 bg-surface p-4 align-top font-medium text-fg">{row.label}</th>
                 {row.cells.map((cell, at) => (
-                  <td class:list={["p-4 align-top text-body", { "bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] text-fg": at === 0 }]}>
-                    {at === 0 && row.own ? <a class="underline decoration-line underline-offset-4 hover:decoration-fg" href={href(locale, row.own)}>{cell}</a> : cell}
+                  <td class:list={["p-4 align-top", { "bg-[color-mix(in_srgb,var(--accent)_10%,transparent)]": at === 0 }]}>
+                    <span class:list={["inline-flex items-center gap-1.5 font-medium", at === 0 && cell.mark === "yes" ? "accent-ink" : tone[cell.mark]]} style={at === 0 && cell.mark === "yes" ? ink : undefined}>
+                      <Icon name={icon[cell.mark]} class="h-4 w-4 shrink-0" />
+                      {at === 0 && row.own ? <a class="underline decoration-line underline-offset-4 hover:decoration-fg" href={href(locale, row.own)}>{t.marks[cell.mark]}</a> : t.marks[cell.mark]}
+                    </span>
+                    {cell.note && <span class="mt-1 block text-[13px] leading-snug text-muted">{cell.note}</span>}
                   </td>
                 ))}
               </tr>
@@ -86,7 +98,7 @@ const trail: [string, string][] = [[product.name, ""], [t.short, path]];
 
   <section class="shell mt-20">
     <h2 class="eyebrow">{t.sources}</h2>
-    <div class="mt-4 grid gap-6 text-sm sm:grid-cols-2 lg:grid-cols-4">
+    <div class="mt-4 grid gap-6 text-sm sm:grid-cols-2 lg:grid-cols-3">
       {
         SOURCES.map(([name, urls]) => (
           <div>

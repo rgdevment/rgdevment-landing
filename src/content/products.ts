@@ -285,7 +285,7 @@ export const PRODUCTS: Product[] = [
       proof: PROOF_EN,
       assistant: ASSISTANT_EN,
       sharing: SHARING_EN,
-      compare: { label: "How Tisty differs from Obsidian, Notion, Todoist and Logseq", path: "compare" },
+      compare: { label: "How Tisty differs from Notion, Craft, Todoist, Logseq, Obsidian and Joplin", path: "compare" },
       firstRun: {
         title: "The first time you open Tisty",
         body: "It asks two things: your language, and where your copies should go, a folder to sync through or nowhere beyond this computer. Then it sets up your starting lists and writes you a guide, an ordinary document of yours to read, edit or throw away, that shows from the inside what a document can hold.",
@@ -429,7 +429,7 @@ export const PRODUCTS: Product[] = [
       proof: PROOF_ES,
       assistant: ASSISTANT_ES,
       sharing: SHARING_ES,
-      compare: { label: "En qué se diferencia Tisty de Obsidian, Notion, Todoist y Logseq", path: "comparar" },
+      compare: { label: "En qué se diferencia Tisty de Notion, Craft, Todoist, Logseq, Obsidian y Joplin", path: "comparar" },
       firstRun: {
         title: "Al abrir Tisty por primera vez",
         body: "Te pregunta dos cosas: tu idioma y adónde van tus copias, a una carpeta para sincronizar o a ninguna parte fuera de este equipo. Luego crea tus listas iniciales y te escribe una guía, un documento tuyo como cualquier otro, para leer, editar o tirar, que muestra desde dentro todo lo que cabe en un documento.",

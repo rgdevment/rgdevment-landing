@@ -6,172 +6,275 @@ export function compares(product: string | null): boolean {
   return product === "tisty";
 }
 
+export type Mark = "yes" | "part" | "no";
+
+export type Cell = { mark: Mark; note?: string };
+
 type Comparison = {
   title: string;
   heading: string;
   short: string;
   meta: string;
   lede: string;
+  only: string;
   checked: string;
-  rows: { label: string; cells: string[]; own?: string }[];
+  marks: Record<Mark, string>;
+  rows: { label: string; cells: Cell[]; own?: string }[];
   stronger: { title: string; lede: string; items: [string, string][] };
   sources: string;
   back: string;
 };
 
+const yes = (note?: string): Cell => ({ mark: "yes", note });
+const part = (note?: string): Cell => ({ mark: "part", note });
+const no = (note?: string): Cell => ({ mark: "no", note });
+
 export const RIVALS = [
   { name: "Tisty", url: "https://github.com/rgdevment/Tisty" },
-  { name: "Obsidian", url: "https://obsidian.md" },
   { name: "Notion", url: "https://www.notion.com" },
+  { name: "Craft", url: "https://www.craft.do" },
   { name: "Todoist", url: "https://www.todoist.com" },
   { name: "Logseq", url: "https://github.com/logseq/logseq" },
+  { name: "Obsidian", url: "https://obsidian.md" },
+  { name: "Joplin", url: "https://joplinapp.org" },
 ];
 
 export const SOURCES: [string, string[]][] = [
   [
-    "Obsidian",
+    "Notion",
     [
-      "https://obsidian.md/help/data-storage",
-      "https://obsidian.md/pricing",
-      "https://obsidian.md/privacy",
-      "https://obsidian.md/license",
-      "https://obsidian.md/mobile",
-      "https://obsidian.md/help/sync/collaborate",
-      "https://community.obsidian.md/",
+      "https://www.notion.com/help/search",
+      "https://www.notion.com/security",
+      "https://www.notion.com/help/use-pages-offline",
+      "https://www.notion.com/trust/privacy-policy",
+      "https://www.notion.com/help/sharing-and-permissions",
+      "https://www.notion.com/releases/2021-12-23",
+      "https://www.notion.com/product/ai/use-cases/translate-your-content",
+      "https://developers.notion.com/guides/mcp/hosting-open-source-mcp",
+      "https://www.notion.com/pricing",
+      "https://www.notion.com/desktop",
+      "https://www.notion.com/mobile",
     ],
   ],
   [
-    "Notion",
+    "Craft",
     [
-      "https://www.notion.com/help/use-pages-offline",
-      "https://www.notion.com/trust/privacy-policy",
-      "https://www.notion.com/help/guides/status-property-gives-clarity-on-tasks",
-      "https://www.notion.com/pricing",
-      "https://developers.notion.com/guides/mcp/get-started-with-mcp",
-      "https://www.notion.com/mobile",
+      "https://support.craft.do/en/plan-and-do/tasks/completing-and-editing-tasks",
+      "https://support.craft.do/en/organize-and-find/search",
+      "https://support.craft.do/en/account-and-subscription/data-and-security/data-storage",
+      "https://support.craft.do/en/account-and-subscription/storage-and-recovery/external-locations",
+      "https://support.craft.do/en/account-and-subscription/data-and-security/encryption",
+      "https://support.craft.do/en/integrate/mcp",
+      "https://support.craft.do/en/share-and-publish/publish",
+      "https://support.craft.do/en/write-and-edit/mermaid-diagrams",
+      "https://www.craft.do/privacy",
+      "https://www.craft.do/pricing",
+      "https://support.craft.do/en/introduction/platforms",
     ],
   ],
   [
     "Todoist",
     [
-      "https://www.todoist.com/privacy",
       "https://www.todoist.com/help/todoist/features/view-completed-tasks-in-todoist-J19h2s",
+      "https://www.todoist.com/help/articles/introduction-to-search-fAfiDSAp",
+      "https://www.todoist.com/security",
+      "https://www.todoist.com/help/articles/create-a-todoist-account-lu9BkL",
+      "https://www.todoist.com/privacy",
+      "https://github.com/Doist/todoist-mcp",
+      "https://www.todoist.com/help/articles/how-to-collaborate-with-others",
       "https://www.todoist.com/pricing",
-      "https://www.todoist.com/help/todoist/todoist-and-ai/connect-todoist-to-an-ai-assistant-xMSzFfHng",
       "https://www.todoist.com/downloads",
     ],
   ],
   [
     "Logseq",
     [
-      "https://github.com/logseq/logseq",
       "https://github.com/logseq/docs/blob/master/db-version.md",
-      "https://opencollective.com/logseq",
+      "https://github.com/logseq/docs/blob/master/db-version-changes.md",
+      "https://github.com/logseq/logseq",
+      "https://github.com/logseq/og",
+      "https://blog.logseq.com/privacy-policy",
+      "https://blog.logseq.com/how-to-setup-and-use-logseq-sync",
+      "https://discuss.logseq.com/t/how-to-sync-your-logseq-graph-across-devices/8462",
+      "https://github.com/logseq/logseq/releases",
+    ],
+  ],
+  [
+    "Obsidian",
+    [
+      "https://obsidian.md/help/plugins/search",
+      "https://obsidian.md/help/sync-notes",
+      "https://obsidian.md/pricing",
+      "https://obsidian.md/privacy",
+      "https://obsidian.md/help/sync/security",
+      "https://obsidian.md/help/cli",
+      "https://obsidian.md/help/publish/security",
+      "https://obsidian.md/help/plugins/canvas",
+      "https://obsidian.md/help/advanced-syntax",
+      "https://obsidian.md/license",
+      "https://obsidian.md/download",
+    ],
+  ],
+  [
+    "Joplin",
+    [
+      "https://joplinapp.org/help/apps/to-dos",
+      "https://joplinapp.org/help/apps/search",
+      "https://joplinapp.org/help/faq",
+      "https://joplinapp.org/help/apps/sync/",
+      "https://joplinapp.org/help/apps/sync/e2ee",
+      "https://joplinapp.org/privacy/",
+      "https://joplinapp.org/help/dev/spec/ai_mcp",
+      "https://joplinapp.org/news/20260831-release-3-7/",
+      "https://joplinapp.org/news/20210513-095238",
+      "https://joplinapp.org/help/apps/whiteboard",
+      "https://joplinapp.org/help/apps/markdown",
+      "https://github.com/laurent22/joplin/blob/dev/LICENSE",
+      "https://joplinapp.org/plans/",
+      "https://joplinapp.org/download/",
     ],
   ],
 ];
 
 const EN: Comparison = {
-  title: "How Tisty differs from Obsidian, Notion, Todoist and Logseq",
-  heading: "How Tisty differs from Obsidian, Notion, Todoist and Logseq",
+  title: "How Tisty differs from Notion, Craft, Todoist, Logseq, Obsidian and Joplin",
+  heading: "How Tisty differs from Notion, Craft, Todoist, Logseq, Obsidian and Joplin",
   short: "How Tisty differs",
-  meta: "Tisty keeps tasks and documents on your disk, and a finished task stays whole in a searchable archive. How that differs from Obsidian, Notion, Todoist and Logseq, with sources.",
-  lede: "A finished task is kept, not ticked off. Tisty keeps tasks and documents in one store and one search on your own disk, and a finished task goes to the archive whole, with everything it gathered. Here is how that differs from the others, including where they are stronger.",
-  checked: "Checked on 8 November 2026 against each project's own pages, listed at the foot. Prices in US dollars, billed monthly unless said. These change, so go and look.",
+  meta: "Tisty keeps tasks and documents on your disk, and a finished task stays whole in a searchable archive. What it does that Notion, Craft, Todoist, Logseq, Obsidian and Joplin do not, with sources.",
+  lede: "A finished task is kept, not ticked off. Tisty keeps tasks and documents in one store and one search on your own disk, and a finished task goes to the archive whole, with everything it gathered. Here is what it does that the apps you may already know do not, and where they are stronger.",
+  only: "{only} of these {total} only Tisty does in full",
+  checked: "Checked on 8 November 2026 against each project's own pages, listed at the foot. A no means its own pages do not offer it. These change, so go and look.",
+  marks: { yes: "Yes", part: "Partly", no: "No" },
   rows: [
     {
-      label: "A finished task",
+      label: "A finished task kept whole",
       cells: [
-        "Goes to the archive whole, page, steps, journal and files, and search finds it",
-        "A ticked checkbox in its note",
-        "A row marked Complete; views or filters hide it",
-        "Leaves the active list; the free plan shows 7 days of history",
-        "Stays in place, marked Done",
+        yes("To the archive with its page, steps, parts, journal and files, and search finds it"),
+        part("Marked done in place"),
+        part("To the Logbook, out of search"),
+        part("Hidden; search finds it"),
+        part("Marked done in place"),
+        part("A ticked box in its note"),
+        part("Hidden in its notebook"),
       ],
     },
     {
-      label: "Tasks and documents together",
+      label: "One document in several languages",
+      cells: [yes("One switch, and Translate into… writes the copy"), no("AI translates a copy"), no(), no(), no(), no(), no()],
+    },
+    {
+      label: "Share a document by an encrypted link that expires on its own",
       cells: [
-        "Yes, one store and one search",
-        "Checkboxes inside notes; a task manager only through plugins",
-        "Yes, through task databases",
-        "Tasks only; notes are a task's description and comments",
-        "Yes, a task is a block in a page",
+        yes("With Folio by Tisty, after up to 15 days without use"),
+        part("Links can expire; not end-to-end encrypted"),
+        part("Links can expire; not end-to-end encrypted"),
+        no(),
+        no(),
+        no(),
+        no("Shared notes are not encrypted"),
       ],
     },
     {
-      label: "Where your data lives",
+      label: "Diagrams drawn by hand, saved as Mermaid text",
       cells: [
-        "Your disk: documents as Markdown, tasks as a log you can read",
-        "Your disk, as Markdown files",
-        "Notion's cloud",
-        "Todoist's cloud",
-        "Your disk: Markdown files, or a SQLite database in the new DB version, in beta",
+        yes("Mind maps, database schemas, freeform and class diagrams"),
+        part("Mermaid as code"),
+        part("Mermaid as code"),
+        no(),
+        no("Mermaid only with a plugin"),
+        part("Mermaid as code; Canvas saves JSON"),
+        part("Mermaid as code; the whiteboard saves JSON"),
       ],
     },
     {
-      label: "Account",
-      cells: ["None", "None; only for the paid Sync and Publish", "Required", "Required", "Only for Sync and Publish"],
+      label: "An assistant (MCP) on your machine that cannot delete",
+      cells: [
+        yes("Built in, with no network; it never closes or deletes a task, or deletes a document"),
+        part("Hosted by Notion"),
+        part("Hosted by Craft"),
+        part("Hosted by Todoist"),
+        part("Local in the DB beta"),
+        no("No official server"),
+        part("Local; it can move notes to the trash"),
+      ],
     },
     {
-      label: "Telemetry",
+      label: "Free, with no paid tier",
+      own: "pricing",
+      cells: [yes(), no("Paid plans"), no("Paid plans"), no("Paid plans"), no("Sync is paid"), no("Sync and Publish are paid"), no("Joplin Cloud is paid")],
+    },
+    {
+      label: "Tasks and documents in one search",
+      cells: [yes("The archive included"), yes(), part("Not the Inbox tasks"), part("Tasks only"), yes(), yes(), yes()],
+    },
+    {
+      label: "Sync through your own cloud, with no server of theirs",
       cells: [
-        "None",
-        "None, says its privacy policy",
-        "Yes: usage data, cookies and third-party analytics",
-        "Yes: third-party analytics, Google Analytics among them",
-        "Usage and diagnostics reporting you can switch off in its settings",
+        yes("Google Drive, OneDrive, WebDAV or any folder"),
+        no(),
+        part("A folder on macOS, not advised across devices"),
+        no(),
+        part("Any synced folder, in the file-based app"),
+        yes("Any synced folder"),
+        yes("OneDrive, Dropbox, WebDAV or S3"),
+      ],
+    },
+    {
+      label: "End-to-end encryption with a key only you hold",
+      cells: [yes("Optional, with a 24-word phrase"), no(), no(), no(), part("With paid Sync"), part("With paid Sync"), yes()],
+    },
+    {
+      label: "Your data as files you read without the app",
+      cells: [
+        yes("Markdown and a log you can read"),
+        no(),
+        no(),
+        no(),
+        part("Markdown in the file-based app; a database in DB"),
+        yes("Markdown"),
+        no("A database; Markdown on export"),
+      ],
+    },
+    {
+      label: "No account",
+      cells: [yes(), no(), no(), no(), yes("Only Sync and Publish ask for one"), yes("Only Sync and Publish ask for one"), yes()],
+    },
+    {
+      label: "No telemetry",
+      cells: [
+        yes("It only checks for a new version, sending nothing"),
+        no(),
+        no(),
+        no("Google Analytics among others"),
+        no("Usage data, which can be turned off"),
+        yes(),
+        yes("Nothing without your consent"),
       ],
     },
     {
       label: "Open source",
-      cells: ["Yes, AGPL-3.0", "No", "No", "No", "Yes, AGPL-3.0"],
+      cells: [yes("AGPL-3.0"), no(), no(), no(), yes("AGPL-3.0"), no(), yes("AGPL-3.0")],
     },
     {
-      label: "Price",
-      own: "pricing",
-      cells: [
-        "Free, no paid tier",
-        "Free; Sync $5 and Publish $10 a month",
-        "Free plan; Plus $10 per member a month",
-        "Free plan; Pro $7 a month",
-        "Free; Sync for its Open Collective backers",
-      ],
+      label: "Phone apps",
+      cells: [no(), yes(), yes(), yes(), yes(), yes(), yes()],
     },
     {
-      label: "MCP for assistants",
-      cells: [
-        "Built in, on your machine; it can never close or delete",
-        "No official server",
-        "Official, hosted by Notion",
-        "Official, hosted by Todoist",
-        "Built into the DB version, still in progress",
-      ],
-    },
-    {
-      label: "Phones",
-      cells: ["No mobile app", "iOS and Android", "iOS and Android", "iPhone, iPad, Android and watches", "iOS"],
-    },
-    {
-      label: "Working with others",
-      cells: [
-        "No live editing; one document shared by an encrypted link that expires",
-        "No live editing; shared vaults through Sync",
-        "Real-time editing",
-        "Projects shared with up to 5 people",
-        "Real-time editing in the DB version, in alpha",
-      ],
+      label: "Linux",
+      cells: [no(), no(), no(), yes(), yes(), yes(), yes()],
     },
   ],
   stronger: {
     title: "Where the others are stronger",
     lede: "Each of them does something better than Tisty, and it is worth saying which.",
     items: [
-      ["Obsidian", "A notebook with more than ten thousand community plugins, and apps for iOS and Android. If plugins are how you work, it is hard to beat."],
-      ["Notion", "Real-time editing with a team and apps everywhere. If your documents are shared work, it is built for that, once you and your data have an account there."],
-      ["Todoist", "Quicker at catching a task on the phone or the watch than anything on a desktop. When the task is done, though, what you worked out has nowhere to stay."],
-      ["Logseq", "Open source like Tisty, an outliner built on linking blocks, and it runs on Linux."],
-      ["Tisty", "Has no phone app and no Linux build, and nobody edits a document with you live."],
+      ["Notion", "Real-time editing with a team, and apps for phones and the web. If your documents are shared work, it is built for that, once you and your data have an account there."],
+      ["Craft", "Polished documents on Mac, Windows, iPhone, iPad, Android and the web, and pages you publish with a password and an end date."],
+      ["Todoist", "Quicker at catching a task on the phone than anything on a desktop, on every system, Linux and the web included. When the task is done, though, what you worked out has nowhere to stay."],
+      ["Logseq", "Open source like Tisty, an outliner built on linking blocks, and it runs on Linux and on phones."],
+      ["Obsidian", "A notebook with thousands of community plugins, and apps for Linux, iOS and Android. If plugins are how you work, it is hard to beat."],
+      ["Joplin", "Open source like Tisty, on every system, Linux, phones and the terminal included, with end-to-end encrypted sync to a cloud you choose."],
+      ["Tisty", "Has no phone app and no Linux build, nobody edits a document with you live, and tasks from another app have to be typed again."],
     ],
   },
   sources: "Sources",
@@ -179,106 +282,144 @@ const EN: Comparison = {
 };
 
 const ES: Comparison = {
-  title: "En qué se diferencia Tisty de Obsidian, Notion, Todoist y Logseq",
-  heading: "En qué se diferencia Tisty de Obsidian, Notion, Todoist y Logseq",
+  title: "En qué se diferencia Tisty de Notion, Craft, Todoist, Logseq, Obsidian y Joplin",
+  heading: "En qué se diferencia Tisty de Notion, Craft, Todoist, Logseq, Obsidian y Joplin",
   short: "En qué se diferencia Tisty",
-  meta: "Tisty guarda tareas y documentos en tu disco, y una tarea terminada se queda entera en un archivo que se busca. En qué se diferencia de Obsidian, Notion, Todoist y Logseq, con fuentes.",
-  lede: "Una tarea terminada se guarda, no se tacha. Tisty guarda tareas y documentos en un mismo lugar y una misma búsqueda, en tu propio disco, y una tarea terminada pasa entera al archivo, con todo lo que reunió. Así se diferencia de los otros, incluido dónde ellos son más fuertes.",
-  checked: "Revisado el 8 de noviembre de 2026 en las páginas de cada proyecto, enlazadas al pie. Precios en dólares estadounidenses, con pago mensual salvo que se diga. Esto cambia, así que conviene ir a mirar.",
+  meta: "Tisty guarda tareas y documentos en tu disco, y una tarea terminada se queda entera en un archivo que se busca. Lo que hace y Notion, Craft, Todoist, Logseq, Obsidian y Joplin no, con fuentes.",
+  lede: "Una tarea terminada se guarda, no se tacha. Tisty guarda tareas y documentos en un mismo lugar y una misma búsqueda, en tu propio disco, y una tarea terminada pasa entera al archivo, con todo lo que reunió. Aquí está lo que hace y que las apps que quizá ya conoces no hacen, y dónde ellas son más fuertes.",
+  only: "{only} de estas {total} solo Tisty las hace por completo",
+  checked: "Revisado el 8 de noviembre de 2026 en las páginas de cada proyecto, enlazadas al pie. Un no quiere decir que sus propias páginas no lo ofrecen. Esto cambia, así que conviene ir a mirar.",
+  marks: { yes: "Sí", part: "En parte", no: "No" },
   rows: [
     {
-      label: "Una tarea terminada",
+      label: "Una tarea terminada se guarda entera",
       cells: [
-        "Pasa entera al archivo, con página, pasos, bitácora y archivos, y la búsqueda la encuentra",
-        "Una casilla marcada en su nota",
-        "Una fila marcada como Complete; las vistas o filtros la ocultan",
-        "Sale de la lista activa; el plan gratuito muestra 7 días de historial",
-        "Se queda donde estaba, marcada como Done",
+        yes("Al archivo con su página, pasos, partes, bitácora y archivos, y la búsqueda la encuentra"),
+        part("Se marca hecha donde está"),
+        part("Al Logbook, fuera de la búsqueda"),
+        part("Se oculta; la búsqueda la encuentra"),
+        part("Se marca hecha donde está"),
+        part("Una casilla marcada en su nota"),
+        part("Se oculta en su libreta"),
       ],
     },
     {
-      label: "Tareas y documentos juntos",
+      label: "Un documento en varios idiomas",
+      cells: [yes("Un selector, y Traducir a… escribe la copia"), no("La IA traduce una copia"), no(), no(), no(), no(), no()],
+    },
+    {
+      label: "Compartir un documento con un enlace cifrado que caduca solo",
       cells: [
-        "Sí, un solo lugar y una sola búsqueda",
-        "Casillas dentro de las notas; un gestor de tareas solo con plugins",
-        "Sí, con bases de datos de tareas",
-        "Solo tareas; las notas son la descripción y los comentarios de una tarea",
-        "Sí, una tarea es un bloque dentro de una página",
+        yes("Con Folio by Tisty, tras hasta 15 días sin uso"),
+        part("El enlace puede caducar; sin cifrado de extremo a extremo"),
+        part("El enlace puede caducar; sin cifrado de extremo a extremo"),
+        no(),
+        no(),
+        no(),
+        no("Las notas compartidas no van cifradas"),
       ],
     },
     {
-      label: "Dónde viven tus datos",
+      label: "Diagramas dibujados a mano, guardados como texto Mermaid",
       cells: [
-        "Tu disco: los documentos en Markdown, las tareas en un registro legible",
-        "Tu disco, en archivos Markdown",
-        "La nube de Notion",
-        "La nube de Todoist",
-        "Tu disco: archivos Markdown, o una base SQLite en la nueva versión DB, en beta",
+        yes("Mapas mentales, esquemas de base de datos, diagramas libres y de clases"),
+        part("Mermaid como código"),
+        part("Mermaid como código"),
+        no(),
+        no("Mermaid solo con un plugin"),
+        part("Mermaid como código; Canvas guarda JSON"),
+        part("Mermaid como código; la pizarra guarda JSON"),
       ],
     },
     {
-      label: "Cuenta",
-      cells: ["Ninguna", "Ninguna; solo para Sync y Publish, de pago", "Obligatoria", "Obligatoria", "Solo para Sync y Publish"],
+      label: "Un asistente (MCP) en tu equipo que no puede borrar",
+      cells: [
+        yes("Incluido y sin red; nunca cierra ni borra una tarea, ni borra un documento"),
+        part("Alojado por Notion"),
+        part("Alojado por Craft"),
+        part("Alojado por Todoist"),
+        part("Local en la beta DB"),
+        no("Sin servidor oficial"),
+        part("Local; puede mandar notas a la papelera"),
+      ],
     },
     {
-      label: "Telemetría",
+      label: "Gratis, sin versión de pago",
+      own: "precios",
+      cells: [yes(), no("Planes de pago"), no("Planes de pago"), no("Planes de pago"), no("Sync es de pago"), no("Sync y Publish son de pago"), no("Joplin Cloud es de pago")],
+    },
+    {
+      label: "Tareas y documentos en una sola búsqueda",
+      cells: [yes("Con el archivo incluido"), yes(), part("Sin las tareas del Inbox"), part("Solo tareas"), yes(), yes(), yes()],
+    },
+    {
+      label: "Sincronizar por tu propia nube, sin servidor de ellos",
       cells: [
-        "Ninguna",
-        "Ninguna, según su política de privacidad",
-        "Sí: datos de uso, cookies y analítica de terceros",
-        "Sí: analítica de terceros, entre ellas Google Analytics",
-        "Envío de uso y diagnósticos, que se apaga en sus ajustes",
+        yes("Google Drive, OneDrive, WebDAV o cualquier carpeta"),
+        no(),
+        part("Una carpeta en macOS, no recomendada entre equipos"),
+        no(),
+        part("Cualquier carpeta sincronizada, en la app de archivos"),
+        yes("Cualquier carpeta sincronizada"),
+        yes("OneDrive, Dropbox, WebDAV o S3"),
+      ],
+    },
+    {
+      label: "Cifrado de extremo a extremo con una llave que solo tú tienes",
+      cells: [yes("Opcional, con una frase de 24 palabras"), no(), no(), no(), part("Con Sync, de pago"), part("Con Sync, de pago"), yes()],
+    },
+    {
+      label: "Tus datos en archivos que se leen sin la app",
+      cells: [
+        yes("Markdown y un registro legible"),
+        no(),
+        no(),
+        no(),
+        part("Markdown en la app de archivos; una base de datos en DB"),
+        yes("Markdown"),
+        no("Una base de datos; Markdown al exportar"),
+      ],
+    },
+    {
+      label: "Sin cuenta",
+      cells: [yes(), no(), no(), no(), yes("Solo la piden Sync y Publish"), yes("Solo la piden Sync y Publish"), yes()],
+    },
+    {
+      label: "Sin telemetría",
+      cells: [
+        yes("Solo busca si hay versión nueva, sin enviar nada"),
+        no(),
+        no(),
+        no("Google Analytics, entre otros"),
+        no("Datos de uso, que se pueden apagar"),
+        yes(),
+        yes("Nada sin tu permiso"),
       ],
     },
     {
       label: "Código abierto",
-      cells: ["Sí, AGPL-3.0", "No", "No", "No", "Sí, AGPL-3.0"],
+      cells: [yes("AGPL-3.0"), no(), no(), no(), yes("AGPL-3.0"), no(), yes("AGPL-3.0")],
     },
     {
-      label: "Precio",
-      own: "precios",
-      cells: [
-        "Gratis, sin versión de pago",
-        "Gratis; Sync USD 5 y Publish USD 10 al mes",
-        "Plan gratuito; Plus USD 10 por miembro al mes",
-        "Plan gratuito; Pro USD 7 al mes",
-        "Gratis; Sync para quienes lo apoyan en Open Collective",
-      ],
+      label: "Apps para el teléfono",
+      cells: [no(), yes(), yes(), yes(), yes(), yes(), yes()],
     },
     {
-      label: "MCP para asistentes",
-      cells: [
-        "Incluido, en tu equipo; nunca puede cerrar ni borrar",
-        "Sin servidor oficial",
-        "Oficial, alojado por Notion",
-        "Oficial, alojado por Todoist",
-        "Incluido en la versión DB, todavía en desarrollo",
-      ],
-    },
-    {
-      label: "Teléfonos",
-      cells: ["Sin app móvil", "iOS y Android", "iOS y Android", "iPhone, iPad, Android y relojes", "iOS"],
-    },
-    {
-      label: "Trabajar con otros",
-      cells: [
-        "Sin edición en vivo; un documento compartido por un enlace cifrado que caduca",
-        "Sin edición en vivo; bóvedas compartidas con Sync",
-        "Edición en tiempo real",
-        "Proyectos compartidos con hasta 5 personas",
-        "Edición en tiempo real en la versión DB, en alfa",
-      ],
+      label: "Linux",
+      cells: [no(), no(), no(), yes(), yes(), yes(), yes()],
     },
   ],
   stronger: {
     title: "Dónde los otros son más fuertes",
     lede: "Cada uno hace algo mejor que Tisty, y vale la pena decir qué.",
     items: [
-      ["Obsidian", "Un cuaderno con más de diez mil plugins de la comunidad y apps para iOS y Android. Si trabajas a punta de plugins, cuesta superarlo."],
-      ["Notion", "Edición en tiempo real con un equipo y apps en todas partes. Si tus documentos son trabajo compartido, está hecho para eso, una vez que tú y tus datos tienen cuenta ahí."],
-      ["Todoist", "Más rápido para anotar una tarea en el teléfono o el reloj que cualquier cosa de escritorio. Pero cuando la tarea termina, lo que resolviste no tiene dónde quedarse."],
-      ["Logseq", "De código abierto como Tisty, un esquematizador hecho para enlazar bloques, y funciona en Linux."],
-      ["Tisty", "No tiene app para el teléfono ni versión para Linux, y nadie edita un documento contigo en vivo."],
+      ["Notion", "Edición en tiempo real con un equipo, y apps para el teléfono y la web. Si tus documentos son trabajo compartido, está hecho para eso, una vez que tú y tus datos tienen cuenta ahí."],
+      ["Craft", "Documentos muy cuidados en Mac, Windows, iPhone, iPad, Android y la web, y páginas que publicas con contraseña y fecha de término."],
+      ["Todoist", "Más rápido para anotar una tarea en el teléfono que cualquier cosa de escritorio, en todos los sistemas, Linux y la web incluidos. Pero cuando la tarea termina, lo que resolviste no tiene dónde quedarse."],
+      ["Logseq", "De código abierto como Tisty, un esquematizador hecho para enlazar bloques, y funciona en Linux y en el teléfono."],
+      ["Obsidian", "Un cuaderno con miles de plugins de la comunidad y apps para Linux, iOS y Android. Si trabajas a punta de plugins, cuesta superarlo."],
+      ["Joplin", "De código abierto como Tisty, en todos los sistemas, Linux, el teléfono y la terminal incluidos, con sincronización cifrada de extremo a extremo a la nube que elijas."],
+      ["Tisty", "No tiene app para el teléfono ni versión para Linux, nadie edita un documento contigo en vivo, y las tareas de otra app hay que escribirlas de nuevo."],
     ],
   },
   sources: "Fuentes",
@@ -287,4 +428,8 @@ const ES: Comparison = {
 
 export function comparison(locale: Locale): Comparison {
   return locale === "es" ? ES : EN;
+}
+
+export function onlyTisty(rows: Comparison["rows"]): number {
+  return rows.filter(({ cells: [tisty, ...others] }) => tisty.mark === "yes" && others.every((one) => one.mark !== "yes")).length;
 }
