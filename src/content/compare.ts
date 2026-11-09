@@ -13,7 +13,7 @@ type Comparison = {
   meta: string;
   lede: string;
   checked: string;
-  rows: { label: string; cells: string[] }[];
+  rows: { label: string; cells: string[]; own?: string }[];
   stronger: { title: string; lede: string; items: [string, string][] };
   sources: string;
   back: string;
@@ -72,13 +72,33 @@ export const SOURCES: [string, string[]][] = [
 ];
 
 const EN: Comparison = {
-  title: "Tisty vs Obsidian, Notion, Todoist and Logseq compared",
-  heading: "Tisty compared with Obsidian, Notion, Todoist and Logseq",
-  short: "Why Tisty?",
-  meta: "Where your data lives, accounts, telemetry, tasks with notes, price and MCP: Tisty side by side with Obsidian, Notion, Todoist and Logseq, with sources.",
-  lede: "Tisty keeps tasks and documents in one store and one search on your own disk, and a finished task keeps everything it gathered instead of disappearing. Here is how that compares, including where the others are stronger.",
+  title: "How Tisty differs from Obsidian, Notion, Todoist and Logseq",
+  heading: "How Tisty differs from Obsidian, Notion, Todoist and Logseq",
+  short: "How Tisty differs",
+  meta: "Tisty keeps tasks and documents on your disk, and a finished task stays whole in a searchable archive. How that differs from Obsidian, Notion, Todoist and Logseq, with sources.",
+  lede: "A finished task is kept, not ticked off. Tisty keeps tasks and documents in one store and one search on your own disk, and a finished task goes to the archive whole, with everything it gathered. Here is how that differs from the others, including where they are stronger.",
   checked: "Checked on 8 November 2026 against each project's own pages, listed at the foot. Prices in US dollars, billed monthly unless said. These change, so go and look.",
   rows: [
+    {
+      label: "A finished task",
+      cells: [
+        "Goes to the archive whole, page, steps, journal and files, and search finds it",
+        "A ticked checkbox in its note",
+        "A row marked Complete; views or filters hide it",
+        "Leaves the active list; the free plan shows 7 days of history",
+        "Stays in place, marked Done",
+      ],
+    },
+    {
+      label: "Tasks and documents together",
+      cells: [
+        "Yes, one store and one search",
+        "Checkboxes inside notes; a task manager only through plugins",
+        "Yes, through task databases",
+        "Tasks only; notes are a task's description and comments",
+        "Yes, a task is a block in a page",
+      ],
+    },
     {
       label: "Where your data lives",
       cells: [
@@ -104,31 +124,12 @@ const EN: Comparison = {
       ],
     },
     {
-      label: "Tasks and documents together",
-      cells: [
-        "Yes, one store and one search",
-        "Checkboxes inside notes; a task manager only through plugins",
-        "Yes, through task databases",
-        "Tasks only; notes are a task's description and comments",
-        "Yes, a task is a block in a page",
-      ],
-    },
-    {
-      label: "A finished task",
-      cells: [
-        "Goes to the archive whole, page, steps, journal and files, and search finds it",
-        "A ticked checkbox in its note",
-        "A row marked Complete; views or filters hide it",
-        "Leaves the active list; the free plan shows 7 days of history",
-        "Stays in place, marked Done",
-      ],
-    },
-    {
       label: "Open source",
       cells: ["Yes, AGPL-3.0", "No", "No", "No", "Yes, AGPL-3.0"],
     },
     {
       label: "Price",
+      own: "pricing",
       cells: [
         "Free, no paid tier",
         "Free; Sync $5 and Publish $10 a month",
@@ -178,13 +179,33 @@ const EN: Comparison = {
 };
 
 const ES: Comparison = {
-  title: "Tisty frente a Obsidian, Notion, Todoist y Logseq",
-  heading: "Tisty frente a Obsidian, Notion, Todoist y Logseq",
-  short: "¿Por qué Tisty?",
-  meta: "Dónde viven tus datos, cuentas, telemetría, tareas y notas, precio y MCP: Tisty junto a Obsidian, Notion, Todoist y Logseq, con fuentes.",
-  lede: "Tisty guarda tareas y documentos en un mismo lugar y una misma búsqueda, en tu propio disco, y una tarea terminada conserva todo lo que reunió en vez de desaparecer. Así se compara, incluido dónde los otros son más fuertes.",
+  title: "En qué se diferencia Tisty de Obsidian, Notion, Todoist y Logseq",
+  heading: "En qué se diferencia Tisty de Obsidian, Notion, Todoist y Logseq",
+  short: "En qué se diferencia Tisty",
+  meta: "Tisty guarda tareas y documentos en tu disco, y una tarea terminada se queda entera en un archivo que se busca. En qué se diferencia de Obsidian, Notion, Todoist y Logseq, con fuentes.",
+  lede: "Una tarea terminada se guarda, no se tacha. Tisty guarda tareas y documentos en un mismo lugar y una misma búsqueda, en tu propio disco, y una tarea terminada pasa entera al archivo, con todo lo que reunió. Así se diferencia de los otros, incluido dónde ellos son más fuertes.",
   checked: "Revisado el 8 de noviembre de 2026 en las páginas de cada proyecto, enlazadas al pie. Precios en dólares estadounidenses, con pago mensual salvo que se diga. Esto cambia, así que conviene ir a mirar.",
   rows: [
+    {
+      label: "Una tarea terminada",
+      cells: [
+        "Pasa entera al archivo, con página, pasos, bitácora y archivos, y la búsqueda la encuentra",
+        "Una casilla marcada en su nota",
+        "Una fila marcada como Complete; las vistas o filtros la ocultan",
+        "Sale de la lista activa; el plan gratuito muestra 7 días de historial",
+        "Se queda donde estaba, marcada como Done",
+      ],
+    },
+    {
+      label: "Tareas y documentos juntos",
+      cells: [
+        "Sí, un solo lugar y una sola búsqueda",
+        "Casillas dentro de las notas; un gestor de tareas solo con plugins",
+        "Sí, con bases de datos de tareas",
+        "Solo tareas; las notas son la descripción y los comentarios de una tarea",
+        "Sí, una tarea es un bloque dentro de una página",
+      ],
+    },
     {
       label: "Dónde viven tus datos",
       cells: [
@@ -210,31 +231,12 @@ const ES: Comparison = {
       ],
     },
     {
-      label: "Tareas y documentos juntos",
-      cells: [
-        "Sí, un solo lugar y una sola búsqueda",
-        "Casillas dentro de las notas; un gestor de tareas solo con plugins",
-        "Sí, con bases de datos de tareas",
-        "Solo tareas; las notas son la descripción y los comentarios de una tarea",
-        "Sí, una tarea es un bloque dentro de una página",
-      ],
-    },
-    {
-      label: "Una tarea terminada",
-      cells: [
-        "Pasa entera al archivo, con página, pasos, bitácora y archivos, y la búsqueda la encuentra",
-        "Una casilla marcada en su nota",
-        "Una fila marcada como Complete; las vistas o filtros la ocultan",
-        "Sale de la lista activa; el plan gratuito muestra 7 días de historial",
-        "Se queda donde estaba, marcada como Done",
-      ],
-    },
-    {
       label: "Código abierto",
       cells: ["Sí, AGPL-3.0", "No", "No", "No", "Sí, AGPL-3.0"],
     },
     {
       label: "Precio",
+      own: "precios",
       cells: [
         "Gratis, sin versión de pago",
         "Gratis; Sync USD 5 y Publish USD 10 al mes",

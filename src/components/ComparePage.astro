@@ -53,7 +53,9 @@ const trail: [string, string][] = [[product.name, ""], [t.short, path]];
               <tr class="border-b border-line last:border-0">
                 <th scope="row" class="sticky left-0 z-10 bg-surface p-4 align-top font-medium text-fg">{row.label}</th>
                 {row.cells.map((cell, at) => (
-                  <td class:list={["p-4 align-top text-body", { "bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] text-fg": at === 0 }]}>{cell}</td>
+                  <td class:list={["p-4 align-top text-body", { "bg-[color-mix(in_srgb,var(--accent)_10%,transparent)] text-fg": at === 0 }]}>
+                    {at === 0 && row.own ? <a class="underline decoration-line underline-offset-4 hover:decoration-fg" href={href(locale, row.own)}>{cell}</a> : cell}
+                  </td>
                 ))}
               </tr>
             ))

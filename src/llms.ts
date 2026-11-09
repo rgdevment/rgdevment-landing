@@ -199,7 +199,7 @@ export async function appLlms(): Promise<Response> {
     link("Pricing", "pricing", "free in full, no paid tier"),
     link("Support", "support"),
     `- [Source code](${product.repo})`,
-    ...(compares(product.slug) ? [link(comparison("en").title, COMPARE_PATH.en, "how it compares with Obsidian, Notion, Todoist and Logseq")] : []),
+    ...(compares(product.slug) ? [link(comparison("en").title, COMPARE_PATH.en, "how it differs from Obsidian, Notion, Todoist and Logseq")] : []),
     `- [Español](${canonical("es", "")}): ${product.es.tagline}`,
     `- [Ayuda en español](${canonical("es", docPath("es", product.slug))})`,
     `- [More tools by ${AUTHOR.handle}](${MAIN}/llms.txt)`,
