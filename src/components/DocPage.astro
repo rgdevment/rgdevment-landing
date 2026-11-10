@@ -5,7 +5,7 @@ import DocNav from "./DocNav.astro";
 import Icon from "./Icon.astro";
 import Layout from "../layouts/Layout.astro";
 import { bySection, type Doc, docPath, docsOf } from "../content/docs";
-import { PRODUCTS, inkOf } from "../content/products";
+import { PRODUCTS, inkOf, iconAlt } from "../content/products";
 import { AUTHOR, HOME_PRODUCT, PERSON_ID, WEBSITE_ID, appId, canonical, crumbs, href, type Locale } from "../site";
 
 interface Props {
@@ -100,7 +100,7 @@ const schema = [
         <div class="doc-search invisible mb-6 min-h-[3.25rem] shrink-0 lg:pr-3" data-search></div>
         <details class="group card lg:hidden">
           <summary class="flex cursor-pointer list-none items-center gap-3 p-4 [&::-webkit-details-marker]:hidden">
-            <img src={product.icon} alt="" width="28" height="28" class="h-7 w-7 rounded-lg" />
+            <img src={product.icon} alt={iconAlt(product, locale)} width="28" height="28" class="h-7 w-7 rounded-lg" />
             <span class="font-display font-semibold text-fg">{say.title}</span>
             <Icon name="chevron" class="ml-auto h-4 w-4 text-muted transition group-open:rotate-180" />
           </summary>
@@ -110,7 +110,7 @@ const schema = [
         </details>
         <div class="hidden min-h-0 lg:block lg:overflow-y-auto lg:pb-6 lg:pr-3">
           <a href={href(locale, product.slug)} class="flex items-center gap-3">
-            <img src={product.icon} alt="" width="28" height="28" class="h-7 w-7 rounded-lg" />
+            <img src={product.icon} alt={iconAlt(product, locale)} width="28" height="28" class="h-7 w-7 rounded-lg" />
             <span class="font-display font-semibold text-fg">{product.name}</span>
           </a>
           <nav aria-label={say.menu} class="mt-6 text-[15px]">
@@ -215,6 +215,8 @@ const schema = [
         try {
           await navigator.clipboard.writeText((pre.querySelector("code") ?? pre).innerText);
           button.textContent = prose!.dataset.copied ?? "";
+          const said = document.querySelector("[data-announce]");
+          if (said) said.textContent = prose!.dataset.copied ?? "";
           setTimeout(() => (button.textContent = prose!.dataset.copy ?? ""), 1500);
         } catch {}
       });

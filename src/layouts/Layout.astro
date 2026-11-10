@@ -7,7 +7,7 @@ import Icon from "../components/Icon.astro";
 import Logo from "../components/Logo.astro";
 import Nav from "../components/Nav.astro";
 import ProductNav from "../components/ProductNav.astro";
-import { PRODUCTS, cardOf } from "../content/products";
+import { PRODUCTS, cardOf, iconAlt } from "../content/products";
 import { CHANGELOG_PATH, FEED, hasChangelog } from "../content/changelog";
 import { COMPARE_PATH, comparisonOf } from "../content/compare";
 import { privacyPath } from "../content/privacy";
@@ -152,8 +152,10 @@ const say = es
       try {
         const chosen = localStorage.getItem("theme");
         if (chosen === "dark" || chosen === "light") document.documentElement.dataset.theme = chosen;
-      } catch {}
-      document.documentElement.dataset.wants = /^es\b/i.test(navigator.language) ? "es" : "en";
+        if (localStorage.getItem("offer") !== "no") document.documentElement.dataset.wants = /^es\b/i.test(navigator.language) ? "es" : "en";
+      } catch {
+        document.documentElement.dataset.wants = /^es\b/i.test(navigator.language) ? "es" : "en";
+      }
     </script>
     <meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0e0d0b" media="(prefers-color-scheme: dark)" />
@@ -201,25 +203,35 @@ const say = es
       )
     }
 
-    {
-      !noindex && (
-        <p class="offer shell hidden pt-3 text-right" lang={there} data-nosnippet>
-          <a
-            class="group inline-flex items-center gap-2 rounded-full border border-line bg-surface/70 py-1 pr-3 pl-1 text-xs text-muted backdrop-blur transition hover:border-fg/25 hover:text-fg"
-            href={href(there, at(there))}
-            hreflang={there}
-          >
-            <span class="rounded-full bg-flame-tint px-2 py-0.5 font-mono text-[11px] font-medium uppercase text-flame-ink" aria-hidden="true">{there}</span>
-            {es ? "This page is also in English" : "Esta página también está en español"}
-            <Icon name="arrow" class="h-3 w-3 transition group-hover:translate-x-0.5" />
-          </a>
-        </p>
-      )
-    }
-
     <main id="content">
+      {
+        !noindex && contentLang === locale && (
+          <p class="offer shell hidden pt-2 text-right" lang={there} data-nosnippet>
+            <span class="inline-flex items-center rounded-full border border-line bg-surface/70 text-xs text-muted backdrop-blur">
+              <a class="group inline-flex items-center gap-2 py-1 pr-2 pl-1 transition hover:text-fg" href={href(there, at(there))} hreflang={there}>
+                <span class="rounded-full bg-flame-tint px-2 py-0.5 font-mono text-[11px] font-medium uppercase text-flame-ink" aria-hidden="true">{there}</span>
+                {es ? "Also in English" : "También en español"}
+                <Icon name="arrow" class="h-3 w-3 transition group-hover:translate-x-0.5" />
+              </a>
+              <button type="button" data-offer-close class="grid h-7 w-7 place-items-center rounded-r-full border-l border-line transition hover:text-fg" aria-label={es ? "Hide" : "Ocultar"}>
+                <span aria-hidden="true">×</span>
+              </button>
+            </span>
+          </p>
+        )
+      }
       <slot />
     </main>
+    <script is:inline>
+      for (const close of document.querySelectorAll("[data-offer-close]")) {
+        close.addEventListener("click", () => {
+          delete document.documentElement.dataset.wants;
+          try {
+            localStorage.setItem("offer", "no");
+          } catch {}
+        });
+      }
+    </script>
 
     <footer class="mt-24 border-t border-line bg-sunken/60 sm:mt-32">
       <div class="shell grid gap-12 py-14 sm:grid-cols-[1.4fr_1fr_1fr]">
@@ -237,7 +249,7 @@ const say = es
           </a>
         </div>
 
-        <nav aria-label={say.footer} class="contents">
+        <nav aria-label={say.footer} class="grid gap-12 sm:col-span-2 sm:grid-cols-2">
           <div>
             <p class="eyebrow">{say.apps}</p>
             <ul class="mt-4 space-y-2.5 text-sm">
@@ -245,7 +257,7 @@ const say = es
                 PRODUCTS.map((one) => (
                   <li>
                     <a class="inline-flex items-center gap-2.5 text-body transition-colors hover:text-fg" href={href(locale, one.slug)}>
-                      <img src={one.icon} alt="" width="20" height="20" class="h-5 w-5 rounded-md" loading="lazy" />
+                      <img src={one.icon} alt={iconAlt(one, locale)} width="20" height="20" class="h-5 w-5 rounded-md" loading="lazy" />
                       {one.name}
                     </a>
                   </li>
@@ -273,5 +285,6 @@ const say = es
         <p class="mt-2 text-xs text-muted">{say.visits}</p>
       </div>
     </footer>
+    <p class="sr-only" role="status" data-announce></p>
   </body>
 </html>

@@ -7,13 +7,14 @@ interface Props {
 }
 
 const { locale, class: klass = "" } = Astro.props;
-const label = locale === "es" ? "Claro u oscuro" : "Light or dark";
+const label = locale === "es" ? "Modo oscuro" : "Dark mode";
 ---
 
 <button
   type="button"
   data-theme-switch
   aria-label={label}
+  aria-pressed="false"
   title={label}
   class={`grid h-9 w-9 shrink-0 place-items-center rounded-full border border-line text-muted transition-colors hover:border-fg/30 hover:text-fg ${klass}`}
 >
@@ -29,7 +30,11 @@ const label = locale === "es" ? "Claro u oscuro" : "Light or dark";
 <script>
   const root = document.documentElement;
   const dark = () => (root.dataset.theme ?? (matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "light")) === "dark";
-  for (const button of document.querySelectorAll("[data-theme-switch]")) {
+  const buttons = document.querySelectorAll("[data-theme-switch]");
+  const show = () => buttons.forEach((button) => button.setAttribute("aria-pressed", String(dark())));
+  show();
+  addEventListener("themechange", show);
+  for (const button of buttons) {
     button.addEventListener("click", () => {
       const now = dark() ? "light" : "dark";
       root.dataset.theme = now;

@@ -677,6 +677,10 @@ export const PRODUCTS: Product[] = [
   },
 ];
 
+export function iconAlt(product: Product, locale: Locale): string {
+  return locale === "es" ? `Ícono de ${product.name}` : `${product.name} icon`;
+}
+
 export function inkOf(product: Product): string {
   return `--ink: ${product.accent}; --ink-dark: ${product.accentDark}`;
 }
