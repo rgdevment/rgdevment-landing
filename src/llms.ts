@@ -1,7 +1,7 @@
 import { docPath, docsOf } from "./content/docs";
 import { PRODUCTS, type Product, brewSteps, releasesUrl, storeUrl } from "./content/products";
 import { privacyPath } from "./content/privacy";
-import { COMPARE_PATH, RIVALS, SOURCES, comparison, compares } from "./content/compare";
+import { COMPARE_PATH, comparisonOf, namesOthers } from "./content/compare";
 import { installers, latestRelease, megabytes } from "./content/releases";
 import { MAIN } from "./hosts";
 import { AUTHOR, HOME_PRODUCT, canonical } from "./site";
@@ -110,8 +110,9 @@ function sharing(product: Product): string[] {
 }
 
 function compared(product: Product): string[] {
-  if (!compares(product.slug)) return [];
-  const t = comparison("en");
+  const compared = comparisonOf(product.slug);
+  if (!compared) return [];
+  const t = compared.en;
   const row = (cells: string[]) => `| ${cells.join(" | ")} |`;
   return [
     `# ${t.heading}`,
@@ -122,8 +123,8 @@ function compared(product: Product): string[] {
     "",
     t.checked,
     "",
-    row(["", ...RIVALS.map((one) => one.name)]),
-    row(["---", ...RIVALS.map(() => "---")]),
+    row(["", ...compared.rivals.map((one) => one.name)]),
+    row(["---", ...compared.rivals.map(() => "---")]),
     ...t.rows.map((one) => row([one.label, ...one.cells.map(({ mark, note }) => (note ? `${t.marks[mark]}: ${note}` : t.marks[mark]))])),
     "",
     `## ${t.stronger.title}`,
@@ -132,7 +133,7 @@ function compared(product: Product): string[] {
     "",
     `## ${t.sources}`,
     "",
-    ...SOURCES.flatMap(([name, urls]) => urls.map((url) => `- ${name}: ${url}`)),
+    ...compared.sources.flatMap(([name, urls]) => urls.map((url) => `- ${name}: ${url}`)),
   ];
 }
 
@@ -140,6 +141,7 @@ export async function appLlms(): Promise<Response> {
   const product = owner();
   const t = product.en;
   const docs = (await docsOf(product.slug, "en")).filter((one) => one.data.page);
+  const compared = comparisonOf(product.slug);
   const link = (title: string, path: string, note = "") => `- [${title}](${canonical("en", path)})${note ? `: ${note}` : ""}`;
   const language = t.language
     ? [
@@ -199,7 +201,7 @@ export async function appLlms(): Promise<Response> {
     link("Pricing", "pricing", "free in full, no paid tier"),
     link("Support", "support"),
     `- [Source code](${product.repo})`,
-    ...(compares(product.slug) ? [link(comparison("en").title, COMPARE_PATH.en, "what it does that Notion, Craft, Todoist, Logseq, Obsidian and Joplin do not")] : []),
+    ...(compared ? [link(compared.en.title, COMPARE_PATH.en, `what it does that ${namesOthers(compared)} do not`)] : []),
     `- [Español](${canonical("es", "")}): ${product.es.tagline}`,
     `- [Ayuda en español](${canonical("es", docPath("es", product.slug))})`,
     `- [More tools by ${AUTHOR.handle}](${MAIN}/llms.txt)`,

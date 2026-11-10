@@ -9,6 +9,7 @@ import ProductHunt from "./ProductHunt.astro";
 import Shot from "./Shot.astro";
 import WritingMark from "./WritingMark.astro";
 import Layout from "../layouts/Layout.astro";
+import { COMPARE_PATH, comparisonOf } from "../content/compare";
 import { bySection, docPath, docsOf } from "../content/docs";
 import { privacyPath } from "../content/privacy";
 import { GUIDES, written } from "../content/guides";
@@ -23,6 +24,8 @@ interface Props {
 
 const { product, locale } = Astro.props;
 const t = words(product, locale);
+const compared = comparisonOf(product.slug);
+const compare = compared && { label: compared[locale].heading, path: COMPARE_PATH[locale] };
 const es = locale === "es";
 const store = storeUrl(product);
 const releases = releasesUrl(product);
@@ -291,9 +294,9 @@ const schema = [
             )}
           </p>
           {
-            t.compare && (
+            compare && (
               <p class="mt-5">
-                <a class="accent-ink inline-flex items-center gap-1.5 font-medium hover:underline" style={ink} href={href(locale, t.compare.path)}>
+                <a class="accent-ink inline-flex items-center gap-1.5 font-medium hover:underline" style={ink} href={href(locale, compare.path)}>
                   {say.differs}
                   <Icon name="arrow" class="h-4 w-4" />
                 </a>
@@ -349,9 +352,9 @@ const schema = [
       )
     }
     {
-      t.compare && (
-        <a class="mt-6 inline-flex items-center gap-1.5 font-medium text-fg hover:underline" href={href(locale, t.compare.path)}>
-          {t.compare.label}
+      compare && (
+        <a class="mt-6 inline-flex items-center gap-1.5 font-medium text-fg hover:underline" href={href(locale, compare.path)}>
+          {compare.label}
           <Icon name="arrow" class="h-4 w-4" />
         </a>
       )
