@@ -13,9 +13,8 @@ static pages; nothing you do on them is stored by us.
 
 ## Counting visits
 
-- **www.tisty.app** counts no visits: it loads no analytics of any kind.
-- **The other sites** count visits with Cloudflare Web Analytics, without
-  cookies or identifiers.
+Every site counts visits with Cloudflare Web Analytics, without cookies or
+identifiers.
 
 ## What stays in your browser
 
