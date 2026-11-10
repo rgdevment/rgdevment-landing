@@ -5,7 +5,7 @@ import Verdict from "./Verdict.astro";
 import Layout from "../layouts/Layout.astro";
 import { COMPARE_PATH, comparisonOf, tally } from "../content/compare";
 import { PRODUCTS, inkOf } from "../content/products";
-import { HOME_PRODUCT, crumbs, href, type Locale } from "../site";
+import { HOME_PRODUCT, appId, canonical, crumbs, href, type Locale } from "../site";
 
 interface Props {
   locale: Locale;
@@ -29,7 +29,7 @@ const priced = (own?: string) => (own ? href(locale, own) : undefined);
   description={t.meta}
   locale={locale}
   paths={COMPARE_PATH}
-  schema={crumbs(locale, trail)}
+  schema={[crumbs(locale, trail), { "@context": "https://schema.org", "@type": "WebPage", url: canonical(locale, path), name: t.title, about: { "@id": appId(product.slug) } }]}
 >
   <section class="shell pt-10 sm:pt-14" style={`--accent: ${product.accent}`}>
     <Crumbs locale={locale} trail={trail} />

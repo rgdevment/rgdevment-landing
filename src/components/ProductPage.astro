@@ -14,7 +14,7 @@ import { COMPARE_PATH, comparisonOf } from "../content/compare";
 import { bySection, docPath, docsOf } from "../content/docs";
 import { privacyPath } from "../content/privacy";
 import { GUIDES, written } from "../content/guides";
-import { PRODUCTS, type Product, brewSteps, cardOf, inkOf, releasesUrl, shotSrc, storeUrl, words } from "../content/products";
+import { PRODUCTS, type Product, brewSteps, cardOf, inkOf, releasesUrl, shotSrc, storeUrl, words, iconAlt } from "../content/products";
 import { installers, latestRelease, megabytes, releaseDate, stars } from "../content/releases";
 import { DOMAIN, HOME_PRODUCT, PERSON_ID, appId, canonical, crumbs, href, type Locale } from "../site";
 
@@ -41,7 +41,7 @@ const kit = installers(release);
 const starCount = product.signals ? await stars(product) : null;
 const macDirect = product.requires ? kit.macArm : undefined;
 const licence = `${product.repo}/blob/main/LICENSE`;
-const quiet ="underline decoration-muted underline-offset-4 transition hover:text-fg";
+const quiet = "inline-block py-1 underline decoration-muted underline-offset-4 transition hover:text-fg";
 const docs = await docsOf(product.slug, locale);
 const docIndex = docPath(locale, product.slug);
 const docSections = bySection(docs);
@@ -51,7 +51,6 @@ const others = PRODUCTS.filter((one) => one.slug !== product.slug);
 const say = {
   guides: es ? "Guías" : "Guides",
   guidesLede: es ? "Para sacarle partido, o para resolver el problema sin instalar nada." : "To get more out of it, or to solve the problem without installing anything.",
-  what: es ? "Qué hace" : "What it does",
   install: es ? "Cómo se instala" : "How to install it",
   installLede: es ? "Elige el camino que prefieras. Ninguno pide cuenta." : "Pick whichever route you prefer. None of them asks for an account.",
   privacy: es ? "Privacidad" : "Privacy",
@@ -91,7 +90,7 @@ const schema = [
     description: t.meta,
     applicationCategory: "UtilitiesApplication",
     operatingSystem: product.platforms.join(", "),
-    url: canonical(locale, path),
+    url: canonical("en", path),
     inLanguage: ["en", "es"],
     image: new URL(product.icon, DOMAIN).toString(),
     ...(shot ? { screenshot: new URL(shot, DOMAIN).toString() } : {}),
@@ -143,17 +142,17 @@ const schema = [
     ></div>
     <div class="dotgrid absolute inset-0 -z-10" aria-hidden="true"></div>
 
-    <div class="shell pt-10 sm:pt-14">
+    <div class="shell pt-6 sm:pt-14">
       <Crumbs locale={locale} trail={[[product.name, path]]} />
 
       <header class="mx-auto mt-8 max-w-3xl text-center sm:mt-12">
         {
           product.writes ? (
-            <WritingMark class="mx-auto h-28 w-28 sm:h-32 sm:w-32" />
+            <WritingMark class="mx-auto h-20 w-20 sm:h-32 sm:w-32" />
           ) : (
             <img
               src={product.icon}
-              alt=""
+              alt={iconAlt(product, locale)}
               width="96"
               height="96"
               class="mx-auto h-20 w-20 rounded-[1.4rem] shadow-[0_18px_40px_-16px_rgb(0_0_0/0.5)] sm:h-24 sm:w-24"
@@ -184,42 +183,6 @@ const schema = [
         }
 
         <div class="flex flex-col">
-        <ul class="order-last mt-7 flex flex-wrap justify-center gap-2 sm:order-none">
-          {
-            product.platforms.map((one) => (
-              <li class="chip">
-                <Icon name={one === "Windows" ? "windows" : "apple"} class="h-3.5 w-3.5" />
-                {one}
-              </li>
-            ))
-          }
-          <li class="chip"><Icon name="lock" class="h-3.5 w-3.5" />{say.noAccount}</li>
-          <li class="chip"><Icon name="eye" class="h-3.5 w-3.5" />{say.noTelemetry}</li>
-          <li>
-            <a class="chip transition hover:border-fg/25 hover:text-fg" href={licence} rel="noopener">
-              <Icon name="licence" class="h-3.5 w-3.5" />{product.licence}
-            </a>
-          </li>
-          <li class="chip border-flame/30 bg-flame-tint font-medium text-flame-ink">
-            <Icon name="free" class="h-3.5 w-3.5" />{say.free}
-          </li>
-          {
-            product.signals && (
-              <li>
-                <a class="chip transition hover:border-fg/25 hover:text-fg" href={product.repo} rel="noopener">
-                  <Icon name="github" class="h-3.5 w-3.5" />
-                  {say.onGithub}
-                  {starCount !== null && (
-                    <span class="inline-flex items-center gap-1 border-l border-line pl-2 font-mono text-xs" title={say.stars}>
-                      <Icon name="star" class="h-3 w-3" />
-                      {starCount}
-                    </span>
-                  )}
-                </a>
-              </li>
-            )
-          }
-        </ul>
 
         <!-- Both links ship in the HTML; the script only decides which one is dressed as the main one,
              so a reader without scripts, and any crawler, still sees every platform. -->
@@ -312,6 +275,42 @@ const schema = [
             )
           }
         </div>
+        <ul class="mt-7 flex flex-wrap justify-center gap-2 sm:order-first">
+          {
+            product.platforms.map((one) => (
+              <li class="chip">
+                <Icon name={one === "Windows" ? "windows" : "apple"} class="h-3.5 w-3.5" />
+                {one}
+              </li>
+            ))
+          }
+          <li class="chip"><Icon name="lock" class="h-3.5 w-3.5" />{say.noAccount}</li>
+          <li class="chip"><Icon name="eye" class="h-3.5 w-3.5" />{say.noTelemetry}</li>
+          <li>
+            <a class="chip transition hover:border-fg/25 hover:text-fg" href={licence} rel="noopener">
+              <Icon name="licence" class="h-3.5 w-3.5" />{product.licence}
+            </a>
+          </li>
+          <li class="chip border-flame/30 bg-flame-tint font-medium text-flame-ink">
+            <Icon name="free" class="h-3.5 w-3.5" />{say.free}
+          </li>
+          {
+            product.signals && (
+              <li>
+                <a class="chip transition hover:border-fg/25 hover:text-fg" href={product.repo} rel="noopener">
+                  <Icon name="github" class="h-3.5 w-3.5" />
+                  {say.onGithub}
+                  {starCount !== null && (
+                    <span class="inline-flex items-center gap-1 border-l border-line pl-2 font-mono text-xs" title={say.stars}>
+                      <Icon name="star" class="h-3 w-3" />
+                      {starCount}
+                    </span>
+                  )}
+                </a>
+              </li>
+            )
+          }
+        </ul>
         </div>
       </header>
 
@@ -333,7 +332,7 @@ const schema = [
   </section>
 
   <section class="shell mt-24 sm:mt-32">
-    <h2 class="section-title">{say.what}</h2>
+    <h2 class="section-title">{es ? `Qué hace ${product.name}` : `What ${product.name} does`}</h2>
     {
       t.groups && (
         <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
@@ -412,7 +411,7 @@ const schema = [
     product.mascot && t.mascot && (
       <section class="shell mt-16">
         <div class="card flex flex-col items-center gap-6 p-7 text-center sm:flex-row sm:p-9 sm:text-left">
-          <img src={product.mascot} alt="" width="120" height="108" loading="lazy" class="h-24 w-auto shrink-0 sm:h-28" />
+          <img src={product.mascot} alt={es ? `Mascota de ${product.name}` : `${product.name}'s mascot`} width="120" height="108" loading="lazy" class="h-24 w-auto shrink-0 sm:h-28" />
           <div>
             <h2 class="font-display text-2xl font-semibold">{t.mascot.title}</h2>
             <p class="mt-2 text-body">{t.mascot.body}</p>
@@ -651,7 +650,7 @@ const schema = [
         others.map((one) => (
           <li>
             <a class="card-link group flex items-center gap-4 p-5" href={href(locale, one.slug)}>
-              <img src={one.icon} alt="" width="48" height="48" class="h-12 w-12 rounded-xl" loading="lazy" />
+              <img src={one.icon} alt={iconAlt(one, locale)} width="48" height="48" class="h-12 w-12 rounded-xl" loading="lazy" />
               <span class="min-w-0">
                 <span class="block font-display text-lg font-semibold text-fg">{one.name}</span>
                 <span class="block text-sm text-muted">{words(one, locale).tagline}</span>
@@ -678,6 +677,8 @@ const schema = [
         navigator.clipboard?.writeText(one.dataset.copy || "");
         one.classList.add("text-flame");
         one.setAttribute("aria-label", one.dataset.done || label);
+        const said = document.querySelector("[data-announce]");
+        if (said) said.textContent = one.dataset.done || "";
         setTimeout(() => {
           one.classList.remove("text-flame");
           one.setAttribute("aria-label", label);

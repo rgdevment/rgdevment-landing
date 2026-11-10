@@ -3,7 +3,7 @@ import Crumbs from "./Crumbs.astro";
 import Icon from "./Icon.astro";
 import Layout from "../layouts/Layout.astro";
 import { privacyPath } from "../content/privacy";
-import { PRODUCTS, type Product, words } from "../content/products";
+import { PRODUCTS, type Product, words, iconAlt } from "../content/products";
 import { crumbs, href, type Locale } from "../site";
 
 interface Props {
@@ -148,6 +148,7 @@ const say = es
       home: "Home",
     };
 
+const trail: [string, string][] = home ? [[home.name, ""], [say.title, paths[locale]]] : [[say.title, paths[locale]]];
 const schema = [
   {
     "@context": "https://schema.org",
@@ -158,7 +159,7 @@ const schema = [
       acceptedAnswer: { "@type": "Answer", text: one.a },
     })),
   },
-  crumbs(locale, [[say.title, paths[locale]]]),
+  crumbs(locale, trail),
 ];
 ---
 
@@ -176,7 +177,7 @@ const schema = [
     <div class="halo absolute inset-0 -z-10" aria-hidden="true"></div>
     <div class="dotgrid absolute inset-0 -z-10" aria-hidden="true"></div>
     <div class="shell pt-10 pb-16 sm:pt-14 sm:pb-20">
-      <Crumbs locale={locale} trail={[[say.title, paths[locale]]]} />
+      <Crumbs locale={locale} trail={trail} />
       <div class="mt-14 text-center">
         <p class="eyebrow">{say.title}</p>
         <h1 class="mx-auto mt-4 max-w-4xl text-5xl font-semibold tracking-[-0.03em] sm:text-7xl">{named?.hero ?? say.hero}</h1>
@@ -198,7 +199,7 @@ const schema = [
               aria-hidden="true"
             />
             <div class="relative flex items-center gap-3">
-              <img src={product.icon} alt="" width="44" height="44" class="h-11 w-11 rounded-xl" loading="lazy" />
+              <img src={product.icon} alt={iconAlt(product, locale)} width="44" height="44" class="h-11 w-11 rounded-xl" loading="lazy" />
               <h2 class="text-2xl font-semibold">{product.name}</h2>
             </div>
             <p class="relative mt-3 text-[15px] leading-snug text-muted">{words(product, locale).tagline}</p>

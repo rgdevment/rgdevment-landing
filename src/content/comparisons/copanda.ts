@@ -2,7 +2,7 @@ import { type Comparison, type Words, no, part, yes } from "./marks";
 
 const RIVALS = [
   { name: "CoPanda", url: "https://github.com/rgdevment/CopyPaste" },
-  { name: "Win+V", url: "https://support.microsoft.com/en-us/windows/clipboard-in-windows-c436501e-985d-1c8d-97ea-fe46ddf338c6" },
+  { name: "Win+V", url: "https://support.microsoft.com/en-us/windows/apps/using-the-clipboard" },
   { name: "Ditto", url: "https://github.com/sabrogden/Ditto" },
   { name: "CopyQ", url: "https://hluk.github.io/CopyQ/" },
   { name: "Maccy", url: "https://maccy.app" },
@@ -14,7 +14,7 @@ const SOURCES: [string, string[]][] = [
   [
     "Win+V",
     [
-      "https://support.microsoft.com/en-us/windows/clipboard-in-windows-c436501e-985d-1c8d-97ea-fe46ddf338c6",
+      "https://support.microsoft.com/en-us/windows/apps/using-the-clipboard",
       "https://learn.microsoft.com/en-us/windows/win32/dataxchg/clipboard-formats",
       "https://learn.microsoft.com/en-us/windows/privacy/configure-windows-diagnostic-data-in-your-organization",
     ],
@@ -23,7 +23,7 @@ const SOURCES: [string, string[]][] = [
     "Ditto",
     [
       "https://github.com/sabrogden/Ditto",
-      "https://github.com/sabrogden/Ditto/wiki/Home",
+      "https://github.com/sabrogden/Ditto/wiki",
       "https://github.com/sabrogden/Ditto/wiki/Auto-Delete",
       "https://github.com/sabrogden/Ditto/wiki/Privacy-Policy",
       "https://github.com/sabrogden/Ditto/releases",
@@ -148,7 +148,7 @@ const EN: Words = {
     },
     {
       label: "Open source",
-      cells: [yes("GPL-3.0"), no(), yes("GPL-3.0"), yes("GPL-3.0"), yes("MIT"), no(), no()],
+      cells: [yes("GPL-3.0-only"), no(), yes("GPL-3.0"), yes("GPL-3.0"), yes("MIT"), no(), no()],
     },
     {
       label: "No telemetry",
@@ -277,7 +277,7 @@ const ES: Words = {
     },
     {
       label: "Código abierto",
-      cells: [yes("GPL-3.0"), no(), yes("GPL-3.0"), yes("GPL-3.0"), yes("MIT"), no(), no()],
+      cells: [yes("GPL-3.0-only"), no(), yes("GPL-3.0"), yes("GPL-3.0"), yes("MIT"), no(), no()],
     },
     {
       label: "Sin telemetría",

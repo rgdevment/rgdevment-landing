@@ -210,8 +210,9 @@ function describe(body, locale) {
     .map((one) => one.trim())
     .filter((one) => one && !/^([#>|`<!\-\d]|\* )/.test(one))
     .map(plainText);
-  const standing = paragraphs.find((one) => one.length >= 60 && !CONNECTOR.test(one) && !one.endsWith(":"));
-  return clip(standing ?? paragraphs[0] ?? "");
+  const standing = paragraphs.filter((one) => one.length >= 60 && !CONNECTOR.test(one) && !one.endsWith(":"));
+  const whole = standing.slice(0, 3).map(clip).find((one) => !one.endsWith("…"));
+  return whole ?? clip(standing[0] ?? paragraphs[0] ?? "");
 }
 
 function twinOf(page, sidebar) {
@@ -240,6 +241,8 @@ async function syncWiki(wiki) {
     if (!entry) continue;
     const raw = readFileSync(join(dir, file), "utf8");
     let body = rewriteCallouts(rewriteLinks(stripHeader(raw), wiki.product, pages), entry.locale);
+    // Folio's home is English at its root, so Spanish help sends readers to its Spanish home.
+    if (entry.locale === "es") body = body.replace(/\]\(https:\/\/tisty\.cl\/?\)/g, "](https://tisty.cl/es/)");
     body = await localiseImages(body, wiki.product);
     const twin = pages.get(twinOf(page, sidebar));
     const meta = {

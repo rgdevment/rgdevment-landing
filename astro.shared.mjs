@@ -1,4 +1,4 @@
-import { appendFileSync, copyFileSync, cpSync, existsSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { cpSync, existsSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { rehypeHeadingIds } from '@astrojs/markdown-remark';
 import tailwind from '@astrojs/tailwind';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -6,6 +6,7 @@ import rehypeKatex from 'rehype-katex';
 import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import remarkMath from 'remark-math';
 import sharp from 'sharp';
+import { PRODUCTS as CATALOG } from './src/content/products.ts';
 import { HOMES, MAIN, homeOf, relocate, renamed } from './src/hosts.ts';
 
 const PRODUCTS = Object.values(HOMES);
@@ -154,13 +155,33 @@ const HELP_MOVED = {
 
 const MAIN_ONLY = ['favicon.svg', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'social.png', 'social-es.png'];
 
+async function favicon(png) {
+  const sizes = [16, 32, 48];
+  const frames = await Promise.all(sizes.map((size) => sharp(png).resize(size, size).png().toBuffer()));
+  const head = Buffer.alloc(6 + 16 * frames.length);
+  head.writeUInt16LE(1, 2);
+  head.writeUInt16LE(frames.length, 4);
+  let offset = head.length;
+  frames.forEach((frame, at) => {
+    const entry = 6 + 16 * at;
+    head.writeUInt8(sizes[at], entry);
+    head.writeUInt8(sizes[at], entry + 1);
+    head.writeUInt16LE(1, entry + 4);
+    head.writeUInt16LE(32, entry + 6);
+    head.writeUInt32LE(frame.length, entry + 8);
+    head.writeUInt32LE(offset, entry + 12);
+    offset += frame.length;
+  });
+  return Buffer.concat([head, ...frames]);
+}
+
 // public/ is shared, so each app's site drops what belongs to the others and takes its own /favicon.ico,
-// which browsers and search engines ask for on their own.
+// which browsers and search engines ask for on their own, so it carries only the small sizes they draw.
 function ownFiles(product) {
   return {
     name: 'own-files',
     hooks: {
-      'astro:build:done': ({ dir }) => {
+      'astro:build:done': async ({ dir }) => {
         const at = (path) => new URL(path, dir);
         const others = PRODUCTS.filter((one) => one !== product);
         const foreign = (name) => others.some((one) => name.startsWith(`${one}-`) || name.startsWith(`${one}.`));
@@ -170,9 +191,9 @@ function ownFiles(product) {
           ...readdirSync(at('icons/')).filter((name) => name.endsWith('.ico')).map((name) => `icons/${name}`),
           ...readdirSync(at('docs-assets/')).filter((name) => !name.startsWith(`${product}-`)).map((name) => `docs-assets/${name}`),
         ];
-        copyFileSync(`./public/icons/${product}.ico`, at('favicon.ico'));
+        const icon = CATALOG.find((one) => one.slug === product).icon;
+        writeFileSync(at('favicon.ico'), await favicon(`./public${icon}`));
         writeFileSync(at('_redirects'), renamed({ '/en/': '/', ...SUPPORT_MOVED, ...HELP_MOVED[product] }));
-        appendFileSync(at('_headers'), '\n/llms-full.txt\n  Content-Type: text/plain; charset=utf-8\n  X-Robots-Tag: noindex\n');
         drop.forEach((path) => rmSync(at(path), { force: true }));
       },
     },

@@ -127,7 +127,7 @@ export const PRODUCTS: Product[] = [
       ["npm", "https://www.npmjs.com/package/tisty-mcp"],
       ["Glama", "https://glama.ai/mcp/servers/rgdevment/Tisty"],
       ["MCP Market", "https://mcpmarket.com/server/tisty"],
-      ["M8ven", "https://m8ven.ai/mcp/rgdevment-tisty-15kwqt"],
+      ["M8ven", "https://m8ven.ai/mcp/rgdevment/tisty"],
     ],
     mcp: {
       registry: "io.github.rgdevment/tisty",
@@ -466,7 +466,7 @@ export const PRODUCTS: Product[] = [
         title: "A bear that looks after your links.",
         body: "Steady and calm, the bear stands between the link and the browser, so every link opens where you decide.",
       },
-      meta: "Free, open source browser picker for Windows and macOS: choose the browser or browser profile that opens each link, with rules per site and per app.",
+      meta: "Free, open source browser picker for Windows and macOS: it becomes your default browser and lets you pick the browser or profile for each link.",
       problem:
         "A link from Teams opens in Edge. One from Slack lands wherever Windows decided last. You keep three browsers and four profiles, and nobody asks you which one you meant.",
       what: [
@@ -514,7 +514,7 @@ export const PRODUCTS: Product[] = [
         title: "Un oso que cuida tus enlaces.",
         body: "Firme y tranquilo, el oso se para entre el enlace y el navegador, para que cada enlace se abra donde tú decides.",
       },
-      meta: "Selector de navegador gratis y de código abierto para Windows y macOS: elige qué navegador o perfil abre cada enlace, con reglas por sitio y por aplicación.",
+      meta: "Selector de navegador gratis y libre para Windows y macOS: queda como navegador predeterminado y te deja elegir navegador o perfil para cada enlace.",
       problem:
         "Un enlace de Teams se abre en Edge. Uno de Slack, donde Windows decidiera la última vez. Tienes tres navegadores y cuatro perfiles, y a ti no te pregunta nadie.",
       what: [
@@ -676,6 +676,10 @@ export const PRODUCTS: Product[] = [
     },
   },
 ];
+
+export function iconAlt(product: Product, locale: Locale): string {
+  return locale === "es" ? `Ícono de ${product.name}` : `${product.name} icon`;
+}
 
 export function inkOf(product: Product): string {
   return `--ink: ${product.accent}; --ink-dark: ${product.accentDark}`;

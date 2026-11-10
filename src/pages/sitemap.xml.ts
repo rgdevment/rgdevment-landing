@@ -13,7 +13,7 @@ const NEWEST = GUIDES.map(lastChanged).sort().at(-1);
 const ENTRIES: Entry[] = [
   { en: "", es: "", priority: "1.0", lastmod: NEWEST },
   ...STAYING.map((p) => ({ en: p.slug, es: p.slug, priority: "0.9", lastmod: NEWEST })),
-  ...STAYING.map((p) => ({ en: privacyPath("en", p.slug), es: privacyPath("es", p.slug), priority: "0.4" })),
+  ...STAYING.map((p) => ({ en: privacyPath("en", p.slug), es: privacyPath("es", p.slug), priority: "0.4", textIn: "en" as const })),
   { en: "guides", es: "guias", priority: "0.7", lastmod: NEWEST },
   { en: "pricing", es: "precios", priority: "0.8" },
   { en: "support", es: "colaborar", priority: "0.6" },

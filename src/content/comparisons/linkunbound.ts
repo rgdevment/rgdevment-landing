@@ -2,7 +2,7 @@ import { type Comparison, type Words, no, part, yes } from "./marks";
 
 const RIVALS = [
   { name: "LinkUnbound", url: "https://github.com/rgdevment/LinkUnbound" },
-  { name: "Switchbar", url: "https://webcatalog.io/switchbar/" },
+  { name: "Switchbar", url: "https://webcatalog.io/en/switchbar" },
   { name: "Browser Tamer", url: "https://github.com/aloneguid/bt" },
   { name: "BrowserPicker", url: "https://github.com/mortenn/BrowserPicker" },
   { name: "Finicky", url: "https://github.com/johnste/finicky" },
@@ -14,7 +14,7 @@ const SOURCES: [string, string[]][] = [
   [
     "Switchbar",
     [
-      "https://webcatalog.io/switchbar/",
+      "https://webcatalog.io/en/switchbar",
       "https://webcatalog.io/en/docs/category/switchbar",
       "https://webcatalog.io/en/docs/article/is-the-switchbar-app-free",
       "https://webcatalog.io/en/docs/article/choose-where-links-open-with-switchbar",
@@ -50,7 +50,7 @@ const SOURCES: [string, string[]][] = [
   ],
   [
     "Velja",
-    ["https://sindresorhus.com/velja", "https://apps.apple.com/app/id1607635845", "https://sindresorhus.com/velja/privacy-policy"],
+    ["https://sindresorhus.com/velja", "https://apps.apple.com/us/app/velja/id1607635845", "https://sindresorhus.com/velja/privacy-policy"],
   ],
   [
     "Choosy",
@@ -172,7 +172,7 @@ const EN: Words = {
     },
     {
       label: "Open source",
-      cells: [yes("GPL-3.0"), no(), yes("Apache-2.0"), yes("MIT"), yes("MIT"), no(), no()],
+      cells: [yes("GPL-3.0-only"), no(), yes("Apache-2.0"), yes("MIT"), yes("MIT"), no(), no()],
     },
     {
       label: "No telemetry",
@@ -313,7 +313,7 @@ const ES: Words = {
     },
     {
       label: "Código abierto",
-      cells: [yes("GPL-3.0"), no(), yes("Apache-2.0"), yes("MIT"), yes("MIT"), no(), no()],
+      cells: [yes("GPL-3.0-only"), no(), yes("Apache-2.0"), yes("MIT"), yes("MIT"), no(), no()],
     },
     {
       label: "Sin telemetría",

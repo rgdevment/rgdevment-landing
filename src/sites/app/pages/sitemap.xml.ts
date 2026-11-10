@@ -15,13 +15,13 @@ export const GET: APIRoute = async () => {
   const release = await latestRelease(PRODUCTS.find((one) => one.slug === product)!);
   return sitemap([
     { en: product, es: product, priority: "1.0", lastmod: release?.date.slice(0, 10) },
-    { en: privacyPath("en", product), es: privacyPath("es", product), priority: "0.4" },
+    { en: privacyPath("en", product), es: privacyPath("es", product), priority: "0.4", textIn: "en" as const },
     ...((await getEntry("terms", product))
-      ? [{ en: termsPath("en", product), es: termsPath("es", product), priority: "0.3" }]
+      ? [{ en: termsPath("en", product), es: termsPath("es", product), priority: "0.3", textIn: "en" as const }]
       : []),
     { en: "pricing", es: "precios", priority: "0.5" },
     ...(hasChangelog(product)
-      ? [{ en: CHANGELOG_PATH.en, es: CHANGELOG_PATH.es, priority: "0.5", lastmod: release?.date.slice(0, 10) }]
+      ? [{ en: CHANGELOG_PATH.en, es: CHANGELOG_PATH.es, priority: "0.5", lastmod: release?.date.slice(0, 10), textIn: "en" as const }]
       : []),
     ...(compares(product) ? [{ en: COMPARE_PATH.en, es: COMPARE_PATH.es, priority: "0.6" }] : []),
     ...(await docEntries(product)),
