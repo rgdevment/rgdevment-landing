@@ -9,6 +9,7 @@ import ProductHunt from "./ProductHunt.astro";
 import Shot from "./Shot.astro";
 import WritingMark from "./WritingMark.astro";
 import Layout from "../layouts/Layout.astro";
+import { changelogUrl, hasChangelog } from "../content/changelog";
 import { COMPARE_PATH, comparisonOf } from "../content/compare";
 import { bySection, docPath, docsOf } from "../content/docs";
 import { privacyPath } from "../content/privacy";
@@ -172,8 +173,7 @@ const schema = [
             <p class="mt-6">
               <a
                 class="chip font-mono text-xs transition hover:border-fg/25"
-                href={release.url}
-                rel="noopener"
+                href={hasChangelog(product.slug) ? changelogUrl(product, locale, release.version) : release.url}
                 title={say.notes}
               >
                 <span class="h-1.5 w-1.5 rounded-full bg-flame" aria-hidden="true" />

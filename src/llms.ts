@@ -1,6 +1,7 @@
 import { docPath, docsOf } from "./content/docs";
 import { PRODUCTS, type Product, brewSteps, releasesUrl, storeUrl } from "./content/products";
 import { privacyPath } from "./content/privacy";
+import { CHANGELOG_PATH, FEED, hasChangelog } from "./content/changelog";
 import { COMPARE_PATH, comparisonOf, namesOthers } from "./content/compare";
 import { installers, latestRelease, megabytes } from "./content/releases";
 import { MAIN } from "./hosts";
@@ -200,6 +201,7 @@ export async function appLlms(): Promise<Response> {
     "",
     link("Pricing", "pricing", "free in full, no paid tier"),
     link("Support", "support"),
+    ...(hasChangelog(product.slug) ? [link("What's new", CHANGELOG_PATH.en, "every release, newest first"), `- [RSS feed](${canonical("en", "")}${FEED})`] : []),
     `- [Source code](${product.repo})`,
     ...(compared ? [link(compared.en.title, COMPARE_PATH.en, `what it does that ${namesOthers(compared)} do not`)] : []),
     `- [Español](${canonical("es", "")}): ${product.es.tagline}`,

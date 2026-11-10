@@ -40,6 +40,34 @@ async function ask(product: Product): Promise<Release | null> {
   };
 }
 
+export type Published = { tag: string; date: string; url: string; body: string; stable: boolean };
+
+const listed = new Map<string, Promise<Published[]>>();
+
+async function list(product: Product): Promise<Published[]> {
+  const all: Published[] = [];
+  for (let page = 1; ; page++) {
+    const batch = await github(`${repoOf(product)}/releases?per_page=100&page=${page}`);
+    if (!Array.isArray(batch)) break;
+    all.push(
+      ...batch.map((one) => ({
+        tag: one.tag_name,
+        date: one.published_at,
+        url: one.html_url,
+        body: one.body ?? "",
+        stable: !one.draft && !one.prerelease,
+      })),
+    );
+    if (batch.length < 100) break;
+  }
+  return all;
+}
+
+export function everyRelease(product: Product): Promise<Published[]> {
+  if (!listed.has(product.slug)) listed.set(product.slug, list(product));
+  return listed.get(product.slug)!;
+}
+
 /// Asked once per build: a failed answer only hides the notice, it never stops the site going out.
 export function latestRelease(product: Product): Promise<Release | null> {
   if (!asked.has(product.slug)) asked.set(product.slug, ask(product));

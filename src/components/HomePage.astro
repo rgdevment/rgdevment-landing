@@ -5,6 +5,7 @@ import Layout from "../layouts/Layout.astro";
 import { GUIDES, written } from "../content/guides";
 import { PRODUCTS, releasesUrl, storeUrl, words } from "../content/products";
 import { newestRelease, releaseDate } from "../content/releases";
+import { changelogUrl, hasChangelog } from "../content/changelog";
 import { AUTHOR, DOMAIN, PERSON_ID, canonical, href, type Locale } from "../site";
 
 interface Props {
@@ -137,8 +138,7 @@ const schema = {
         release ? (
           <a
             class="group inline-flex items-center gap-2.5 rounded-full border border-line bg-surface/70 py-1 pr-4 pl-1 text-sm text-body backdrop-blur transition hover:border-fg/25"
-            href={release.url}
-            rel="noopener"
+            href={hasChangelog(release.product.slug) ? changelogUrl(release.product, locale, release.version) : release.url}
           >
             <span class="rounded-full bg-flame px-2.5 py-0.5 font-mono text-xs font-medium text-night">{say.fresh}</span>
             <img src={release.product.icon} alt="" width="18" height="18" class="h-[18px] w-[18px] rounded-[5px]" />
