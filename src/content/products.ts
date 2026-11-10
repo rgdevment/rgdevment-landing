@@ -71,7 +71,6 @@ type Words = {
     anchor: string;
   };
   faq: { q: string; a: string; link?: { label: string; path: string } }[];
-  compare?: { label: string; path: string };
   firstRun?: { title: string; body: string; link: string; anchor: string };
   proof?: Proof;
   assistant?: Assistant;
@@ -287,7 +286,6 @@ export const PRODUCTS: Product[] = [
       proof: PROOF_EN,
       assistant: ASSISTANT_EN,
       sharing: SHARING_EN,
-      compare: { label: "How Tisty differs from Notion, Craft, Todoist, Logseq, Obsidian and Joplin", path: "compare" },
       firstRun: {
         title: "The first time you open Tisty",
         body: "It asks two things: your language, and where your copies should go, a folder to sync through or nowhere beyond this computer. Then it sets up your starting lists and writes you a guide, an ordinary document of yours to read, edit or throw away, that shows from the inside what a document can hold.",
@@ -431,7 +429,6 @@ export const PRODUCTS: Product[] = [
       proof: PROOF_ES,
       assistant: ASSISTANT_ES,
       sharing: SHARING_ES,
-      compare: { label: "En qué se diferencia Tisty de Notion, Craft, Todoist, Logseq, Obsidian y Joplin", path: "comparar" },
       firstRun: {
         title: "Al abrir Tisty por primera vez",
         body: "Te pregunta dos cosas: tu idioma y adónde van tus copias, a una carpeta para sincronizar o a ninguna parte fuera de este equipo. Luego crea tus listas iniciales y te escribe una guía, un documento tuyo como cualquier otro, para leer, editar o tirar, que muestra desde dentro todo lo que cabe en un documento.",
@@ -502,6 +499,11 @@ export const PRODUCTS: Product[] = [
           q: "What does it cost?",
           a: "Nothing, and there is no paid tier. It is released under the GPL-3.0, so you can read it, change it and share it.",
         },
+        {
+          q: "How is it different from Switchbar, Finicky or Velja?",
+          a: "It is one app for Windows and macOS, a rule can follow the app a link came from, and SafeLinks are unwrapped before any rule, all free and open source. Each of the others is stronger at something, and the comparison says where.",
+          link: { label: "See how it differs", path: "compare" },
+        },
       ],
     },
     es: {
@@ -544,6 +546,11 @@ export const PRODUCTS: Product[] = [
         {
           q: "¿Cuánto cuesta?",
           a: "Nada, y no hay versión de pago. Se publica bajo la GPL-3.0, así que puedes leerlo, cambiarlo y compartirlo.",
+        },
+        {
+          q: "¿En qué se diferencia de Switchbar, Finicky o Velja?",
+          a: "Es una sola app para Windows y macOS, una regla puede seguir a la app de la que vino el enlace y los SafeLinks se desenvuelven antes de cualquier regla, todo gratis y de código abierto. Cada uno de los otros es más fuerte en algo, y la comparación dice dónde.",
+          link: { label: "Ver en qué se diferencia", path: "comparar" },
         },
       ],
     },
@@ -611,6 +618,11 @@ export const PRODUCTS: Product[] = [
           q: "Where is my clipboard history kept?",
           a: "Locally, under your user profile. It is never uploaded anywhere.",
         },
+        {
+          q: "Is it an alternative to Win+V, Ditto or Maccy?",
+          a: "Yes. It is one app for Windows and macOS that keeps the history as long as you choose, finds the text inside images and pastes the same item in another form. Each of the others is stronger at something, and the comparison says where.",
+          link: { label: "See how it differs", path: "compare" },
+        },
       ],
     },
     es: {
@@ -654,6 +666,11 @@ export const PRODUCTS: Product[] = [
         {
           q: "¿Dónde queda el historial?",
           a: "En tu equipo, dentro de tu perfil de usuario. No se sube a ninguna parte.",
+        },
+        {
+          q: "¿Es una alternativa a Win+V, Ditto o Maccy?",
+          a: "Sí. Es una sola app para Windows y macOS que guarda el historial el tiempo que elijas, encuentra el texto dentro de las imágenes y pega lo mismo en otra forma. Cada uno de los otros es más fuerte en algo, y la comparación dice dónde.",
+          link: { label: "Ver en qué se diferencia", path: "comparar" },
         },
       ],
     },

@@ -3,7 +3,7 @@ import Crumbs from "./Crumbs.astro";
 import Icon from "./Icon.astro";
 import Verdict from "./Verdict.astro";
 import Layout from "../layouts/Layout.astro";
-import { COMPARE_PATH, RIVALS, SOURCES, comparison, onlyTisty } from "../content/compare";
+import { COMPARE_PATH, comparisonOf, tally } from "../content/compare";
 import { PRODUCTS, inkOf } from "../content/products";
 import { HOME_PRODUCT, crumbs, href, type Locale } from "../site";
 
@@ -12,14 +12,15 @@ interface Props {
 }
 
 const { locale } = Astro.props;
-const t = comparison(locale);
+const compared = comparisonOf(HOME_PRODUCT)!;
+const t = compared[locale];
 const path = COMPARE_PATH[locale];
 const product = PRODUCTS.find((one) => one.slug === HOME_PRODUCT)!;
 const trail: [string, string][] = [[product.name, ""], [t.short, path]];
 const ink = inkOf(product);
-const only = t.only.replace("{only}", String(onlyTisty(t.rows))).replace("{total}", String(t.rows.length));
+const only = tally(t);
 const tint = "bg-[color-mix(in_srgb,var(--accent)_10%,transparent)]";
-const [tisty, ...others] = RIVALS;
+const [featured, ...others] = compared.rivals;
 const priced = (own?: string) => (own ? href(locale, own) : undefined);
 ---
 
@@ -54,7 +55,7 @@ const priced = (own?: string) => (own ? href(locale, own) : undefined);
           <tr class="border-b border-line">
             <th class="p-4" aria-hidden="true"></th>
             {
-              RIVALS.map((one, at) => (
+              compared.rivals.map((one, at) => (
                 <th scope="col" class:list={["p-4 font-display text-base font-semibold text-fg", { [tint]: at === 0 }]}>
                   <a class="hover:underline" href={one.url} rel="noopener">{one.name}</a>
                 </th>
@@ -87,7 +88,7 @@ const priced = (own?: string) => (own ? href(locale, own) : undefined);
             <h2 class="font-display text-lg font-semibold leading-snug text-fg">{label}</h2>
             <div class:list={["mt-3 rounded-2xl p-3", tint]}>
               <span class="flex items-center justify-between gap-3">
-                <span class="font-display text-sm font-semibold text-fg">{tisty.name}</span>
+                <span class="font-display text-sm font-semibold text-fg">{featured.name}</span>
                 <Verdict cell={mine} label={t.marks[mine.mark]} ink={ink} to={priced(own)} />
               </span>
               {mine.note && <span class="mt-1 block text-[13px] leading-snug text-body">{mine.note}</span>}
@@ -95,7 +96,7 @@ const priced = (own?: string) => (own ? href(locale, own) : undefined);
             <dl class="mt-3 divide-y divide-line text-sm">
               {theirs.map((cell, at) => (
                 <div class="flex items-start gap-3 py-2">
-                  <dt class="w-20 shrink-0 text-fg">{others[at].name}</dt>
+                  <dt class="w-28 shrink-0 text-fg">{others[at].name}</dt>
                   <dd class="min-w-0">
                     <Verdict cell={cell} label={t.marks[cell.mark]} />
                     {cell.note && <span class="block text-[13px] leading-snug text-muted">{cell.note}</span>}
@@ -132,7 +133,7 @@ const priced = (own?: string) => (own ? href(locale, own) : undefined);
     <h2 class="eyebrow">{t.sources}</h2>
     <div class="mt-4 grid gap-6 text-sm sm:grid-cols-2 lg:grid-cols-3">
       {
-        SOURCES.map(([name, urls]) => (
+        compared.sources.map(([name, urls]) => (
           <div>
             <h3 class="font-medium text-fg">{name}</h3>
             <ul class="mt-2 space-y-1">
