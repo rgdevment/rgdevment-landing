@@ -102,7 +102,7 @@ const schema = [
     {
       groups.map(({ product, guides }) => (
         <section aria-labelledby={`g-${product.slug}`}>
-          <div class="flex items-center gap-3 border-b border-line pb-4">
+          <div class="flex flex-wrap items-center gap-x-3 gap-y-2 border-b border-line pb-4">
             <img src={product.icon} alt="" width="32" height="32" class="h-8 w-8 rounded-lg" loading="lazy" />
             <h2 id={`g-${product.slug}`} class="text-2xl font-semibold tracking-tight">
               <a class="transition-colors hover:text-flame-ink" href={href(locale, product.slug)}>{product.name}</a>

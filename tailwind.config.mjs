@@ -5,7 +5,7 @@ const display = ['"Space Grotesk Variable"', '"Inter Variable"', 'ui-sans-serif'
 
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}'],
+  content: ['./src/**/*.{astro,html,js,jsx,md,mdx,svelte,ts,tsx,vue}', './astro.shared.mjs'],
   darkMode: 'media',
   theme: {
     extend: {
@@ -45,7 +45,7 @@ export default {
             '--tw-prose-th-borders': 'rgb(var(--line))',
             '--tw-prose-td-borders': 'rgb(var(--line))',
             maxWidth: 'none',
-            a: { textDecorationColor: 'rgb(var(--line))', textUnderlineOffset: '4px', fontWeight: '500' },
+            a: { textDecorationColor: 'rgb(var(--muted))', textUnderlineOffset: '4px', fontWeight: '500' },
             'a:hover': { textDecorationColor: '#f97c3d' },
             'h2, h3, h4': { fontFamily: display.join(', '), letterSpacing: '-0.01em', scrollMarginTop: '6rem' },
             blockquote: { fontStyle: 'normal', fontWeight: '400', background: 'rgb(var(--flame-tint))', borderRadius: '0 1rem 1rem 0', padding: '0.75rem 1.25rem' },

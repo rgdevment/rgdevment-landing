@@ -17,5 +17,5 @@ const lit = ink !== undefined && cell.mark === "yes";
 
 <span class:list={["inline-flex items-center gap-1.5 font-medium", lit ? "accent-ink" : tone[cell.mark]]} style={lit ? ink : undefined}>
   <Icon name={icon[cell.mark]} class="h-4 w-4 shrink-0" />
-  {to ? <a class="underline decoration-line underline-offset-4 hover:decoration-fg" href={to}>{label}</a> : label}
+  {to ? <a class="underline decoration-muted underline-offset-4 hover:decoration-fg" href={to}>{label}</a> : label}
 </span>

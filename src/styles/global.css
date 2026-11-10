@@ -67,7 +67,7 @@
   }
 
   :focus-visible {
-    @apply rounded-md outline outline-2 outline-offset-2 outline-flame;
+    @apply rounded-md outline outline-2 outline-offset-2 outline-flame-ink;
   }
 
   @media (prefers-reduced-motion: reduce) {
@@ -103,11 +103,16 @@
     --pagefind-ui-primary: rgb(var(--fg));
     --pagefind-ui-text: rgb(var(--body));
     --pagefind-ui-background: rgb(var(--surface));
-    --pagefind-ui-border: rgb(var(--line));
+    --pagefind-ui-border: rgb(var(--muted));
     --pagefind-ui-tag: rgb(var(--sunken));
     --pagefind-ui-border-width: 1px;
     --pagefind-ui-border-radius: 14px;
     --pagefind-ui-font: inherit;
+  }
+
+  .doc-search input.pagefind-ui__search-input::placeholder {
+    color: rgb(var(--muted));
+    opacity: 1;
   }
 
   .doc-search .pagefind-ui__drawer {
