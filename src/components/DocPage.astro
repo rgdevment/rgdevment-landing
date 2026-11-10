@@ -5,8 +5,8 @@ import DocNav from "./DocNav.astro";
 import Icon from "./Icon.astro";
 import Layout from "../layouts/Layout.astro";
 import { bySection, type Doc, docPath, docsOf } from "../content/docs";
-import { PRODUCTS, inkOf, iconAlt } from "../content/products";
-import { AUTHOR, HOME_PRODUCT, PERSON_ID, WEBSITE_ID, appId, canonical, crumbs, href, type Locale } from "../site";
+import { PRODUCTS, cardOf, inkOf, iconAlt } from "../content/products";
+import { AUTHOR, DOMAIN, HOME_PRODUCT, PERSON_ID, WEBSITE_ID, appId, canonical, crumbs, href, type Locale } from "../site";
 
 interface Props {
   doc: Doc;
@@ -62,6 +62,7 @@ const words = product[locale].language;
 const language = words && { eyebrow: say.reference, label: words.title, href: words.url };
 const promote = words && (!data.page || ["Documents", "Documentos"].includes(data.section));
 
+const card = cardOf(product, locale);
 const schema = [
   {
     "@context": "https://schema.org",
@@ -75,6 +76,7 @@ const schema = [
     isPartOf: { "@id": WEBSITE_ID },
     mainEntityOfPage: canonical(locale, path),
     about: { "@id": appId(product.slug) },
+    ...(card ? { image: new URL(card.src, DOMAIN).toString() } : {}),
     ...(promote ? { mentions: { "@type": "TechArticle", headline: words.title, url: words.url, inLanguage: locale } } : {}),
   },
   crumbs(locale, trail),

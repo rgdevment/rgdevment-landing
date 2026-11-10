@@ -21,7 +21,7 @@ const day = (date: string) =>
   new Date(date).toLocaleDateString(locale === "es" ? "es-CL" : "en-US", { year: "numeric", month: "long", day: "numeric" });
 ---
 
-<Layout title={t.title} description={t.meta} locale={locale} paths={CHANGELOG_PATH} schema={crumbs(locale, trail)}>
+<Layout title={t.title} description={t.meta} locale={locale} textIn="en" paths={CHANGELOG_PATH} schema={crumbs(locale, trail)}>
   <section class="shell pt-10 sm:pt-14" style={`--accent: ${product.accent}`}>
     <Crumbs locale={locale} trail={trail} />
     <header class="mt-10 max-w-3xl">

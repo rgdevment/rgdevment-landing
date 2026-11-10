@@ -1,13 +1,29 @@
+import text from "./llms.txt?raw";
 import { docPath, docsOf } from "./content/docs";
+import { lastChanged, type Guide } from "./content/guide";
+import { GUIDES, written } from "./content/guides";
 import { PRODUCTS, type Product, brewSteps, releasesUrl, storeUrl } from "./content/products";
 import { privacyPath } from "./content/privacy";
 import { CHANGELOG_PATH, FEED, hasChangelog } from "./content/changelog";
 import { COMPARE_PATH, comparisonOf, namesOthers } from "./content/compare";
 import { installers, latestRelease, megabytes } from "./content/releases";
-import { MAIN } from "./hosts";
-import { AUTHOR, HOME_PRODUCT, canonical } from "./site";
+import { MAIN, homeOf, relocate } from "./hosts";
+import { AUTHOR, DOMAIN, HOME_PRODUCT, canonical, type Locale } from "./site";
 
 const TEXT = { "Content-Type": "text/plain; charset=utf-8" };
+
+const LINK = /(?<!!\[[^\]]*)\]\((\/[^)\s]*)\)/g;
+const IMAGE = /(!\[[^\]]*\]\()(\/[^)\s]*\))/g;
+
+// The help is written with the main site's paths, which only the rendered pages rewrite.
+function absolute(body: string): string {
+  return body
+    .replace(LINK, (_, url: string) => {
+      const to = relocate(url, HOME_PRODUCT);
+      return `](${to.startsWith("/") ? `${DOMAIN}${to}` : to})`;
+    })
+    .replace(IMAGE, `$1${DOMAIN}$2`);
+}
 
 function owner(): Product {
   return PRODUCTS.find((one) => one.slug === HOME_PRODUCT)!;
@@ -192,6 +208,7 @@ export async function appLlms(): Promise<Response> {
     ...docs.map((one) => link(one.data.title, docPath("en", product.slug, one.data.page), one.data.description)),
     `- [Every page in one file](${canonical("en", "")}llms-full.txt)`,
     "",
+    ...guidesOf(product, link),
     ...language,
     "## Questions",
     "",
@@ -222,11 +239,88 @@ export async function appLlmsFull(): Promise<Response> {
       `Source: ${canonical(one.data.locale, docPath(one.data.locale, product.slug, one.data.page))}`,
       `Updated: ${one.data.updated}`,
       "",
-      (one.body ?? "").trim(),
+      absolute((one.body ?? "").trim()),
     ].join("\n"),
   );
   const head = `# ${product.name} documentation\n\n> ${product.en.meta}\n\nEvery page of the ${product.name} docs, in English. The same pages in Spanish live at ${canonical("es", docPath("es", product.slug))}.`;
   const extra = compared(product);
   const all = extra.length ? [head, ...pages, extra.join("\n")] : [head, ...pages];
   return new Response(`${all.join("\n\n---\n\n")}\n`, { headers: TEXT });
+}
+
+function guidesOf(product: Product, link: (title: string, path: string, note?: string) => string): string[] {
+  const own = GUIDES.filter((one) => one.product === product.slug).map((one) => written(one, "en"));
+  return own.length ? ["## Guides", "", ...own.map((t) => link(t.title, t.slug, t.description)), ""] : [];
+}
+
+function guideList(locale: Locale): string[] {
+  return GUIDES.map((one) => written(one, locale)).map((t) => `- [${t.title}](${canonical(locale, t.slug)}): ${t.description}`);
+}
+
+export function mainLlms(): string {
+  const comparisons = PRODUCTS.flatMap((product) => {
+    const compared = comparisonOf(product.slug);
+    const home = homeOf(product.slug);
+    return compared ? [`- [${compared.en.title}](${home}/${COMPARE_PATH.en}/) ([español](${home}/es/${COMPARE_PATH.es}/)): ${compared.en.meta}`] : [];
+  });
+  const changelogs = PRODUCTS.filter((product) => hasChangelog(product.slug)).map((product) => {
+    const home = homeOf(product.slug);
+    return `- [${product.name}](${home}/${CHANGELOG_PATH.en}/) ([RSS](${home}/${FEED}), [español](${home}/es/${CHANGELOG_PATH.es}/))`;
+  });
+  const generated = [
+    "## Comparisons",
+    "",
+    "Each app against the ones people already use, cell by cell, with the rivals' own pages as sources.",
+    "",
+    ...comparisons,
+    "",
+    "## What's new",
+    "",
+    ...changelogs,
+    `- [All three in one feed](${MAIN}/${FEED})`,
+    "",
+    "## Guides",
+    "",
+    ...guideList("en"),
+    "",
+    "## Guías",
+    "",
+    ...guideList("es"),
+    "",
+    `- [Every guide in full, in one file](${MAIN}/llms-full.txt)`,
+    "",
+  ].join("\n");
+  return text.replace("## Spanish\n", `${generated}\n## Spanish\n`);
+}
+
+function guideText(guide: Guide, locale: Locale): string {
+  const t = written(guide, locale);
+  return [
+    `# ${t.title}`,
+    "",
+    `Source: ${canonical(locale, t.slug)}`,
+    `Updated: ${lastChanged(guide)}`,
+    "",
+    t.lede,
+    "",
+    `## ${t.nativeTitle}`,
+    "",
+    ...t.nativeSteps.map((step, at) => `${at + 1}. ${step.title}. ${step.body}`),
+    "",
+    `## ${t.gapTitle}`,
+    "",
+    ...t.gap.map((one) => `- ${one}`),
+    "",
+    `## ${t.toolTitle}`,
+    "",
+    ...t.tool.map((one) => `- ${one}`),
+    ...(t.also ? ["", `${t.also.line} ${t.also.url}`] : []),
+    "",
+    ...t.faq.flatMap((one) => [`**${one.q}** ${one.a}`, ""]),
+  ].join("\n");
+}
+
+export function mainLlmsFull(): string {
+  const guides = (["en", "es"] as Locale[]).flatMap((locale) => GUIDES.map((one) => guideText(one, locale)));
+  return `${[mainLlms().trim(), ...guides].join("\n\n---\n\n")}\n`;
 }

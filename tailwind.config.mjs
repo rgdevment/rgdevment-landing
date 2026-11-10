@@ -24,7 +24,7 @@ export default {
       fontFamily: {
         sans: ['"Inter Variable"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
         display,
-        mono: ['"JetBrains Mono Variable"', 'ui-monospace', 'SFMono-Regular', 'monospace'],
+        mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
       },
       maxWidth: { shell: '72rem' },
       typography: {

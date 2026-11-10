@@ -22,6 +22,9 @@ interface Props {
   /// The language of the page's actual text, when it differs from the site chrome around it —
   /// a privacy policy taken as-is from English, shown with a Spanish nav and breadcrumbs.
   contentLang?: Locale;
+  /// The text exists in this language only, and the twin in the other language repeats it under its own nav,
+  /// so search engines are pointed at the original and no pair is announced.
+  textIn?: Locale;
   path?: string;
   paths?: Partial<Record<Locale, string>>;
   image?: { src: string; width: number; height: number };
@@ -32,14 +35,14 @@ interface Props {
   noindex?: boolean;
 }
 
-const { title, description, locale, contentLang = locale, path = "", paths, image, published, modified, here, schema, noindex } = Astro.props;
+const { title, description, locale, contentLang = locale, textIn, path = "", paths, image, published, modified, here, schema, noindex } = Astro.props;
 const es = locale === "es";
 const there: Locale = es ? "en" : "es";
 
 /// A guide keeps a different slug in each language, so the twin of a page is looked up rather
 /// than assumed: without that the hreflang pair would point at a URL that does not exist.
 const at = (one: Locale) => paths?.[one] ?? path;
-const url = canonical(locale, at(locale));
+const url = textIn ? canonical(textIn, at(textIn)) : canonical(locale, at(locale));
 const owner = PRODUCTS.find((one) => one.slug === HOME_PRODUCT);
 const brand = owner?.name ?? "rgdevment";
 const full = title.includes(brand) || title.length > 44 ? title : `${title} · ${brand}`;
@@ -122,10 +125,10 @@ const say = es
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={url} />}
 
     {
-      !noindex &&
+      !noindex && !textIn &&
         LOCALES.map((one) => <link rel="alternate" hreflang={one} href={canonical(one, at(one))} />)
     }
-    {!noindex && <link rel="alternate" hreflang="x-default" href={canonical("en", at("en"))} />}
+    {!noindex && !textIn && <link rel="alternate" hreflang="x-default" href={canonical("en", at("en"))} />}
 
     <meta property="og:type" content={published || modified ? "article" : "website"} />
     <meta property="og:site_name" content={brand} />
@@ -137,8 +140,8 @@ const say = es
     <meta property="og:image:width" content={String(card.width)} />
     <meta property="og:image:height" content={String(card.height)} />
     <meta property="og:image:alt" content={title} />
-    <meta property="og:locale" content={contentLang === "es" ? "es_LA" : "en_US"} />
-    <meta property="og:locale:alternate" content={contentLang === "es" ? "en_US" : "es_LA"} />
+    <meta property="og:locale" content={(textIn ?? contentLang) === "es" ? "es_LA" : "en_US"} />
+    <meta property="og:locale:alternate" content={(textIn ?? contentLang) === "es" ? "en_US" : "es_LA"} />
     {published && <meta property="article:published_time" content={published} />}
     {modified && <meta property="article:modified_time" content={modified} />}
     {(published || modified) && <meta property="article:author" content={AUTHOR.name} />}
@@ -205,7 +208,7 @@ const say = es
 
     <main id="content">
       {
-        !noindex && contentLang === locale && (
+        !noindex && !textIn && (
           <p class="offer shell hidden pt-2 text-right" lang={there} data-nosnippet>
             <span class="inline-flex items-center rounded-full border border-line bg-surface/70 text-xs text-muted backdrop-blur">
               <a class="group inline-flex items-center gap-2 py-1 pr-2 pl-1 transition hover:text-fg" href={href(there, at(there))} hreflang={there}>

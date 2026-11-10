@@ -163,7 +163,7 @@ export const ASSISTANT_ES: Assistant = {
   page: "que-puede-hacer-un-asistente",
 };
 
-const FOLIO_PAPERS = "https://github.com/rgdevment/Folio-by-Tisty/blob/main/docs/";
+const FOLIO_PAPERS = "https://github.com/rgdevment/Folio-by-Tisty/tree/main/docs";
 
 export const SHARING_EN: Sharing = {
   title: "Share a document with Folio",

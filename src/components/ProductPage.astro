@@ -51,7 +51,6 @@ const others = PRODUCTS.filter((one) => one.slug !== product.slug);
 const say = {
   guides: es ? "Guías" : "Guides",
   guidesLede: es ? "Para sacarle partido, o para resolver el problema sin instalar nada." : "To get more out of it, or to solve the problem without installing anything.",
-  what: es ? "Qué hace" : "What it does",
   install: es ? "Cómo se instala" : "How to install it",
   installLede: es ? "Elige el camino que prefieras. Ninguno pide cuenta." : "Pick whichever route you prefer. None of them asks for an account.",
   privacy: es ? "Privacidad" : "Privacy",
@@ -91,7 +90,7 @@ const schema = [
     description: t.meta,
     applicationCategory: "UtilitiesApplication",
     operatingSystem: product.platforms.join(", "),
-    url: canonical(locale, path),
+    url: canonical("en", path),
     inLanguage: ["en", "es"],
     image: new URL(product.icon, DOMAIN).toString(),
     ...(shot ? { screenshot: new URL(shot, DOMAIN).toString() } : {}),
@@ -333,7 +332,7 @@ const schema = [
   </section>
 
   <section class="shell mt-24 sm:mt-32">
-    <h2 class="section-title">{say.what}</h2>
+    <h2 class="section-title">{es ? `Qué hace ${product.name}` : `What ${product.name} does`}</h2>
     {
       t.groups && (
         <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">

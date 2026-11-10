@@ -1,9 +1,9 @@
 import { getCollection } from "astro:content";
 import { docPath } from "./content/docs";
 import { homeOf } from "./hosts";
-import { LOCALES, canonical } from "./site";
+import { LOCALES, canonical, type Locale } from "./site";
 
-export type Entry = { en: string; es: string; priority: string; lastmod?: string };
+export type Entry = { en: string; es: string; priority: string; lastmod?: string; textIn?: Locale };
 
 const BREAK = "\n";
 
@@ -29,16 +29,15 @@ export async function docEntries(product?: string): Promise<Entry[]> {
 /// keeps a different slug in each language, which is why the pair travels together.
 export function sitemap(entries: Entry[]): Response {
   const urls = entries.flatMap((entry) =>
-    LOCALES.map((locale) => {
-      const alternates = LOCALES.map(
+    (entry.textIn ? [entry.textIn] : LOCALES).map((locale: Locale) => {
+      const alternates = (entry.textIn ? [] : LOCALES).map(
         (other) =>
           `    <xhtml:link rel="alternate" hreflang="${other}" href="${canonical(other, entry[other])}"/>`,
       ).join(BREAK);
       const rows = [
         "  <url>",
         `    <loc>${canonical(locale, entry[locale])}</loc>`,
-        alternates,
-        `    <xhtml:link rel="alternate" hreflang="x-default" href="${canonical("en", entry.en)}"/>`,
+        ...(entry.textIn ? [] : [alternates, `    <xhtml:link rel="alternate" hreflang="x-default" href="${canonical("en", entry.en)}"/>`]),
       ];
       if (entry.lastmod) rows.push(`    <lastmod>${entry.lastmod}</lastmod>`);
       rows.push(`    <priority>${entry.priority}</priority>`, "  </url>");

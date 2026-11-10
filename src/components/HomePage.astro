@@ -25,6 +25,7 @@ const say = es
       out: "ya está disponible",
       motto: "Software por convicción,",
       motto2: "no por suscripción.",
+      kind: "Apps de escritorio gratis y de código abierto para Windows y macOS",
       lede: "Aplicaciones de escritorio que se adaptan a cómo trabajas. Tus datos en tu disco o en tu nube, tú eliges. Sin telemetría, sin cuentas, sin suscripciones.",
       cta: "Ver las aplicaciones",
       code: "Leer el código",
@@ -68,6 +69,7 @@ const say = es
       out: "is out",
       motto: "Software out of conviction,",
       motto2: "not subscription.",
+      kind: "Free, open source desktop apps for Windows and macOS",
       lede: "Desktop apps that fit how you work instead of getting in your way. Your data on your disk or in your cloud, your call. No telemetry, no accounts, no subscriptions.",
       cta: "See the apps",
       code: "Read the source",
@@ -160,6 +162,8 @@ const schema = {
       <h1 class="mx-auto mt-8 max-w-4xl text-[2.6rem] font-semibold leading-[1.04] tracking-[-0.03em] sm:text-7xl">
         <span class="block">{say.motto}</span>
         <span class="block text-muted">{say.motto2}</span>
+        <span class="sr-only">: </span>
+        <span class="mt-5 block font-display text-base font-medium tracking-normal text-muted sm:text-lg">{say.kind}</span>
       </h1>
 
       <p class="mx-auto mt-7 max-w-2xl text-lg text-body sm:text-xl">{say.lede}</p>
