@@ -45,6 +45,10 @@ export function canonical(locale: Locale, path = ""): string {
 const UNCOUNTED = ["https://www.tisty.app"];
 export const COUNTS_VISITS = !UNCOUNTED.includes(DOMAIN);
 
+export function appId(product: string): string {
+  return `${canonical("en", product)}#app`;
+}
+
 export const PERSON_ID = `${MAIN}/#person`;
 export const WEBSITE_ID = `${DOMAIN}/#website`;
 

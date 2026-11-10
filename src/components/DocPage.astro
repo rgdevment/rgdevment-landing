@@ -6,7 +6,7 @@ import Icon from "./Icon.astro";
 import Layout from "../layouts/Layout.astro";
 import { bySection, type Doc, docPath, docsOf } from "../content/docs";
 import { PRODUCTS, inkOf } from "../content/products";
-import { AUTHOR, HOME_PRODUCT, PERSON_ID, WEBSITE_ID, canonical, crumbs, href, type Locale } from "../site";
+import { AUTHOR, HOME_PRODUCT, PERSON_ID, WEBSITE_ID, appId, canonical, crumbs, href, type Locale } from "../site";
 
 interface Props {
   doc: Doc;
@@ -74,7 +74,7 @@ const schema = [
     publisher: { "@id": PERSON_ID },
     isPartOf: { "@id": WEBSITE_ID },
     mainEntityOfPage: canonical(locale, path),
-    about: { "@type": "SoftwareApplication", name: product.name, url: canonical(locale, product.slug) },
+    about: { "@id": appId(product.slug) },
     ...(promote ? { mentions: { "@type": "TechArticle", headline: words.title, url: words.url, inLanguage: locale } } : {}),
   },
   crumbs(locale, trail),

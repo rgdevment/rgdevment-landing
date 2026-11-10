@@ -132,6 +132,26 @@ const SUPPORT_MOVED = {
   '/es/apoyar/': `${MAIN}/es/colaborar/`,
 };
 
+// Tisty's Markdown pages moved to a site of their own, and search engines still send people to the old addresses.
+const HELP_MOVED = {
+  tisty: {
+    '/docs/tisty-markdown/': 'https://markdown.tisty.app/',
+    '/docs/callouts-and-highlights/': 'https://markdown.tisty.app/quotes-and-callouts',
+    '/docs/code-blocks/': 'https://markdown.tisty.app/code-blocks',
+    '/docs/diagrams-mermaid/': 'https://markdown.tisty.app/diagrams-formulas-and-widgets',
+    '/docs/math/': 'https://markdown.tisty.app/diagrams-formulas-and-widgets',
+    '/docs/link-cards/': 'https://markdown.tisty.app/links',
+    '/docs/tables/': 'https://markdown.tisty.app/tables',
+    '/es/ayuda/lenguaje-tisty/': 'https://markdown.tisty.app/es/',
+    '/es/ayuda/avisos-y-destacados/': 'https://markdown.tisty.app/es/citas-y-avisos',
+    '/es/ayuda/bloques-de-codigo/': 'https://markdown.tisty.app/es/bloques-de-codigo',
+    '/es/ayuda/diagramas-mermaid/': 'https://markdown.tisty.app/es/diagramas-formulas-y-widgets',
+    '/es/ayuda/formulas/': 'https://markdown.tisty.app/es/diagramas-formulas-y-widgets',
+    '/es/ayuda/tarjetas-de-enlace/': 'https://markdown.tisty.app/es/enlaces',
+    '/es/ayuda/tablas/': 'https://markdown.tisty.app/es/tablas',
+  },
+};
+
 const MAIN_ONLY = ['favicon.svg', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'social.png', 'social-es.png'];
 
 // public/ is shared, so each app's site drops what belongs to the others and takes its own /favicon.ico,
@@ -151,7 +171,7 @@ function ownFiles(product) {
           ...readdirSync(at('docs-assets/')).filter((name) => !name.startsWith(`${product}-`)).map((name) => `docs-assets/${name}`),
         ];
         copyFileSync(`./public/icons/${product}.ico`, at('favicon.ico'));
-        writeFileSync(at('_redirects'), renamed(SUPPORT_MOVED));
+        writeFileSync(at('_redirects'), renamed({ ...SUPPORT_MOVED, ...HELP_MOVED[product] }));
         appendFileSync(at('_headers'), '\n/llms-full.txt\n  Content-Type: text/plain; charset=utf-8\n  X-Robots-Tag: noindex\n');
         drop.forEach((path) => rmSync(at(path), { force: true }));
       },

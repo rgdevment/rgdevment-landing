@@ -6,7 +6,7 @@ import { GUIDES, written } from "../content/guides";
 import { PRODUCTS, releasesUrl, storeUrl, words } from "../content/products";
 import { newestRelease, releaseDate } from "../content/releases";
 import { changelogUrl, hasChangelog } from "../content/changelog";
-import { AUTHOR, DOMAIN, PERSON_ID, canonical, href, type Locale } from "../site";
+import { AUTHOR, DOMAIN, PERSON_ID, appId, canonical, href, type Locale } from "../site";
 
 interface Props {
   locale: Locale;
@@ -116,6 +116,7 @@ const schema = {
   author: { "@id": PERSON_ID },
   hasPart: PRODUCTS.map((p) => ({
     "@type": "SoftwareApplication",
+    "@id": appId(p.slug),
     name: p.name,
     description: words(p, locale).meta,
     applicationCategory: "UtilitiesApplication",
