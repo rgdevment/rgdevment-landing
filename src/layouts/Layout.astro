@@ -13,7 +13,7 @@ import { COMPARE_PATH, comparisonOf } from "../content/compare";
 import { privacyPath } from "../content/privacy";
 import { termsPath } from "../content/terms";
 import { MAIN } from "../hosts";
-import { AUTHOR, DOMAIN, HOME_PRODUCT, LOCALES, PERSON_ID, COUNTS_VISITS, WEBSITE_ID, canonical, href, mainHref, type Locale } from "../site";
+import { AUTHOR, DOMAIN, HOME_PRODUCT, LOCALES, PERSON_ID, WEBSITE_ID, canonical, href, mainHref, type Locale } from "../site";
 
 interface Props {
   title: string;
@@ -90,9 +90,7 @@ const say = es
       terms: "Términos de uso",
       foot: "MHG (rgdevment). Código abierto, cada programa con su licencia.",
       footer: "Pie de página",
-      visits: COUNTS_VISITS
-        ? "Este sitio cuenta visitas con Cloudflare Web Analytics, sin cookies ni identificadores."
-        : "Este sitio no cuenta visitas: sin analítica, sin cookies y sin identificadores.",
+      visits: "Este sitio cuenta visitas con Cloudflare Web Analytics, sin cookies ni identificadores.",
     }
   : {
       skip: "Skip to content",
@@ -108,9 +106,7 @@ const say = es
       terms: "Terms of use",
       foot: "MHG (rgdevment). Open source, each program under its own licence.",
       footer: "Footer",
-      visits: COUNTS_VISITS
-        ? "This site counts visits with Cloudflare Web Analytics, without cookies or identifiers."
-        : "This site counts no visits: no analytics, no cookies and no identifiers.",
+      visits: "This site counts visits with Cloudflare Web Analytics, without cookies or identifiers.",
     };
 ---
 

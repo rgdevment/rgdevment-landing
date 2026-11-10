@@ -41,10 +41,6 @@ export function canonical(locale: Locale, path = ""): string {
   return to.startsWith("/") ? `${DOMAIN}${to}` : to;
 }
 
-/// Cloudflare turns its Web Analytics on per site from its dashboard, so this only has to say which sites keep it off.
-const UNCOUNTED = ["https://www.tisty.app"];
-export const COUNTS_VISITS = !UNCOUNTED.includes(DOMAIN);
-
 export function appId(product: string): string {
   return `${canonical("en", product)}#app`;
 }
