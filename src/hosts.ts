@@ -11,7 +11,7 @@ export const HOMES: Record<string, string> = {
 const FORMER: Record<string, string> = { copypaste: "copanda" };
 
 /// Pages a product's own site keeps for itself, showing only that product.
-const OWN = ["pricing", "precios", "compare", "comparar"];
+const OWN = ["pricing", "precios", "compare", "comparar", "changelog", "novedades"];
 
 export function homeOf(product: string): string | undefined {
   return Object.keys(HOMES).find((domain) => HOMES[domain] === product);

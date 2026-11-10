@@ -1,0 +1,11 @@
+---
+import ChangelogPage from "../../../../components/ChangelogPage.astro";
+import { CHANGELOG_PATH, hasChangelog } from "../../../../content/changelog";
+import { HOME_PRODUCT } from "../../../../site";
+
+export function getStaticPaths() {
+  return hasChangelog(HOME_PRODUCT) ? [{ params: { novedades: CHANGELOG_PATH.es } }] : [];
+}
+---
+
+<ChangelogPage locale="es" />
