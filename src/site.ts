@@ -12,6 +12,12 @@ export const AUTHOR = {
   handle: "rgdevment",
   github: "https://github.com/rgdevment",
   x: "https://x.com/rgdevment",
+  linkedin: "https://www.linkedin.com/in/rgdevment/",
+  coffee: "https://buymeacoffee.com/rgdevment",
+  avatar: "https://avatars.githubusercontent.com/u/10289498",
+  role: "Independent software developer",
+  about: "Makes free, open source desktop apps for Windows and macOS, with no account and no telemetry: Tisty, LinkUnbound and CoPanda.",
+  knows: ["Desktop applications", "Windows", "macOS", "Rust", "Model Context Protocol", "Privacy by design"],
 };
 
 /// The English pages live at the root and Spanish under /es/, so a path is built once here

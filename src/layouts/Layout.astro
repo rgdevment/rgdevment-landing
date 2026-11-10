@@ -64,7 +64,11 @@ const site = [
     name: AUTHOR.name,
     alternateName: AUTHOR.handle,
     url: `${MAIN}/`,
-    sameAs: [AUTHOR.github, AUTHOR.x],
+    image: AUTHOR.avatar,
+    jobTitle: AUTHOR.role,
+    description: AUTHOR.about,
+    knowsAbout: AUTHOR.knows,
+    sameAs: [AUTHOR.github, AUTHOR.x, AUTHOR.linkedin, AUTHOR.coffee],
   },
 ];
 const graphs = [...site, ...(schema ? (Array.isArray(schema) ? schema : [schema]) : [])];
