@@ -108,10 +108,10 @@ const SOURCES: [string, string[]][] = [
 ];
 
 const EN: Words = {
-  title: "How Tisty differs from Notion, Craft, Todoist, Logseq, Obsidian and Joplin",
+  title: "Tisty vs Notion, Obsidian, Todoist: local-first notes app",
   heading: "How Tisty differs from Notion, Craft, Todoist, Logseq, Obsidian and Joplin",
   short: "How Tisty differs",
-  meta: "Tisty keeps tasks and documents on your disk, and a finished task stays whole in a searchable archive. What it does that Notion, Craft, Todoist, Logseq, Obsidian and Joplin do not, with sources.",
+  meta: "Local-first notes and tasks app compared with Notion, Obsidian, Todoist, Logseq, Craft and Joplin: what Tisty does that they do not, with sources.",
   lede: "A finished task is kept, not ticked off. Tisty keeps tasks and documents in one store and one search on your own disk, and a finished task goes to the archive whole, with everything it gathered. Private and secure from the start: no account, no telemetry, and what leaves your disk can go end-to-end encrypted. Here is what it does that the apps you may already know do not, and where they are stronger.",
   only: "{only} of these {total} only Tisty does in full",
   checked: "Checked on 8 November 2026 against each project's own pages, listed at the foot. A no means its own pages do not offer it. These change, so go and look.",
@@ -253,10 +253,10 @@ const EN: Words = {
 };
 
 const ES: Words = {
-  title: "En qué se diferencia Tisty de Notion, Craft, Todoist, Logseq, Obsidian y Joplin",
+  title: "Tisty vs Notion, Obsidian y Todoist: notas y tareas locales",
   heading: "En qué se diferencia Tisty de Notion, Craft, Todoist, Logseq, Obsidian y Joplin",
   short: "En qué se diferencia Tisty",
-  meta: "Tisty guarda tareas y documentos en tu disco, y una tarea terminada se queda entera en un archivo que se busca. Lo que hace y Notion, Craft, Todoist, Logseq, Obsidian y Joplin no, con fuentes.",
+  meta: "App de notas y tareas en tu disco frente a Notion, Obsidian, Todoist, Logseq, Craft y Joplin: lo que Tisty hace y ellas no, con fuentes.",
   lede: "Una tarea terminada se guarda, no se tacha. Tisty guarda tareas y documentos en un mismo lugar y una misma búsqueda, en tu propio disco, y una tarea terminada pasa entera al archivo, con todo lo que reunió. Privado y seguro desde el principio: sin cuenta, sin telemetría, y lo que sale de tu disco puede ir cifrado de extremo a extremo. Aquí está lo que hace y que las apps que quizá ya conoces no hacen, y dónde ellas son más fuertes.",
   only: "{only} de estas {total} solo Tisty las hace por completo",
   checked: "Revisado el 8 de noviembre de 2026 en las páginas de cada proyecto, enlazadas al pie. Un no quiere decir que sus propias páginas no lo ofrecen. Esto cambia, así que conviene ir a mirar.",

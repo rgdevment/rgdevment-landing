@@ -217,7 +217,7 @@ export const PRODUCTS: Product[] = [
         page: "tasks",
         anchor: "a-task-or-a-document",
       },
-      title: "Tisty: local-first notes, documents and tasks app",
+      title: "Tisty: local-first Markdown notes and tasks app, with MCP",
       meta: "Local-first notes and tasks app for Windows and macOS: Markdown documents, tasks that keep their history, MCP for assistants. Free, open source, no account.",
       problem:
         "A task list forgets the moment you tick the box. Six months later the same problem comes back and all that is left is knowing you solved it once, somehow.",
@@ -360,7 +360,7 @@ export const PRODUCTS: Product[] = [
         page: "tareas",
         anchor: "tarea-o-documento",
       },
-      title: "Tisty: app de notas, documentos y tareas en tu disco",
+      title: "Tisty: notas en Markdown y tareas en tu disco, con MCP",
       meta: "App de notas y tareas local para Windows y macOS: documentos en Markdown, tareas que guardan su historial y MCP para asistentes. Gratis, libre y sin cuenta.",
       problem:
         "Una lista de tareas olvida en cuanto marcas la casilla. Seis meses después vuelve el mismo problema y lo único que queda es saber que ya lo resolviste una vez, de alguna manera.",
@@ -579,7 +579,7 @@ export const PRODUCTS: Product[] = [
     en: {
       category: "Clipboard manager for Windows and macOS",
       tagline: "An extra thumb for your clipboard.",
-      title: "CoPanda: free clipboard manager for Windows and macOS",
+      title: "CoPanda: free clipboard history manager for Windows and macOS",
       meta: "Free, open source clipboard manager for Windows and macOS, formerly CopyPaste. A searchable local history that skips your password manager. No account.",
       formerly: "Formerly CopyPaste. The same app and the same history, with a name of its own.",
       mascot: {
@@ -628,7 +628,7 @@ export const PRODUCTS: Product[] = [
     es: {
       category: "Gestor de portapapeles para Windows y macOS",
       tagline: "Un pulgar extra para tu portapapeles.",
-      title: "CoPanda: gestor de portapapeles gratis para Windows y macOS",
+      title: "CoPanda: gestor e historial del portapapeles, Windows y macOS",
       meta: "Gestor de portapapeles gratis y libre para Windows y macOS, antes CopyPaste. Historial local con búsqueda que ignora tu gestor de contraseñas. Sin cuenta.",
       formerly: "Antes se llamaba CopyPaste. La misma aplicación y el mismo historial, con un nombre propio.",
       mascot: {
