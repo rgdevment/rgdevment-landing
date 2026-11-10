@@ -282,7 +282,7 @@ export const TISTY_GUIDES: Guide[] = [
         "Quien lo recibe lo lee en el navegador, sin cuenta. La página dice qué llave lo firmó, y lo que no debería estar ahí se puede denunciar.",
         "Folio guarda solo bytes cifrados: la llave va en el enlace, después del #. Tu documento sigue en tu Tisty.",
       ],
-      also: { line: "Para conocer Folio, el servicio detrás del enlace, visita su sitio:", url: "https://tisty.cl" },
+      also: { line: "Para conocer Folio, el servicio detrás del enlace, visita su sitio:", url: "https://tisty.cl/es/" },
       faq: [
         {
           q: "¿La otra persona necesita Tisty o una cuenta?",

@@ -34,6 +34,7 @@ interface Props {
 
 const { title, description, locale, contentLang = locale, path = "", paths, image, published, modified, here, schema, noindex } = Astro.props;
 const es = locale === "es";
+const there: Locale = es ? "en" : "es";
 
 /// A guide keeps a different slug in each language, so the twin of a page is looked up rather
 /// than assumed: without that the hreflang pair would point at a URL that does not exist.
@@ -152,6 +153,7 @@ const say = es
         const chosen = localStorage.getItem("theme");
         if (chosen === "dark" || chosen === "light") document.documentElement.dataset.theme = chosen;
       } catch {}
+      document.documentElement.dataset.wants = /^es\b/i.test(navigator.language) ? "es" : "en";
     </script>
     <meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0e0d0b" media="(prefers-color-scheme: dark)" />
@@ -193,9 +195,25 @@ const say = es
 
     {
       owner ? (
-        <ProductNav product={owner} locale={locale} other={at(es ? "en" : "es")} />
+        <ProductNav product={owner} locale={locale} other={at(there)} />
       ) : (
-        <Nav locale={locale} here={here} other={at(es ? "en" : "es")} />
+        <Nav locale={locale} here={here} other={at(there)} />
+      )
+    }
+
+    {
+      !noindex && (
+        <p class="offer shell hidden pt-3 text-right" lang={there} data-nosnippet>
+          <a
+            class="group inline-flex items-center gap-2 rounded-full border border-line bg-surface/70 py-1 pr-3 pl-1 text-xs text-muted backdrop-blur transition hover:border-fg/25 hover:text-fg"
+            href={href(there, at(there))}
+            hreflang={there}
+          >
+            <span class="rounded-full bg-flame-tint px-2 py-0.5 font-mono text-[11px] font-medium uppercase text-flame-ink" aria-hidden="true">{there}</span>
+            {es ? "This page is also in English" : "Esta página también está en español"}
+            <Icon name="arrow" class="h-3 w-3 transition group-hover:translate-x-0.5" />
+          </a>
+        </p>
       )
     }
 
@@ -245,7 +263,7 @@ const say = es
               <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "colaborar" : "support")}>{say.support}</a></li>
               {owner && <li><a class="text-body transition-colors hover:text-fg" href={href(locale, privacyPath(locale, owner.slug))}>{say.privacy}</a></li>}
               {terms && <li><a class="text-body transition-colors hover:text-fg" href={href(locale, termsPath(locale, owner.slug))}>{say.terms}</a></li>}
-              <li><a class="text-body transition-colors hover:text-fg" href={href(es ? "en" : "es", at(es ? "en" : "es"))} lang={es ? "en" : "es"} hreflang={es ? "en" : "es"}>{es ? "English" : "Español"}</a></li>
+              <li><a class="text-body transition-colors hover:text-fg" href={href(there, at(there))} lang={there} hreflang={there}>{es ? "English" : "Español"}</a></li>
             </ul>
           </div>
         </nav>
