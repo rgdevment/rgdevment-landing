@@ -8,6 +8,7 @@ import { HOME_PRODUCT, href, type Locale } from "../../../site";
 const product = PRODUCTS.find((one) => one.slug === HOME_PRODUCT)!;
 // Tisty is the only app that hands out links to notes, and those links expire or close.
 const shares = product.slug === "tisty";
+const lowered = (text: string) => text.charAt(0).toLowerCase() + text.slice(1);
 
 const COPY = {
   en: {
@@ -23,7 +24,7 @@ const COPY = {
       { icon: "cut", title: "The link came cut short", text: "Some chat apps clip long links. Check that it reached you whole." },
     ],
     ask: "The easiest fix: ask whoever sent it for a fresh link. It takes them a second.",
-    meet: `While you are here, ${product.name} keeps your tasks and documents on your own machine. No account, no telemetry.`,
+    meet: `While you are here: ${product.name}, ${lowered(product.en.category)}. No account, no telemetry.`,
     home: `Meet ${product.name}`,
     docs: "Read the docs",
     other: "Ver en español",
@@ -41,7 +42,7 @@ const COPY = {
       { icon: "cut", title: "El enlace llegó cortado", text: "Algunas apps de chat recortan los enlaces largos. Revisa que te haya llegado completo." },
     ],
     ask: "Lo más fácil: pídele a quien te lo envió un enlace nuevo. Le toma un segundo.",
-    meet: `Ya que estás aquí: ${product.name} guarda tus tareas y documentos en tu propio equipo. Sin cuentas ni telemetría.`,
+    meet: `Ya que estás aquí: ${product.name}, ${lowered(product.es.category)}. Sin cuentas ni telemetría.`,
     home: `Conoce ${product.name}`,
     docs: "Lee la documentación",
     other: "See in English",

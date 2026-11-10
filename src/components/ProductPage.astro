@@ -16,7 +16,7 @@ import { privacyPath } from "../content/privacy";
 import { GUIDES, written } from "../content/guides";
 import { PRODUCTS, type Product, brewSteps, cardOf, inkOf, releasesUrl, shotSrc, storeUrl, words } from "../content/products";
 import { installers, latestRelease, megabytes, releaseDate, stars } from "../content/releases";
-import { DOMAIN, HOME_PRODUCT, PERSON_ID, canonical, crumbs, href, type Locale } from "../site";
+import { DOMAIN, HOME_PRODUCT, PERSON_ID, appId, canonical, crumbs, href, type Locale } from "../site";
 
 interface Props {
   product: Product;
@@ -85,7 +85,7 @@ const schema = [
   {
     "@context": "https://schema.org",
     "@type": "SoftwareApplication",
-    "@id": `${canonical(locale, path)}#app`,
+    "@id": appId(product.slug),
     name: product.name,
     ...(product.formerName ? { alternateName: product.formerName } : {}),
     description: t.meta,

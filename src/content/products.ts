@@ -115,7 +115,7 @@ export const PRODUCTS: Product[] = [
     slug: "tisty",
     name: "Tisty",
     repo: "https://github.com/rgdevment/Tisty",
-    licence: "AGPL-3.0",
+    licence: "AGPL-3.0-only",
     platforms: ["Windows", "macOS"],
     storeId: "9PGVWXD8X93N",
     requires: { windows: "Windows 10 (1809)", macos: "macOS 13.3" },
@@ -226,7 +226,7 @@ export const PRODUCTS: Product[] = [
           title: "Capture",
           points: [
             "Type «call the bank at 3» in the quick capture, open from anywhere, and it is a task with its hour.",
-            "Documents with tables that add themselves up, diagrams drawn by hand, formulas, pages and their own PDF.",
+            "Documents with tables that add themselves up, diagrams you draw in their own editor, formulas, pages and their own PDF.",
           ],
         },
         {
@@ -247,7 +247,7 @@ export const PRODUCTS: Product[] = [
           title: "Your data is yours",
           points: [
             "Documents in Markdown and tasks in a log you can read, on your own disk.",
-            "Synced through your Google Drive, OneDrive, WebDAV server or a folder you already sync, encrypted with a phrase only you know if you want.",
+            "Synced through your Google Drive, OneDrive or WebDAV server, encrypted with a phrase only you know if you want, or through a folder you already sync.",
             "No account, no subscription, no telemetry. Free and open source.",
           ],
         },
@@ -369,7 +369,7 @@ export const PRODUCTS: Product[] = [
           title: "Capturar",
           points: [
             "Escribe «llamar al banco a las 3» en la captura rápida, que se abre desde cualquier parte, y es una tarea con su hora.",
-            "Documentos con tablas que se suman solas, diagramas dibujados a mano, fórmulas, páginas y su propio PDF.",
+            "Documentos con tablas que se suman solas, diagramas que dibujas en su propio editor, fórmulas, páginas y su propio PDF.",
           ],
         },
         {
@@ -390,7 +390,7 @@ export const PRODUCTS: Product[] = [
           title: "Tus datos son tuyos",
           points: [
             "Documentos en Markdown y tareas en un registro legible, en tu propio disco.",
-            "Se sincronizan por tu Google Drive, OneDrive, servidor WebDAV o una carpeta que ya sincronizas, cifrados si quieres con una frase que solo tú conoces.",
+            "Se sincronizan por tu Google Drive, OneDrive o servidor WebDAV, cifrados si quieres con una frase que solo tú conoces, o por una carpeta que ya sincronizas.",
             "Sin cuenta, sin suscripción y sin telemetría. Gratis y de código abierto.",
           ],
         },
@@ -560,7 +560,7 @@ export const PRODUCTS: Product[] = [
     name: "CoPanda",
     formerName: "CopyPaste",
     repo: "https://github.com/rgdevment/CopyPaste",
-    licence: "GPL-3.0",
+    licence: "GPL-3.0-only",
     platforms: ["Windows", "macOS"],
     storeId: "9NBJRZF3K856",
     cask: "copanda",
@@ -590,12 +590,12 @@ export const PRODUCTS: Product[] = [
         "You copied an address ten minutes ago and then copied something else. It is gone, and the only way back is to go and find it again.",
       what: [
         "It keeps a history of what you copy, searchable, on your own disk.",
-        "Passwords and API keys are left out: clipboard content from password managers is ignored.",
+        "Passwords from your password manager are left out: what it marks as secret is never stored.",
         "Copying the same text again without styles no longer discards the formatting already stored.",
         "History, images and settings can be exported and imported as a backup file.",
       ],
       privacy:
-        "Everything is stored locally under your user profile. No mandatory cloud, no tracking.",
+        "Everything is stored locally under your user profile. No cloud, no sync, no tracking.",
       data: {
         line: "Your history stays on this computer.",
         checks: [
@@ -612,7 +612,7 @@ export const PRODUCTS: Product[] = [
         },
         {
           q: "Does it store passwords?",
-          a: "No. Clipboard content coming from password managers such as 1Password or Bitwarden is ignored.",
+          a: "Not the ones it can tell apart: what a password manager such as 1Password or Bitwarden marks as secret is never stored. A password copied from anywhere else, such as a text file, is kept like any other text.",
         },
         {
           q: "Where is my clipboard history kept?",
@@ -639,12 +639,12 @@ export const PRODUCTS: Product[] = [
         "Copiaste una dirección hace diez minutos y luego copiaste otra cosa. Ya no está, y la única forma de recuperarla es ir a buscarla otra vez.",
       what: [
         "Guarda en tu propio disco el historial de lo que copias, y puedes buscar dentro.",
-        "Las contraseñas y las claves de API se quedan fuera: lo que viene de un gestor de contraseñas se ignora.",
+        "Las contraseñas de tu gestor de contraseñas se quedan fuera: lo que marca como secreto nunca se guarda.",
         "Volver a copiar el mismo texto sin estilos ya no descarta el formato que había guardado.",
         "El historial, las imágenes y los ajustes se pueden exportar e importar como copia de seguridad.",
       ],
       privacy:
-        "Todo se guarda localmente en tu perfil de usuario. Sin nube obligatoria y sin rastreo.",
+        "Todo se guarda localmente en tu perfil de usuario. Sin nube, sin sincronización y sin rastreo.",
       data: {
         line: "Tu historial se queda en este equipo.",
         checks: [
@@ -661,7 +661,7 @@ export const PRODUCTS: Product[] = [
         },
         {
           q: "¿Guarda las contraseñas?",
-          a: "No. Lo que llega al portapapeles desde un gestor de contraseñas como 1Password o Bitwarden se ignora.",
+          a: "No las que puede reconocer: lo que un gestor de contraseñas como 1Password o Bitwarden marca como secreto nunca se guarda. Una contraseña copiada desde otro lugar, como un archivo de texto, se guarda como cualquier otro texto.",
         },
         {
           q: "¿Dónde queda el historial?",
@@ -707,5 +707,5 @@ export function brewSteps(product: Product): string[] {
 }
 
 export function storeUrl(product: Product): string | null {
-  return product.storeId ? `https://apps.microsoft.com/detail/${product.storeId}` : null;
+  return product.storeId ? `https://apps.microsoft.com/detail/${product.storeId.toLowerCase()}` : null;
 }

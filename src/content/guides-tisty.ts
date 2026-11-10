@@ -231,7 +231,7 @@ export const TISTY_GUIDES: Guide[] = [
         "Whoever gets it reads it in a browser, with no account. The page says which key signed it, and anything that should not be there can be reported.",
         "Folio keeps only encrypted bytes: the key travels in the link, after the #. Your document stays in your Tisty.",
       ],
-      also: { line: "To learn about Folio, the service behind the link, visit its home:", url: "https://folio.tisty.app" },
+      also: { line: "To learn about Folio, the service behind the link, visit its home:", url: "https://tisty.cl" },
       faq: [
         {
           q: "Does the other person need Tisty or an account?",
@@ -282,7 +282,7 @@ export const TISTY_GUIDES: Guide[] = [
         "Quien lo recibe lo lee en el navegador, sin cuenta. La página dice qué llave lo firmó, y lo que no debería estar ahí se puede denunciar.",
         "Folio guarda solo bytes cifrados: la llave va en el enlace, después del #. Tu documento sigue en tu Tisty.",
       ],
-      also: { line: "Para conocer Folio, el servicio detrás del enlace, visita su sitio:", url: "https://folio.tisty.app" },
+      also: { line: "Para conocer Folio, el servicio detrás del enlace, visita su sitio:", url: "https://tisty.cl" },
       faq: [
         {
           q: "¿La otra persona necesita Tisty o una cuenta?",

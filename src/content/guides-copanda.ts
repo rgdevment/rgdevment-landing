@@ -36,7 +36,7 @@ export const COPANDA_GUIDES: Guide[] = [
       toolTitle: "When twenty-five is not enough",
       tool: [
         "CoPanda keeps a history that survives restarts and that you can search.",
-        "Clipboard content coming from password managers is ignored, so credentials never reach the history.",
+        "What a password manager marks as secret is ignored, so the passwords it hands over never reach the history.",
         "History, images and settings can be exported and imported as a backup file.",
         "Free and open source under the GPL-3.0, for Windows and macOS.",
       ],
@@ -86,7 +86,7 @@ export const COPANDA_GUIDES: Guide[] = [
       toolTitle: "Cuando veinticinco no bastan",
       tool: [
         "CoPanda guarda un historial que sobrevive a los reinicios y en el que puedes buscar.",
-        "Lo que llega al portapapeles desde un gestor de contraseñas se ignora, así que las credenciales nunca entran en el historial.",
+        "Lo que un gestor de contraseñas marca como secreto se ignora, así que las contraseñas que entrega nunca entran en el historial.",
         "El historial, las imágenes y los ajustes se pueden exportar e importar como copia de seguridad.",
         "Gratuito y de código abierto bajo la GPL-3.0, para Windows y macOS.",
       ],
@@ -137,7 +137,7 @@ export const COPANDA_GUIDES: Guide[] = [
       toolTitle: "Giving the Mac the history it never had",
       tool: [
         "CoPanda keeps a searchable history of what you copy, on your own disk.",
-        "It ignores clipboard content from password managers, so credentials stay out of it.",
+        "It ignores what a password manager marks as secret, so the passwords it hands over stay out of it.",
         "The same application and the same history on Windows and macOS.",
         "Free and open source under the GPL-3.0.",
       ],
@@ -178,7 +178,7 @@ export const COPANDA_GUIDES: Guide[] = [
       toolTitle: "Darle al Mac el historial que nunca tuvo",
       tool: [
         "CoPanda guarda en tu propio disco un historial de lo que copias, y puedes buscar dentro.",
-        "Ignora lo que llega al portapapeles desde un gestor de contraseñas, así que las credenciales se quedan fuera.",
+        "Ignora lo que un gestor de contraseñas marca como secreto, así que las contraseñas que entrega se quedan fuera.",
         "La misma aplicación y el mismo historial en Windows y en macOS.",
         "Gratuito y de código abierto bajo la GPL-3.0.",
       ],
