@@ -99,7 +99,7 @@ Peso: ==11,4 kg=={green} ::heart red::`,
   share: {
     line: "Y cuando otra persona necesita leer uno, Folio comparte un documento con un enlace cifrado que caduca solo.",
     link: "Folio",
-    url: "https://tisty.cl",
+    url: "https://tisty.cl/es/",
   },
 };
 
@@ -230,7 +230,7 @@ export const SHARING_ES: Sharing = {
   ],
   caveat: "La aplicación no tiene servidor ni recoge nada; Folio sí tiene uno. Guarda la copia cifrada hasta que caduca y cuenta las lecturas sin guardar quién leyó. Con una denuncia seria o una orden, un documento deja de servirse y puede guardarse hasta 180 días, o lo que la orden pida.",
   home: "Para conocer Folio, visita su sitio:",
-  site: "https://tisty.cl",
+  site: "https://tisty.cl/es/",
   papers: [
     ["Términos de uso", `${FOLIO_PAPERS}TERMINOS.md`],
     ["Política de privacidad", `${FOLIO_PAPERS}PRIVACIDAD.md`],
