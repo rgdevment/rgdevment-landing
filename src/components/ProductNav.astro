@@ -1,4 +1,6 @@
 ---
+import { CHANGELOG_PATH, hasChangelog } from "../content/changelog";
+import { COMPARE_PATH, compares } from "../content/compare";
 import { docPath } from "../content/docs";
 import type { Product } from "../content/products";
 import { href, type Locale } from "../site";
@@ -15,12 +17,15 @@ const there: Locale = locale === "es" ? "en" : "es";
 const es = locale === "es";
 const link = "rounded-full px-3 py-1.5 text-muted transition-colors hover:text-fg";
 const words = product[locale].language;
-const items: [string, string, boolean][] = [
+type Item = [to: string, label: string, external: boolean, wide?: boolean];
+const items: Item[] = [
   [href(locale, es ? "precios" : "pricing"), es ? "Precios" : "Pricing", false],
+  ...(compares(product.slug) ? [[href(locale, COMPARE_PATH[locale]), es ? "Comparar" : "Compare", false, true] as Item] : []),
+  ...(hasChangelog(product.slug) ? [[href(locale, CHANGELOG_PATH[locale]), es ? "Novedades" : "What's new", false, true] as Item] : []),
   [href(locale, es ? "colaborar" : "support"), es ? "Colaborar" : "Support", false],
   [product.repo, es ? "Repositorio" : "Repository", true],
   [href(locale, docPath(locale, product.slug)), es ? "Ayuda" : "Docs", false],
-  ...(words ? ([[words.url, "Markdown", true]] as [string, string, boolean][]) : []),
+  ...(words ? [[words.url, "Markdown", true] as Item] : []),
 ];
 ---
 
@@ -33,8 +38,8 @@ const items: [string, string, boolean][] = [
 
     <ul class="ml-auto hidden items-center gap-1 text-[15px] sm:flex">
       {
-        items.map(([to, label, external]) => (
-          <li>
+        items.map(([to, label, external, wide]) => (
+          <li class={wide ? "hidden lg:block" : undefined}>
             <a class={link} href={to} rel={external ? "noopener" : undefined}>
               {label}
             </a>

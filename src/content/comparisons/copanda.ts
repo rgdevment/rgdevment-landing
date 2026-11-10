@@ -68,10 +68,10 @@ const SOURCES: [string, string[]][] = [
 ];
 
 const EN: Words = {
-  title: "How CoPanda differs from Win+V, Ditto, CopyQ, Maccy, Paste and Raycast",
+  title: "CoPanda vs Ditto, CopyQ, Maccy: clipboard managers compared",
   heading: "How CoPanda differs from Win+V, Ditto, CopyQ, Maccy, Paste and Raycast",
   short: "How CoPanda differs",
-  meta: "CoPanda is a free, open source clipboard manager for Windows and macOS that keeps your history on your disk. How it compares with Win+V, Ditto, CopyQ, Maccy, Paste and Raycast, with sources.",
+  meta: "Free, open source clipboard manager for Windows and macOS, compared with Win+V, Ditto, CopyQ, Maccy, Paste and Raycast, cell by cell and with sources.",
   lede: "One clipboard history for Windows and macOS, kept on your own disk for as long as you choose. It finds the text inside your screenshots, filters by kind and pastes the same item in another form. Free, open source, with no account and no telemetry. Here is what it does that the clipboard managers you may already know do not, and where they are stronger.",
   only: "Yes in {own} of these {total}; the closest of the others, in {best}",
   checked: "Checked on 10 November 2026 against each project's own pages, listed at the foot. A no means its own pages do not offer it. These change, so go and look.",
@@ -197,10 +197,10 @@ const EN: Words = {
 };
 
 const ES: Words = {
-  title: "En qué se diferencia CoPanda de Win+V, Ditto, CopyQ, Maccy, Paste y Raycast",
+  title: "CoPanda vs Ditto, CopyQ y Maccy: gestores de portapapeles",
   heading: "En qué se diferencia CoPanda de Win+V, Ditto, CopyQ, Maccy, Paste y Raycast",
   short: "En qué se diferencia CoPanda",
-  meta: "CoPanda es un gestor del portapapeles gratuito y de código abierto para Windows y macOS que guarda tu historial en tu disco. Cómo se compara con Win+V, Ditto, CopyQ, Maccy, Paste y Raycast, con fuentes.",
+  meta: "Gestor de portapapeles gratis y libre para Windows y macOS, comparado con Win+V, Ditto, CopyQ, Maccy, Paste y Raycast, con fuentes.",
   lede: "Un solo historial del portapapeles para Windows y macOS, guardado en tu propio disco por el tiempo que elijas. Encuentra el texto dentro de tus capturas, filtra por tipo y pega lo mismo en otra forma. Gratis, de código abierto, sin cuenta y sin telemetría. Aquí está lo que hace y que los gestores del portapapeles que quizá ya conoces no, y dónde ellos son más fuertes.",
   only: "Sí en {own} de estas {total}; el más cercano de los otros, en {best}",
   checked: "Revisado el 10 de noviembre de 2026 en las páginas de cada proyecto, enlazadas al pie. Un no quiere decir que sus propias páginas no lo ofrecen. Esto cambia, así que conviene ir a mirar.",

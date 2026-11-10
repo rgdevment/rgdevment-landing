@@ -184,7 +184,11 @@ const CONNECTOR = /^(But|And|So|That|Also|Pero|Y|Así|Eso|También)(?!\p{L})/u;
 const plainText = (text) =>
   text.replace(/\[([^\]]+)\]\([^)]*\)/g, "$1").replace(/[*_`]/g, "").replace(/\s+/g, " ").trim();
 
-const clip = (text) => (text.length > 158 ? `${text.slice(0, 155).replace(/\s\S*$/, "")}…` : text);
+const clip = (text) => {
+  if (text.length <= 158) return text;
+  const sentence = text.slice(0, 158).match(/^.{70,}[.!?](?=\s)/)?.[0];
+  return sentence ?? `${text.slice(0, 155).replace(/\s\S*$/, "")}…`;
+};
 
 function askedOn(body, locale) {
   const questions = [...body.matchAll(/^\*\*([^*\n]+\?)\*\*\s*$/gm)].map((one) => plainText(one[1]));
@@ -206,7 +210,7 @@ function describe(body, locale) {
     .map((one) => one.trim())
     .filter((one) => one && !/^([#>|`<!\-\d]|\* )/.test(one))
     .map(plainText);
-  const standing = paragraphs.find((one) => one.length >= 60 && !CONNECTOR.test(one));
+  const standing = paragraphs.find((one) => one.length >= 60 && !CONNECTOR.test(one) && !one.endsWith(":"));
   return clip(standing ?? paragraphs[0] ?? "");
 }
 

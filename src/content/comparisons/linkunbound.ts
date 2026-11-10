@@ -68,10 +68,10 @@ const SOURCES: [string, string[]][] = [
 ];
 
 const EN: Words = {
-  title: "How LinkUnbound differs from Switchbar, Browser Tamer, BrowserPicker, Finicky, Velja and Choosy",
+  title: "LinkUnbound vs Finicky, Velja and Choosy: browser pickers",
   heading: "How LinkUnbound differs from Switchbar, Browser Tamer, BrowserPicker, Finicky, Velja and Choosy",
   short: "How LinkUnbound differs",
-  meta: "LinkUnbound is a free, open source browser picker for Windows and macOS, with rules by site, profile and the app a link came from. How it compares with Switchbar, Browser Tamer, BrowserPicker, Finicky, Velja and Choosy, with sources.",
+  meta: "Free, open source browser picker for Windows and macOS, compared with Finicky, Velja, Choosy, Switchbar, Browser Tamer and BrowserPicker, with sources.",
   lede: "One app for Windows and macOS that asks which browser and profile should open each link, or remembers it for you. A rule matches the site, the profile or the app the link came from, and you set it from the settings, with no file to write. Free, open source, with no account and no telemetry. Here is what it does that other browser pickers do not, and where they are stronger.",
   only: "Yes in {own} of these {total}; the closest of the others, in {best}",
   checked: "Checked on 10 November 2026 against each project's own pages, listed at the foot. A no means its own pages do not offer it. These change, so go and look.",
@@ -209,10 +209,10 @@ const EN: Words = {
 };
 
 const ES: Words = {
-  title: "En qué se diferencia LinkUnbound de Switchbar, Browser Tamer, BrowserPicker, Finicky, Velja y Choosy",
+  title: "LinkUnbound vs Finicky y Velja: selectores de navegador",
   heading: "En qué se diferencia LinkUnbound de Switchbar, Browser Tamer, BrowserPicker, Finicky, Velja y Choosy",
   short: "En qué se diferencia LinkUnbound",
-  meta: "LinkUnbound es un selector de navegador gratuito y de código abierto para Windows y macOS, con reglas por sitio, por perfil y por la app de la que vino el enlace. Cómo se compara con Switchbar, Browser Tamer, BrowserPicker, Finicky, Velja y Choosy, con fuentes.",
+  meta: "Selector de navegador gratis y libre para Windows y macOS, comparado con Finicky, Velja, Choosy, Switchbar, Browser Tamer y BrowserPicker, con fuentes.",
   lede: "Una sola app para Windows y macOS que te pregunta qué navegador y qué perfil abren cada enlace, o lo recuerda por ti. Una regla se fija en el sitio, en el perfil o en la app de la que vino el enlace, y la armas desde la configuración, sin escribir ningún archivo. Gratis, de código abierto, sin cuenta y sin telemetría. Aquí está lo que hace y que otros selectores de navegador no, y dónde ellos son más fuertes.",
   only: "Sí en {own} de estas {total}; el más cercano de los otros, en {best}",
   checked: "Revisado el 10 de noviembre de 2026 en las páginas de cada proyecto, enlazadas al pie. Un no quiere decir que sus propias páginas no lo ofrecen. Esto cambia, así que conviene ir a mirar.",
