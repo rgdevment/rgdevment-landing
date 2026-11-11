@@ -106,6 +106,41 @@ function assistants(product: Product): string[] {
   ];
 }
 
+function memory(product: Product): string[] {
+  const { fixes, day, cost } = product.en;
+  return [
+    ...(fixes
+      ? [
+          `## ${fixes.title}`,
+          "",
+          fixes.lede,
+          "",
+          ...fixes.rows.map((one) => `- ${one.who}. ${fixes.said.problem}: ${one.problem} ${fixes.said.fix}: ${one.fix}`),
+          "",
+        ]
+      : []),
+    ...(day
+      ? [`## ${day.title}`, "", day.lede, "", ...day.steps.map((one, at) => `${at + 1}. ${one.title} ${one.body}`), "", day.close, ""]
+      : []),
+    ...(cost
+      ? [
+          `## ${cost.title}`,
+          "",
+          cost.lede,
+          "",
+          ...cost.rows.map(([what, spends, saves]) => `- ${what}: ${spends}, ${saves}`),
+          "",
+          `${cost.whyTitle}:`,
+          "",
+          ...cost.why.map((one) => `- ${one}`),
+          "",
+          cost.caveat,
+          "",
+        ]
+      : []),
+  ];
+}
+
 function sharing(product: Product): string[] {
   const said = product.en.sharing;
   if (!said) return [];
@@ -144,6 +179,8 @@ function compared(product: Product): string[] {
     row(["---", ...compared.rivals.map(() => "---")]),
     ...t.rows.map((one) => row([one.label, ...one.cells.map(({ mark, note }) => (note ? `${t.marks[mark]}: ${note}` : t.marks[mark]))])),
     "",
+    ...(t.agent ? [`## ${t.agent.title}`, "", ...t.agent.body.flatMap((one) => [one, ""]), `- [${t.agent.link.label}](${t.agent.link.url})`, ""] : []),
+    ...(t.faq ? [`## ${t.faq.title}`, "", ...t.faq.items.map((one) => `- ${one.q} ${one.a}`), ""] : []),
     `## ${t.stronger.title}`,
     "",
     ...t.stronger.items.map(([name, text]) => `- ${name}: ${text}`),
@@ -186,6 +223,7 @@ export async function appLlms(): Promise<Response> {
     ...(t.what ?? []).map((one) => `- ${one}`),
     ...(t.groups ?? []).flatMap((group) => [`### ${group.title}`, "", ...group.points.map((one) => `- ${one}`), ""]),
     "",
+    ...memory(product),
     ...onDisk(product),
     "## Privacy",
     "",
@@ -243,8 +281,9 @@ export async function appLlmsFull(): Promise<Response> {
     ].join("\n"),
   );
   const head = `# ${product.name} documentation\n\n> ${product.en.meta}\n\nEvery page of the ${product.name} docs, in English. The same pages in Spanish live at ${canonical("es", docPath("es", product.slug))}.`;
+  const pitch = memory(product);
   const extra = compared(product);
-  const all = extra.length ? [head, ...pages, extra.join("\n")] : [head, ...pages];
+  const all = [head, ...(pitch.length ? [pitch.join("\n").trim()] : []), ...pages, ...(extra.length ? [extra.join("\n")] : [])];
   return new Response(`${all.join("\n\n---\n\n")}\n`, { headers: TEXT });
 }
 

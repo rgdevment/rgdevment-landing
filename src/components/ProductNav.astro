@@ -24,7 +24,6 @@ const items: Item[] = [
   ...(compares(product.slug) ? [[href(locale, COMPARE_PATH[locale]), es ? "Comparar" : "Compare", false] as Item] : []),
   ...(hasChangelog(product.slug) ? [[href(locale, CHANGELOG_PATH[locale]), es ? "Novedades" : "What's new", false] as Item] : []),
   [href(locale, es ? "colaborar" : "support"), es ? "Colaborar" : "Support", false],
-  [product.repo, es ? "Repositorio" : "Repository", true],
   [href(locale, docPath(locale, product.slug)), es ? "Ayuda" : "Docs", false],
   ...(words ? [[words.url, "Markdown", true] as Item] : []),
 ];
