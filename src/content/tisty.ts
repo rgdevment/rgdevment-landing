@@ -131,11 +131,11 @@ export const DAY_ES: Day = {
 export const COST_EN: Cost = {
   title: "What it costs your agent",
   lede: "Tisty knows what each answer costs, and keeps cutting it. Measured on a 256 KB Markdown work log, against an agent that rereads the whole file every session:",
-  head: ["The agent…", "Spends, with Tisty", "Saving"],
+  less: "less",
   rows: [
-    ["Picks up the work, with nothing new", "about 1%", "99% less"],
-    ["Looks for something solved months ago", "about 2%", "98% less"],
-    ["Looks up one subject: the outline and one section", "about 5%, 8% at worst", "92–95% less"],
+    { what: "Picks up the work, with nothing new", spends: "spends about 1%", saving: "99%" },
+    { what: "Looks for something solved months ago", spends: "spends about 2%", saving: "98%" },
+    { what: "Looks up one subject: the outline and one section", spends: "spends about 5%, 8% at worst", saving: "92–95%" },
   ],
   whyTitle: "Where the saving comes from",
   why: [
@@ -150,11 +150,11 @@ export const COST_EN: Cost = {
 export const COST_ES: Cost = {
   title: "Lo que le cuesta a tu agente",
   lede: "Tisty sabe lo que cuesta cada respuesta, y lo sigue recortando. Medido sobre una bitácora de trabajo de 256 KB en Markdown, frente a un agente que relee el archivo entero en cada sesión:",
-  head: ["El agente…", "Gasta, con Tisty", "Ahorro"],
+  less: "menos",
   rows: [
-    ["Retoma el trabajo, sin novedades", "cerca de un 1 %", "99 % menos"],
-    ["Busca algo resuelto hace meses", "cerca de un 2 %", "98 % menos"],
-    ["Consulta un tema: el índice y una sección", "cerca de un 5 %, 8 % en el peor caso", "92–95 % menos"],
+    { what: "Retoma el trabajo, sin novedades", spends: "gasta cerca de un 1 %", saving: "99 %" },
+    { what: "Busca algo resuelto hace meses", spends: "gasta cerca de un 2 %", saving: "98 %" },
+    { what: "Consulta un tema: el índice y una sección", spends: "gasta cerca de un 5 %, 8 % en el peor caso", saving: "92–95 %" },
   ],
   whyTitle: "De dónde sale el ahorro",
   why: [

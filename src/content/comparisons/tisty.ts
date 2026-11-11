@@ -237,15 +237,33 @@ const EN: Words = {
   ],
   stronger: {
     title: "Where the others are stronger",
-    lede: "Each of them does something better than Tisty, and it is worth saying which.",
-    items: [
-      ["Notion", "Real-time editing with a team, and apps for phones and the web. If your documents are shared work, it is built for that, once you and your data have an account there."],
-      ["Craft", "Polished documents on Mac, Windows, iPhone, iPad, Android and the web, and pages you publish with a password and an end date."],
-      ["Todoist", "Quicker at catching a task on the phone than anything on a desktop, on every system, Linux and the web included. When the task is done, though, what you worked out has nowhere to stay."],
-      ["Logseq", "Open source like Tisty, an outliner built on linking blocks, and it runs on Linux and on phones."],
-      ["Obsidian", "A notebook with thousands of community plugins, and apps for Linux, iOS and Android. If plugins are how you work, it is hard to beat."],
-      ["Joplin", "Open source like Tisty, on every system, Linux, phones and the terminal included, with end-to-end encrypted sync to a cloud you choose."],
-      ["Tisty", "Has no phone app and no Linux build, nobody edits a document with you live, and tasks from another app have to be typed again."],
+    lede: "Each of them does something better than Tisty, and it is worth saying which: the free ones that keep your notes on your disk first, then the ones with paid plans that keep them in their cloud.",
+    groups: [
+      {
+        title: "Free, on your disk",
+        label: "What it does better than Tisty",
+        items: [
+          { name: "Logseq", facts: ["Open source · AGPL-3.0", "Free", "On your disk", "Windows, macOS, Linux, iOS"], text: "An outliner built on linking blocks, and it runs on Linux and on phones." },
+          { name: "Joplin", facts: ["Open source · AGPL-3.0", "Free", "On your disk", "Windows, macOS, Linux, Android, iOS"], text: "On every system, Linux, phones and the terminal included, with end-to-end encrypted sync to a cloud you choose." },
+          { name: "Obsidian", facts: ["Closed source", "Free for personal use", "On your disk", "Windows, macOS, Linux, iOS, Android"], text: "A notebook with thousands of community plugins, and apps for Linux, iOS and Android. If plugins are how you work, it is hard to beat." },
+        ],
+      },
+      {
+        title: "Paid plans, in their cloud",
+        label: "What it does better than Tisty",
+        items: [
+          { name: "Notion", facts: ["Closed source", "Freemium", "Their servers, with an account", "Every platform"], text: "Real-time editing with a team, and apps for phones and the web. If your documents are shared work, it is built for that, once you and your data have an account there." },
+          { name: "Todoist", facts: ["Closed source", "Freemium", "Their servers, with an account", "Every platform"], text: "Quicker at catching a task on the phone than anything on a desktop, on every system, Linux and the web included. When the task is done, though, what you worked out has nowhere to stay." },
+          { name: "Craft", facts: ["Closed source", "Freemium", "Their cloud", "macOS, iOS, Windows, Android, web"], text: "Polished documents on Mac, Windows, iPhone, iPad, Android and the web, and pages you publish with a password and an end date." },
+        ],
+      },
+      {
+        title: "And where Tisty falls short",
+        label: "What it lacks",
+        items: [
+          { name: "Tisty", facts: ["Open source · AGPL-3.0", "Free, no paid tier", "On your disk, no account", "Windows, macOS"], text: "Has no phone app and no Linux build, nobody edits a document with you live, and tasks from another app have to be typed again." },
+        ],
+      },
     ],
   },
   agent: {
@@ -400,15 +418,33 @@ const ES: Words = {
   ],
   stronger: {
     title: "Dónde los otros son más fuertes",
-    lede: "Cada uno hace algo mejor que Tisty, y vale la pena decir qué.",
-    items: [
-      ["Notion", "Edición en tiempo real con un equipo, y apps para el teléfono y la web. Si tus documentos son trabajo compartido, está hecho para eso, una vez que tú y tus datos tienen cuenta ahí."],
-      ["Craft", "Documentos muy cuidados en Mac, Windows, iPhone, iPad, Android y la web, y páginas que publicas con contraseña y fecha de término."],
-      ["Todoist", "Más rápido para anotar una tarea en el teléfono que cualquier cosa de escritorio, en todos los sistemas, Linux y la web incluidos. Pero cuando la tarea termina, lo que resolviste no tiene dónde quedarse."],
-      ["Logseq", "De código abierto como Tisty, un esquematizador hecho para enlazar bloques, y funciona en Linux y en el teléfono."],
-      ["Obsidian", "Un cuaderno con miles de plugins de la comunidad y apps para Linux, iOS y Android. Si trabajas a punta de plugins, cuesta superarlo."],
-      ["Joplin", "De código abierto como Tisty, en todos los sistemas, Linux, el teléfono y la terminal incluidos, con sincronización cifrada de extremo a extremo a la nube que elijas."],
-      ["Tisty", "No tiene app para el teléfono ni versión para Linux, nadie edita un documento contigo en vivo, y las tareas de otra app hay que escribirlas de nuevo."],
+    lede: "Cada uno hace algo mejor que Tisty, y vale la pena decir qué: primero los gratuitos que guardan tus notas en tu disco, después los que tienen planes de pago y las guardan en su nube.",
+    groups: [
+      {
+        title: "Gratis y en tu disco",
+        label: "Lo que hace mejor que Tisty",
+        items: [
+          { name: "Logseq", facts: ["Código abierto · AGPL-3.0", "Gratis", "En tu disco", "Windows, macOS, Linux, iOS"], text: "Un esquematizador hecho para enlazar bloques, y funciona en Linux y en el teléfono." },
+          { name: "Joplin", facts: ["Código abierto · AGPL-3.0", "Gratis", "En tu disco", "Windows, macOS, Linux, Android, iOS"], text: "En todos los sistemas, Linux, el teléfono y la terminal incluidos, con sincronización cifrada de extremo a extremo a la nube que elijas." },
+          { name: "Obsidian", facts: ["Código cerrado", "Gratis para uso personal", "En tu disco", "Windows, macOS, Linux, iOS, Android"], text: "Un cuaderno con miles de plugins de la comunidad y apps para Linux, iOS y Android. Si trabajas a punta de plugins, cuesta superarlo." },
+        ],
+      },
+      {
+        title: "Con planes de pago y en su nube",
+        label: "Lo que hace mejor que Tisty",
+        items: [
+          { name: "Notion", facts: ["Código cerrado", "Freemium", "En sus servidores, con cuenta", "Todas las plataformas"], text: "Edición en tiempo real con un equipo, y apps para el teléfono y la web. Si tus documentos son trabajo compartido, está hecho para eso, una vez que tú y tus datos tienen cuenta ahí." },
+          { name: "Todoist", facts: ["Código cerrado", "Freemium", "En sus servidores, con cuenta", "Todas las plataformas"], text: "Más rápido para anotar una tarea en el teléfono que cualquier cosa de escritorio, en todos los sistemas, Linux y la web incluidos. Pero cuando la tarea termina, lo que resolviste no tiene dónde quedarse." },
+          { name: "Craft", facts: ["Código cerrado", "Freemium", "En su nube", "macOS, iOS, Windows, Android, web"], text: "Documentos muy cuidados en Mac, Windows, iPhone, iPad, Android y la web, y páginas que publicas con contraseña y fecha de término." },
+        ],
+      },
+      {
+        title: "Y donde Tisty se queda corto",
+        label: "Lo que le falta",
+        items: [
+          { name: "Tisty", facts: ["Código abierto · AGPL-3.0", "Gratis, sin versión de pago", "En tu disco, sin cuenta", "Windows, macOS"], text: "No tiene app para el teléfono ni versión para Linux, nadie edita un documento contigo en vivo, y las tareas de otra app hay que escribirlas de nuevo." },
+        ],
+      },
     ],
   },
   agent: {

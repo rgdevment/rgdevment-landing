@@ -164,17 +164,30 @@ const priced = (own?: string) => (own ? href(locale, own) : undefined);
 
   <section class="shell mt-20">
     <h2 class="section-title">{t.stronger.title}</h2>
-    <p class="mt-3 text-muted">{t.stronger.lede}</p>
-    <ul class="mt-8 grid gap-4 sm:grid-cols-2">
-      {
-        t.stronger.items.map(([name, text]) => (
-          <li class="card p-6">
-            <h3 class="font-display text-lg font-semibold text-fg">{name}</h3>
-            <p class="mt-2 text-body">{text}</p>
-          </li>
-        ))
-      }
-    </ul>
+    <p class="mt-3 max-w-3xl text-muted">{t.stronger.lede}</p>
+    {
+      t.stronger.groups.map((group) => (
+        <div class="mt-10">
+          {group.title && <h3 class="font-display text-xl font-semibold text-fg">{group.title}</h3>}
+          <ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+            {group.items.map((one) => (
+              <li class="card flex flex-col p-6">
+                <h4 class="font-display text-lg font-semibold text-fg">{one.name}</h4>
+                {one.facts && (
+                  <ul class="mt-3 flex flex-wrap gap-1.5">
+                    {one.facts.map((fact) => (
+                      <li class="chip text-xs">{fact}</li>
+                    ))}
+                  </ul>
+                )}
+                {group.label && <p class="mt-4 text-xs font-medium uppercase tracking-[0.12em] text-muted">{group.label}</p>}
+                <p class={group.label ? "mt-1.5 text-body" : "mt-2 text-body"}>{one.text}</p>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
     <a class="btn-primary mt-10" href={`${href(locale)}#download`}>
       <Icon name="download" class="h-4 w-4" />
       {t.back}

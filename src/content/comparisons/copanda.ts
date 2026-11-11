@@ -182,14 +182,18 @@ const EN: Words = {
   stronger: {
     title: "Where the others are stronger",
     lede: "Each of them does something better than CoPanda, and it is worth saying which.",
-    items: [
-      ["Win+V", "Built into Windows with nothing to install, and it can sync what you copy across PCs through a Microsoft account."],
-      ["Ditto", "Sends clips to other computers on your network, and has years of power features behind it: groups, many special pastes and scripting."],
-      ["CopyQ", "Runs on Linux too, and is scriptable from end to end: command line, tabs, automatic commands and optional encryption."],
-      ["Maccy", "Small, fast and made for the keyboard, with native macOS controls, and it already searches the text inside images."],
-      ["Paste", "Syncs the history and pinboards through iCloud to iPhone and iPad, and has pinboards shared with a team."],
-      ["Raycast", "Part of a launcher with many other tools, with the same clipboard features on Mac and Windows."],
-      ["CoPanda", "No Linux build, no phone app, nothing scriptable, and no sync between computers: a backup file is how the history moves."],
+    groups: [
+      {
+        items: [
+          { name: "Win+V", text: "Built into Windows with nothing to install, and it can sync what you copy across PCs through a Microsoft account." },
+          { name: "Ditto", text: "Sends clips to other computers on your network, and has years of power features behind it: groups, many special pastes and scripting." },
+          { name: "CopyQ", text: "Runs on Linux too, and is scriptable from end to end: command line, tabs, automatic commands and optional encryption." },
+          { name: "Maccy", text: "Small, fast and made for the keyboard, with native macOS controls, and it already searches the text inside images." },
+          { name: "Paste", text: "Syncs the history and pinboards through iCloud to iPhone and iPad, and has pinboards shared with a team." },
+          { name: "Raycast", text: "Part of a launcher with many other tools, with the same clipboard features on Mac and Windows." },
+          { name: "CoPanda", text: "No Linux build, no phone app, nothing scriptable, and no sync between computers: a backup file is how the history moves." },
+        ],
+      },
     ],
   },
   sources: "Sources",
@@ -311,14 +315,18 @@ const ES: Words = {
   stronger: {
     title: "Dónde los otros son más fuertes",
     lede: "Cada uno hace algo mejor que CoPanda, y vale la pena decir qué.",
-    items: [
-      ["Win+V", "Viene con Windows, sin instalar nada, y puede sincronizar lo que copias entre PC con una cuenta Microsoft."],
-      ["Ditto", "Manda recortes a otros computadores de tu red y tiene años de funciones avanzadas detrás: grupos, muchas formas de pegado especial y scripts."],
-      ["CopyQ", "También funciona en Linux y se programa de punta a punta: línea de comandos, pestañas, comandos automáticos y cifrado opcional."],
-      ["Maccy", "Pequeño, rápido y pensado para el teclado, con controles nativos de macOS, y ya busca el texto dentro de las imágenes."],
-      ["Paste", "Sincroniza el historial y los tableros por iCloud con el iPhone y el iPad, y tiene tableros compartidos con un equipo."],
-      ["Raycast", "Es parte de un lanzador con muchas otras herramientas, con las mismas funciones del portapapeles en Mac y en Windows."],
-      ["CoPanda", "No tiene versión para Linux ni app para el teléfono, no se programa con scripts y no sincroniza entre computadores: el historial se mueve con un archivo de respaldo."],
+    groups: [
+      {
+        items: [
+          { name: "Win+V", text: "Viene con Windows, sin instalar nada, y puede sincronizar lo que copias entre PC con una cuenta Microsoft." },
+          { name: "Ditto", text: "Manda recortes a otros computadores de tu red y tiene años de funciones avanzadas detrás: grupos, muchas formas de pegado especial y scripts." },
+          { name: "CopyQ", text: "También funciona en Linux y se programa de punta a punta: línea de comandos, pestañas, comandos automáticos y cifrado opcional." },
+          { name: "Maccy", text: "Pequeño, rápido y pensado para el teclado, con controles nativos de macOS, y ya busca el texto dentro de las imágenes." },
+          { name: "Paste", text: "Sincroniza el historial y los tableros por iCloud con el iPhone y el iPad, y tiene tableros compartidos con un equipo." },
+          { name: "Raycast", text: "Es parte de un lanzador con muchas otras herramientas, con las mismas funciones del portapapeles en Mac y en Windows." },
+          { name: "CoPanda", text: "No tiene versión para Linux ni app para el teléfono, no se programa con scripts y no sincroniza entre computadores: el historial se mueve con un archivo de respaldo." },
+        ],
+      },
     ],
   },
   sources: "Fuentes",

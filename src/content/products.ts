@@ -73,8 +73,8 @@ export type Day = {
 export type Cost = {
   title: string;
   lede: string;
-  head: [string, string, string];
-  rows: [string, string, string][];
+  less: string;
+  rows: { what: string; spends: string; saving: string }[];
   whyTitle: string;
   why: string[];
   caveat: string;
