@@ -190,7 +190,7 @@ export const PRODUCTS: Product[] = [
     writes: true,
     mascot: "/tisty-head.svg",
     en: {
-      category: "Local memory for you and your AI agent: Markdown notes, documents and tasks for Windows and macOS",
+      category: "Local memory and context for you and your AI agent: Markdown notes, documents and tasks for Windows and macOS",
       tagline: "The working memory for you and your agent. What you learn stays, and your agent picks up where it left off.",
       mascot: {
         title: "A beaver that keeps what you build.",
@@ -256,8 +256,8 @@ export const PRODUCTS: Product[] = [
         page: "tasks",
         anchor: "a-task-or-a-document",
       },
-      title: "Tisty: local memory for AI agents, Markdown notes and tasks",
-      meta: "Local memory for you and your AI agent: Markdown notes, documents and tasks on your disk, over MCP for GitHub Copilot, Claude Code and Cursor. Free, no account.",
+      title: "Tisty: local memory and context for AI agents, notes and tasks",
+      meta: "Local memory and context for you and your AI agent: Markdown notes, documents and tasks on your disk, over MCP for GitHub Copilot, Claude Code and Cursor. Free.",
       problem:
         "A task list forgets the moment you tick the box, and your AI agent forgets the moment the session ends. Six months later the same problem comes back and all that is left is knowing you solved it once, somehow.",
       groups: [
@@ -343,7 +343,7 @@ export const PRODUCTS: Product[] = [
       },
     },
     es: {
-      category: "Memoria local para ti y tu agente de IA: notas, documentos y tareas en Markdown para Windows y macOS",
+      category: "Memoria y contexto locales para ti y tu agente de IA: notas, documentos y tareas en Markdown para Windows y macOS",
       tagline: "La memoria de trabajo tuya y de tu agente. Lo que aprendes se queda, y tu agente retoma donde quedó.",
       mascot: {
         title: "Un castor que guarda lo que construyes.",
@@ -409,8 +409,8 @@ export const PRODUCTS: Product[] = [
         page: "tareas",
         anchor: "tarea-o-documento",
       },
-      title: "Tisty: memoria local para agentes de IA, notas y tareas",
-      meta: "Memoria local para ti y tu agente de IA: notas, documentos y tareas en Markdown en tu disco, por MCP para GitHub Copilot, Claude Code y Cursor. Gratis, sin cuenta.",
+      title: "Tisty: memoria y contexto locales para tu agente de IA",
+      meta: "Memoria y contexto locales para ti y tu agente de IA: notas, documentos y tareas en Markdown en tu disco, por MCP para GitHub Copilot, Claude Code y Cursor. Gratis.",
       problem:
         "Una lista de tareas olvida en cuanto marcas la casilla, y tu agente de IA olvida en cuanto termina la sesión. Seis meses después vuelve el mismo problema y lo único que queda es saber que ya lo resolviste una vez, de alguna manera.",
       groups: [
