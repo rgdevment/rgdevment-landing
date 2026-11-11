@@ -183,7 +183,11 @@ function compared(product: Product): string[] {
     ...(t.faq ? [`## ${t.faq.title}`, "", ...t.faq.items.map((one) => `- ${one.q} ${one.a}`), ""] : []),
     `## ${t.stronger.title}`,
     "",
-    ...t.stronger.items.map(([name, text]) => `- ${name}: ${text}`),
+    ...t.stronger.groups.flatMap((group) => [
+      ...(group.title ? [`### ${group.title}`, ""] : []),
+      ...group.items.map((one) => `- ${one.name}${one.facts ? ` (${one.facts.join("; ")})` : ""}: ${one.text}`),
+      "",
+    ]),
     "",
     `## ${t.sources}`,
     "",

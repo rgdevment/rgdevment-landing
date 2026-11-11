@@ -194,14 +194,18 @@ const EN: Words = {
   stronger: {
     title: "Where the others are stronger",
     lede: "Each of them does something better than LinkUnbound, and it is worth saying which.",
-    items: [
-      ["Switchbar", "Sends links into WebCatalog's desktop apps and spaces, and email links to Gmail, Outlook or Apple Mail, with browser extensions and Handoff on a Mac."],
-      ["Browser Tamer", "Runs on Linux, finds Firefox profiles and containers on its own, removes trackers with ClearURLs, and lets you script rules in Lua with a debugger."],
-      ["BrowserPicker", "A portable build that registers without administrator rights, browsers ordered by how often you pick them, and Zen and Firefox containers."],
-      ["Finicky", "Rules and address rewrites written in JavaScript or TypeScript, as far as you want to take them, down to the title of the window the link came from."],
-      ["Velja", "Removes more than 200 tracking parameters, transforms addresses in JavaScript, has Shortcuts actions, and opens Zoom, Teams, Meet and Figma links straight in their apps."],
-      ["Choosy", "Rules that also match modifier keys, how many browsers are running, the kind of link, AirDrop and Handoff, plus browser extensions and an address API."],
-      ["LinkUnbound", "No Linux build, no scripting beyond what the settings offer, Firefox profiles added by hand, and rules copied by hand to another computer."],
+    groups: [
+      {
+        items: [
+          { name: "Switchbar", text: "Sends links into WebCatalog's desktop apps and spaces, and email links to Gmail, Outlook or Apple Mail, with browser extensions and Handoff on a Mac." },
+          { name: "Browser Tamer", text: "Runs on Linux, finds Firefox profiles and containers on its own, removes trackers with ClearURLs, and lets you script rules in Lua with a debugger." },
+          { name: "BrowserPicker", text: "A portable build that registers without administrator rights, browsers ordered by how often you pick them, and Zen and Firefox containers." },
+          { name: "Finicky", text: "Rules and address rewrites written in JavaScript or TypeScript, as far as you want to take them, down to the title of the window the link came from." },
+          { name: "Velja", text: "Removes more than 200 tracking parameters, transforms addresses in JavaScript, has Shortcuts actions, and opens Zoom, Teams, Meet and Figma links straight in their apps." },
+          { name: "Choosy", text: "Rules that also match modifier keys, how many browsers are running, the kind of link, AirDrop and Handoff, plus browser extensions and an address API." },
+          { name: "LinkUnbound", text: "No Linux build, no scripting beyond what the settings offer, Firefox profiles added by hand, and rules copied by hand to another computer." },
+        ],
+      },
     ],
   },
   sources: "Sources",
@@ -335,14 +339,18 @@ const ES: Words = {
   stronger: {
     title: "Dónde los otros son más fuertes",
     lede: "Cada uno hace algo mejor que LinkUnbound, y vale la pena decir qué.",
-    items: [
-      ["Switchbar", "Manda enlaces a las apps de escritorio y espacios de WebCatalog, y los de correo a Gmail, Outlook o Apple Mail, con extensiones para el navegador y Handoff en Mac."],
-      ["Browser Tamer", "Funciona en Linux, encuentra solo los perfiles y contenedores de Firefox, quita rastreadores con ClearURLs y deja programar reglas en Lua con un depurador."],
-      ["BrowserPicker", "Una versión portable que se registra sin permisos de administrador, navegadores ordenados según cuánto los eliges, y contenedores de Zen y Firefox."],
-      ["Finicky", "Reglas y reescrituras de direcciones escritas en JavaScript o TypeScript, tan lejos como quieras llevarlas, hasta el título de la ventana de la que vino el enlace."],
-      ["Velja", "Quita más de 200 parámetros de rastreo, transforma direcciones con JavaScript, tiene acciones para Atajos y abre los enlaces de Zoom, Teams, Meet y Figma directo en sus apps."],
-      ["Choosy", "Reglas que también miran las teclas modificadoras, cuántos navegadores están abiertos, el tipo de enlace, AirDrop y Handoff, además de extensiones para el navegador y una API de direcciones."],
-      ["LinkUnbound", "No tiene versión para Linux ni scripts más allá de lo que ofrece la configuración, los perfiles de Firefox se agregan a mano y las reglas se copian a mano a otro computador."],
+    groups: [
+      {
+        items: [
+          { name: "Switchbar", text: "Manda enlaces a las apps de escritorio y espacios de WebCatalog, y los de correo a Gmail, Outlook o Apple Mail, con extensiones para el navegador y Handoff en Mac." },
+          { name: "Browser Tamer", text: "Funciona en Linux, encuentra solo los perfiles y contenedores de Firefox, quita rastreadores con ClearURLs y deja programar reglas en Lua con un depurador." },
+          { name: "BrowserPicker", text: "Una versión portable que se registra sin permisos de administrador, navegadores ordenados según cuánto los eliges, y contenedores de Zen y Firefox." },
+          { name: "Finicky", text: "Reglas y reescrituras de direcciones escritas en JavaScript o TypeScript, tan lejos como quieras llevarlas, hasta el título de la ventana de la que vino el enlace." },
+          { name: "Velja", text: "Quita más de 200 parámetros de rastreo, transforma direcciones con JavaScript, tiene acciones para Atajos y abre los enlaces de Zoom, Teams, Meet y Figma directo en sus apps." },
+          { name: "Choosy", text: "Reglas que también miran las teclas modificadoras, cuántos navegadores están abiertos, el tipo de enlace, AirDrop y Handoff, además de extensiones para el navegador y una API de direcciones." },
+          { name: "LinkUnbound", text: "No tiene versión para Linux ni scripts más allá de lo que ofrece la configuración, los perfiles de Firefox se agregan a mano y las reglas se copian a mano a otro computador." },
+        ],
+      },
     ],
   },
   sources: "Fuentes",

@@ -12,7 +12,11 @@ export type Words = {
   checked: string;
   marks: Record<Mark, string>;
   rows: { label: string; cells: Cell[]; own?: string }[];
-  stronger: { title: string; lede: string; items: [string, string][] };
+  stronger: {
+    title: string;
+    lede: string;
+    groups: { title?: string; label?: string; items: { name: string; text: string; facts?: string[] }[] }[];
+  };
   agent?: { title: string; body: string[]; link: { label: string; url: string } };
   faq?: { title: string; items: { q: string; a: string }[] };
   sources: string;
