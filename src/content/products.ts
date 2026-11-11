@@ -259,7 +259,7 @@ export const PRODUCTS: Product[] = [
       title: "Tisty: local memory and context for AI agents, notes and tasks",
       meta: "Local memory and context for you and your AI agent: Markdown notes, documents and tasks on your disk, over MCP for GitHub Copilot, Claude Code and Cursor. Free.",
       problem:
-        "A task list forgets the moment you tick the box, and your AI agent forgets the moment the session ends. Six months later the same problem comes back and all that is left is knowing you solved it once, somehow.",
+        "An ordinary task list forgets the moment you tick the box, and your AI agent forgets the moment the session ends: six months later the same problem comes back and all you have is knowing you solved it once. In Tisty, what you solved stays, with its steps and its why, for you and for your agent.",
       groups: [
         {
           title: "Capture and plan",
@@ -412,7 +412,7 @@ export const PRODUCTS: Product[] = [
       title: "Tisty: memoria y contexto locales para tu agente de IA",
       meta: "Memoria y contexto locales para ti y tu agente de IA: notas, documentos y tareas en Markdown en tu disco, por MCP para GitHub Copilot, Claude Code y Cursor. Gratis.",
       problem:
-        "Una lista de tareas olvida en cuanto marcas la casilla, y tu agente de IA olvida en cuanto termina la sesión. Seis meses después vuelve el mismo problema y lo único que queda es saber que ya lo resolviste una vez, de alguna manera.",
+        "Una lista de tareas común olvida en cuanto marcas la casilla, y tu agente de IA olvida en cuanto termina la sesión: seis meses después vuelve el mismo problema y solo te queda saber que ya lo resolviste una vez. En Tisty, lo que resolviste se queda, con sus pasos y su porqué, para ti y para tu agente.",
       groups: [
         {
           title: "Capturar y planificar",
