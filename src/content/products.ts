@@ -183,8 +183,8 @@ export const PRODUCTS: Product[] = [
       srcEs: "/tisty-social-es.png",
       width: 1920,
       height: 1080,
-      en: "Tisty: the day's tasks with their steps, the documents beside them and the days ahead, kept as files on disk",
-      es: "Tisty: las tareas del día con sus pasos, los documentos al lado y los días que vienen, guardados como archivos en disco",
+      en: "Tisty, the working memory for you and your AI agent: the archive keeps every finished task with its steps and its journal, and your agent asks how did we solve this last time? to bring one back as it was",
+      es: "Tisty, la memoria de trabajo tuya y de tu agente de IA: el archivo guarda cada tarea terminada con sus pasos y su bitácora, y tu agente pregunta ¿cómo lo resolvimos la otra vez? para traer una tal como quedó",
     },
     accent: "#6F4BD8",
     accentDark: "#9276E1",
@@ -268,7 +268,7 @@ export const PRODUCTS: Product[] = [
           points: [
             "Type «call the bank at 3» in the quick capture, open from anywhere, and it is a task with its hour.",
             "Today puts the urgent first: overdue only past its deadline, late when the day you planned slipped by.",
-            "Steps, parts and the Eisenhower matrix by its name: do, decide, delegate, drop.",
+            "Steps, parts and the Eisenhower matrix by its name: do, schedule, delegate, minor.",
           ],
         },
         {
