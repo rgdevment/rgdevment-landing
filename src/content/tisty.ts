@@ -3,6 +3,7 @@ import type { Assistant, Cost, Day, Fixes, Proof, Sharing } from "./products";
 export const FIXES_EN: Fixes = {
   title: "Real problems, real fixes",
   lede: "What people actually run into after months of working with an AI assistant, and what happens instead when the memory lives in Tisty.",
+  said: { problem: "The problem", fix: "With Tisty" },
   rows: [
     {
       who: "Developer",
@@ -50,6 +51,7 @@ export const FIXES_EN: Fixes = {
 export const FIXES_ES: Fixes = {
   title: "Problemas reales, soluciones reales",
   lede: "Lo que de verdad le pasa a quien trabaja meses con un asistente de IA, y lo que pasa en cambio cuando la memoria vive en Tisty.",
+  said: { problem: "El problema", fix: "Con Tisty" },
   rows: [
     {
       who: "Desarrollo",

@@ -59,6 +59,7 @@ export type Sharing = {
 export type Fixes = {
   title: string;
   lede: string;
+  said: { problem: string; fix: string };
   rows: { who: string; problem: string; fix: string }[];
 };
 

@@ -34,6 +34,7 @@ const path = product.slug;
 const shot = shotSrc(product, locale);
 const brew = brewSteps(product);
 const ink = inkOf(product);
+const fixes = t.fixes;
 const social = cardOf(product, locale);
 
 const release = await latestRelease(product);
@@ -332,16 +333,20 @@ const schema = [
   </section>
 
   {
-    t.fixes && (
+    fixes && (
       <section class="shell mt-24 sm:mt-32">
-        <h2 class="section-title">{t.fixes.title}</h2>
-        <p class="mt-3 max-w-3xl text-muted">{t.fixes.lede}</p>
+        <h2 class="section-title">{fixes.title}</h2>
+        <p class="mt-3 max-w-3xl text-muted">{fixes.lede}</p>
         <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
-          {t.fixes.rows.map((one) => (
+          {fixes.rows.map((one) => (
             <div class="card p-6 sm:p-7">
               <p class="accent-ink font-mono text-xs uppercase tracking-[0.14em]" style={ink}>{one.who}</p>
-              <h3 class="mt-2 font-display text-lg font-semibold">{one.problem}</h3>
-              <p class="mt-2 text-body">{one.fix}</p>
+              <p class="mt-4 text-xs font-medium uppercase tracking-[0.12em] text-muted">{fixes.said.problem}</p>
+              <h3 class="mt-1.5 font-display text-lg font-semibold">{one.problem}</h3>
+              <div class="mt-5 border-l-2 pl-4" style={`border-color: ${product.accent}`}>
+                <p class="accent-ink text-xs font-medium uppercase tracking-[0.12em]" style={ink}>{fixes.said.fix}</p>
+                <p class="mt-1.5 text-body">{one.fix}</p>
+              </div>
             </div>
           ))}
         </div>
