@@ -13,7 +13,7 @@ export const FIXES_EN: Fixes = {
     {
       who: "Developer",
       problem: "Your NOTES.md grew to 256 KB and the agent rereads it every time.",
-      fix: "It lives as documents split by subject, in pages. The agent reads the outline and the one section it needs, about 95% less than the whole file.",
+      fix: "It lives as documents split by subject, in pages. The agent reads the outline and the one section it needs, about 94% less than the whole file.",
     },
     {
       who: "Anyone",
@@ -61,7 +61,7 @@ export const FIXES_ES: Fixes = {
     {
       who: "Desarrollo",
       problem: "Tu NOTES.md llegó a 256 KB y el agente lo relee cada vez.",
-      fix: "Vive como documentos separados por tema, en páginas. El agente lee el índice y la única sección que necesita, cerca de un 95 % menos que el archivo entero.",
+      fix: "Vive como documentos separados por tema, en páginas. El agente lee el índice y la única sección que necesita, cerca de un 94 % menos que el archivo entero.",
     },
     {
       who: "Cualquiera",
@@ -134,8 +134,8 @@ export const COST_EN: Cost = {
   less: "less",
   rows: [
     { what: "Picks up the work, with nothing new", spends: "spends about 1%", saving: "99%" },
-    { what: "Looks for something solved months ago", spends: "spends about 2%", saving: "98%" },
-    { what: "Looks up one subject: the outline and one section", spends: "spends about 5%, 8% at worst", saving: "92–95%" },
+    { what: "Looks for something solved months ago", spends: "spends about 3%", saving: "97%" },
+    { what: "Looks up one subject: the outline and one section", spends: "spends about 6%, 12% at worst", saving: "88–94%" },
   ],
   whyTitle: "Where the saving comes from",
   why: [
@@ -144,7 +144,7 @@ export const COST_EN: Cost = {
     "The outline says what each section weighs before anything is opened.",
     "Picking up again brings only what moved, and what is finished costs nothing until it is searched.",
   ],
-  caveat: "Connecting costs something too: the description of Tisty's tools weighs about a quarter of that log. An assistant that loads tools only as it uses them does not pay it whole; one that loads every tool each session saves closer to 70–75%, and below some 70 KB of notes a plain file is cheaper. Counted in characters, with the JSON each answer carries included.",
+  caveat: "Connecting costs something too: the description of Tisty's tools weighs about a sixth of that log, a third less than it did, and a test keeps it from growing. An assistant that loads tools only as it uses them does not pay it whole; one that loads every tool each session saves 72–83%, and below some 50 KB of notes a plain file is cheaper. Counted in characters, with the JSON each answer carries included.",
 };
 
 export const COST_ES: Cost = {
@@ -153,8 +153,8 @@ export const COST_ES: Cost = {
   less: "menos",
   rows: [
     { what: "Retoma el trabajo, sin novedades", spends: "gasta cerca de un 1 %", saving: "99 %" },
-    { what: "Busca algo resuelto hace meses", spends: "gasta cerca de un 2 %", saving: "98 %" },
-    { what: "Consulta un tema: el índice y una sección", spends: "gasta cerca de un 5 %, 8 % en el peor caso", saving: "92–95 %" },
+    { what: "Busca algo resuelto hace meses", spends: "gasta cerca de un 3 %", saving: "97 %" },
+    { what: "Consulta un tema: el índice y una sección", spends: "gasta cerca de un 6 %, 12 % en el peor caso", saving: "88–94 %" },
   ],
   whyTitle: "De dónde sale el ahorro",
   why: [
@@ -163,7 +163,7 @@ export const COST_ES: Cost = {
     "El índice dice cuánto pesa cada sección antes de abrir nada.",
     "Retomar trae solo lo que cambió, y lo terminado no cuesta nada hasta que alguien lo busca.",
   ],
-  caveat: "Conectarse también cuesta: la descripción de las herramientas de Tisty pesa cerca de una cuarta parte de esa bitácora. Un asistente que carga las herramientas solo a medida que las usa no la paga entera; uno que las carga todas en cada sesión ahorra más bien un 70–75 %, y con menos de unos 70 KB de notas un archivo plano sale más barato. Contado en caracteres, incluido el JSON que acompaña cada respuesta.",
+  caveat: "Conectarse también cuesta: la descripción de las herramientas de Tisty pesa cerca de una sexta parte de esa bitácora, un tercio menos que antes, y un test impide que vuelva a crecer. Un asistente que carga las herramientas solo a medida que las usa no la paga entera; uno que las carga todas en cada sesión ahorra entre un 72 y un 83 %, y con menos de unos 50 KB de notas un archivo plano sale más barato. Contado en caracteres, incluido el JSON que acompaña cada respuesta.",
 };
 
 const LOG = (title: string, entry: string) =>
