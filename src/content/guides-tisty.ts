@@ -193,6 +193,101 @@ export const TISTY_GUIDES: Guide[] = [
     },
   },
   {
+    id: "agent-memory-between-sessions",
+    product: "tisty",
+    published: "2026-11-11",
+    en: {
+      slug: "guides/ai-agent-memory-between-sessions",
+      title: "Give your AI coding agent a memory that lasts between sessions",
+      description:
+        "GitHub Copilot, Claude Code, Codex and Cursor forget everything when the session ends. Why the usual Markdown files fall short, and how to keep a memory your agent reads a section at a time.",
+      lede: "Your agent is brilliant at the file in front of it and forgets the picture: why something was decided six months ago, what failed last time, what is still left. Every new session starts with you explaining the project again.",
+      nativeTitle: "What people usually do",
+      nativeSteps: [
+        {
+          title: "Write it into CLAUDE.md or AGENTS.md",
+          body: "Good for what rarely changes: how to build, the conventions. Progress and decisions written there turn it into a diary the agent rereads whole, every session.",
+        },
+        {
+          title: "Keep a NOTES.md or a memory-bank folder",
+          body: "Often hidden behind .gitignore. It grows, nobody corrects it in place, and it stays on one machine and one branch.",
+        },
+        {
+          title: "Start a TASKS.md, or a Markdown file per session",
+          body: "Easy to begin. Within weeks there are dozens of files, half of them stale, and nothing says which one still holds.",
+        },
+      ],
+      gapTitle: "What that costs",
+      gap: [
+        "The agent rereads every file, whole, every session: the bigger the memory, the more each session costs before any work starts.",
+        "Nothing is dated or archived, so «how did we solve this last year?» has no answer.",
+        "The files go stale, pile up and get lost between branches, machines and projects.",
+      ],
+      toolTitle: "A memory your agent reads a section at a time",
+      tool: [
+        "Tisty keeps tasks with their steps and a dated journal, and documents one per subject, as Markdown on your own disk.",
+        "Over MCP, your agent asks what moved since the last session, reads an outline first and then only the section it needs: on a 256 KB log, picking up the work costs about 99% less than rereading it.",
+        "A finished task goes to the archive whole, and a search answers «how did we solve this?» with the line that says it.",
+        "Free and open source, for Windows and macOS, with no account.",
+      ],
+      faq: [
+        {
+          q: "Does Tisty replace CLAUDE.md or AGENTS.md?",
+          a: "No, it sits beside them. Instructions that rarely move stay in the files your repository hands the assistant; progress, decisions, what was ruled out and what is left go in Tisty.",
+        },
+        {
+          q: "Which assistants can use it?",
+          a: "Any that speaks MCP: GitHub Copilot in VS Code, Claude Code, Codex, Cursor and Gemini CLI connect with one line, and Settings › Assistants in Tisty connects the ones it finds on your computer.",
+        },
+      ],
+    },
+    es: {
+      slug: "guias/memoria-para-tu-agente-de-ia-entre-sesiones",
+      title: "Dale a tu agente de IA una memoria que dure entre sesiones",
+      description:
+        "GitHub Copilot, Claude Code, Codex y Cursor olvidan todo al terminar la sesión. Por qué los archivos Markdown de siempre se quedan cortos, y cómo tener una memoria que tu agente lee de a una sección.",
+      lede: "Tu agente brilla con el archivo que tiene delante y olvida el panorama: por qué se decidió algo hace seis meses, qué falló la última vez, qué falta todavía. Cada sesión nueva empieza contigo explicando otra vez el proyecto.",
+      nativeTitle: "Lo que suele hacerse",
+      nativeSteps: [
+        {
+          title: "Escribirlo en CLAUDE.md o AGENTS.md",
+          body: "Sirve para lo que casi no cambia: cómo compilar, las convenciones. El avance y las decisiones escritos ahí lo vuelven un diario que el agente relee entero en cada sesión.",
+        },
+        {
+          title: "Llevar un NOTES.md o una carpeta memory-bank",
+          body: "Muchas veces escondido detrás de .gitignore. Crece, nadie lo corrige en su lugar, y se queda en un equipo y en una rama.",
+        },
+        {
+          title: "Empezar un TASKS.md, o un Markdown por sesión",
+          body: "Es fácil de empezar. En semanas hay decenas de archivos, la mitad desactualizados, y nada dice cuál sigue vigente.",
+        },
+      ],
+      gapTitle: "Lo que eso cuesta",
+      gap: [
+        "El agente relee cada archivo, entero, en cada sesión: cuanto más grande la memoria, más cuesta cada sesión antes de empezar a trabajar.",
+        "Nada tiene fecha ni se archiva, así que «¿cómo lo resolvimos el año pasado?» no tiene respuesta.",
+        "Los archivos se desactualizan, se acumulan y se pierden entre ramas, equipos y proyectos.",
+      ],
+      toolTitle: "Una memoria que tu agente lee de a una sección",
+      tool: [
+        "Tisty guarda tareas con sus pasos y una bitácora con fechas, y documentos uno por tema, en Markdown y en tu propio disco.",
+        "Por MCP, tu agente pregunta qué cambió desde la última sesión, lee primero el índice y después solo la sección que necesita: sobre una bitácora de 256 KB, retomar el trabajo cuesta cerca de un 99 % menos que releerla.",
+        "Una tarea terminada pasa entera al archivo, y la búsqueda responde «¿cómo resolvimos esto?» con la línea que lo dice.",
+        "Gratis y de código abierto, para Windows y macOS, sin cuenta.",
+      ],
+      faq: [
+        {
+          q: "¿Tisty reemplaza a CLAUDE.md o AGENTS.md?",
+          a: "No, va al lado. Las instrucciones que casi no se mueven siguen en los archivos que tu repositorio le entrega al asistente; el avance, las decisiones, lo descartado y lo que falta van en Tisty.",
+        },
+        {
+          q: "¿Qué asistentes pueden usarlo?",
+          a: "Cualquiera que hable MCP: GitHub Copilot en VS Code, Claude Code, Codex, Cursor y Gemini CLI se conectan con una línea, y Configuración › Asistentes en Tisty conecta los que encuentra en tu equipo.",
+        },
+      ],
+    },
+  },
+  {
     id: "share-a-document",
     product: "tisty",
     published: "2026-11-08",
