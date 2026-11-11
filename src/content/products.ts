@@ -1,5 +1,18 @@
 import type { Locale } from "../site";
-import { ASSISTANT_EN, ASSISTANT_ES, PROOF_EN, PROOF_ES, SHARING_EN, SHARING_ES } from "./tisty";
+import {
+  ASSISTANT_EN,
+  ASSISTANT_ES,
+  COST_EN,
+  COST_ES,
+  DAY_EN,
+  DAY_ES,
+  FIXES_EN,
+  FIXES_ES,
+  PROOF_EN,
+  PROOF_ES,
+  SHARING_EN,
+  SHARING_ES,
+} from "./tisty";
 
 export type JourneyStep = {
   label: string;
@@ -43,6 +56,29 @@ export type Sharing = {
   anchor: string;
 };
 
+export type Fixes = {
+  title: string;
+  lede: string;
+  rows: { who: string; problem: string; fix: string }[];
+};
+
+export type Day = {
+  title: string;
+  lede: string;
+  steps: { title: string; body: string }[];
+  close: string;
+};
+
+export type Cost = {
+  title: string;
+  lede: string;
+  head: [string, string, string];
+  rows: [string, string, string][];
+  whyTitle: string;
+  why: string[];
+  caveat: string;
+};
+
 type Words = {
   tagline: string;
   category: string;
@@ -75,6 +111,9 @@ type Words = {
   proof?: Proof;
   assistant?: Assistant;
   sharing?: Sharing;
+  fixes?: Fixes;
+  day?: Day;
+  cost?: Cost;
 };
 
 export type Product = {
@@ -151,8 +190,8 @@ export const PRODUCTS: Product[] = [
     writes: true,
     mascot: "/tisty-head.svg",
     en: {
-      category: "Local-first notes, documents and tasks for Windows and macOS",
-      tagline: "Notes, documents and tasks. The record of what you learned solving them.",
+      category: "Local memory and context for you and your AI agent: Markdown notes, documents and tasks for Windows and macOS",
+      tagline: "The working memory for you and your agent. What you learn stays, and your agent picks up where it left off.",
       mascot: {
         title: "A beaver that keeps what you build.",
         body: "A beaver gathers every branch it finds and builds with it, and what it builds stays. Tisty keeps what you work out the same way: the steps, the journal and the documents, there to find again months later.",
@@ -217,30 +256,33 @@ export const PRODUCTS: Product[] = [
         page: "tasks",
         anchor: "a-task-or-a-document",
       },
-      title: "Tisty: local-first Markdown notes and tasks app, with MCP",
-      meta: "Local-first notes and tasks app for Windows and macOS: Markdown documents, tasks that keep their history, MCP for assistants. Free, open source, no account.",
+      title: "Tisty: local memory and context for AI agents, notes and tasks",
+      meta: "Local memory and context for you and your AI agent: Markdown notes, documents and tasks on your disk, over MCP for GitHub Copilot, Claude Code and Cursor. Free.",
       problem:
-        "A task list forgets the moment you tick the box. Six months later the same problem comes back and all that is left is knowing you solved it once, somehow.",
+        "A task list forgets the moment you tick the box, and your AI agent forgets the moment the session ends. Six months later the same problem comes back and all that is left is knowing you solved it once, somehow.",
       groups: [
         {
-          title: "Capture",
+          title: "Capture and plan",
           points: [
             "Type «call the bank at 3» in the quick capture, open from anywhere, and it is a task with its hour.",
-            "Documents with tables that add themselves up, diagrams you draw in their own editor, formulas, pages and their own PDF.",
-          ],
-        },
-        {
-          title: "Plan",
-          points: [
             "Today puts the urgent first: overdue only past its deadline, late when the day you planned slipped by.",
-            "Steps, parts and the Eisenhower matrix by its name, with a thin bar weighing the time gone against the parts closed.",
+            "Steps, parts and the Eisenhower matrix by its name: do, decide, delegate, drop.",
           ],
         },
         {
-          title: "Find",
+          title: "Remember",
           points: [
             "A finished task goes to the archive whole: its page, steps, dated journal and files.",
             "One search across open tasks, the archive and every document, even what you closed two years ago.",
+            "One living document per subject, with tables, diagrams, formulas, pages and its own PDF.",
+          ],
+        },
+        {
+          title: "Your agent",
+          points: [
+            "GitHub Copilot, Claude Code, Codex or Cursor connect over MCP and pick up where they left off.",
+            "An outline first, then one section: a fraction of what rereading your Markdown files costs.",
+            "It files its work as tasks with steps and a journal; closing them is yours.",
           ],
         },
         {
@@ -275,8 +317,12 @@ export const PRODUCTS: Product[] = [
           link: { label: "See how it differs", path: "compare" },
         },
         {
-          q: "What is the MCP door for?",
-          a: "It lets an assistant read and write your notes and tasks through the Model Context Protocol, on your machine and with your permission.",
+          q: "How do I give my AI agent a memory between sessions?",
+          a: "Connect Tisty over MCP: GitHub Copilot in VS Code, Claude Code, Codex, Cursor and Gemini CLI take one line. The agent then starts each session by asking what moved since the last one, files its work as tasks with steps and a journal, and keeps what it learns in documents, on your machine and with your permission.",
+        },
+        {
+          q: "Does it replace CLAUDE.md, AGENTS.md or a memory-bank folder?",
+          a: "For what changes, yes; for what does not, no. Instructions that rarely move, such as how to build and the conventions, stay in the files your repository hands the assistant. Progress, decisions, what was ruled out and what is left go in Tisty, dated, searchable and read a section at a time.",
         },
         {
           q: "Can I draw diagrams?",
@@ -286,6 +332,9 @@ export const PRODUCTS: Product[] = [
       proof: PROOF_EN,
       assistant: ASSISTANT_EN,
       sharing: SHARING_EN,
+      fixes: FIXES_EN,
+      day: DAY_EN,
+      cost: COST_EN,
       firstRun: {
         title: "The first time you open Tisty",
         body: "It asks two things: your language, and where your copies should go, a folder to sync through or nowhere beyond this computer. Then it sets up your starting lists and writes you a guide, an ordinary document of yours to read, edit or throw away, that shows from the inside what a document can hold.",
@@ -294,8 +343,8 @@ export const PRODUCTS: Product[] = [
       },
     },
     es: {
-      category: "Notas, documentos y tareas en tu propio disco, para Windows y macOS",
-      tagline: "Notas, documentos y tareas. El historial de lo que aprendiste resolviendo.",
+      category: "Memoria y contexto locales para ti y tu agente de IA: notas, documentos y tareas en Markdown para Windows y macOS",
+      tagline: "La memoria de trabajo tuya y de tu agente. Lo que aprendes se queda, y tu agente retoma donde quedó.",
       mascot: {
         title: "Un castor que guarda lo que construyes.",
         body: "El castor junta cada rama que encuentra y construye con ella, y lo que construye se queda. Tisty guarda así lo que resuelves: los pasos, el diario y los documentos, listos para encontrarlos meses después.",
@@ -360,30 +409,33 @@ export const PRODUCTS: Product[] = [
         page: "tareas",
         anchor: "tarea-o-documento",
       },
-      title: "Tisty: notas en Markdown y tareas en tu disco, con MCP",
-      meta: "App de notas y tareas local para Windows y macOS: documentos en Markdown, tareas que guardan su historial y MCP para asistentes. Gratis, libre y sin cuenta.",
+      title: "Tisty: memoria y contexto locales para tu agente de IA",
+      meta: "Memoria y contexto locales para ti y tu agente de IA: notas, documentos y tareas en Markdown en tu disco, por MCP para GitHub Copilot, Claude Code y Cursor. Gratis.",
       problem:
-        "Una lista de tareas olvida en cuanto marcas la casilla. Seis meses después vuelve el mismo problema y lo único que queda es saber que ya lo resolviste una vez, de alguna manera.",
+        "Una lista de tareas olvida en cuanto marcas la casilla, y tu agente de IA olvida en cuanto termina la sesión. Seis meses después vuelve el mismo problema y lo único que queda es saber que ya lo resolviste una vez, de alguna manera.",
       groups: [
         {
-          title: "Capturar",
+          title: "Capturar y planificar",
           points: [
             "Escribe «llamar al banco a las 3» en la captura rápida, que se abre desde cualquier parte, y es una tarea con su hora.",
-            "Documentos con tablas que se suman solas, diagramas que dibujas en su propio editor, fórmulas, páginas y su propio PDF.",
-          ],
-        },
-        {
-          title: "Planificar",
-          points: [
             "Hoy pone primero lo urgente: vence solo lo que pasó su límite, se atrasa lo que no hiciste el día que planeaste.",
-            "Pasos, partes y la matriz de Eisenhower por su nombre, con una barra fina que compara el plazo que pasó con las partes cerradas.",
+            "Pasos, partes y la matriz de Eisenhower por su nombre: hacer, planificar, delegar, prescindible.",
           ],
         },
         {
-          title: "Encontrar",
+          title: "Recordar",
           points: [
             "Una tarea terminada pasa entera al archivo: su página, sus pasos, su bitácora con fecha y sus archivos.",
             "Una sola búsqueda en las tareas abiertas, el archivo y todos los documentos, aunque lo hayas cerrado hace dos años.",
+            "Un documento vivo por tema, con tablas, diagramas, fórmulas, páginas y su propio PDF.",
+          ],
+        },
+        {
+          title: "Tu agente",
+          points: [
+            "GitHub Copilot, Claude Code, Codex o Cursor se conectan por MCP y retoman donde quedaron.",
+            "Primero el índice, después una sección: una fracción de lo que cuesta releer tus archivos Markdown.",
+            "Anota su trabajo como tareas con pasos y bitácora; cerrarlas es tuyo.",
           ],
         },
         {
@@ -418,8 +470,12 @@ export const PRODUCTS: Product[] = [
           link: { label: "Ver en qué se diferencia", path: "comparar" },
         },
         {
-          q: "¿Para qué sirve la puerta MCP?",
-          a: "Permite que un asistente lea y escriba tus notas y tareas por el Model Context Protocol, en tu equipo y con tu permiso.",
+          q: "¿Cómo le doy a mi agente de IA una memoria entre sesiones?",
+          a: "Conecta Tisty por MCP: GitHub Copilot en VS Code, Claude Code, Codex, Cursor y Gemini CLI lo hacen con una línea. Desde ahí, el agente empieza cada sesión preguntando qué cambió desde la anterior, anota su trabajo como tareas con pasos y bitácora, y guarda lo que aprende en documentos, en tu equipo y con tu permiso.",
+        },
+        {
+          q: "¿Reemplaza a CLAUDE.md, AGENTS.md o una carpeta memory-bank?",
+          a: "Para lo que cambia, sí; para lo que no, no. Las instrucciones que casi no se mueven, como compilar y las convenciones, siguen en los archivos que tu repositorio le entrega al asistente. El avance, las decisiones, lo descartado y lo que falta van en Tisty, con fecha, buscables y leídos una sección a la vez.",
         },
         {
           q: "¿Puedo dibujar diagramas?",
@@ -429,6 +485,9 @@ export const PRODUCTS: Product[] = [
       proof: PROOF_ES,
       assistant: ASSISTANT_ES,
       sharing: SHARING_ES,
+      fixes: FIXES_ES,
+      day: DAY_ES,
+      cost: COST_ES,
       firstRun: {
         title: "Al abrir Tisty por primera vez",
         body: "Te pregunta dos cosas: tu idioma y adónde van tus copias, a una carpeta para sincronizar o a ninguna parte fuera de este equipo. Luego crea tus listas iniciales y te escribe una guía, un documento tuyo como cualquier otro, para leer, editar o tirar, que muestra desde dentro todo lo que cabe en un documento.",
