@@ -6,8 +6,8 @@ export const APPS = [
     help: "docs/help",
     terms: true,
     assets: {
-      "tisty-social.png": "assets/store/en-01-record.png",
-      "tisty-social-es.png": "assets/store/es-01-registro.png",
+      "tisty-social.png": "assets/screens/store/en-01-memory.png",
+      "tisty-social-es.png": "assets/screens/store/es-01-memoria.png",
       "tisty-head.svg": "assets/mascot/tisty-head.svg",
       "icons/tisty.ico": "app/src-tauri/icons/icon.ico",
     },
