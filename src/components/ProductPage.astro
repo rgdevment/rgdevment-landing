@@ -35,6 +35,7 @@ const shot = shotSrc(product, locale);
 const brew = brewSteps(product);
 const ink = inkOf(product);
 const fixes = t.fixes;
+const cost = t.cost;
 const social = cardOf(product, locale);
 
 const release = await latestRelease(product);
@@ -452,40 +453,37 @@ const schema = [
   }
 
   {
-    t.cost && (
+    cost && (
       <section class="shell mt-24 sm:mt-32">
-        <h2 class="section-title">{t.cost.title}</h2>
-        <p class="mt-3 max-w-3xl text-muted">{t.cost.lede}</p>
-        <div class="card mt-10 overflow-x-auto p-2 sm:p-3">
-          <table class="w-full min-w-[32rem] text-left">
-            <thead>
-              <tr class="border-b border-line text-sm text-muted">
-                {t.cost.head.map((one) => (
-                  <th scope="col" class="px-4 py-3 font-medium">{one}</th>
-                ))}
-              </tr>
-            </thead>
-            <tbody>
-              {t.cost.rows.map(([what, spends, saves]) => (
-                <tr class="border-b border-line last:border-0">
-                  <td class="px-4 py-3.5 text-body">{what}</td>
-                  <td class="px-4 py-3.5 font-mono text-sm text-muted">{spends}</td>
-                  <td class="accent-ink px-4 py-3.5 font-display text-lg font-semibold" style={ink}>{saves}</td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
+        <div class="relative isolate overflow-hidden rounded-[2rem] border border-line p-6 sm:p-10 lg:p-12" style={`--accent: ${product.accent}`}>
+          <div
+            class="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[28rem] w-[52rem] -translate-x-1/2 rounded-full opacity-[0.16] blur-3xl"
+            style="background: radial-gradient(closest-side, var(--accent), transparent)"
+            aria-hidden="true"
+          ></div>
+          <h2 class="section-title">{cost.title}</h2>
+          <p class="mt-3 max-w-3xl text-lg text-body">{cost.lede}</p>
+          <ul class="mt-10 grid gap-4 md:grid-cols-3">
+            {cost.rows.map((one) => (
+              <li class="card flex flex-col p-6 sm:p-7">
+                <p class="accent-ink font-display text-5xl font-semibold tracking-[-0.03em] sm:text-6xl" style={ink}>{one.saving}</p>
+                <p class="mt-1 font-mono text-xs uppercase tracking-[0.14em] text-muted">{cost.less}</p>
+                <p class="mt-5 font-medium text-fg">{one.what}</p>
+                <p class="mt-1 font-mono text-sm text-muted">{one.spends}</p>
+              </li>
+            ))}
+          </ul>
+          <h3 class="mt-10 font-display text-xl font-semibold">{cost.whyTitle}</h3>
+          <ul class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {cost.why.map((one) => (
+              <li class="flex gap-2.5 text-body">
+                <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full" style={`background: ${product.accent}`} aria-hidden="true" />
+                <span>{one}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="mt-6 max-w-3xl text-sm text-muted">{cost.caveat}</p>
         </div>
-        <h3 class="mt-10 font-display text-xl font-semibold">{t.cost.whyTitle}</h3>
-        <ul class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {t.cost.why.map((one) => (
-            <li class="flex gap-2.5 text-body">
-              <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full" style={`background: ${product.accent}`} aria-hidden="true" />
-              <span>{one}</span>
-            </li>
-          ))}
-        </ul>
-        <p class="mt-6 max-w-3xl text-sm text-muted">{t.cost.caveat}</p>
       </section>
     )
   }

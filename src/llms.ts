@@ -128,7 +128,7 @@ function memory(product: Product): string[] {
           "",
           cost.lede,
           "",
-          ...cost.rows.map(([what, spends, saves]) => `- ${what}: ${spends}, ${saves}`),
+          ...cost.rows.map((one) => `- ${one.what}: ${one.spends}, ${one.saving} ${cost.less}`),
           "",
           `${cost.whyTitle}:`,
           "",
