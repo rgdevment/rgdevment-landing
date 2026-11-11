@@ -1,4 +1,6 @@
 ---
+import { createHash } from "node:crypto";
+import { readFileSync } from "node:fs";
 import { type Product, shotSrc } from "../content/products";
 import type { Locale } from "../site";
 
@@ -14,12 +16,15 @@ const { product, locale, eager = false, sizes = "(min-width: 1088px) 1000px, cal
 const shot = product.shot!;
 const src = shotSrc(product, locale)!;
 const webp = src.replace(/\.png$/, "");
+// The screen keeps its name when an app ships a new one, so the address carries what it holds and a browser may keep it for a year.
+const version = createHash("sha256").update(readFileSync(`./public${src}`)).digest("hex").slice(0, 10);
+const at = (path: string) => `${path}?v=${version}`;
 ---
 
 <picture>
-  <source srcset={`${webp}-720.webp 720w, ${webp}-1280.webp 1280w, ${webp}.webp ${shot.width}w`} sizes={sizes} type="image/webp" />
+  <source srcset={`${at(`${webp}-720.webp`)} 720w, ${at(`${webp}-1280.webp`)} 1280w, ${at(`${webp}.webp`)} ${shot.width}w`} sizes={sizes} type="image/webp" />
   <img
-    src={src}
+    src={at(src)}
     width={shot.width}
     height={shot.height}
     alt={locale === "es" ? shot.es : shot.en}

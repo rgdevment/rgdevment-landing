@@ -108,10 +108,10 @@ const SOURCES: [string, string[]][] = [
 ];
 
 const EN: Words = {
-  title: "Tisty vs Notion, Obsidian, Todoist: notes, tasks and AI agent memory",
+  title: "Tisty vs Notion, Obsidian, Todoist: notes, tasks, AI memory",
   heading: "How Tisty differs from Notion, Craft, Todoist, Logseq, Obsidian and Joplin",
   short: "How Tisty differs",
-  meta: "Local notes, tasks and memory for your AI agent, compared with Notion, Obsidian, Todoist, Logseq, Craft and Joplin: what Tisty does that they do not, with sources.",
+  meta: "Local notes, tasks and AI agent memory, compared with Notion, Obsidian, Todoist, Logseq, Craft and Joplin: what Tisty does that they do not, with sources.",
   lede: "A finished task is kept, not ticked off. Tisty keeps tasks and documents in one store and one search on your own disk, and a finished task goes to the archive whole, with everything it gathered. Private and secure from the start: no account, no telemetry, and what leaves your disk can go end-to-end encrypted. And it is the local memory and context of your AI agent, over MCP. Here is what it does that the apps you may already know do not, and where they are stronger.",
   only: "{only} of these {total} only Tisty does in full",
   checked: "Checked on 8 November 2026 against each project's own pages, listed at the foot. A no means its own pages do not offer it. These change, so go and look.",
@@ -273,7 +273,7 @@ const EN: Words = {
       "An AI agent is stateless: it forgets the moment the session ends. With Tisty it asks what changed since last time, opens the task it was on with its ticked steps and dated journal, and reads a long document by its outline and one section instead of the whole file. On a 256 KB Markdown log, picking up the work costs about 99% less than rereading it.",
       "What it learns stays written down for next time, on your disk, where you can follow and audit it, and closing a task is always yours.",
     ],
-    link: { label: "Give your AI coding agent a memory that lasts between sessions", url: "https://rgdevment.dev/guides/ai-agent-memory-between-sessions/" },
+    link: { label: "Give your AI coding agent memory that lasts between sessions", url: "https://rgdevment.dev/guides/ai-agent-memory-between-sessions/" },
   },
   faq: {
     title: "Questions about Tisty and AI agents",
@@ -289,7 +289,7 @@ const EN: Words = {
 };
 
 const ES: Words = {
-  title: "Tisty vs Notion, Obsidian y Todoist: notas, tareas y memoria para IA",
+  title: "Tisty vs Notion, Obsidian y Todoist: notas, tareas e IA",
   heading: "En qué se diferencia Tisty de Notion, Craft, Todoist, Logseq, Obsidian y Joplin",
   short: "En qué se diferencia Tisty",
   meta: "Notas, tareas y memoria local para tu agente de IA, frente a Notion, Obsidian, Todoist, Logseq, Craft y Joplin: lo que Tisty hace y ellas no, con fuentes.",

@@ -198,9 +198,9 @@ export const TISTY_GUIDES: Guide[] = [
     published: "2026-11-11",
     en: {
       slug: "guides/ai-agent-memory-between-sessions",
-      title: "Give your AI coding agent a memory that lasts between sessions",
+      title: "Give your AI coding agent memory that lasts between sessions",
       description:
-        "GitHub Copilot, Claude Code, Codex and Cursor forget everything when the session ends. Why the usual Markdown files fall short, and how to keep a memory your agent reads a section at a time.",
+        "GitHub Copilot, Claude Code, Codex and Cursor forget everything when a session ends. Why Markdown files fall short, and a memory your agent reads by section.",
       lede: "Your agent is brilliant at the file in front of it and forgets the picture: why something was decided six months ago, what failed last time, what is still left. Every new session starts with you explaining the project again.",
       nativeTitle: "What people usually do",
       nativeSteps: [
@@ -245,7 +245,7 @@ export const TISTY_GUIDES: Guide[] = [
       slug: "guias/memoria-para-tu-agente-de-ia-entre-sesiones",
       title: "Dale a tu agente de IA una memoria que dure entre sesiones",
       description:
-        "GitHub Copilot, Claude Code, Codex y Cursor olvidan todo al terminar la sesión. Por qué los archivos Markdown de siempre se quedan cortos, y cómo tener una memoria que tu agente lee de a una sección.",
+        "Copilot, Claude Code, Codex y Cursor olvidan todo al terminar la sesión. Por qué el Markdown de siempre no basta, y una memoria que tu agente lee por secciones.",
       lede: "Tu agente brilla con el archivo que tiene delante y olvida el panorama: por qué se decidió algo hace seis meses, qué falló la última vez, qué falta todavía. Cada sesión nueva empieza contigo explicando otra vez el proyecto.",
       nativeTitle: "Lo que suele hacerse",
       nativeSteps: [
