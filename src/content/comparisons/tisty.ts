@@ -108,11 +108,11 @@ const SOURCES: [string, string[]][] = [
 ];
 
 const EN: Words = {
-  title: "Tisty vs Notion, Obsidian, Todoist: local-first notes app",
+  title: "Tisty vs Notion, Obsidian, Todoist: notes, tasks and AI agent memory",
   heading: "How Tisty differs from Notion, Craft, Todoist, Logseq, Obsidian and Joplin",
   short: "How Tisty differs",
-  meta: "Local-first notes and tasks app compared with Notion, Obsidian, Todoist, Logseq, Craft and Joplin: what Tisty does that they do not, with sources.",
-  lede: "A finished task is kept, not ticked off. Tisty keeps tasks and documents in one store and one search on your own disk, and a finished task goes to the archive whole, with everything it gathered. Private and secure from the start: no account, no telemetry, and what leaves your disk can go end-to-end encrypted. Here is what it does that the apps you may already know do not, and where they are stronger.",
+  meta: "Local notes, tasks and memory for your AI agent, compared with Notion, Obsidian, Todoist, Logseq, Craft and Joplin: what Tisty does that they do not, with sources.",
+  lede: "A finished task is kept, not ticked off. Tisty keeps tasks and documents in one store and one search on your own disk, and a finished task goes to the archive whole, with everything it gathered. Private and secure from the start: no account, no telemetry, and what leaves your disk can go end-to-end encrypted. And it is the local memory and context of your AI agent, over MCP. Here is what it does that the apps you may already know do not, and where they are stronger.",
   only: "{only} of these {total} only Tisty does in full",
   checked: "Checked on 8 November 2026 against each project's own pages, listed at the foot. A no means its own pages do not offer it. These change, so go and look.",
   marks: { yes: "Yes", part: "Partly", no: "No", soon: "Soon" },
@@ -248,16 +248,25 @@ const EN: Words = {
       ["Tisty", "Has no phone app and no Linux build, nobody edits a document with you live, and tasks from another app have to be typed again."],
     ],
   },
+  agent: {
+    title: "And for your AI agent",
+    body: [
+      "Tisty has no AI inside, on purpose: it is the memory and context of the assistant you already use. GitHub Copilot, Claude Code, Codex or Cursor connect over its local MCP server, with no account and nothing sent over the network.",
+      "An AI agent is stateless: it forgets the moment the session ends. With Tisty it asks what changed since last time, opens the task it was on with its ticked steps and dated journal, and reads a long document by its outline and one section instead of the whole file. On a 256 KB Markdown log, picking up the work costs about 99% less than rereading it.",
+      "What it learns stays written down for next time, on your disk, where you can follow and audit it, and closing a task is always yours.",
+    ],
+    link: { label: "Give your AI coding agent a memory that lasts between sessions", url: "https://rgdevment.dev/guides/ai-agent-memory-between-sessions/" },
+  },
   sources: "Sources",
   back: "Download Tisty",
 };
 
 const ES: Words = {
-  title: "Tisty vs Notion, Obsidian y Todoist: notas y tareas locales",
+  title: "Tisty vs Notion, Obsidian y Todoist: notas, tareas y memoria para IA",
   heading: "En qué se diferencia Tisty de Notion, Craft, Todoist, Logseq, Obsidian y Joplin",
   short: "En qué se diferencia Tisty",
-  meta: "App de notas y tareas en tu disco frente a Notion, Obsidian, Todoist, Logseq, Craft y Joplin: lo que Tisty hace y ellas no, con fuentes.",
-  lede: "Una tarea terminada se guarda, no se tacha. Tisty guarda tareas y documentos en un mismo lugar y una misma búsqueda, en tu propio disco, y una tarea terminada pasa entera al archivo, con todo lo que reunió. Privado y seguro desde el principio: sin cuenta, sin telemetría, y lo que sale de tu disco puede ir cifrado de extremo a extremo. Aquí está lo que hace y que las apps que quizá ya conoces no hacen, y dónde ellas son más fuertes.",
+  meta: "Notas, tareas y memoria local para tu agente de IA, frente a Notion, Obsidian, Todoist, Logseq, Craft y Joplin: lo que Tisty hace y ellas no, con fuentes.",
+  lede: "Una tarea terminada se guarda, no se tacha. Tisty guarda tareas y documentos en un mismo lugar y una misma búsqueda, en tu propio disco, y una tarea terminada pasa entera al archivo, con todo lo que reunió. Privado y seguro desde el principio: sin cuenta, sin telemetría, y lo que sale de tu disco puede ir cifrado de extremo a extremo. Y es la memoria y el contexto locales de tu agente de IA, por MCP. Aquí está lo que hace y que las apps que quizá ya conoces no hacen, y dónde ellas son más fuertes.",
   only: "{only} de estas {total} solo Tisty las hace por completo",
   checked: "Revisado el 8 de noviembre de 2026 en las páginas de cada proyecto, enlazadas al pie. Un no quiere decir que sus propias páginas no lo ofrecen. Esto cambia, así que conviene ir a mirar.",
   marks: { yes: "Sí", part: "En parte", no: "No", soon: "Pronto" },
@@ -392,6 +401,15 @@ const ES: Words = {
       ["Joplin", "De código abierto como Tisty, en todos los sistemas, Linux, el teléfono y la terminal incluidos, con sincronización cifrada de extremo a extremo a la nube que elijas."],
       ["Tisty", "No tiene app para el teléfono ni versión para Linux, nadie edita un documento contigo en vivo, y las tareas de otra app hay que escribirlas de nuevo."],
     ],
+  },
+  agent: {
+    title: "Y para tu agente de IA",
+    body: [
+      "Tisty no trae IA dentro, a propósito: es la memoria y el contexto del asistente que ya usas. GitHub Copilot, Claude Code, Codex o Cursor se conectan por su servidor MCP local, sin cuenta y sin enviar nada por la red.",
+      "Un agente de IA no guarda estado: olvida en cuanto termina la sesión. Con Tisty pregunta qué cambió desde la última vez, abre la tarea en la que estaba con sus pasos marcados y su bitácora con fechas, y lee un documento largo por su índice y una sección en vez del archivo entero. Sobre una bitácora de 256 KB en Markdown, retomar el trabajo cuesta cerca de un 99 % menos que releerla.",
+      "Lo que aprende queda escrito para la próxima vez, en tu disco, donde puedes seguirlo y revisarlo, y cerrar una tarea siempre es tuyo.",
+    ],
+    link: { label: "Dale a tu agente de IA una memoria que dure entre sesiones", url: "https://rgdevment.dev/es/guias/memoria-para-tu-agente-de-ia-entre-sesiones/" },
   },
   sources: "Fuentes",
   back: "Descargar Tisty",

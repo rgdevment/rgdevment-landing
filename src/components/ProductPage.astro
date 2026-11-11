@@ -101,7 +101,7 @@ const schema = [
     sameAs: [
       product.repo,
       ...(store ? [store] : []),
-      ...(product.signals ? [product.signals.producthunt.url] : []),
+      ...(product.signals?.producthunt ? [product.signals.producthunt.url] : []),
       ...(product.listings ?? []).map(([, url]) => url),
     ],
     license: licence,
@@ -146,7 +146,7 @@ const schema = [
     <div class="shell pt-6 sm:pt-14">
       <Crumbs locale={locale} trail={[[product.name, path]]} />
 
-      <header class="mx-auto mt-8 max-w-3xl text-center sm:mt-12">
+      <header class="mx-auto mt-8 max-w-5xl text-center sm:mt-12">
         {
           product.writes ? (
             <WritingMark class="mx-auto h-20 w-20 sm:h-32 sm:w-32" />
@@ -166,7 +166,7 @@ const schema = [
         </h1>
         <p class="mt-4 font-display text-xl text-fg sm:text-2xl">{t.tagline}</p>
         {t.formerly && <p class="mt-3 text-sm text-muted">{t.formerly}</p>}
-        <p class="mx-auto mt-5 max-w-2xl text-lg text-body">{t.problem}</p>
+        <p class="mx-auto mt-5 max-w-4xl text-lg text-body">{t.problem}</p>
 
         {
           release && (
@@ -269,7 +269,7 @@ const schema = [
             )
           }
           {
-            product.signals && (
+            product.signals?.producthunt?.badge && (
               <p class="mt-6">
                 <ProductHunt url={product.signals.producthunt.url} post={product.signals.producthunt.post} label={say.onProductHunt} />
               </p>

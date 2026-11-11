@@ -111,6 +111,21 @@ const priced = (own?: string) => (own ? href(locale, own) : undefined);
     </ul>
   </section>
 
+  {
+    t.agent && (
+      <section class="shell mt-20" style={`--accent: ${product.accent}`}>
+        <h2 class="section-title">{t.agent.title}</h2>
+        <div class="mt-4 max-w-3xl space-y-4 text-lg text-body">
+          {t.agent.body.map((one) => <p>{one}</p>)}
+        </div>
+        <a class="mt-6 inline-flex items-center gap-1.5 font-medium text-fg hover:underline" href={t.agent.link.url}>
+          {t.agent.link.label}
+          <Icon name="arrow" class="h-4 w-4" />
+        </a>
+      </section>
+    )
+  }
+
   <section class="shell mt-20">
     <h2 class="section-title">{t.stronger.title}</h2>
     <p class="mt-3 text-muted">{t.stronger.lede}</p>

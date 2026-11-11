@@ -13,6 +13,7 @@ export type Words = {
   marks: Record<Mark, string>;
   rows: { label: string; cells: Cell[]; own?: string }[];
   stronger: { title: string; lede: string; items: [string, string][] };
+  agent?: { title: string; body: string[]; link: { label: string; url: string } };
   sources: string;
   back: string;
 };

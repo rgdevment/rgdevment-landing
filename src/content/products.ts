@@ -126,7 +126,7 @@ export type Product = {
   formerName?: string;
   storeId?: string;
   requires?: { windows: string; macos: string };
-  signals?: { producthunt: { url: string; post: string } };
+  signals?: { producthunt?: { url: string; post: string; badge?: boolean } };
   winget?: string;
   cask?: string;
   /** Directories and registries with a page of their own for it. */
@@ -191,8 +191,8 @@ export const PRODUCTS: Product[] = [
     writes: true,
     mascot: "/tisty-head.svg",
     en: {
-      category: "Local memory and context for you and your AI agent: Markdown notes, documents and tasks for Windows and macOS",
-      tagline: "The working memory for you and your agent. What you learn stays, and your agent picks up where it left off.",
+      category: "Local memory and context for your AI agent: Markdown notes, tasks and documents",
+      tagline: "The working memory for you and your AI agent.",
       mascot: {
         title: "A beaver that keeps what you build.",
         body: "A beaver gathers every branch it finds and builds with it, and what it builds stays. Tisty keeps what you work out the same way: the steps, the journal and the documents, there to find again months later.",
@@ -344,8 +344,8 @@ export const PRODUCTS: Product[] = [
       },
     },
     es: {
-      category: "Memoria y contexto locales para ti y tu agente de IA: notas, documentos y tareas en Markdown para Windows y macOS",
-      tagline: "La memoria de trabajo tuya y de tu agente. Lo que aprendes se queda, y tu agente retoma donde quedó.",
+      category: "Memoria y contexto locales para tu agente de IA: notas, tareas y documentos en Markdown",
+      tagline: "La memoria de trabajo tuya y de tu agente de IA.",
       mascot: {
         title: "Un castor que guarda lo que construyes.",
         body: "El castor junta cada rama que encuentra y construye con ella, y lo que construye se queda. Tisty guarda así lo que resuelves: los pasos, el diario y los documentos, listos para encontrarlos meses después.",
