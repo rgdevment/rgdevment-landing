@@ -115,6 +115,7 @@ type Words = {
   fixes?: Fixes;
   day?: Day;
   cost?: Cost;
+  keywords?: string[];
 };
 
 export type Product = {
@@ -336,6 +337,7 @@ export const PRODUCTS: Product[] = [
       fixes: FIXES_EN,
       day: DAY_EN,
       cost: COST_EN,
+      keywords: ["AI agent memory", "persistent memory for AI coding assistants", "MCP server", "context engineering", "Markdown notes", "task manager", "local-first", "GitHub Copilot", "Claude Code", "Cursor", "Codex", "Obsidian alternative", "Notion alternative"],
       firstRun: {
         title: "The first time you open Tisty",
         body: "It asks two things: your language, and where your copies should go, a folder to sync through or nowhere beyond this computer. Then it sets up your starting lists and writes you a guide, an ordinary document of yours to read, edit or throw away, that shows from the inside what a document can hold.",
@@ -489,6 +491,7 @@ export const PRODUCTS: Product[] = [
       fixes: FIXES_ES,
       day: DAY_ES,
       cost: COST_ES,
+      keywords: ["memoria para agentes de IA", "memoria persistente para asistentes de IA", "servidor MCP", "contexto para IA", "notas en Markdown", "gestor de tareas", "local", "GitHub Copilot", "Claude Code", "Cursor", "Codex", "alternativa a Obsidian", "alternativa a Notion"],
       firstRun: {
         title: "Al abrir Tisty por primera vez",
         body: "Te pregunta dos cosas: tu idioma y adónde van tus copias, a una carpeta para sincronizar o a ninguna parte fuera de este equipo. Luego crea tus listas iniciales y te escribe una guía, un documento tuyo como cualquier otro, para leer, editar o tirar, que muestra desde dentro todo lo que cabe en un documento.",

@@ -249,13 +249,22 @@ const EN: Words = {
     ],
   },
   agent: {
-    title: "And for your AI agent",
+    title: "Memory and context for your AI agent, over MCP",
     body: [
       "Tisty has no AI inside, on purpose: it is the memory and context of the assistant you already use. GitHub Copilot, Claude Code, Codex or Cursor connect over its local MCP server, with no account and nothing sent over the network.",
       "An AI agent is stateless: it forgets the moment the session ends. With Tisty it asks what changed since last time, opens the task it was on with its ticked steps and dated journal, and reads a long document by its outline and one section instead of the whole file. On a 256 KB Markdown log, picking up the work costs about 99% less than rereading it.",
       "What it learns stays written down for next time, on your disk, where you can follow and audit it, and closing a task is always yours.",
     ],
     link: { label: "Give your AI coding agent a memory that lasts between sessions", url: "https://rgdevment.dev/guides/ai-agent-memory-between-sessions/" },
+  },
+  faq: {
+    title: "Questions about Tisty and AI agents",
+    items: [
+      { q: "Is Tisty a memory for AI coding agents?", a: "Yes. Tisty is a local app for notes, documents and tasks whose built-in MCP server gives GitHub Copilot, Claude Code, Codex or Cursor memory and context between sessions: the agent asks what changed, reads a long document by its outline and one section, and files its work as tasks you review and close." },
+      { q: "Does Tisty have AI built in?", a: "No, and it sends nothing to a model. It is the memory of the assistant you already use, over MCP on your own machine; what that assistant reads goes wherever that assistant goes, so pair it with one you trust." },
+      { q: "Which AI assistants work with Tisty?", a: "Any assistant that speaks MCP. GitHub Copilot in VS Code, Claude Code, Codex, Cursor and Gemini CLI connect with one line, and Settings › Assistants in Tisty connects the ones it finds on your computer." },
+      { q: "Does it replace CLAUDE.md, AGENTS.md or a memory-bank folder?", a: "It sits beside them. Instructions that rarely change stay in your repository; progress, decisions, what was ruled out and what is left go in Tisty, dated, searchable and read a section at a time." },
+    ],
   },
   sources: "Sources",
   back: "Download Tisty",
@@ -403,13 +412,22 @@ const ES: Words = {
     ],
   },
   agent: {
-    title: "Y para tu agente de IA",
+    title: "Memoria y contexto para tu agente de IA, por MCP",
     body: [
       "Tisty no trae IA dentro, a propósito: es la memoria y el contexto del asistente que ya usas. GitHub Copilot, Claude Code, Codex o Cursor se conectan por su servidor MCP local, sin cuenta y sin enviar nada por la red.",
       "Un agente de IA no guarda estado: olvida en cuanto termina la sesión. Con Tisty pregunta qué cambió desde la última vez, abre la tarea en la que estaba con sus pasos marcados y su bitácora con fechas, y lee un documento largo por su índice y una sección en vez del archivo entero. Sobre una bitácora de 256 KB en Markdown, retomar el trabajo cuesta cerca de un 99 % menos que releerla.",
       "Lo que aprende queda escrito para la próxima vez, en tu disco, donde puedes seguirlo y revisarlo, y cerrar una tarea siempre es tuyo.",
     ],
     link: { label: "Dale a tu agente de IA una memoria que dure entre sesiones", url: "https://rgdevment.dev/es/guias/memoria-para-tu-agente-de-ia-entre-sesiones/" },
+  },
+  faq: {
+    title: "Preguntas sobre Tisty y los agentes de IA",
+    items: [
+      { q: "¿Tisty sirve como memoria para agentes de IA de programación?", a: "Sí. Tisty es una app local de notas, documentos y tareas cuyo servidor MCP integrado les da a GitHub Copilot, Claude Code, Codex o Cursor memoria y contexto entre sesiones: el agente pregunta qué cambió, lee un documento largo por su índice y una sección, y anota su trabajo como tareas que tú revisas y cierras." },
+      { q: "¿Tisty trae IA integrada?", a: "No, y no le envía nada a ningún modelo. Es la memoria del asistente que ya usas, por MCP y en tu propio equipo; lo que ese asistente lee va adonde va ese asistente, así que úsalo con uno en el que confíes." },
+      { q: "¿Qué asistentes de IA funcionan con Tisty?", a: "Cualquiera que hable MCP. GitHub Copilot en VS Code, Claude Code, Codex, Cursor y Gemini CLI se conectan con una línea, y Configuración › Asistentes en Tisty conecta los que encuentra en tu equipo." },
+      { q: "¿Reemplaza a CLAUDE.md, AGENTS.md o una carpeta memory-bank?", a: "Va al lado. Las instrucciones que casi no cambian siguen en tu repositorio; el avance, las decisiones, lo descartado y lo que falta van en Tisty, con fecha, buscables y leídos una sección a la vez." },
+    ],
   },
   sources: "Fuentes",
   back: "Descargar Tisty",

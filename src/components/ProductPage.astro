@@ -89,6 +89,8 @@ const schema = [
     name: product.name,
     ...(product.formerName ? { alternateName: product.formerName } : {}),
     description: t.meta,
+    ...(t.keywords ? { keywords: t.keywords.join(", ") } : {}),
+    ...(t.groups ? { featureList: t.groups.flatMap((group) => group.points) } : {}),
     applicationCategory: "UtilitiesApplication",
     operatingSystem: product.platforms.join(", "),
     url: canonical("en", path),

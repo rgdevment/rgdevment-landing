@@ -14,6 +14,7 @@ export type Words = {
   rows: { label: string; cells: Cell[]; own?: string }[];
   stronger: { title: string; lede: string; items: [string, string][] };
   agent?: { title: string; body: string[]; link: { label: string; url: string } };
+  faq?: { title: string; items: { q: string; a: string }[] };
   sources: string;
   back: string;
 };

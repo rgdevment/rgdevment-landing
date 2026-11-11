@@ -29,7 +29,27 @@ const priced = (own?: string) => (own ? href(locale, own) : undefined);
   description={t.meta}
   locale={locale}
   paths={COMPARE_PATH}
-  schema={[crumbs(locale, trail), { "@context": "https://schema.org", "@type": "WebPage", url: canonical(locale, path), name: t.title, about: { "@id": appId(product.slug) } }]}
+  schema={[
+    crumbs(locale, trail),
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      url: canonical(locale, path),
+      name: t.title,
+      description: t.meta,
+      about: { "@id": appId(product.slug) },
+      mentions: others.map((one) => ({ "@type": "SoftwareApplication", name: one.name, url: one.url })),
+    },
+    ...(t.faq
+      ? [
+          {
+            "@context": "https://schema.org",
+            "@type": "FAQPage",
+            mainEntity: t.faq.items.map((one) => ({ "@type": "Question", name: one.q, acceptedAnswer: { "@type": "Answer", text: one.a } })),
+          },
+        ]
+      : []),
+  ]}
 >
   <section class="shell pt-10 sm:pt-14" style={`--accent: ${product.accent}`}>
     <Crumbs locale={locale} trail={trail} />
@@ -122,6 +142,22 @@ const priced = (own?: string) => (own ? href(locale, own) : undefined);
           {t.agent.link.label}
           <Icon name="arrow" class="h-4 w-4" />
         </a>
+      </section>
+    )
+  }
+
+  {
+    t.faq && (
+      <section class="shell mt-20">
+        <h2 class="section-title">{t.faq.title}</h2>
+        <dl class="mt-8 grid gap-4 md:grid-cols-2">
+          {t.faq.items.map((one) => (
+            <div class="card p-6">
+              <dt class="font-display text-lg font-semibold text-fg">{one.q}</dt>
+              <dd class="mt-2 text-body">{one.a}</dd>
+            </div>
+          ))}
+        </dl>
       </section>
     )
   }
