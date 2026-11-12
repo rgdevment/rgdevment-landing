@@ -5,6 +5,7 @@
   "scripts": {
     "wikis": "node scripts/wikis.mjs",
     "assets": "node scripts/assets.mjs",
+    "screens": "node scripts/screens.mjs",
     "dev": "astro dev",
     "check": "astro check",
     "build": "astro build",

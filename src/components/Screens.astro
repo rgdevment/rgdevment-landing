@@ -1,0 +1,324 @@
+---
+import sharp from "sharp";
+import ScreenPicture from "./ScreenPicture.astro";
+import type { Screen } from "../content/products";
+import { SCREEN_SIZES, srcsetOf, variantsOf } from "../screens";
+import type { Locale } from "../site";
+import { versioned } from "../versioned";
+
+interface Props {
+  name: string;
+  screens: Screen[];
+  locale: Locale;
+}
+
+const { name, screens, locale } = Astro.props;
+const es = locale === "es";
+
+const say = {
+  label: es ? `${name}, pantalla por pantalla` : `${name}, screen by screen`,
+  carousel: es ? "carrusel" : "carousel",
+  slide: es ? "pantalla" : "slide",
+  previous: es ? "Pantalla anterior" : "Previous screen",
+  next: es ? "Pantalla siguiente" : "Next screen",
+  stop: es ? "Detener el avance automático" : "Stop moving on its own",
+  start: es ? "Reanudar el avance automático" : "Start moving on its own",
+};
+
+const slides = await Promise.all(
+  screens.map(async (one) => {
+    const webp = variantsOf(one.image, "webp");
+    const { width, height } = await sharp(`./public${webp.at(-1)!.path}`).metadata();
+    const picture = { width, height, alt: one.alt, avif: srcsetOf(one.image, "avif"), webp: srcsetOf(one.image, "webp"), fallback: versioned(webp[0].path) };
+    return { ...one, picture };
+  }),
+);
+
+const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted transition hover:bg-fg/5 hover:text-fg aria-disabled:opacity-30";
+---
+
+<section
+  class="relative isolate mx-auto mt-14 max-w-5xl sm:mt-16"
+  aria-roledescription={say.carousel}
+  aria-label={say.label}
+  data-screens
+  data-stop={say.stop}
+  data-start={say.start}
+>
+  <div class="halo absolute inset-x-0 top-0 -z-10 aspect-[1440/758] scale-x-[1.03] scale-y-[1.12] sm:scale-x-[1.08] sm:scale-y-[1.16] rounded-[40%]" aria-hidden="true"></div>
+  <div class="strip relative flex snap-x snap-mandatory gap-6 overflow-x-auto" tabindex="0" data-strip>
+    {
+      slides.map((one, at) => (
+        <figure
+          class="w-full shrink-0 snap-center"
+          role="group"
+          aria-roledescription={say.slide}
+          aria-label={`${at + 1} / ${slides.length}: ${one.label}`}
+        >
+          <div class="flex aspect-[1440/758] justify-center">
+            {at === 0 ? (
+              <ScreenPicture {...one.picture} sizes={SCREEN_SIZES} />
+            ) : (
+              <>
+                <div class="later contents">
+                  <ScreenPicture {...one.picture} sizes={SCREEN_SIZES} later />
+                </div>
+                <noscript>
+                  <ScreenPicture {...one.picture} sizes={SCREEN_SIZES} />
+                </noscript>
+              </>
+            )}
+          </div>
+          <figcaption class="mx-auto mt-5 max-w-2xl px-1 text-center">
+            <span class="block font-display text-lg font-semibold text-fg sm:text-xl">{one.title}</span>
+            <span class="mt-1.5 block text-body">{one.text}</span>
+          </figcaption>
+        </figure>
+      ))
+    }
+  </div>
+  <div data-controls hidden>
+    <div class="mt-4 flex items-center justify-center gap-1">
+      <button type="button" class={quiet} aria-label={say.stop} data-turn>
+        <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true" data-playing>
+          <rect x="6.5" y="5" width="3.5" height="14" rx="1" />
+          <rect x="14" y="5" width="3.5" height="14" rx="1" />
+        </svg>
+        <svg viewBox="0 0 24 24" fill="currentColor" class="hidden h-4 w-4" aria-hidden="true" data-stopped>
+          <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z" />
+        </svg>
+      </button>
+      <button type="button" class={quiet} aria-label={say.previous} data-step="back">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+          <path d="M15 6l-6 6 6 6" />
+        </svg>
+      </button>
+      <ul class="flex items-center">
+        {
+          slides.map((one, at) => (
+            <li>
+              <button type="button" class="grid h-9 place-items-center px-1" aria-label={one.label} data-go={at}>
+                <span class="dot relative block h-1.5 overflow-hidden rounded-full bg-fg/20" aria-hidden="true">
+                  <span class="fill absolute inset-0 rounded-full bg-fg" />
+                </span>
+              </button>
+            </li>
+          ))
+        }
+      </ul>
+      <button type="button" class={quiet} aria-label={say.next} data-step="forth">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="h-4 w-4" aria-hidden="true">
+          <path d="M9 6l6 6-6 6" />
+        </svg>
+      </button>
+    </div>
+  </div>
+</section>
+
+<style>
+  .strip {
+    scrollbar-width: thin;
+    overscroll-behavior-x: contain;
+  }
+
+  .strip[data-ready] {
+    scrollbar-width: none;
+  }
+
+  .strip:not([data-ready]) .later {
+    display: none;
+  }
+
+  .strip[data-ready]::-webkit-scrollbar {
+    display: none;
+  }
+
+  .halo {
+    background: rgb(228 181 89 / 0.5);
+    filter: blur(28px);
+  }
+
+  :global(:root[data-theme="dark"]) .halo {
+    background: rgb(228 181 89 / 0.12);
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme="light"])) .halo {
+      background: rgb(228 181 89 / 0.12);
+    }
+  }
+
+  @media (min-width: 640px) {
+    .halo {
+      filter: blur(44px);
+    }
+  }
+
+  .dot {
+    width: 0.375rem;
+    transition: width 0.3s ease;
+  }
+
+  .fill {
+    transform: scaleX(0);
+    transform-origin: left;
+  }
+
+  [aria-current="true"] > .dot {
+    width: 1.5rem;
+  }
+
+  [aria-current="true"] > .dot > .fill {
+    transform: scaleX(1);
+  }
+
+  [data-running] [aria-current="true"] > .dot > .fill {
+    animation: fill var(--turn) linear;
+  }
+
+  @keyframes fill {
+    from {
+      transform: scaleX(0);
+    }
+  }
+</style>
+
+<script>
+  const TURN = 7000;
+  const still = matchMedia("(prefers-reduced-motion: reduce)");
+
+  for (const box of document.querySelectorAll<HTMLElement>("[data-screens]")) {
+    const strip = box.querySelector<HTMLElement>("[data-strip]")!;
+    const slides = [...strip.children] as HTMLElement[];
+    const dots = [...box.querySelectorAll<HTMLButtonElement>("[data-go]")];
+    const back = box.querySelector<HTMLButtonElement>('[data-step="back"]')!;
+    const forth = box.querySelector<HTMLButtonElement>('[data-step="forth"]')!;
+    const turn = box.querySelector<HTMLButtonElement>("[data-turn]")!;
+    const last = slides.length - 1;
+    const held = new Set<string>();
+    let current = 0;
+    let playing = !still.matches;
+    let timer = 0;
+
+    const reveal = (slide: HTMLElement) => {
+      for (const node of slide.querySelectorAll<HTMLElement>("[data-srcset]")) {
+        node.setAttribute("srcset", node.dataset.srcset!);
+        node.removeAttribute("data-srcset");
+      }
+      const image = slide.querySelector<HTMLImageElement>("img[data-src]");
+      if (!image) return;
+      image.src = image.dataset.src!;
+      image.removeAttribute("data-src");
+    };
+
+    const go = (at: number) => {
+      const slide = slides[(at + slides.length) % slides.length];
+      reveal(slide);
+      strip.scrollTo({ left: slide.offsetLeft, behavior: still.matches ? "auto" : "smooth" });
+    };
+
+    const schedule = () => {
+      clearTimeout(timer);
+      const running = playing && held.size === 0;
+      box.toggleAttribute("data-running", running);
+      if (running) timer = window.setTimeout(() => go(current + 1), TURN);
+    };
+
+    const show = (at: number) => {
+      current = at;
+      dots.forEach((dot, index) => dot.setAttribute("aria-current", String(index === at)));
+      back.setAttribute("aria-disabled", String(at === 0));
+      forth.setAttribute("aria-disabled", String(at === last));
+      schedule();
+    };
+
+    const play = (on: boolean) => {
+      playing = on;
+      turn.setAttribute("aria-label", (on ? box.dataset.stop : box.dataset.start)!);
+      turn.querySelector("[data-playing]")!.classList.toggle("hidden", !on);
+      turn.querySelector("[data-stopped]")!.classList.toggle("hidden", on);
+      schedule();
+    };
+
+    const hold = (why: string, on: boolean) => {
+      if (on === held.has(why)) return;
+      if (on) held.add(why);
+      else held.delete(why);
+      schedule();
+    };
+
+    const seen = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) if (entry.isIntersecting) show(slides.indexOf(entry.target as HTMLElement));
+      },
+      { root: strip, threshold: 0.6 },
+    );
+    slides.forEach((slide) => seen.observe(slide));
+
+    const near = new IntersectionObserver(
+      (entries) => {
+        for (const entry of entries) if (entry.isIntersecting) reveal(entry.target as HTMLElement);
+      },
+      { root: strip, rootMargin: "0px 100%" },
+    );
+    const whenIdle = window.requestIdleCallback ?? ((run: () => void) => setTimeout(run, 200));
+    const approaching = new IntersectionObserver(
+      ([entry]) => {
+        if (!entry.isIntersecting) return;
+        approaching.disconnect();
+        whenIdle(() => slides.forEach((slide) => near.observe(slide)));
+      },
+      { rootMargin: "600px 0px" },
+    );
+    const watch = () => approaching.observe(strip);
+    if (document.readyState === "complete") watch();
+    else addEventListener("load", watch, { once: true });
+
+    new IntersectionObserver(([entry]) => hold("away", !entry.isIntersecting), { threshold: 0.4 }).observe(strip);
+    document.addEventListener("visibilitychange", () => hold("hidden", document.hidden));
+    box.addEventListener("pointerenter", (event) => event.pointerType === "mouse" && hold("hover", true));
+    box.addEventListener("pointerleave", () => hold("hover", false));
+    box.addEventListener("focusin", (event) => hold("focus", (event.target as HTMLElement).matches(":focus-visible")));
+    box.addEventListener("focusout", (event) => box.contains(event.relatedTarget as Node) || hold("focus", false));
+
+    const keys: Record<string, () => number> = {
+      ArrowLeft: () => Math.max(current - 1, 0),
+      ArrowRight: () => Math.min(current + 1, last),
+      Home: () => 0,
+      End: () => last,
+    };
+    strip.addEventListener("keydown", (event) => {
+      const to = keys[event.key];
+      if (!to) return;
+      event.preventDefault();
+      play(false);
+      go(to());
+    });
+    strip.addEventListener("pointerdown", () => play(false));
+    strip.addEventListener("wheel", (event) => Math.abs(event.deltaX) > Math.abs(event.deltaY) && play(false), { passive: true });
+    back.addEventListener("click", () => {
+      play(false);
+      go(Math.max(current - 1, 0));
+    });
+    forth.addEventListener("click", () => {
+      play(false);
+      go(Math.min(current + 1, last));
+    });
+    dots.forEach((dot, index) =>
+      dot.addEventListener("click", () => {
+        play(false);
+        go(index);
+      }),
+    );
+    turn.addEventListener("click", () => {
+      held.delete("focus");
+      play(!playing);
+    });
+
+    box.style.setProperty("--turn", `${TURN}ms`);
+    strip.dataset.ready = "";
+    box.querySelector<HTMLElement>("[data-controls]")!.hidden = false;
+    play(playing);
+    show(0);
+  }
+</script>

@@ -10,6 +10,8 @@ import {
   FIXES_ES,
   PROOF_EN,
   PROOF_ES,
+  SCREENS_EN,
+  SCREENS_ES,
   SHARING_EN,
   SHARING_ES,
 } from "./tisty";
@@ -41,6 +43,14 @@ export type Assistant = {
   listed: string;
   more: string;
   page: string;
+};
+
+export type Screen = {
+  image: string;
+  label: string;
+  title: string;
+  text: string;
+  alt: string;
 };
 
 export type Sharing = {
@@ -112,6 +122,7 @@ type Words = {
   proof?: Proof;
   assistant?: Assistant;
   sharing?: Sharing;
+  screens?: Screen[];
   fixes?: Fixes;
   day?: Day;
   cost?: Cost;
@@ -186,8 +197,8 @@ export const PRODUCTS: Product[] = [
       en: "Tisty, the working memory for you and your AI agent: the archive keeps every finished task with its steps and its journal, and your agent asks how did we solve this last time? to bring one back as it was",
       es: "Tisty, la memoria de trabajo tuya y de tu agente de IA: el archivo guarda cada tarea terminada con sus pasos y su bitácora, y tu agente pregunta ¿cómo lo resolvimos la otra vez? para traer una tal como quedó",
     },
-    accent: "#6F4BD8",
-    accentDark: "#9276E1",
+    accent: "#86601A",
+    accentDark: "#E4B559",
     icon: "/icons/tisty-mark.png",
     writes: true,
     mascot: "/tisty-head.svg",
@@ -334,6 +345,7 @@ export const PRODUCTS: Product[] = [
       proof: PROOF_EN,
       assistant: ASSISTANT_EN,
       sharing: SHARING_EN,
+      screens: SCREENS_EN,
       fixes: FIXES_EN,
       day: DAY_EN,
       cost: COST_EN,
@@ -488,6 +500,7 @@ export const PRODUCTS: Product[] = [
       proof: PROOF_ES,
       assistant: ASSISTANT_ES,
       sharing: SHARING_ES,
+      screens: SCREENS_ES,
       fixes: FIXES_ES,
       day: DAY_ES,
       cost: COST_ES,
