@@ -1,0 +1,11 @@
+---
+import NewsPage from "../../../../../components/NewsPage.astro";
+import { NEWS_PATH, hasNews } from "../../../../../content/news";
+import { HOME_PRODUCT } from "../../../../../site";
+
+export function getStaticPaths() {
+  return hasNews(HOME_PRODUCT) ? [{ params: { noticias: NEWS_PATH.es } }] : [];
+}
+---
+
+<NewsPage locale="es" />

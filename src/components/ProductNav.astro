@@ -2,6 +2,7 @@
 import { CHANGELOG_PATH, hasChangelog } from "../content/changelog";
 import { COMPARE_PATH, compares } from "../content/compare";
 import { docPath } from "../content/docs";
+import { NEWS_PATH, hasNews } from "../content/news";
 import type { Product } from "../content/products";
 import { iconAlt } from "../content/products";
 import { href, type Locale } from "../site";
@@ -22,7 +23,11 @@ type Item = [to: string, label: string, external: boolean];
 const items: Item[] = [
   [href(locale, es ? "precios" : "pricing"), es ? "Precios" : "Pricing", false],
   ...(compares(product.slug) ? [[href(locale, COMPARE_PATH[locale]), es ? "Comparar" : "Compare", false] as Item] : []),
-  ...(hasChangelog(product.slug) ? [[href(locale, CHANGELOG_PATH[locale]), es ? "Novedades" : "What's new", false] as Item] : []),
+  ...(hasNews(product.slug)
+    ? [[href(locale, NEWS_PATH[locale]), es ? "Noticias" : "News", false] as Item]
+    : hasChangelog(product.slug)
+      ? [[href(locale, CHANGELOG_PATH[locale]), es ? "Novedades" : "What's new", false] as Item]
+      : []),
   [href(locale, es ? "colaborar" : "support"), es ? "Colaborar" : "Support", false],
   [href(locale, docPath(locale, product.slug)), es ? "Ayuda" : "Docs", false],
   ...(words ? [[words.url, "Markdown", true] as Item] : []),

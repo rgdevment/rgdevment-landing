@@ -1,0 +1,12 @@
+---
+import StoryPage from "../../../../../components/StoryPage.astro";
+import { NEWS_PATH, homeStories } from "../../../../../content/news";
+
+export async function getStaticPaths() {
+  return (await homeStories()).map((one) => ({ params: { noticias: NEWS_PATH.es, version: one.version } }));
+}
+
+const { version } = Astro.params;
+---
+
+<StoryPage locale="es" version={version!} />

@@ -4,7 +4,7 @@ import Icon from "./Icon.astro";
 import Layout from "../layouts/Layout.astro";
 import { CHANGELOG_PATH, FEED, changelogWords, notesOf } from "../content/changelog";
 import { PRODUCTS, releasesUrl } from "../content/products";
-import { HOME_PRODUCT, crumbs, type Locale } from "../site";
+import { HOME_PRODUCT, crumbs, longDate, type Locale } from "../site";
 
 interface Props {
   locale: Locale;
@@ -17,8 +17,7 @@ const path = CHANGELOG_PATH[locale];
 const trail: [string, string][] = [[product.name, ""], [t.short, path]];
 const notes = await notesOf(product);
 const written = locale === "en" ? undefined : "en";
-const day = (date: string) =>
-  new Date(date).toLocaleDateString(locale === "es" ? "es-CL" : "en-US", { year: "numeric", month: "long", day: "numeric" });
+const day = (date: string) => longDate(date, locale);
 ---
 
 <Layout title={t.title} description={t.meta} locale={locale} textIn="en" paths={CHANGELOG_PATH} schema={crumbs(locale, trail)}>

@@ -1,9 +1,19 @@
 import { getCollection } from "astro:content";
 import { docPath } from "./content/docs";
+import { NEWS_PATH, homeStories, storyPath } from "./content/news";
 import { homeOf } from "./hosts";
 import { LOCALES, canonical, type Locale } from "./site";
 
 export type Entry = { en: string; es: string; priority: string; lastmod?: string; textIn?: Locale };
+
+export async function newsEntries(): Promise<Entry[]> {
+  const stories = await homeStories();
+  if (!stories.length) return [];
+  return [
+    { en: NEWS_PATH.en, es: NEWS_PATH.es, priority: "0.6", lastmod: stories[0].date.slice(0, 10) },
+    ...stories.map((one) => ({ en: storyPath("en", one.version), es: storyPath("es", one.version), priority: "0.5", lastmod: one.date.slice(0, 10) })),
+  ];
+}
 
 const BREAK = "\n";
 

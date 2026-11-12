@@ -1,0 +1,57 @@
+---
+import Crumbs from "./Crumbs.astro";
+import Icon from "./Icon.astro";
+import Layout from "../layouts/Layout.astro";
+import { CHANGELOG_PATH } from "../content/changelog";
+import { NEWS_FEED, NEWS_PATH, homeProduct, newsWords, storiesOf, storyPath } from "../content/news";
+import { crumbs, href, longDate, type Locale } from "../site";
+
+interface Props {
+  locale: Locale;
+}
+
+const { locale } = Astro.props;
+const product = homeProduct()!;
+const t = newsWords(product, locale);
+const trail: [string, string][] = [[product.name, ""], [t.short, NEWS_PATH[locale]]];
+const stories = await storiesOf(product);
+---
+
+<Layout title={t.title} description={t.meta} locale={locale} paths={NEWS_PATH} schema={crumbs(locale, trail)}>
+  <section class="shell pt-10 sm:pt-14" style={`--accent: ${product.accent}`}>
+    <Crumbs locale={locale} trail={trail} />
+    <header class="mt-10">
+      <p class="eyebrow">{t.short}</p>
+      <h1 class="mt-3 text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">{t.title}</h1>
+      <p class="mt-5 text-lg text-body">{t.lede}</p>
+      <p class="mt-6">
+        <a class="inline-flex items-center gap-1.5 font-medium text-fg hover:underline" href={`/${NEWS_FEED[locale]}`} type="application/rss+xml">
+          {t.feed}
+          <Icon name="arrow" class="h-4 w-4" />
+        </a>
+      </p>
+    </header>
+
+    <ol class="mt-12 max-w-3xl divide-y divide-line">
+      {
+        stories.map((one) => (
+          <li class="py-10 first:pt-0">
+            <p class="text-sm text-muted">
+              <time datetime={one.date}>{longDate(one.date, locale)}</time>
+              <span class="px-2" aria-hidden="true">·</span>
+              {product.name} {one.version}
+            </p>
+            <h2 class="mt-2 text-2xl font-semibold tracking-[-0.02em] text-fg">
+              <a class="hover:underline" href={href(locale, storyPath(locale, one.version))}>{one.headline[locale]}</a>
+            </h2>
+            <ul class="mt-4 list-disc space-y-1 pl-5 text-body">
+              {one.told[locale].map((said) => <li>{said.title}</li>)}
+            </ul>
+          </li>
+        ))
+      }
+    </ol>
+
+    <a class="btn-ghost mt-6" href={href(locale, CHANGELOG_PATH[locale])}>{t.every}</a>
+  </section>
+</Layout>

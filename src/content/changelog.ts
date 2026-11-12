@@ -2,6 +2,7 @@ import { createMarkdownProcessor } from "@astrojs/markdown-remark";
 import rehypeSanitize, { defaultSchema } from "rehype-sanitize";
 import { PRODUCTS, type Product } from "./products";
 import { everyRelease, type Published } from "./releases";
+import { rss } from "../rss";
 import { canonical, type Locale } from "../site";
 
 export const CHANGELOG_PATH: Record<Locale, string> = { en: "changelog", es: "novedades" };
@@ -117,36 +118,15 @@ export async function everyNote(): Promise<Note[]> {
   return all.flat().sort((a, b) => b.date.localeCompare(a.date));
 }
 
-function xml(text: string): string {
-  return text.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;");
-}
-
 export function feed(title: string, page: string, self: string, description: string, notes: Note[]): Response {
-  const items = notes.map((one) =>
-    [
-      "    <item>",
-      `      <title>${xml(`${one.product.name} ${one.version}${one.headline ? ` — ${one.headline}` : ""}`)}</title>`,
-      `      <link>${xml(changelogUrl(one.product, "en", one.version))}</link>`,
-      `      <guid isPermaLink="false">${xml(one.url)}</guid>`,
-      `      <pubDate>${new Date(one.date).toUTCString()}</pubDate>`,
-      `      <description>${xml(one.html)}</description>`,
-      "    </item>",
-    ].join("\n"),
+  return rss(
+    { title, page, self, description, language: "en" },
+    notes.map((one) => ({
+      title: `${one.product.name} ${one.version}${one.headline ? ` — ${one.headline}` : ""}`,
+      link: changelogUrl(one.product, "en", one.version),
+      guid: one.url,
+      date: one.date,
+      html: one.html,
+    })),
   );
-  const body = [
-    '<?xml version="1.0" encoding="UTF-8"?>',
-    '<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">',
-    "  <channel>",
-    `    <title>${xml(title)}</title>`,
-    `    <link>${xml(page)}</link>`,
-    `    <description>${xml(description)}</description>`,
-    "    <language>en</language>",
-    `    <atom:link href="${xml(self)}" rel="self" type="application/rss+xml"/>`,
-    ...(notes[0] ? [`    <lastBuildDate>${new Date(notes[0].date).toUTCString()}</lastBuildDate>`] : []),
-    ...items,
-    "  </channel>",
-    "</rss>",
-    "",
-  ].join("\n");
-  return new Response(body, { headers: { "Content-Type": "application/rss+xml; charset=utf-8" } });
 }

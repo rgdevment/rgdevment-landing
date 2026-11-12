@@ -11,7 +11,7 @@ export const HOMES: Record<string, string> = {
 const FORMER: Record<string, string> = { copypaste: "copanda" };
 
 /// Pages a product's own site keeps for itself, showing only that product.
-const OWN = ["pricing", "precios", "compare", "comparar", "changelog", "novedades"];
+const OWN = ["pricing", "precios", "compare", "comparar", "changelog", "novedades", "news", "noticias"];
 
 export function homeOf(product: string): string | undefined {
   return Object.keys(HOMES).find((domain) => HOMES[domain] === product);
@@ -23,7 +23,7 @@ export function relocate(url: string, product: string | null): string {
   if (!url.startsWith("/") || url.startsWith("//")) return url;
   const [, prefix = "", rest = ""] = url.match(/^(\/es(?=\/|$))?\/?(.*)$/) ?? [];
   const [page, tail = ""] = rest.split(/(?=[?#])/, 2);
-  if (OWN.includes(page.replace(/\/$/, ""))) return url;
+  if (OWN.includes(page.split("/")[0])) return url;
   if (page === "" || page === `${product}/` || page === product) return `${prefix}/${tail}`;
   if (page.startsWith(`${product}/`)) return `${prefix}/${page.slice(product.length + 1)}${tail}`;
   return away(`${MAIN}${url}`);
