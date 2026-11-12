@@ -258,7 +258,7 @@ export const PRODUCTS: Product[] = [
         page: "tasks",
         anchor: "a-task-or-a-document",
       },
-      title: "Tisty: local memory and context for AI agents, notes and tasks",
+      title: "Tisty: local memory for AI agents, notes and tasks",
       meta: "Local memory and context for you and your AI agent: Markdown notes, documents and tasks on your disk, over MCP for GitHub Copilot, Claude Code and Cursor. Free.",
       problem:
         "An ordinary task list forgets the moment you tick the box, and your AI agent forgets the moment the session ends: six months later the same problem comes back and all you have is knowing you solved it once. In Tisty, what you solved stays, with its steps and its why, for you and for your agent.",
@@ -413,7 +413,7 @@ export const PRODUCTS: Product[] = [
         anchor: "tarea-o-documento",
       },
       title: "Tisty: memoria y contexto locales para tu agente de IA",
-      meta: "Memoria y contexto locales para ti y tu agente de IA: notas, documentos y tareas en Markdown en tu disco, por MCP para GitHub Copilot, Claude Code y Cursor. Gratis.",
+      meta: "Memoria y contexto locales para ti y tu agente de IA: notas, documentos y tareas Markdown en tu disco, vía MCP en GitHub Copilot, Claude Code y Cursor. Gratis.",
       problem:
         "Una lista de tareas común olvida en cuanto marcas la casilla, y tu agente de IA olvida en cuanto termina la sesión: seis meses después vuelve el mismo problema y solo te queda saber que ya lo resolviste una vez. En Tisty, lo que resolviste se queda, con sus pasos y su porqué, para ti y para tu agente.",
       groups: [
@@ -642,7 +642,7 @@ export const PRODUCTS: Product[] = [
     en: {
       category: "Clipboard manager for Windows and macOS",
       tagline: "An extra thumb for your clipboard.",
-      title: "CoPanda: free clipboard history manager for Windows and macOS",
+      title: "CoPanda: free clipboard history manager, Windows and macOS",
       meta: "Free, open source clipboard manager for Windows and macOS, formerly CopyPaste. A searchable local history that skips your password manager. No account.",
       formerly: "Formerly CopyPaste. The same app and the same history, with a name of its own.",
       mascot: {
@@ -691,7 +691,7 @@ export const PRODUCTS: Product[] = [
     es: {
       category: "Gestor de portapapeles para Windows y macOS",
       tagline: "Un pulgar extra para tu portapapeles.",
-      title: "CoPanda: gestor e historial del portapapeles, Windows y macOS",
+      title: "CoPanda: gestor e historial de portapapeles, Windows y macOS",
       meta: "Gestor de portapapeles gratis y libre para Windows y macOS, antes CopyPaste. Historial local con búsqueda que ignora tu gestor de contraseñas. Sin cuenta.",
       formerly: "Antes se llamaba CopyPaste. La misma aplicación y el mismo historial, con un nombre propio.",
       mascot: {

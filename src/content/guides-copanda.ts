@@ -7,7 +7,7 @@ export const COPANDA_GUIDES: Guide[] = [
     published: "2026-09-24",
     en: {
       slug: "guides/windows-clipboard-history",
-      title: "Windows clipboard history: what Win+V does and where it stops",
+      title: "Windows clipboard history: what Win+V does, where it stops",
       description:
         "Windows keeps a clipboard history and most people never switch it on. How to enable it, and the three limits that make people look for something else.",
       lede: "Windows has had a clipboard history for years, hidden behind a shortcut nobody mentions. Turn it on first: for a lot of people it is enough, and it costs one setting.",
@@ -113,7 +113,7 @@ export const COPANDA_GUIDES: Guide[] = [
     updated: "2026-11-08",
     en: {
       slug: "guides/clipboard-history-on-mac",
-      title: "Clipboard history on Mac: why macOS has none, and how to get one",
+      title: "Mac clipboard history: why macOS has none and how to get one",
       description:
         "macOS remembers exactly one thing you copied. What the Finder can show you, and what you need if you want more than the last item.",
       lede: "Unlike Windows, macOS has no clipboard history at all. It holds the last thing you copied and that is the whole feature, which is why every Mac ends up with a third-party manager sooner or later.",
@@ -154,7 +154,7 @@ export const COPANDA_GUIDES: Guide[] = [
     },
     es: {
       slug: "guias/historial-del-portapapeles-en-mac",
-      title: "Historial del portapapeles en Mac: por qué no hay y cómo tenerlo",
+      title: "Portapapeles en Mac: por qué no hay historial y cómo tenerlo",
       description:
         "macOS recuerda exactamente una cosa de las que copiaste. Qué puede enseñarte el Finder y qué necesitas si quieres algo más que el último elemento.",
       lede: "A diferencia de Windows, macOS no tiene historial del portapapeles. Guarda lo último que copiaste y esa es toda la función, y por eso cada Mac acaba tarde o temprano con un gestor de terceros.",

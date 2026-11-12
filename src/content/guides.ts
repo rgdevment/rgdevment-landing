@@ -61,7 +61,7 @@ const LINKUNBOUND_GUIDES: Guide[] = [
     },
     es: {
       slug: "guias/abrir-enlaces-de-teams-en-otro-navegador",
-      title: "Abrir los enlaces de Teams en otro navegador (Windows y macOS)",
+      title: "Abrir enlaces de Teams en otro navegador (Windows y macOS)",
       description:
         "Microsoft Teams manda todos los enlaces a Edge. Cambia el ajuste que Teams ya trae y decide después qué hacer con los enlaces que no lo respetan.",
       lede: "Teams entrega los enlaces a Edge sea cual sea tu navegador predeterminado. Hay un ajuste para eso, y es lo primero que conviene probar: no cuesta nada y a la mayoría le basta.",
@@ -159,7 +159,7 @@ const LINKUNBOUND_GUIDES: Guide[] = [
     },
     es: {
       slug: "guias/abrir-enlaces-de-outlook-en-chrome-o-firefox",
-      title: "Abrir los enlaces de Outlook en Chrome o Firefox en vez de Edge",
+      title: "Abrir enlaces de Outlook en Chrome o Firefox en vez de Edge",
       description:
         "El Outlook clásico tiene un ajuste que decide dónde se abre un enlace de un correo. Cámbialo primero y ocúpate después de lo que ese ajuste deja fuera.",
       lede: "El Outlook de escritorio guarda su propia preferencia para abrir enlaces, aparte del predeterminado de Windows. Si tus correos siguen abriendo Edge, casi siempre es por ese ajuste.",
@@ -249,7 +249,7 @@ const LINKUNBOUND_GUIDES: Guide[] = [
     },
     es: {
       slug: "guias/enviar-enlaces-de-trabajo-a-un-perfil-de-chrome",
-      title: "Abrir enlaces en un perfil concreto de Chrome, trabajo o personal",
+      title: "Abrir enlaces en un perfil de Chrome, trabajo o personal",
       description:
         "Chrome abre los enlaces en el perfil que se usó la última vez. Por qué pasa y cómo mandar cada enlace al perfil que corresponde.",
       lede: "Si tienes un perfil del trabajo y otro personal, Chrome no pregunta cuál querías. Abre el último que usaste, y te enteras cuando la página te saluda con el nombre equivocado.",

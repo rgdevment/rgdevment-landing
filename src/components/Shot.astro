@@ -1,6 +1,7 @@
 ---
 import { type Product, shotSrc } from "../content/products";
 import type { Locale } from "../site";
+import { versioned } from "../versioned";
 
 interface Props {
   product: Product;
@@ -17,9 +18,9 @@ const webp = src.replace(/\.png$/, "");
 ---
 
 <picture>
-  <source srcset={`${webp}-720.webp 720w, ${webp}-1280.webp 1280w, ${webp}.webp ${shot.width}w`} sizes={sizes} type="image/webp" />
+  <source srcset={`${versioned(`${webp}-720.webp`)} 720w, ${versioned(`${webp}-1280.webp`)} 1280w, ${versioned(`${webp}.webp`)} ${shot.width}w`} sizes={sizes} type="image/webp" />
   <img
-    src={src}
+    src={versioned(src)}
     width={shot.width}
     height={shot.height}
     alt={locale === "es" ? shot.es : shot.en}
