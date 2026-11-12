@@ -100,7 +100,7 @@ export const DAY_EN: Day = {
   title: "A day with your agent",
   lede: "What an agent connected to Tisty does with your tasks and documents, on a real piece of work.",
   steps: [
-    { title: "It asks what moved", body: "since its last session, and who moved it, instead of rereading everything." },
+    { title: "It asks what moved", body: "since its last session, and who moved it, instead of rereading everything, with the tasks that press, overdue first." },
     { title: "It opens the task it was on", body: "which Tisty names for it. «Done when» says when it is finished, and the unticked steps say what is left." },
     { title: "It searches the archive first", body: "before proposing anything. If it was solved before, it starts from there." },
     { title: "It reads by the outline", body: "then only the section it needs, and keeps to the decisions and to what is out of scope." },
@@ -116,7 +116,7 @@ export const DAY_ES: Day = {
   title: "Un día con tu agente",
   lede: "Lo que hace con tus tareas y documentos un agente conectado a Tisty, en un trabajo real.",
   steps: [
-    { title: "Pregunta qué cambió", body: "desde su última sesión, y quién lo cambió, en vez de releerlo todo." },
+    { title: "Pregunta qué cambió", body: "desde su última sesión, y quién lo cambió, en vez de releerlo todo, con las tareas que apremian, las vencidas primero." },
     { title: "Abre la tarea en la que estaba", body: "que Tisty le nombra. «Para estar lista» le dice cuándo termina, y los pasos sin marcar, qué falta." },
     { title: "Busca primero en el archivo", body: "antes de proponer nada. Si ya se resolvió, parte de ahí." },
     { title: "Lee por el índice", body: "y después solo la sección que necesita, respetando las decisiones y lo que está fuera de alcance." },
@@ -280,7 +280,9 @@ export const ASSISTANT_EN: Assistant = {
     title: "It can",
     items: [
       "Pick up where it left off: what moved since last time, who moved it, and the task it was on",
-      "Start and wrap up a session with one command, such as /mcp__tisty__pick_up and /mcp__tisty__leave_off in Claude Code",
+      "Start, wrap up or brainstorm with one command in Claude Code or GitHub Copilot in VS Code, and mention a document with @",
+      "Work any task the way it works a document, yours too: its description, page, title, list and open steps",
+      "Jot ideas on Brainstorm and sort them with you, marking old ones with a ◆ for you to delete or keep",
       "Read a long document by its outline and one section",
       "Compact a long document, which you undo or keep with one click",
       "Mark a document that had its day, for you to delete, put away or keep",
@@ -288,7 +290,7 @@ export const ASSISTANT_EN: Assistant = {
       "Add to a task's journal",
       "Write documents, correct a passage and file them in folders",
       "Read and search everything, the archive included",
-      "Say a task is done, for you to confirm",
+      "Say a task is done, or should not be done, yours too, for you to confirm",
     ],
   },
   never: {
@@ -298,6 +300,7 @@ export const ASSISTANT_EN: Assistant = {
       "Ticks a step of yours or finishes a task of yours",
       "Moves a day you set",
       "Deletes a document, or renames or empties a folder",
+      "Takes an idea off Brainstorm except by filing it or turning it into a task",
     ],
   },
   door: "The door is open when you install Tisty, and Settings › Assistants closes it with one click. While it is closed, everything an assistant tries is refused.",
@@ -315,7 +318,9 @@ export const ASSISTANT_ES: Assistant = {
     title: "Puede",
     items: [
       "Retomar donde quedó: lo que cambió desde la última vez, quién lo cambió y la tarea en la que estaba",
-      "Empezar y cerrar una sesión con un comando, como /mcp__tisty__pick_up y /mcp__tisty__leave_off en Claude Code",
+      "Empezar, cerrar o hacer una lluvia de ideas con un comando en Claude Code o GitHub Copilot en VS Code, y mencionar un documento con @",
+      "Trabajar cualquier tarea como un documento, también las tuyas: su descripción, página, título, lista y pasos abiertos",
+      "Anotar ideas en la Lluvia de ideas y ordenarlas contigo, marcando las viejas con un ◆ para que tú las borres o las conserves",
       "Leer un documento largo por su índice y una sección",
       "Compactar un documento largo, que tú deshaces o conservas con un clic",
       "Marcar un documento que ya cumplió su vida, para que tú lo borres, lo archives o lo conserves",
@@ -323,7 +328,7 @@ export const ASSISTANT_ES: Assistant = {
       "Agregar a la bitácora de una tarea",
       "Escribir documentos, corregir un pasaje y ordenarlos en carpetas",
       "Leer y buscar en todo, también en el archivo",
-      "Decir que una tarea está hecha, para que tú lo confirmes",
+      "Decir que una tarea está hecha, o que no debería hacerse, también las tuyas, para que tú lo confirmes",
     ],
   },
   never: {
@@ -333,6 +338,7 @@ export const ASSISTANT_ES: Assistant = {
       "Marca un paso tuyo ni termina una tarea tuya",
       "Mueve un día que pusiste tú",
       "Borra un documento, ni renombra ni vacía una carpeta",
+      "Saca una idea de la Lluvia de ideas salvo anexándola a un documento o convirtiéndola en tarea",
     ],
   },
   door: "La puerta viene abierta al instalar Tisty, y Configuración › Asistentes la cierra con un clic. Mientras está cerrada, todo lo que intente un asistente se rechaza.",
