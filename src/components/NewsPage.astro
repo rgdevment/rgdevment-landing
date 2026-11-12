@@ -38,19 +38,11 @@ const stories = await storiesOf(product);
           <li class="py-10 first:pt-0">
             <p class="text-sm text-muted">
               <time datetime={one.date}>{longDate(one.date, locale)}</time>
-              <span class="px-2" aria-hidden="true">·</span>
-              {product.name} {one.version}
             </p>
             <h2 class="mt-2 text-2xl font-semibold tracking-[-0.02em] text-fg">
-              <a class="hover:underline" href={href(locale, storyPath(locale, one.version))}>{one.headline[locale]}</a>
+              <a class="hover:underline" href={href(locale, storyPath(locale, one.page[locale]))}>{one.article[locale].data.title}</a>
             </h2>
-            {one.article[locale] ? (
-              <p class="mt-4 text-body">{one.article[locale].data.description}</p>
-            ) : (
-              <ul class="mt-4 list-disc space-y-1 pl-5 text-body">
-                {one.told[locale].map((said) => <li>{said.title}</li>)}
-              </ul>
-            )}
+            <p class="mt-4 text-body">{one.article[locale].data.description}</p>
           </li>
         ))
       }

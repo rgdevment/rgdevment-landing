@@ -103,6 +103,7 @@ export function shared({ product = null } = {}) {
   return {
     trailingSlash: 'always',
     integrations: [tailwind({ applyBaseStyles: false })],
+    image: { layout: 'constrained' },
     markdown: {
       syntaxHighlight: { type: 'shiki', excludeLangs: ['math', 'mermaid'] },
       remarkPlugins: [[remarkMath, { singleDollarTextMath: false }]],
@@ -153,6 +154,19 @@ const HELP_MOVED = {
   },
 };
 
+// Tisty's first news pages were one per version, and every version is told in the changelog now.
+const NEWS_BY_VERSION = {
+  tisty: ['1.30.0', '1.30.2', '1.31.0', '1.31.3', '1.31.5', '1.32.0', '1.32.1', '1.33.0', '1.34.0', '1.34.1', '1.35.0', '1.36.0', '1.36.1', '1.36.2', '1.37.0', '1.37.1', '1.38.0', '1.39.0', '1.40.0', '1.41.0', '1.42.0', '1.43.0', '1.44.0', '1.44.1', '1.45.0', '1.46.0'],
+};
+
+const newsMoved = (product) =>
+  Object.fromEntries(
+    (NEWS_BY_VERSION[product] ?? []).flatMap((version) => [
+      [`/news/${version}/`, '/changelog/'],
+      [`/es/noticias/${version}/`, '/es/novedades/'],
+    ]),
+  );
+
 const MAIN_ONLY = ['favicon.svg', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'social.png', 'social-es.png'];
 
 async function favicon(png) {
@@ -193,7 +207,7 @@ function ownFiles(product) {
         ];
         const icon = CATALOG.find((one) => one.slug === product).icon;
         writeFileSync(at('favicon.ico'), await favicon(`./public${icon}`));
-        writeFileSync(at('_redirects'), renamed({ '/en/': '/', ...SUPPORT_MOVED, ...HELP_MOVED[product] }));
+        writeFileSync(at('_redirects'), renamed({ '/en/': '/', ...SUPPORT_MOVED, ...HELP_MOVED[product], ...newsMoved(product) }));
         drop.forEach((path) => rmSync(at(path), { force: true }));
       },
     },

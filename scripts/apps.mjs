@@ -4,7 +4,6 @@ export const APPS = [
     product: "tisty",
     repo: "Tisty",
     help: "docs/help",
-    news: "docs/news",
     terms: true,
     assets: {
       "tisty-social.png": "assets/screens/store/en-01-memory.png",
