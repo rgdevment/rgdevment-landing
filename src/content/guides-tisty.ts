@@ -268,7 +268,7 @@ export const TISTY_GUIDES: Guide[] = [
         "Nada tiene fecha ni se archiva, así que «¿cómo lo resolvimos el año pasado?» no tiene respuesta.",
         "Los archivos se desactualizan, se acumulan y se pierden entre ramas, equipos y proyectos.",
       ],
-      toolTitle: "Una memoria que tu agente lee de a una sección",
+      toolTitle: "Una memoria que tu agente lee sección por sección",
       tool: [
         "Tisty guarda tareas con sus pasos y una bitácora con fechas, y documentos uno por tema, en Markdown y en tu propio disco.",
         "Por MCP, tu agente pregunta qué cambió desde la última sesión, lee primero el índice y después solo la sección que necesita: sobre una bitácora de 256 KB, retomar el trabajo cuesta cerca de un 99 % menos que releerla.",

@@ -192,7 +192,7 @@ export const PRODUCTS: Product[] = [
     writes: true,
     mascot: "/tisty-head.svg",
     en: {
-      category: "Local memory and context for your AI agent: Markdown notes, tasks and documents",
+      category: "Local memory and context for you and your AI agent: Markdown notes, tasks and documents",
       tagline: "The working memory for you and your AI agent.",
       mascot: {
         title: "A beaver that keeps what you build.",
@@ -258,7 +258,7 @@ export const PRODUCTS: Product[] = [
         page: "tasks",
         anchor: "a-task-or-a-document",
       },
-      title: "Tisty: local memory for AI agents, notes and tasks",
+      title: "Tisty: notes, tasks and memory for you and your AI agent",
       meta: "Local memory and context for you and your AI agent: Markdown notes, documents and tasks on your disk, over MCP for GitHub Copilot, Claude Code and Cursor. Free.",
       problem:
         "An ordinary task list forgets the moment you tick the box, and your AI agent forgets the moment the session ends: six months later the same problem comes back and all you have is knowing you solved it once. In Tisty, what you solved stays, with its steps and its why, for you and for your agent.",
@@ -324,7 +324,7 @@ export const PRODUCTS: Product[] = [
         },
         {
           q: "Does it replace CLAUDE.md, AGENTS.md or a memory-bank folder?",
-          a: "For what changes, yes; for what does not, no. Instructions that rarely move, such as how to build and the conventions, stay in the files your repository hands the assistant. Progress, decisions, what was ruled out and what is left go in Tisty, dated, searchable and read a section at a time.",
+          a: "It sits beside them. Instructions that rarely move, such as how to build and the conventions, stay in the files your repository hands the assistant. Progress, decisions, what was ruled out and what is left go in Tisty, dated, searchable and read a section at a time.",
         },
         {
           q: "Can I draw diagrams?",
@@ -346,7 +346,7 @@ export const PRODUCTS: Product[] = [
       },
     },
     es: {
-      category: "Memoria y contexto locales para tu agente de IA: notas, tareas y documentos en Markdown",
+      category: "Memoria y contexto locales para ti y tu agente de IA: notas, tareas y documentos en Markdown",
       tagline: "La memoria de trabajo tuya y de tu agente de IA.",
       mascot: {
         title: "Un castor que guarda lo que construyes.",
@@ -412,7 +412,7 @@ export const PRODUCTS: Product[] = [
         page: "tareas",
         anchor: "tarea-o-documento",
       },
-      title: "Tisty: memoria y contexto locales para tu agente de IA",
+      title: "Tisty: notas, tareas y memoria para ti y tu agente de IA",
       meta: "Memoria y contexto locales para ti y tu agente de IA: notas, documentos y tareas Markdown en tu disco, vía MCP en GitHub Copilot, Claude Code y Cursor. Gratis.",
       problem:
         "Una lista de tareas común olvida en cuanto marcas la casilla, y tu agente de IA olvida en cuanto termina la sesión: seis meses después vuelve el mismo problema y solo te queda saber que ya lo resolviste una vez. En Tisty, lo que resolviste se queda, con sus pasos y su porqué, para ti y para tu agente.",
@@ -478,7 +478,7 @@ export const PRODUCTS: Product[] = [
         },
         {
           q: "¿Reemplaza a CLAUDE.md, AGENTS.md o una carpeta memory-bank?",
-          a: "Para lo que cambia, sí; para lo que no, no. Las instrucciones que casi no se mueven, como compilar y las convenciones, siguen en los archivos que tu repositorio le entrega al asistente. El avance, las decisiones, lo descartado y lo que falta van en Tisty, con fecha, buscables y leídos una sección a la vez.",
+          a: "Va al lado. Las instrucciones que casi no se mueven, como compilar y las convenciones, siguen en los archivos que tu repositorio le entrega al asistente. El avance, las decisiones, lo descartado y lo que falta van en Tisty, con fecha, buscables y leídos una sección a la vez.",
         },
         {
           q: "¿Puedo dibujar diagramas?",

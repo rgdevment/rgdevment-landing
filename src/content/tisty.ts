@@ -271,7 +271,7 @@ Peso: ==11,4 kg=={green} ::heart red::`,
 
 export const ASSISTANT_EN: Assistant = {
   title: "Connect your assistant",
-  lede: "Tisty has no AI inside: it is the memory of the assistant you already use. GitHub Copilot, Claude Code, Codex, Cursor or Gemini CLI connect over MCP, on this machine only, with no port, no account and no key. Your assistant picks up where it left off, files its work as tasks with steps, ticks them as it goes and keeps what it learns in documents, all where you can follow and audit it.",
+  lede: "Tisty has no AI inside: it keeps your memory, and the assistant you already use reads and adds to it. GitHub Copilot, Claude Code, Codex, Cursor or Gemini CLI connect over MCP, on this machine only, with no port, no account and no key. Your assistant picks up where it left off, files its work as tasks with steps, ticks them as it goes and keeps what it learns in documents, all where you can follow and audit it.",
   settings: "Or open Settings › Assistants: it finds the assistants installed on this computer and connects them with one click.",
   other: "Any other client, such as VS Code or Cursor",
   can: {
@@ -279,6 +279,7 @@ export const ASSISTANT_EN: Assistant = {
     items: [
       "Pick up where it left off: what moved since last time",
       "Read a long document by its outline and one section",
+      "Compact a long document, which you undo or keep with one click",
       "File a task with its steps, date and list",
       "Add to a task's journal",
       "Write documents, correct a passage and file them in folders",
@@ -303,7 +304,7 @@ export const ASSISTANT_EN: Assistant = {
 
 export const ASSISTANT_ES: Assistant = {
   title: "Conecta tu asistente",
-  lede: "Tisty no tiene IA dentro: es la memoria del asistente que ya usas. GitHub Copilot, Claude Code, Codex, Cursor o Gemini CLI se conectan por MCP, solo en este equipo, sin puerto, sin cuenta y sin clave. Tu asistente retoma donde quedó, anota su trabajo como tareas con pasos, los marca a medida que avanza y guarda lo que aprende en documentos, todo donde puedes seguirlo y revisarlo.",
+  lede: "Tisty no tiene IA dentro: guarda tu memoria, y el asistente que ya usas la lee y la amplía. GitHub Copilot, Claude Code, Codex, Cursor o Gemini CLI se conectan por MCP, solo en este equipo, sin puerto, sin cuenta y sin clave. Tu asistente retoma donde quedó, anota su trabajo como tareas con pasos, los marca a medida que avanza y guarda lo que aprende en documentos, todo donde puedes seguirlo y revisarlo.",
   settings: "O abre Configuración › Asistentes: encuentra los asistentes instalados en este equipo y los conecta con un clic.",
   other: "Cualquier otro cliente, como VS Code o Cursor",
   can: {
@@ -311,6 +312,7 @@ export const ASSISTANT_ES: Assistant = {
     items: [
       "Retomar donde quedó: lo que cambió desde la última vez",
       "Leer un documento largo por su índice y una sección",
+      "Compactar un documento largo, que tú deshaces o conservas con un clic",
       "Anotar una tarea con sus pasos, fecha y lista",
       "Agregar a la bitácora de una tarea",
       "Escribir documentos, corregir un pasaje y ordenarlos en carpetas",
