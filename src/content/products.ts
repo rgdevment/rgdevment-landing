@@ -270,7 +270,7 @@ export const PRODUCTS: Product[] = [
         anchor: "a-task-or-a-document",
       },
       title: "Tisty: notes, tasks and memory for you and your AI agent",
-      meta: "Local memory and context for you and your AI agent: Markdown notes, documents and tasks on your disk, over MCP for GitHub Copilot, Claude Code and Cursor. Free.",
+      meta: "Local memory and context for you and your AI agent: tasks, documents and ideas in Markdown on disk, over MCP for GitHub Copilot, Claude Code and Cursor. Free.",
       problem:
         "An ordinary task list forgets the moment you tick the box, and your AI agent forgets the moment the session ends: six months later the same problem comes back and all you have is knowing you solved it once. In Tisty, what you solved stays, with its steps and its why, for you and for your agent.",
       groups: [
@@ -296,7 +296,7 @@ export const PRODUCTS: Product[] = [
           points: [
             "GitHub Copilot, Claude Code, Codex or Cursor connect over MCP and pick up where they left off.",
             "An outline first, then one section: a fraction of what rereading your Markdown files costs.",
-            "It files its work as tasks with steps and a journal; closing them is yours.",
+            "It works your tasks as it works a document and sorts your ideas with you; ticking your steps, closing and the day stay yours.",
           ],
         },
         {
@@ -332,7 +332,7 @@ export const PRODUCTS: Product[] = [
         },
         {
           q: "How do I give my AI agent a memory between sessions?",
-          a: "Connect Tisty over MCP: GitHub Copilot in VS Code, Claude Code, Codex, Cursor and Gemini CLI take one line. The agent then starts each session by asking what moved since its last one and opening the task it was on, files its work as tasks with steps and a journal, and keeps what it learns in documents, on your machine and with your permission.",
+          a: "Connect Tisty over MCP: GitHub Copilot in VS Code, Claude Code, Codex, Cursor and Gemini CLI take one line. The agent then starts each session by asking what moved since its last one and which tasks press, then opening the task it was on, files its work as tasks with steps and a journal, and keeps what it learns in documents, on your machine, behind a door you close with one click.",
         },
         {
           q: "Does it replace CLAUDE.md, AGENTS.md or a memory-bank folder?",
@@ -350,7 +350,7 @@ export const PRODUCTS: Product[] = [
       fixes: FIXES_EN,
       day: DAY_EN,
       cost: COST_EN,
-      keywords: ["AI agent memory", "persistent memory for AI coding assistants", "MCP server", "context engineering", "Markdown notes", "task manager", "local-first", "GitHub Copilot", "Claude Code", "Cursor", "Codex", "Obsidian alternative", "Notion alternative"],
+      keywords: ["AI agent memory", "persistent memory for AI coding assistants", "MCP server", "context engineering", "Markdown notes", "brainstorm", "sticky notes", "Eisenhower matrix", "task manager", "local-first", "GitHub Copilot", "Claude Code", "Cursor", "Codex", "Obsidian alternative", "Notion alternative"],
       firstRun: {
         title: "The first time you open Tisty",
         body: "It asks two things: your language, and where your copies should go, a folder to sync through or nowhere beyond this computer. Then it sets up your starting lists and writes you a guide, an ordinary document of yours to read, edit or throw away, that shows from the inside what a document can hold.",
@@ -363,7 +363,7 @@ export const PRODUCTS: Product[] = [
       tagline: "La memoria de trabajo tuya y de tu agente de IA.",
       mascot: {
         title: "Un castor que guarda lo que construyes.",
-        body: "El castor junta cada rama que encuentra y construye con ella, y lo que construye se queda. Tisty guarda así lo que resuelves: los pasos, el diario y los documentos, listos para encontrarlos meses después.",
+        body: "El castor junta cada rama que encuentra y construye con ella, y lo que construye se queda. Tisty guarda así lo que resuelves: los pasos, la bitácora y los documentos, listos para encontrarlos meses después.",
       },
       language: {
         url: "https://markdown.tisty.app/es/",
@@ -426,7 +426,7 @@ export const PRODUCTS: Product[] = [
         anchor: "tarea-o-documento",
       },
       title: "Tisty: notas, tareas y memoria para ti y tu agente de IA",
-      meta: "Memoria y contexto locales para ti y tu agente de IA: notas, documentos y tareas Markdown en tu disco, vía MCP en GitHub Copilot, Claude Code y Cursor. Gratis.",
+      meta: "Memoria y contexto locales para ti y tu agente de IA: tareas, documentos e ideas en Markdown en disco, vía MCP en GitHub Copilot, Claude Code y Cursor. Gratis.",
       problem:
         "Una lista de tareas común olvida en cuanto marcas la casilla, y tu agente de IA olvida en cuanto termina la sesión: seis meses después vuelve el mismo problema y solo te queda saber que ya lo resolviste una vez. En Tisty, lo que resolviste se queda, con sus pasos y su porqué, para ti y para tu agente.",
       groups: [
@@ -452,7 +452,7 @@ export const PRODUCTS: Product[] = [
           points: [
             "GitHub Copilot, Claude Code, Codex o Cursor se conectan por MCP y retoman donde quedaron.",
             "Primero el índice, después una sección: una fracción de lo que cuesta releer tus archivos Markdown.",
-            "Anota su trabajo como tareas con pasos y bitácora; cerrarlas es tuyo.",
+            "Trabaja tus tareas como un documento y ordena tus ideas contigo; marcar tus pasos, cerrar y el día siguen siendo tuyos.",
           ],
         },
         {
@@ -488,7 +488,7 @@ export const PRODUCTS: Product[] = [
         },
         {
           q: "¿Cómo le doy a mi agente de IA una memoria entre sesiones?",
-          a: "Conecta Tisty por MCP: GitHub Copilot en VS Code, Claude Code, Codex, Cursor y Gemini CLI lo hacen con una línea. Desde ahí, el agente empieza cada sesión preguntando qué cambió desde la anterior y abriendo la tarea en la que estaba, anota su trabajo como tareas con pasos y bitácora, y guarda lo que aprende en documentos, en tu equipo y con tu permiso.",
+          a: "Conecta Tisty por MCP: GitHub Copilot en VS Code, Claude Code, Codex, Cursor y Gemini CLI lo hacen con una línea. Desde ahí, el agente empieza cada sesión preguntando qué cambió desde la anterior y qué tareas apremian, y abriendo la tarea en la que estaba, anota su trabajo como tareas con pasos y bitácora, y guarda lo que aprende en documentos, en tu equipo, tras una puerta que cierras con un clic.",
         },
         {
           q: "¿Reemplaza a CLAUDE.md, AGENTS.md o una carpeta memory-bank?",
@@ -506,7 +506,7 @@ export const PRODUCTS: Product[] = [
       fixes: FIXES_ES,
       day: DAY_ES,
       cost: COST_ES,
-      keywords: ["memoria para agentes de IA", "memoria persistente para asistentes de IA", "servidor MCP", "contexto para IA", "notas en Markdown", "gestor de tareas", "local", "GitHub Copilot", "Claude Code", "Cursor", "Codex", "alternativa a Obsidian", "alternativa a Notion"],
+      keywords: ["memoria para agentes de IA", "memoria persistente para asistentes de IA", "servidor MCP", "contexto para IA", "notas en Markdown", "lluvia de ideas", "notas adhesivas", "matriz de Eisenhower", "gestor de tareas", "local", "GitHub Copilot", "Claude Code", "Cursor", "Codex", "alternativa a Obsidian", "alternativa a Notion"],
       firstRun: {
         title: "Al abrir Tisty por primera vez",
         body: "Te pregunta dos cosas: tu idioma y adónde van tus copias, a una carpeta para sincronizar o a ninguna parte fuera de este equipo. Luego crea tus listas iniciales y te escribe una guía, un documento tuyo como cualquier otro, para leer, editar o tirar, que muestra desde dentro todo lo que cabe en un documento.",
