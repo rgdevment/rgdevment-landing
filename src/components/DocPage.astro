@@ -103,7 +103,7 @@ const schema = [
         <details class="group card lg:hidden">
           <summary class="flex cursor-pointer list-none items-center gap-3 p-4 [&::-webkit-details-marker]:hidden">
             <img src={product.icon} alt={iconAlt(product, locale)} width="28" height="28" class="h-7 w-7 rounded-lg" />
-            <span class="font-display font-semibold text-fg">{say.title}</span>
+            <span class="font-semibold text-fg">{say.title}</span>
             <Icon name="chevron" class="ml-auto h-4 w-4 text-muted transition group-open:rotate-180" />
           </summary>
           <nav aria-label={say.menu} class="px-1 pb-4 text-[15px]">
@@ -113,7 +113,7 @@ const schema = [
         <div class="hidden min-h-0 lg:block lg:overflow-y-auto lg:pb-6 lg:pr-3">
           <a href={href(locale, product.slug)} class="flex items-center gap-3">
             <img src={product.icon} alt={iconAlt(product, locale)} width="28" height="28" class="h-7 w-7 rounded-lg" />
-            <span class="font-display font-semibold text-fg">{product.name}</span>
+            <span class="font-semibold text-fg">{product.name}</span>
           </a>
           <nav aria-label={say.menu} class="mt-6 text-[15px]">
             <DocNav current={doc.id} overview={overview} sections={sections} linkOf={linkOf} language={language} source={source} />
@@ -142,7 +142,7 @@ const schema = [
               </span>
               <span class="min-w-0">
                 <span class="eyebrow text-[11px]">{say.reference}</span>
-                <span class="mt-1 block font-display text-xl font-semibold text-fg">{words.title}</span>
+                <span class="mt-1 block text-xl font-semibold text-fg">{words.title}</span>
                 <span class="mt-2 block text-body">{words.line}</span>
                 <span class="mt-4 inline-flex items-center gap-2 text-sm font-medium text-fg">
                   {say.open}
@@ -160,7 +160,7 @@ const schema = [
             prev ? (
               <a class="card-link group p-5" href={linkOf(prev)}>
                 <span class="text-sm text-muted">{say.prev}</span>
-                <span class="mt-1 block font-display font-semibold text-fg">{prev.data.page ? prev.data.title : say.overview}</span>
+                <span class="mt-1 block font-semibold text-fg">{prev.data.page ? prev.data.title : say.overview}</span>
               </a>
             ) : (
               <span />
@@ -170,7 +170,7 @@ const schema = [
             next && (
               <a class="card-link group p-5 text-right" href={linkOf(next)}>
                 <span class="text-sm text-muted">{say.next}</span>
-                <span class="mt-1 block font-display font-semibold text-fg">{next.data.title}</span>
+                <span class="mt-1 block font-semibold text-fg">{next.data.title}</span>
               </a>
             )
           }

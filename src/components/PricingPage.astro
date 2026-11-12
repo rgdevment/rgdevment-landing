@@ -204,7 +204,7 @@ const schema = [
             </div>
             <p class="relative mt-3 text-[15px] leading-snug text-muted">{words(product, locale).tagline}</p>
 
-            <p class="relative mt-7 font-display text-7xl font-semibold tracking-tight text-fg">{say.free}</p>
+            <p class="relative mt-7 text-7xl font-semibold tracking-tight text-fg">{say.free}</p>
 
             <ul class="relative mt-7 flex-1 space-y-2.5 text-[15px] text-body">
               {[...say.included, account(product.name), product.licence].map((one) => (
@@ -287,7 +287,7 @@ const schema = [
         {
           say.faq.map((one, at) => (
             <details class="faq group py-2" open={at === 0}>
-              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-4 font-display text-lg font-semibold text-fg">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-4 text-lg font-semibold text-fg">
                 <h3>{one.q}</h3>
                 <Icon name="chevron" class="h-5 w-5 shrink-0 text-muted transition group-open:rotate-180" />
               </summary>

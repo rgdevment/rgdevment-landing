@@ -177,9 +177,9 @@ const schema = [
         }
         <h1 class="mt-7 text-5xl font-semibold tracking-[-0.03em] sm:text-6xl">
           {product.name}<span class="sr-only">: </span>
-          <span class="mt-3 block font-display text-base font-medium tracking-normal text-muted sm:text-lg">{t.category}</span>
+          <span class="mt-3 block text-base font-medium tracking-normal text-muted sm:text-lg">{t.category}</span>
         </h1>
-        <p class="mt-4 font-display text-xl text-fg sm:text-2xl">{t.tagline}</p>
+        <p class="mt-4 text-xl text-fg sm:text-2xl">{t.tagline}</p>
         {t.formerly && <p class="mt-3 text-sm text-muted">{t.formerly}</p>}
         <p class="mx-auto mt-5 max-w-4xl text-lg text-body">{t.problem}</p>
 
@@ -187,7 +187,7 @@ const schema = [
           release && (
             <p class="mt-6">
               <a
-                class="chip font-mono text-xs transition hover:border-fg/25"
+                class="chip text-xs transition hover:border-fg/25"
                 href={hasChangelog(product.slug) ? changelogUrl(product, locale, release.version) : release.url}
                 title={say.notes}
               >
@@ -317,7 +317,7 @@ const schema = [
                   <Icon name="github" class="h-3.5 w-3.5" />
                   {say.onGithub}
                   {starCount !== null && (
-                    <span class="inline-flex items-center gap-1 border-l border-line pl-2 font-mono text-xs" title={say.stars}>
+                    <span class="inline-flex items-center gap-1 border-l border-line pl-2 text-xs" title={say.stars}>
                       <Icon name="star" class="h-3 w-3" />
                       {starCount}
                     </span>
@@ -357,9 +357,9 @@ const schema = [
         <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
           {fixes.rows.map((one) => (
             <div class="card p-6 sm:p-7">
-              <p class="accent-ink font-mono text-xs uppercase tracking-[0.14em]" style={ink}>{one.who}</p>
-              <p class="mt-4 text-xs font-medium uppercase tracking-[0.12em] text-muted">{fixes.said.problem}</p>
-              <h3 class="mt-1.5 font-display text-lg font-semibold">{one.problem}</h3>
+              <p class="accent-ink text-xs font-medium uppercase tracking-[0.12em]" style={ink}>{one.who}</p>
+              <p class="eyebrow mt-4">{fixes.said.problem}</p>
+              <h3 class="mt-1.5 text-lg font-semibold">{one.problem}</h3>
               <div class="mt-5 border-l-2 pl-4" style={`border-color: ${product.accent}`}>
                 <p class="accent-ink text-xs font-medium uppercase tracking-[0.12em]" style={ink}>{fixes.said.fix}</p>
                 <p class="mt-1.5 text-body">{one.fix}</p>
@@ -378,7 +378,7 @@ const schema = [
         <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
           {t.groups.map((group) => (
             <div class="card p-6 sm:p-8">
-              <h3 class="accent-ink font-display text-xl font-semibold" style={ink}>{group.title}</h3>
+              <h3 class="accent-ink text-xl font-semibold" style={ink}>{group.title}</h3>
               <ul class="mt-4 space-y-3">
                 {group.points.map((one) => (
                   <li class="flex gap-2.5 text-body">
@@ -405,7 +405,7 @@ const schema = [
         <ol class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {t.what.map((one, at) => (
             <li class="card relative p-6 sm:p-7">
-              <span class="accent-ink font-mono text-sm font-medium" style={ink}>
+              <span class="accent-ink text-sm font-medium" style={ink}>
                 {String(at + 1).padStart(2, "0")}
               </span>
               <p class="mt-3 text-body">{one}</p>
@@ -430,14 +430,14 @@ const schema = [
           <ul class="mt-10 grid gap-4 md:grid-cols-3">
             {cost.rows.map((one) => (
               <li class="card flex flex-col p-6 sm:p-7">
-                <p class="accent-ink font-display text-5xl font-semibold tracking-[-0.03em] sm:text-6xl" style={ink}>{one.saving}</p>
-                <p class="mt-1 font-mono text-xs uppercase tracking-[0.14em] text-muted">{cost.less}</p>
+                <p class="accent-ink text-5xl font-semibold tracking-[-0.03em] sm:text-6xl" style={ink}>{one.saving}</p>
+                <p class="eyebrow mt-1">{cost.less}</p>
                 <p class="mt-5 font-medium text-fg">{one.what}</p>
-                <p class="mt-1 font-mono text-sm text-muted">{one.spends}</p>
+                <p class="mt-1 text-sm text-muted">{one.spends}</p>
               </li>
             ))}
           </ul>
-          <h3 class="mt-10 font-display text-xl font-semibold">{cost.whyTitle}</h3>
+          <h3 class="mt-10 text-xl font-semibold">{cost.whyTitle}</h3>
           <ul class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
             {cost.why.map((one) => (
               <li class="flex gap-2.5 text-body">
@@ -460,13 +460,13 @@ const schema = [
         <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
           {t.kinds.cards.map((one) => (
             <div class="card p-6 sm:p-7">
-              <h3 class="accent-ink font-display text-xl font-semibold" style={ink}>{one.title}</h3>
+              <h3 class="accent-ink text-xl font-semibold" style={ink}>{one.title}</h3>
               <p class="mt-2 text-body">{one.body}</p>
             </div>
           ))}
         </div>
         <div class="card mt-4 p-6 sm:p-7">
-          <h3 class="font-display text-xl font-semibold">{t.kinds.spike.title}</h3>
+          <h3 class="text-xl font-semibold">{t.kinds.spike.title}</h3>
           <p class="mt-2 text-body">{t.kinds.spike.lede}</p>
           <Journey steps={t.kinds.spike.steps} accent={product.accent} />
         </div>
@@ -489,15 +489,15 @@ const schema = [
         <ol class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
           {t.day.steps.map((one, at) => (
             <li class="card p-6">
-              <span class="accent-ink font-mono text-sm font-medium" style={ink}>
+              <span class="accent-ink text-sm font-medium" style={ink}>
                 {String(at + 1).padStart(2, "0")}
               </span>
-              <h3 class="mt-3 font-display text-lg font-semibold">{one.title}</h3>
+              <h3 class="mt-3 text-lg font-semibold">{one.title}</h3>
               <p class="mt-1.5 text-body">{one.body}</p>
             </li>
           ))}
         </ol>
-        <p class="mt-8 font-display text-xl leading-snug text-fg">{t.day.close}</p>
+        <p class="mt-8 text-xl leading-snug text-fg">{t.day.close}</p>
       </section>
     )
   }
@@ -510,7 +510,7 @@ const schema = [
         <div class="card flex flex-col items-center gap-6 p-7 text-center sm:flex-row sm:p-9 sm:text-left">
           <img src={product.mascot} alt={es ? `Mascota de ${product.name}` : `${product.name}'s mascot`} width="120" height="108" loading="lazy" class="h-24 w-auto shrink-0 sm:h-28" />
           <div>
-            <h2 class="font-display text-2xl font-semibold">{t.mascot.title}</h2>
+            <h2 class="text-2xl font-semibold">{t.mascot.title}</h2>
             <p class="mt-2 text-body">{t.mascot.body}</p>
           </div>
         </div>
@@ -640,7 +640,7 @@ const schema = [
             <Icon name="book" class="h-5 w-5" />
           </span>
           <div>
-            <h3 class="font-display text-lg font-semibold text-fg">{t.firstRun.title}</h3>
+            <h3 class="text-lg font-semibold text-fg">{t.firstRun.title}</h3>
             <p class="mt-1.5 text-body">{t.firstRun.body}</p>
             <a class="mt-3 inline-flex items-center gap-1.5 font-medium text-fg hover:underline" href={`${href(locale, docIndex)}#${t.firstRun.anchor}`}>
               {t.firstRun.link}
@@ -692,7 +692,7 @@ const schema = [
         {
           t.faq.map((one, at) => (
             <details class="faq group py-2" open={at === 0}>
-              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-4 font-display text-lg font-semibold text-fg">
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-4 text-lg font-semibold text-fg">
                 <h3>{one.q}</h3>
                 <Icon name="chevron" class="h-5 w-5 shrink-0 text-muted transition group-open:rotate-180" />
               </summary>
@@ -722,7 +722,7 @@ const schema = [
             <li>
               <a class="card-link group block h-full p-6" href={href(locale, written(one, locale).slug)}>
                 <span class="flex items-start justify-between gap-4">
-                  <span class="font-display text-lg font-semibold leading-snug text-fg">{written(one, locale).title}</span>
+                  <span class="text-lg font-semibold leading-snug text-fg">{written(one, locale).title}</span>
                   <Icon name="arrow" class="mt-1 h-4 w-4 shrink-0 text-muted transition group-hover:translate-x-0.5" />
                 </span>
                 <span class="mt-2 block text-sm text-muted">{written(one, locale).description}</span>
@@ -749,7 +749,7 @@ const schema = [
             <a class="card-link group flex items-center gap-4 p-5" href={href(locale, one.slug)}>
               <img src={one.icon} alt={iconAlt(one, locale)} width="48" height="48" class="h-12 w-12 rounded-xl" loading="lazy" />
               <span class="min-w-0">
-                <span class="block font-display text-lg font-semibold text-fg">{one.name}</span>
+                <span class="block text-lg font-semibold text-fg">{one.name}</span>
                 <span class="block text-sm text-muted">{words(one, locale).tagline}</span>
               </span>
               <Icon name="arrow" class="ml-auto h-4 w-4 shrink-0 text-muted transition group-hover:translate-x-0.5" />

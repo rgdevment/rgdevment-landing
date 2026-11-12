@@ -1,5 +1,4 @@
 @import "@fontsource-variable/inter";
-@import "@fontsource-variable/space-grotesk";
 
 @tailwind base;
 @tailwind components;
@@ -57,7 +56,7 @@
   }
 
   h1, h2, h3 {
-    @apply font-display text-fg;
+    @apply text-fg;
     text-wrap: balance;
   }
 
@@ -171,7 +170,7 @@
   }
 
   .eyebrow {
-    @apply font-mono text-xs font-medium uppercase tracking-[0.18em] text-muted;
+    @apply text-xs font-medium uppercase tracking-[0.12em] text-muted;
   }
 
   .card {

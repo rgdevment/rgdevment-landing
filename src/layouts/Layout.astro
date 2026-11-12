@@ -1,6 +1,5 @@
 ---
 import "../styles/global.css";
-import displayFont from "@fontsource-variable/space-grotesk/files/space-grotesk-latin-wght-normal.woff2?url";
 import textFont from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
 import { getEntry } from "astro:content";
 import Icon from "../components/Icon.astro";
@@ -183,7 +182,6 @@ const say = es
     <meta name="generator" content={Astro.generator} />
 
     <link rel="preload" href={textFont} as="font" type="font/woff2" crossorigin />
-    <link rel="preload" href={displayFont} as="font" type="font/woff2" crossorigin />
     <slot name="head" />
     <script type="speculationrules" is:inline>
       { "prefetch": [{ "source": "document", "where": { "href_matches": "/*" }, "eagerness": "moderate" }] }
@@ -212,7 +210,7 @@ const say = es
           <p class="offer shell pointer-events-none absolute inset-x-0 top-2 z-30 hidden text-right" lang={there} data-nosnippet>
             <span class="pointer-events-auto inline-flex items-center rounded-full border border-line bg-surface/70 text-xs text-muted backdrop-blur">
               <a class="group inline-flex items-center gap-2 py-1 pr-2 pl-1 transition hover:text-fg" href={href(there, at(there))} hreflang={there}>
-                <span class="rounded-full bg-flame-tint px-2 py-0.5 font-mono text-[11px] font-medium uppercase text-flame-ink" aria-hidden="true">{there}</span>
+                <span class="rounded-full bg-flame-tint px-2 py-0.5 text-[11px] font-medium uppercase text-flame-ink" aria-hidden="true">{there}</span>
                 {es ? "Also in English" : "También en español"}
                 <Icon name="arrow" class="h-3 w-3 transition group-hover:translate-x-0.5" />
               </a>
@@ -240,7 +238,7 @@ const say = es
       <div class="shell grid gap-12 py-14 sm:grid-cols-[1.4fr_1fr_1fr]">
         <div>
           <a href={owner ? mainHref(locale) : href(locale)} class="inline-block"><Logo class="h-6 w-auto" /></a>
-          <p class="mt-4 max-w-sm font-display text-lg text-fg">{say.motto}</p>
+          <p class="mt-4 max-w-sm text-lg text-fg">{say.motto}</p>
           <p class="mt-2 max-w-sm text-sm text-muted">{say.promise}</p>
           <a
             class="mt-5 inline-flex items-center gap-2 text-sm text-muted transition-colors hover:text-fg"

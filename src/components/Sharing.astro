@@ -21,7 +21,7 @@ const { product, words, locale } = Astro.props;
     {
       words.points.map((one) => (
         <div class="card p-6">
-          <h3 class="accent-ink font-display text-lg font-semibold" style={inkOf(product)}>{one.title}</h3>
+          <h3 class="accent-ink text-lg font-semibold" style={inkOf(product)}>{one.title}</h3>
           <p class="mt-2 text-sm text-body">{one.body}</p>
         </div>
       ))

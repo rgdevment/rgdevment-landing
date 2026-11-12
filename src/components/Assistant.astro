@@ -47,7 +47,7 @@ const copy = locale === "es" ? { label: "Copiar", done: "Copiado" } : { label: "
 
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-[3fr_2fr]">
       <div class="card p-6 sm:p-7">
-        <h3 class="font-display text-lg font-semibold text-fg">{words.can.title}</h3>
+        <h3 class="text-lg font-semibold text-fg">{words.can.title}</h3>
         <ul class="mt-3 space-y-2 text-body">
           {
             words.can.items.map((one) => (
@@ -60,7 +60,7 @@ const copy = locale === "es" ? { label: "Copiar", done: "Copiado" } : { label: "
         </ul>
       </div>
       <div class="card p-6 sm:p-7">
-        <h3 class="font-display text-lg font-semibold text-fg">{words.never.title}</h3>
+        <h3 class="text-lg font-semibold text-fg">{words.never.title}</h3>
         <ul class="mt-3 space-y-2 text-body">
           {
             words.never.items.map((one) => (
@@ -84,7 +84,7 @@ const copy = locale === "es" ? { label: "Copiar", done: "Copiado" } : { label: "
 
   <div class="mt-6 flex flex-wrap items-center gap-x-3 gap-y-2 text-sm">
     <span class="text-muted">{words.listed}</span>
-    <span class="chip font-mono text-xs">MCP Registry · {mcp.registry}</span>
+    <span class="chip">MCP Registry · {mcp.registry}</span>
     {
       (product.listings ?? []).map(([name, url]) => (
         <a class="chip transition hover:border-fg/25 hover:text-fg" href={url} rel="noopener">{name}</a>

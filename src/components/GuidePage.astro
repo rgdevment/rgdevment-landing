@@ -116,7 +116,7 @@ const schema = [
           {
             t.nativeSteps.map((one, at) => (
               <li class="relative">
-                <span class="absolute -left-[2.85rem] grid h-7 w-7 place-items-center rounded-full border border-line bg-surface font-mono text-xs text-fg">
+                <span class="absolute -left-[2.85rem] grid h-7 w-7 place-items-center rounded-full border border-line bg-surface text-xs text-fg">
                   {at + 1}
                 </span>
                 <h3 class="text-lg font-semibold">{one.title}</h3>
@@ -169,7 +169,7 @@ const schema = [
         <a class="group relative mt-8 flex items-center gap-4 rounded-2xl border border-line bg-canvas p-4 transition hover:border-fg/25" href={href(locale, product.slug)}>
           <img src={product.icon} alt={iconAlt(product, locale)} width="48" height="48" class="h-12 w-12 rounded-xl" loading="lazy" />
           <span class="min-w-0">
-            <span class="block font-display font-semibold text-fg">{say.more} {product.name}</span>
+            <span class="block font-semibold text-fg">{say.more} {product.name}</span>
             <span class="block text-sm text-muted">{words(product, locale).tagline} {say.free}</span>
           </span>
           <Icon name="arrow" class="ml-auto h-4 w-4 shrink-0 text-muted transition group-hover:translate-x-0.5" />
@@ -190,7 +190,7 @@ const schema = [
           {
             t.faq.map((one) => (
               <details class="faq group py-2">
-                <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-4 font-display text-lg font-semibold text-fg">
+                <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-4 text-lg font-semibold text-fg">
                   <h3>{one.q}</h3>
                   <Icon name="chevron" class="h-5 w-5 shrink-0 text-muted transition group-open:rotate-180" />
                 </summary>
@@ -209,7 +209,7 @@ const schema = [
               {kin.map((one) => (
                 <li>
                   <a class="card-link group flex items-center justify-between gap-4 p-5" href={href(locale, written(one, locale).slug)}>
-                    <span class="font-display font-semibold text-fg">{written(one, locale).title}</span>
+                    <span class="font-semibold text-fg">{written(one, locale).title}</span>
                     <Icon name="arrow" class="h-4 w-4 shrink-0 text-muted transition group-hover:translate-x-0.5" />
                   </a>
                 </li>
