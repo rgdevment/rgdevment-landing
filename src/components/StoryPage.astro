@@ -1,4 +1,5 @@
 ---
+import { render } from "astro:content";
 import Crumbs from "./Crumbs.astro";
 import Layout from "../layouts/Layout.astro";
 import { NEWS_PATH, homeProduct, newsWords, sentence, storiesOf, storyPath, storySummary } from "../content/news";
@@ -21,9 +22,12 @@ const headline = story.headline[locale];
 const paths = { en: storyPath("en", version), es: storyPath("es", version) };
 const trail: [string, string][] = [[product.name, ""], [t.short, NEWS_PATH[locale]], [version, paths[locale]]];
 const description = storySummary(product, story, locale);
-const card = cardOf(product, locale);
+const article = story.article[locale];
+const Content = article ? (await render(article)).Content : null;
+const image = article?.data.card ? { src: article.data.card, width: 1200, height: 630 } : undefined;
+const card = image ?? cardOf(product, locale);
 const url = canonical(locale, paths[locale]);
-const article = {
+const posting = {
   "@context": "https://schema.org",
   "@type": "BlogPosting",
   headline: `${product.name} ${version}: ${headline}`,
@@ -40,7 +44,7 @@ const article = {
 const neighbour = "block rounded-3xl border border-line p-5 transition-colors hover:border-fg/30";
 ---
 
-<Layout title={`${product.name} ${version}: ${headline}`} description={description} locale={locale} paths={paths} published={story.date} schema={[crumbs(locale, trail), article]}>
+<Layout title={`${product.name} ${version}: ${headline}`} description={description} locale={locale} paths={paths} published={story.date} image={image} schema={[crumbs(locale, trail), posting]}>
   <article class="shell pt-10 sm:pt-14" style={`--accent: ${product.accent}`}>
     <Crumbs locale={locale} trail={trail} />
     <header class="mt-10 max-w-3xl">
@@ -51,19 +55,25 @@ const neighbour = "block rounded-3xl border border-line p-5 transition-colors ho
         <span class="px-2" aria-hidden="true">·</span>
         <a class="underline decoration-muted underline-offset-4 hover:text-fg" href={story.release} rel="noopener">{t.github}</a>
       </p>
-      <p class="mt-6 text-lg text-body">{t.out(version)}</p>
+      {!Content && <p class="mt-6 text-lg text-body">{t.out(version)}</p>}
     </header>
 
-    <div class="mt-10 max-w-3xl space-y-8">
-      {
-        story.told[locale].map((one) => (
-          <section>
-            <h2 class="text-xl font-semibold tracking-[-0.01em] text-fg">{one.title}</h2>
-            <p class="mt-2 text-body">{sentence(one.said, locale)}</p>
-          </section>
-        ))
-      }
-    </div>
+    {
+      Content ? (
+        <div class="prose prose-lg mt-10 max-w-3xl">
+          <Content />
+        </div>
+      ) : (
+        <div class="mt-10 max-w-3xl space-y-8">
+          {story.told[locale].map((one) => (
+            <section>
+              <h2 class="text-xl font-semibold tracking-[-0.01em] text-fg">{one.title}</h2>
+              <p class="mt-2 text-body">{sentence(one.said, locale)}</p>
+            </section>
+          ))}
+        </div>
+      )
+    }
 
     <aside class="mt-12 max-w-3xl rounded-3xl border border-line bg-sunken/60 p-6 sm:p-8">
       <p class="text-body">{t.updates}</p>

@@ -44,9 +44,13 @@ const stories = await storiesOf(product);
             <h2 class="mt-2 text-2xl font-semibold tracking-[-0.02em] text-fg">
               <a class="hover:underline" href={href(locale, storyPath(locale, one.version))}>{one.headline[locale]}</a>
             </h2>
-            <ul class="mt-4 list-disc space-y-1 pl-5 text-body">
-              {one.told[locale].map((said) => <li>{said.title}</li>)}
-            </ul>
+            {one.article[locale] ? (
+              <p class="mt-4 text-body">{one.article[locale].data.description}</p>
+            ) : (
+              <ul class="mt-4 list-disc space-y-1 pl-5 text-body">
+                {one.told[locale].map((said) => <li>{said.title}</li>)}
+              </ul>
+            )}
           </li>
         ))
       }

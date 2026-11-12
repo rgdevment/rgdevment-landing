@@ -33,4 +33,16 @@ const terms = defineCollection({
   schema: policy,
 });
 
-export const collections = { docs, privacy, terms };
+const news = defineCollection({
+  loader: glob({ pattern: "**/*.md", base: "./.wikis/news" }),
+  schema: z.object({
+    product: z.string(),
+    version: z.string(),
+    locale: z.enum(["en", "es"]),
+    title: z.string(),
+    description: z.string(),
+    card: z.string().nullable(),
+  }),
+});
+
+export const collections = { docs, privacy, terms, news };

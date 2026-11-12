@@ -1,3 +1,4 @@
+import { getCollection, type CollectionEntry } from "astro:content";
 import { PRODUCTS, type Product } from "./products";
 import { everyRelease } from "./releases";
 import { escaped, rss } from "../rss";
@@ -10,12 +11,15 @@ const IN_FEED = 30;
 type Told = { title: string; said: string };
 type Written = { version: string; headline?: Record<Locale, string>; en: Told[]; es: Told[] };
 
+export type Article = CollectionEntry<"news">;
+
 export type Story = {
   version: string;
   date: string;
   release: string;
   headline: Record<Locale, string>;
   told: Record<Locale, Told[]>;
+  article: Partial<Record<Locale, Article>>;
 };
 
 type Words = {
@@ -82,7 +86,10 @@ export function sentence(said: string, locale: Locale): string {
 }
 
 export function storySummary(product: Product, story: Story, locale: Locale): string {
-  return `${newsWords(product, locale).out(story.version)} ${story.told[locale].map((one) => one.title).join(" · ")}.`;
+  return (
+    story.article[locale]?.data.description ??
+    `${newsWords(product, locale).out(story.version)} ${story.told[locale].map((one) => one.title).join(" · ")}.`
+  );
 }
 
 const byVersion = (a: string, b: string) => {
@@ -110,11 +117,17 @@ async function read(product: Product): Promise<Story[]> {
   const newest = released.toSorted((a, b) => byVersion(a.version, b.version)).at(-1);
   if (!newest) return [];
   const when = new Map(released.map((one) => [one.version, one]));
+  const articles = await getCollection("news", (one) => one.data.product === product.slug);
   return (await written(product, newest.tag))
     .flatMap((one) => {
       const release = when.get(one.version);
-      return one.headline && release
-        ? [{ version: one.version, date: release.date, release: release.url, headline: one.headline, told: { en: one.en, es: one.es } }]
+      const article: Story["article"] = Object.fromEntries(
+        articles.filter((entry) => entry.data.version === one.version).map((entry) => [entry.data.locale, entry]),
+      );
+      const en = article.en?.data.title ?? one.headline?.en;
+      const es = article.es?.data.title ?? one.headline?.es;
+      return release && en && es
+        ? [{ version: one.version, date: release.date, release: release.url, headline: { en, es }, told: { en: one.en, es: one.es }, article }]
         : [];
     })
     .sort((a, b) => b.date.localeCompare(a.date));
