@@ -100,12 +100,12 @@ export const DAY_EN: Day = {
   title: "A day with your agent",
   lede: "What an agent connected to Tisty does with your tasks and documents, on a real piece of work.",
   steps: [
-    { title: "It asks what moved", body: "since the last session, instead of rereading everything." },
-    { title: "It opens the task it is on", body: "«Done when» says when it is finished, and the unticked steps say what is left." },
+    { title: "It asks what moved", body: "since its last session, and who moved it, instead of rereading everything." },
+    { title: "It opens the task it was on", body: "which Tisty names for it. «Done when» says when it is finished, and the unticked steps say what is left." },
     { title: "It searches the archive first", body: "before proposing anything. If it was solved before, it starts from there." },
     { title: "It reads by the outline", body: "then only the section it needs, and keeps to the decisions and to what is out of scope." },
     { title: "It ticks each step and notes what it ruled out", body: "so the next session, or another agent, does not repeat the failed attempt." },
-    { title: "It compacts its own notes", body: "into one dated digest when a task's page grows long. The journal stays whole." },
+    { title: "It compacts the assistants' notes", body: "into one dated digest when a task's page grows long. The journal stays whole, and asking it to put the notes back brings them as they were, even after later ticks." },
     { title: "It says what it did and how it knows", body: "when the work is done. You review it and close it." },
     { title: "It leaves a summary", body: "after reading a long document, for the next agent to choose by. A change to the document marks it stale." },
   ],
@@ -116,12 +116,12 @@ export const DAY_ES: Day = {
   title: "Un día con tu agente",
   lede: "Lo que hace con tus tareas y documentos un agente conectado a Tisty, en un trabajo real.",
   steps: [
-    { title: "Pregunta qué cambió", body: "desde la última sesión, en vez de releerlo todo." },
-    { title: "Abre la tarea en la que está", body: "«Para estar lista» le dice cuándo termina, y los pasos sin marcar, qué falta." },
+    { title: "Pregunta qué cambió", body: "desde su última sesión, y quién lo cambió, en vez de releerlo todo." },
+    { title: "Abre la tarea en la que estaba", body: "que Tisty le nombra. «Para estar lista» le dice cuándo termina, y los pasos sin marcar, qué falta." },
     { title: "Busca primero en el archivo", body: "antes de proponer nada. Si ya se resolvió, parte de ahí." },
     { title: "Lee por el índice", body: "y después solo la sección que necesita, respetando las decisiones y lo que está fuera de alcance." },
     { title: "Marca cada paso y anota lo que descartó", body: "así la próxima sesión, u otro agente, no repite el intento fallido." },
-    { title: "Compacta sus propias notas", body: "en un resumen fechado cuando la página de una tarea crece. La bitácora queda entera." },
+    { title: "Compacta las notas de los asistentes", body: "en un resumen fechado cuando la página de una tarea crece. La bitácora queda entera, y si le pides devolver las notas, vuelven como estaban, aunque después hayas marcado pasos." },
     { title: "Dice qué hizo y cómo lo sabe", body: "cuando termina. Tú lo revisas y la cierras." },
     { title: "Deja un resumen", body: "después de leer un documento largo, para que el próximo agente elija con él. Si el documento cambia, queda marcado como desactualizado." },
   ],
@@ -141,6 +141,7 @@ export const COST_EN: Cost = {
   why: [
     "No document holds more than 64,000 characters, so a log that size is kept as subjects in pages.",
     "No read brings more than about 12,000 characters; past that, a document comes back as its outline.",
+    "A task's page comes whole only while it is short, about 4,000 characters; past that come its sections and the agent's latest note, and its journal is counted by size, not by number of notes.",
     "The outline says what each section weighs before anything is opened.",
     "Picking up again brings only what moved, and what is finished costs nothing until it is searched.",
   ],
@@ -160,6 +161,7 @@ export const COST_ES: Cost = {
   why: [
     "Ningún documento pasa de 64 000 caracteres, así que una bitácora de ese tamaño queda en temas y páginas.",
     "Ninguna lectura trae más de unos 12 000 caracteres; pasado eso, un documento vuelve como su índice.",
+    "La página de una tarea llega entera solo mientras es corta, unos 4000 caracteres; pasado eso llegan sus secciones y la última nota del agente, y su bitácora se mide por tamaño, no por cantidad de notas.",
     "El índice dice cuánto pesa cada sección antes de abrir nada.",
     "Retomar trae solo lo que cambió, y lo terminado no cuesta nada hasta que alguien lo busca.",
   ],
@@ -277,9 +279,11 @@ export const ASSISTANT_EN: Assistant = {
   can: {
     title: "It can",
     items: [
-      "Pick up where it left off: what moved since last time",
+      "Pick up where it left off: what moved since last time, who moved it, and the task it was on",
+      "Start and wrap up a session with one command, such as /mcp__tisty__pick_up and /mcp__tisty__leave_off in Claude Code",
       "Read a long document by its outline and one section",
       "Compact a long document, which you undo or keep with one click",
+      "Mark a document that had its day, for you to delete, put away or keep",
       "File a task with its steps, date and list",
       "Add to a task's journal",
       "Write documents, correct a passage and file them in folders",
@@ -310,9 +314,11 @@ export const ASSISTANT_ES: Assistant = {
   can: {
     title: "Puede",
     items: [
-      "Retomar donde quedó: lo que cambió desde la última vez",
+      "Retomar donde quedó: lo que cambió desde la última vez, quién lo cambió y la tarea en la que estaba",
+      "Empezar y cerrar una sesión con un comando, como /mcp__tisty__pick_up y /mcp__tisty__leave_off en Claude Code",
       "Leer un documento largo por su índice y una sección",
       "Compactar un documento largo, que tú deshaces o conservas con un clic",
+      "Marcar un documento que ya cumplió su vida, para que tú lo borres, lo archives o lo conserves",
       "Anotar una tarea con sus pasos, fecha y lista",
       "Agregar a la bitácora de una tarea",
       "Escribir documentos, corregir un pasaje y ordenarlos en carpetas",
