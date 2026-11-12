@@ -11,10 +11,6 @@ const PRIVACY = ".wikis/privacy";
 const TERMS = ".wikis/terms";
 const ASSETS = "public/docs-assets";
 const SECTION = { en: "docs", es: "ayuda" };
-const CALLOUT = {
-  en: { NOTE: "Note", TIP: "Tip", IMPORTANT: "Important", WARNING: "Warning", CAUTION: "Caution" },
-  es: { NOTE: "Nota", TIP: "Consejo", IMPORTANT: "Importante", WARNING: "Atención", CAUTION: "Cuidado" },
-};
 
 function carries(dir, tag, help) {
   try {
@@ -121,10 +117,6 @@ function rewriteLinks(text, product, pages) {
       const url = resolve(decodeURIComponent(page), hash.slice(1));
       return url ? `](${url})` : whole;
     });
-}
-
-function rewriteCallouts(text, locale) {
-  return text.replace(/^> \[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*$/gm, (_, kind) => `> **${CALLOUT[locale][kind]}**`);
 }
 
 const smallerOf = (file) => file.replace(/\.webp$/, "-720.webp");
@@ -240,7 +232,7 @@ async function syncWiki(wiki) {
     const entry = pages.get(page);
     if (!entry) continue;
     const raw = readFileSync(join(dir, file), "utf8");
-    let body = rewriteCallouts(rewriteLinks(stripHeader(raw), wiki.product, pages), entry.locale);
+    let body = rewriteLinks(stripHeader(raw), wiki.product, pages);
     // Folio's home is English at its root, so Spanish help sends readers to its Spanish home.
     if (entry.locale === "es") body = body.replace(/\]\(https:\/\/tisty\.cl\/?\)/g, "](https://tisty.cl/es/)");
     body = await localiseImages(body, wiki.product);

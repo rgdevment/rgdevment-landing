@@ -32,6 +32,51 @@ function rehypeRelocate(product) {
   return () => walk;
 }
 
+const CALLOUT = {
+  en: { NOTE: 'Note', TIP: 'Tip', IMPORTANT: 'Important', WARNING: 'Warning', CAUTION: 'Caution' },
+  es: { NOTE: 'Nota', TIP: 'Consejo', IMPORTANT: 'Importante', WARNING: 'Atención', CAUTION: 'Cuidado' },
+};
+
+const writtenIn = (file) => (/[\\/]es(?:[\\/]|\.md$)/.test(String(file?.path ?? '')) ? 'es' : 'en');
+
+const element = (tagName, className, children) => ({ type: 'element', tagName, properties: className ? { className } : {}, children });
+
+function rehypeCallouts() {
+  return (tree, file) => {
+    const words = CALLOUT[writtenIn(file)];
+    const walk = (node) => {
+      node.children?.forEach(walk);
+      if (node.tagName !== 'blockquote') return;
+      const first = node.children.find((one) => one.type === 'element');
+      const opening = first?.tagName === 'p' ? first.children[0] : null;
+      const kind = opening?.type === 'text' && opening.value.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\][^\S\n]*\n?/i);
+      if (!kind) return;
+      opening.value = opening.value.slice(kind[0].length);
+      while (first.children[0] && (first.children[0].tagName === 'br' || first.children[0].value === '')) first.children.shift();
+      if (!first.children.length) node.children.splice(node.children.indexOf(first), 1);
+      const name = kind[1].toUpperCase();
+      node.tagName = 'aside';
+      node.properties = { className: ['callout', `callout-${name.toLowerCase()}`] };
+      node.children.unshift(element('p', ['callout-title'], [{ type: 'text', value: words[name] }]));
+    };
+    walk(tree);
+  };
+}
+
+function rehypeFigures() {
+  const walk = (node) => {
+    node.children?.forEach((child, at) => {
+      const held = child.tagName === 'p' ? child.children.filter((one) => one.type !== 'text' || one.value.trim()) : [];
+      const picture = held.length === 1 && held[0].tagName === 'img' ? held[0] : null;
+      const caption = picture?.properties?.title;
+      if (!caption) return walk(child);
+      delete picture.properties.title;
+      node.children[at] = element('figure', null, [picture, element('figcaption', null, [{ type: 'text', value: String(caption) }])]);
+    });
+  };
+  return walk;
+}
+
 // A screenshot with its size reserved does not push the text down when it arrives; the first may be what people see.
 function rehypeImages() {
   return async (tree) => {
@@ -109,6 +154,8 @@ export function shared({ product = null } = {}) {
       remarkPlugins: [[remarkMath, { singleDollarTextMath: false }]],
       rehypePlugins: [
         [rehypeSanitize, wikiSafe],
+        rehypeCallouts,
+        rehypeFigures,
         rehypeKatex,
         rehypeRelocate(product),
         rehypeImages,
