@@ -33,7 +33,7 @@ const items: Item[] = [
   <nav aria-label={es ? "Principal" : "Main"} class="shell flex h-16 items-center gap-6">
     <a class="flex shrink-0 items-center gap-3" href={href(locale)} aria-label={es ? `${product.name}, inicio` : `${product.name}, home`}>
       <img src={product.icon} alt={iconAlt(product, locale)} width="28" height="28" class="h-7 w-7 rounded-lg" />
-      <span class="font-display text-lg font-semibold text-fg">{product.name}</span>
+      <span class="text-lg font-semibold text-fg">{product.name}</span>
     </a>
 
     <ul class="ml-auto hidden items-center gap-1 text-[15px] lg:flex">
@@ -48,7 +48,7 @@ const items: Item[] = [
       }
       <li class="ml-2">
         <a
-          class="rounded-full border border-line px-3 py-1 font-mono text-xs text-muted transition-colors hover:border-fg/30 hover:text-fg"
+          class="rounded-full border border-line px-3 py-1 text-xs text-muted transition-colors hover:border-fg/30 hover:text-fg"
           href={href(there, other)}
           lang={there}
           hreflang={there}

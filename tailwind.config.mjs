@@ -1,7 +1,6 @@
 import typography from '@tailwindcss/typography';
 
 const token = (name) => `rgb(var(--${name}) / <alpha-value>)`;
-const display = ['"Space Grotesk Variable"', '"Inter Variable"', 'ui-sans-serif', 'sans-serif'];
 
 /** @type {import('tailwindcss').Config} */
 export default {
@@ -23,7 +22,6 @@ export default {
       },
       fontFamily: {
         sans: ['"Inter Variable"', 'ui-sans-serif', 'system-ui', 'sans-serif'],
-        display,
         mono: ['ui-monospace', 'SFMono-Regular', 'Menlo', 'Consolas', 'monospace'],
       },
       maxWidth: { shell: '72rem' },
@@ -47,7 +45,7 @@ export default {
             maxWidth: 'none',
             a: { textDecorationColor: 'rgb(var(--muted))', textUnderlineOffset: '4px', fontWeight: '500' },
             'a:hover': { textDecorationColor: '#f97c3d' },
-            'h2, h3, h4': { fontFamily: display.join(', '), letterSpacing: '-0.01em', scrollMarginTop: '6rem' },
+            'h2, h3, h4': { letterSpacing: '-0.01em', scrollMarginTop: '6rem' },
             blockquote: { fontStyle: 'normal', fontWeight: '400', background: 'rgb(var(--flame-tint))', borderRadius: '0 1rem 1rem 0', padding: '0.75rem 1.25rem' },
             'blockquote p:first-of-type::before, blockquote p:last-of-type::after': { content: 'none' },
             code: { background: 'rgb(var(--sunken))', borderRadius: '0.375rem', padding: '0.15em 0.4em', fontWeight: '500' },

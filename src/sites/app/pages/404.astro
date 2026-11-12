@@ -82,7 +82,7 @@ const locales = Object.keys(COPY) as Locale[];
                   </g>
                   <path d="M62 120h30" stroke="#f97c3d" stroke-width="5" stroke-linecap="round" />
                 </g>
-                <g class="zzz font-display" fill="rgb(var(--muted))">
+                <g class="zzz" fill="rgb(var(--muted))">
                   <text x="164" y="46" font-size="24" font-weight="700">z</text>
                   <text x="184" y="28" font-size="18" font-weight="700">z</text>
                   <text x="200" y="14" font-size="13" font-weight="700">z</text>
@@ -96,7 +96,7 @@ const locales = Object.keys(COPY) as Locale[];
               <h1 class="mt-4 text-balance text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">{say.title}</h1>
               <p class="mx-auto mt-5 max-w-xl text-pretty text-lg text-body">{say.lede}</p>
               <p class="lost-path mt-6 hidden">
-                <span class="chip font-mono text-xs">
+                <span class="chip text-xs">
                   <span class="text-muted">{say.looking}</span>
                   <span class="lost-where max-w-[16rem] truncate text-fg"></span>
                 </span>
@@ -128,7 +128,7 @@ const locales = Object.keys(COPY) as Locale[];
                               </svg>
                             )}
                           </span>
-                          <p class="mt-4 font-display font-semibold text-fg">{reason.title}</p>
+                          <p class="mt-4 font-semibold text-fg">{reason.title}</p>
                           <p class="mt-1.5 text-sm leading-relaxed text-muted">{reason.text}</p>
                         </li>
                       ))}
