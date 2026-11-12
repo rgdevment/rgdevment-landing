@@ -289,7 +289,7 @@ const EN: Words = {
 };
 
 const ES: Words = {
-  title: "Tisty vs Notion, Obsidian y Todoist: notas, tareas e IA",
+  title: "Tisty vs Notion, Obsidian, Todoist: notas y memoria para IA",
   heading: "En qué se diferencia Tisty de Notion, Craft, Todoist, Logseq, Obsidian y Joplin",
   short: "En qué se diferencia Tisty",
   meta: "Notas, tareas y memoria local para tu agente de IA, frente a Notion, Obsidian, Todoist, Logseq, Craft y Joplin: lo que Tisty hace y ellas no, con fuentes.",

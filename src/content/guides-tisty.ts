@@ -245,7 +245,7 @@ export const TISTY_GUIDES: Guide[] = [
       slug: "guias/memoria-para-tu-agente-de-ia-entre-sesiones",
       title: "Dale a tu agente de IA una memoria que dure entre sesiones",
       description:
-        "Copilot, Claude Code, Codex y Cursor olvidan todo al terminar la sesión. Por qué el Markdown de siempre no basta, y una memoria que tu agente lee por secciones.",
+        "GitHub Copilot, Claude Code, Codex y Cursor olvidan todo entre sesiones. Por qué el Markdown de siempre no basta, y una memoria que tu agente lee por secciones.",
       lede: "Tu agente brilla con el archivo que tiene delante y olvida el panorama: por qué se decidió algo hace seis meses, qué falló la última vez, qué falta todavía. Cada sesión nueva empieza contigo explicando otra vez el proyecto.",
       nativeTitle: "Lo que suele hacerse",
       nativeSteps: [

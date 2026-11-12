@@ -413,7 +413,7 @@ export const PRODUCTS: Product[] = [
         anchor: "tarea-o-documento",
       },
       title: "Tisty: memoria y contexto locales para tu agente de IA",
-      meta: "Memoria y contexto locales para ti y tu agente de IA: notas, documentos y tareas en Markdown en tu disco, por MCP para Copilot, Claude Code y Cursor. Gratis.",
+      meta: "Memoria y contexto locales para ti y tu agente de IA: notas, documentos y tareas Markdown en tu disco, vía MCP en GitHub Copilot, Claude Code y Cursor. Gratis.",
       problem:
         "Una lista de tareas común olvida en cuanto marcas la casilla, y tu agente de IA olvida en cuanto termina la sesión: seis meses después vuelve el mismo problema y solo te queda saber que ya lo resolviste una vez. En Tisty, lo que resolviste se queda, con sus pasos y su porqué, para ti y para tu agente.",
       groups: [
