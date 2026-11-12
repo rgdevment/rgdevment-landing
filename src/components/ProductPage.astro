@@ -6,6 +6,7 @@ import Assistant from "./Assistant.astro";
 import OnDisk from "./OnDisk.astro";
 import Sharing from "./Sharing.astro";
 import ProductHunt from "./ProductHunt.astro";
+import Screens from "./Screens.astro";
 import Shot from "./Shot.astro";
 import WritingMark from "./WritingMark.astro";
 import Layout from "../layouts/Layout.astro";
@@ -16,6 +17,7 @@ import { privacyPath } from "../content/privacy";
 import { GUIDES, written } from "../content/guides";
 import { PRODUCTS, type Product, brewSteps, cardOf, inkOf, releasesUrl, shotSrc, storeUrl, words, iconAlt } from "../content/products";
 import { installers, latestRelease, megabytes, releaseDate, stars } from "../content/releases";
+import { variantsOf } from "../screens";
 import { DOMAIN, HOME_PRODUCT, PERSON_ID, appId, canonical, crumbs, href, type Locale } from "../site";
 
 interface Props {
@@ -82,6 +84,16 @@ const say = {
   noTelemetry: es ? "Sin telemetría" : "No telemetry",
 };
 
+const screenshot = t.screens
+  ? t.screens.map((one) => ({
+      "@type": "ImageObject",
+      contentUrl: new URL(variantsOf(one.image, "webp").at(-1)!.path, DOMAIN).toString(),
+      name: one.title,
+      caption: one.alt,
+      inLanguage: locale,
+    }))
+  : shot && new URL(shot, DOMAIN).toString();
+
 const schema = [
   {
     "@context": "https://schema.org",
@@ -97,7 +109,7 @@ const schema = [
     url: canonical("en", path),
     inLanguage: ["en", "es"],
     image: new URL(product.icon, DOMAIN).toString(),
-    ...(shot ? { screenshot: new URL(shot, DOMAIN).toString() } : {}),
+    ...(screenshot ? { screenshot } : {}),
     downloadUrl: releases,
     ...(release ? { softwareVersion: release.version, dateModified: release.date } : {}),
     ...(store ? { installUrl: store } : {}),
@@ -319,7 +331,9 @@ const schema = [
       </header>
 
       {
-        product.shot && (
+        t.screens ? (
+          <Screens name={product.name} screens={t.screens} locale={locale} />
+        ) : product.shot && (
           <div class="relative mx-auto mt-16 max-w-5xl">
             <div
               class="absolute inset-x-10 -bottom-6 top-10 -z-10 rounded-[2rem] opacity-30 blur-3xl"
@@ -361,9 +375,9 @@ const schema = [
     <h2 class="section-title">{es ? `Qué hace ${product.name}` : `What ${product.name} does`}</h2>
     {
       t.groups && (
-        <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+        <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
           {t.groups.map((group) => (
-            <div class="card p-6">
+            <div class="card p-6 sm:p-8">
               <h3 class="accent-ink font-display text-xl font-semibold" style={ink}>{group.title}</h3>
               <ul class="mt-4 space-y-3">
                 {group.points.map((one) => (

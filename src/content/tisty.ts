@@ -1,4 +1,4 @@
-import type { Assistant, Cost, Day, Fixes, Proof, Sharing } from "./products";
+import type { Assistant, Cost, Day, Fixes, Proof, Screen, Sharing } from "./products";
 
 export const FIXES_EN: Fixes = {
   title: "Real problems, real fixes",
@@ -418,3 +418,107 @@ export const SHARING_ES: Sharing = {
   page: "documentos",
   anchor: "compartir",
 };
+
+export const SCREENS_EN: Screen[] = [
+  {
+    image: "/tisty-screen-en-01-archive",
+    label: "Archive",
+    title: "Months later, as it was left",
+    text: "A finished task goes to the Archive with its steps and its journal, and a search by you or your AI agent brings it back whole.",
+    alt: "Tisty's Archive on the Routines tab, with the Weekly review open beside it: 27 of 27 rounds kept, its longest run and the hour it usually gets done",
+  },
+  {
+    image: "/tisty-screen-en-02-diagrams",
+    label: "Diagrams",
+    title: "Diagrams that stay text",
+    text: "You draw the diagram and Tisty keeps it as Mermaid, inside Markdown that any editor opens and any agent reads, offline.",
+    alt: "Tisty's freeform diagram editor: a flowchart on the canvas, the shapes on the left and, on the right, the Mermaid it writes into the document live",
+  },
+  {
+    image: "/tisty-screen-en-03-brainstorm",
+    label: "Brainstorm",
+    title: "Ideas, before they become tasks",
+    text: "Press Tab in the quick capture and it is an idea: a sticky note of up to 140 characters that you later turn into a task or file in a document.",
+    alt: "Tisty's Brainstorm: short ideas on coloured sticky notes, each with its date and time",
+  },
+  {
+    image: "/tisty-screen-en-04-priorities",
+    label: "Priorities",
+    title: "Urgent is not always important",
+    text: "Each task in its quadrant of the Eisenhower matrix: do, schedule, delegate or minor, and what is left to classify waiting on the side.",
+    alt: "Tisty's Priorities view: tasks spread across Do, Schedule, Delegate and Minor, by urgent and important",
+  },
+  {
+    image: "/tisty-screen-en-05-documents",
+    label: "Documents",
+    title: "What you know, one document per subject",
+    text: "A document you correct in place, with its outline beside it, so your AI agent reads the outline first and then only the section it needs.",
+    alt: "The Tisty document «What is Tisty?» with its outline beside it, and buttons to read it in English or Spanish and to pick the paper size",
+  },
+  {
+    image: "/tisty-screen-en-06-today",
+    label: "Today",
+    title: "Late is not overdue",
+    text: "You type a task the way you would say it and Tisty picks out the date. Today puts the overdue ones first and, beside them, what the coming days bring.",
+    alt: "Tisty's Today view: overdue and due-soon tasks, and beside them the coming days, the priorities and the lists",
+  },
+  {
+    image: "/tisty-screen-en-07-folio",
+    label: "Folio",
+    title: "Share what you know, encrypted",
+    text: "Folio hands over a document as a link to read, encrypted on your computer and signed by you. Whoever gets it opens it in any browser, with no account.",
+    alt: "A Tisty document shared through Folio, with the panel that shows it is shared and its link to read",
+  },
+];
+
+export const SCREENS_ES: Screen[] = [
+  {
+    image: "/tisty-screen-es-01-archivo",
+    label: "Archivo",
+    title: "Meses después, tal como quedó",
+    text: "Una tarea terminada pasa al Archivo con sus pasos y su bitácora, y una búsqueda tuya o de tu agente de IA la trae de vuelta entera.",
+    alt: "El Archivo de Tisty en la pestaña Rutinas, con la Revisión semanal abierta al lado: 27 de 27 vueltas cumplidas, la racha más larga y la hora a la que suele cumplirse",
+  },
+  {
+    image: "/tisty-screen-es-02-diagramas",
+    label: "Diagramas",
+    title: "Diagramas que siguen siendo texto",
+    text: "Dibujas el diagrama y Tisty lo guarda como Mermaid, dentro de un Markdown que abre cualquier editor y lee cualquier agente, sin conexión.",
+    alt: "El editor de diagramas libres de Tisty: un diagrama de flujo en el lienzo, las formas a la izquierda y, a la derecha, el Mermaid que escribe en el documento en vivo",
+  },
+  {
+    image: "/tisty-screen-es-03-lluvia-de-ideas",
+    label: "Lluvia de ideas",
+    title: "Las ideas, antes de ser tareas",
+    text: "Pulsa Tab en la captura rápida y es una idea: una nota adhesiva de hasta 140 caracteres que después conviertes en tarea o anexas a un documento.",
+    alt: "La Lluvia de ideas de Tisty: ideas cortas en notas adhesivas de colores, cada una con su fecha y hora",
+  },
+  {
+    image: "/tisty-screen-es-04-prioridades",
+    label: "Prioridades",
+    title: "Urgente no siempre es importante",
+    text: "Cada tarea en su cuadrante de la matriz de Eisenhower: hacer, planificar, delegar o prescindible, y lo que falta por clasificar esperando a un lado.",
+    alt: "La vista Prioridades de Tisty: las tareas repartidas en Hacer, Planificar, Delegar y Prescindible, según lo urgente y lo importante",
+  },
+  {
+    image: "/tisty-screen-es-05-documentos",
+    label: "Documentos",
+    title: "Lo que sabes, en un documento por tema",
+    text: "Un documento que corriges en su lugar, con su índice al lado: así tu agente de IA lee primero el índice y después solo la sección que necesita.",
+    alt: "El documento de Tisty «¿Qué es Tisty?» con su índice al lado y los botones para leerlo en español o en inglés y elegir el papel",
+  },
+  {
+    image: "/tisty-screen-es-06-hoy",
+    label: "Hoy",
+    title: "Atrasada no es vencida",
+    text: "Escribes la tarea tal como la dices y Tisty saca la fecha. Hoy pone primero las vencidas y, al lado, lo que traen los próximos días.",
+    alt: "La vista Hoy de Tisty: las tareas vencidas y por vencer, y al lado los próximos días, las prioridades y las listas",
+  },
+  {
+    image: "/tisty-screen-es-07-folio",
+    label: "Folio",
+    title: "Comparte lo que sabes, cifrado",
+    text: "Folio entrega un documento con un link para leer, cifrado en tu equipo y firmado por ti. Quien lo recibe lo abre en cualquier navegador, sin cuenta.",
+    alt: "Un documento de Tisty compartido con Folio, con el panel que muestra que está compartido y su link para leer",
+  },
+];
