@@ -320,7 +320,7 @@ export const PRODUCTS: Product[] = [
         },
         {
           q: "How do I give my AI agent a memory between sessions?",
-          a: "Connect Tisty over MCP: GitHub Copilot in VS Code, Claude Code, Codex, Cursor and Gemini CLI take one line. The agent then starts each session by asking what moved since the last one, files its work as tasks with steps and a journal, and keeps what it learns in documents, on your machine and with your permission.",
+          a: "Connect Tisty over MCP: GitHub Copilot in VS Code, Claude Code, Codex, Cursor and Gemini CLI take one line. The agent then starts each session by asking what moved since its last one and opening the task it was on, files its work as tasks with steps and a journal, and keeps what it learns in documents, on your machine and with your permission.",
         },
         {
           q: "Does it replace CLAUDE.md, AGENTS.md or a memory-bank folder?",
@@ -474,7 +474,7 @@ export const PRODUCTS: Product[] = [
         },
         {
           q: "¿Cómo le doy a mi agente de IA una memoria entre sesiones?",
-          a: "Conecta Tisty por MCP: GitHub Copilot en VS Code, Claude Code, Codex, Cursor y Gemini CLI lo hacen con una línea. Desde ahí, el agente empieza cada sesión preguntando qué cambió desde la anterior, anota su trabajo como tareas con pasos y bitácora, y guarda lo que aprende en documentos, en tu equipo y con tu permiso.",
+          a: "Conecta Tisty por MCP: GitHub Copilot en VS Code, Claude Code, Codex, Cursor y Gemini CLI lo hacen con una línea. Desde ahí, el agente empieza cada sesión preguntando qué cambió desde la anterior y abriendo la tarea en la que estaba, anota su trabajo como tareas con pasos y bitácora, y guarda lo que aprende en documentos, en tu equipo y con tu permiso.",
         },
         {
           q: "¿Reemplaza a CLAUDE.md, AGENTS.md o una carpeta memory-bank?",
