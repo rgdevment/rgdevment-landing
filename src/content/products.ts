@@ -205,7 +205,7 @@ export const PRODUCTS: Product[] = [
       },
       kinds: {
         title: "A task or a document?",
-        lede: "Tisty keeps two kinds of things, and telling them apart is most of using it well. Something you will do is a task. Something you will come back to is a document.",
+        lede: "Tisty keeps two kinds of things, and telling them apart is most of using it well. Something you will do is a task. Something you will come back to is a document. Before either, there is often an idea: a thought caught on the fly, a few words in Brainstorm, waiting to become a task, go into a document or be set aside.",
         cards: [
           {
             title: "A task",
@@ -268,6 +268,7 @@ export const PRODUCTS: Product[] = [
           points: [
             "Type «call the bank at 3» in the quick capture, open from anywhere, and it is a task with its hour.",
             "Today puts the urgent first: overdue only past its deadline, late when the day you planned slipped by.",
+            "Press Tab in the quick capture and it is an idea: a sticky note in Brainstorm, up to 140 characters, that you turn into a task or a document later.",
             "Steps, parts and the Eisenhower matrix by its name: do, schedule, delegate, minor.",
           ],
         },
@@ -359,7 +360,7 @@ export const PRODUCTS: Product[] = [
       },
       kinds: {
         title: "¿Tarea o documento?",
-        lede: "Tisty guarda dos tipos de cosas, y distinguirlas es buena parte de usarlo bien. Lo que vas a hacer es una tarea. Lo que vas a volver a consultar es un documento.",
+        lede: "Tisty guarda dos tipos de cosas, y distinguirlas es buena parte de usarlo bien. Lo que vas a hacer es una tarea. Lo que vas a volver a consultar es un documento. Antes de las dos, muchas veces hay una idea: un pensamiento atrapado al vuelo, pocas palabras en la Lluvia de ideas, que espera volverse tarea, ir a un documento o apartarse.",
         cards: [
           {
             title: "Una tarea",
@@ -422,6 +423,7 @@ export const PRODUCTS: Product[] = [
           points: [
             "Escribe «llamar al banco a las 3» en la captura rápida, que se abre desde cualquier parte, y es una tarea con su hora.",
             "Hoy pone primero lo urgente: vence solo lo que pasó su límite, se atrasa lo que no hiciste el día que planeaste.",
+            "Pulsa Tab en la captura rápida y es una idea: una nota adhesiva en la Lluvia de ideas, de hasta 140 caracteres, que después conviertes en tarea o en documento.",
             "Pasos, partes y la matriz de Eisenhower por su nombre: hacer, planificar, delegar, prescindible.",
           ],
         },
