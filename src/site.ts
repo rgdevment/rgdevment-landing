@@ -53,6 +53,10 @@ export function withHome(locale: Locale, trail: [string, string][]): [string, st
   return [[locale === "es" ? "Inicio" : "Home", ""], ...trail];
 }
 
+export function longDate(date: string, locale: Locale): string {
+  return new Date(date).toLocaleDateString(locale === "es" ? "es-CL" : "en-US", { year: "numeric", month: "long", day: "numeric" });
+}
+
 export function crumbs(locale: Locale, trail: [string, string][]) {
   return {
     "@context": "https://schema.org",

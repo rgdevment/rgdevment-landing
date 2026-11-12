@@ -9,6 +9,7 @@ import ProductNav from "../components/ProductNav.astro";
 import { PRODUCTS, cardOf, iconAlt } from "../content/products";
 import { CHANGELOG_PATH, FEED, hasChangelog } from "../content/changelog";
 import { COMPARE_PATH, comparisonOf } from "../content/compare";
+import { NEWS_FEED, NEWS_PATH, hasNews } from "../content/news";
 import { privacyPath } from "../content/privacy";
 import { termsPath } from "../content/terms";
 import { MAIN } from "../hosts";
@@ -88,6 +89,7 @@ const say = es
       guides: "Guías",
       pricing: "Precios",
       news: "Novedades",
+      stories: "Noticias",
       support: "Colaborar",
       privacy: "Privacidad",
       terms: "Términos de uso",
@@ -104,6 +106,7 @@ const say = es
       guides: "Guides",
       pricing: "Pricing",
       news: "What's new",
+      stories: "News",
       support: "Support",
       privacy: "Privacy",
       terms: "Terms of use",
@@ -178,6 +181,7 @@ const say = es
     }
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
+    {owner && hasNews(owner.slug) && <link rel="alternate" type="application/rss+xml" title={es ? `Noticias de ${brand}` : `${brand} news`} href={`/${NEWS_FEED[locale]}`} />}
     {(!owner || hasChangelog(owner.slug)) && <link rel="alternate" type="application/rss+xml" title={es ? `Novedades de ${brand}` : `What's new in ${brand}`} href={`/${FEED}`} />}
     <meta name="generator" content={Astro.generator} />
 
@@ -271,6 +275,7 @@ const say = es
             <ul class="mt-4 space-y-2.5 text-sm">
               <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "guias" : "guides")}>{say.guides}</a></li>
               <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "precios" : "pricing")}>{say.pricing}</a></li>
+              {owner && hasNews(owner.slug) && <li><a class="text-body transition-colors hover:text-fg" href={href(locale, NEWS_PATH[locale])}>{say.stories}</a></li>}
               {owner && hasChangelog(owner.slug) && <li><a class="text-body transition-colors hover:text-fg" href={href(locale, CHANGELOG_PATH[locale])}>{say.news}</a></li>}
               {compared && <li><a class="text-body transition-colors hover:text-fg" href={href(locale, COMPARE_PATH[locale])}>{compared[locale].short}</a></li>}
               <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "colaborar" : "support")}>{say.support}</a></li>

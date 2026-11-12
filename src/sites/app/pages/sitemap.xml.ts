@@ -6,7 +6,7 @@ import { termsPath } from "../../../content/terms";
 import { latestRelease } from "../../../content/releases";
 import { CHANGELOG_PATH, hasChangelog } from "../../../content/changelog";
 import { COMPARE_PATH, compares } from "../../../content/compare";
-import { docEntries, sitemap } from "../../../sitemap";
+import { docEntries, newsEntries, sitemap } from "../../../sitemap";
 import { HOME_PRODUCT } from "../../../site";
 
 const product = HOME_PRODUCT!;
@@ -24,6 +24,7 @@ export const GET: APIRoute = async () => {
       ? [{ en: CHANGELOG_PATH.en, es: CHANGELOG_PATH.es, priority: "0.5", lastmod: release?.date.slice(0, 10), textIn: "en" as const }]
       : []),
     ...(compares(product) ? [{ en: COMPARE_PATH.en, es: COMPARE_PATH.es, priority: "0.6" }] : []),
+    ...(await newsEntries()),
     ...(await docEntries(product)),
   ]);
 };

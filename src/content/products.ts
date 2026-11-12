@@ -145,6 +145,7 @@ export type Product = {
   listings?: [string, string][];
   /** Its MCP server: the registry name and, per assistant, the command that connects it. */
   mcp?: { registry: string; connect: { who?: string; command: string }[] };
+  news?: string;
   shot?: {
     src: string;
     srcEs?: string;
@@ -167,6 +168,7 @@ export const PRODUCTS: Product[] = [
     slug: "tisty",
     name: "Tisty",
     repo: "https://github.com/rgdevment/Tisty",
+    news: "app/src/news.json",
     licence: "AGPL-3.0-only",
     platforms: ["Windows", "macOS"],
     storeId: "9PGVWXD8X93N",
