@@ -44,6 +44,7 @@ const there: Locale = es ? "en" : "es";
 const at = (one: Locale) => paths?.[one] ?? path;
 const url = textIn ? canonical(textIn, at(textIn)) : canonical(locale, at(locale));
 const owner = PRODUCTS.find((one) => one.slug === HOME_PRODUCT);
+const told = owner ? await hasNews(owner.slug) : false;
 const brand = owner?.name ?? "rgdevment";
 const full = title.includes(brand) || title.length > 44 ? title : `${title} · ${brand}`;
 const ownCard = owner && cardOf(owner, locale);
@@ -181,7 +182,7 @@ const say = es
     }
     <link rel="manifest" href="/site.webmanifest" />
     <link rel="sitemap" type="application/xml" href="/sitemap.xml" />
-    {owner && hasNews(owner.slug) && <link rel="alternate" type="application/rss+xml" title={es ? `Noticias de ${brand}` : `${brand} news`} href={`/${NEWS_FEED[locale]}`} />}
+    {told && <link rel="alternate" type="application/rss+xml" title={es ? `Noticias de ${brand}` : `${brand} news`} href={`/${NEWS_FEED[locale]}`} />}
     {(!owner || hasChangelog(owner.slug)) && <link rel="alternate" type="application/rss+xml" title={es ? `Novedades de ${brand}` : `What's new in ${brand}`} href={`/${FEED}`} />}
     <meta name="generator" content={Astro.generator} />
 
@@ -275,7 +276,7 @@ const say = es
             <ul class="mt-4 space-y-2.5 text-sm">
               <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "guias" : "guides")}>{say.guides}</a></li>
               <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "precios" : "pricing")}>{say.pricing}</a></li>
-              {owner && hasNews(owner.slug) && <li><a class="text-body transition-colors hover:text-fg" href={href(locale, NEWS_PATH[locale])}>{say.stories}</a></li>}
+              {told && <li><a class="text-body transition-colors hover:text-fg" href={href(locale, NEWS_PATH[locale])}>{say.stories}</a></li>}
               {owner && hasChangelog(owner.slug) && <li><a class="text-body transition-colors hover:text-fg" href={href(locale, CHANGELOG_PATH[locale])}>{say.news}</a></li>}
               {compared && <li><a class="text-body transition-colors hover:text-fg" href={href(locale, COMPARE_PATH[locale])}>{compared[locale].short}</a></li>}
               <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "colaborar" : "support")}>{say.support}</a></li>

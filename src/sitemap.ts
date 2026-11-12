@@ -11,7 +11,7 @@ export async function newsEntries(): Promise<Entry[]> {
   if (!stories.length) return [];
   return [
     { en: NEWS_PATH.en, es: NEWS_PATH.es, priority: "0.6", lastmod: stories[0].date.slice(0, 10) },
-    ...stories.map((one) => ({ en: storyPath("en", one.version), es: storyPath("es", one.version), priority: "0.5", lastmod: one.date.slice(0, 10) })),
+    ...stories.map((one) => ({ en: storyPath("en", one.page.en), es: storyPath("es", one.page.es), priority: "0.5", lastmod: one.date.slice(0, 10) })),
   ];
 }
 

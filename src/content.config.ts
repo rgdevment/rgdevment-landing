@@ -34,15 +34,18 @@ const terms = defineCollection({
 });
 
 const news = defineCollection({
-  loader: glob({ pattern: "**/*.md", base: "./.wikis/news" }),
-  schema: z.object({
-    product: z.string(),
-    version: z.string(),
-    locale: z.enum(["en", "es"]),
-    title: z.string(),
-    description: z.string(),
-    card: z.string().nullable(),
-  }),
+  loader: glob({ pattern: "*/*/{en,es}.md", base: "./src/news" }),
+  schema: ({ image }) =>
+    z
+      .object({
+        title: z.string(),
+        description: z.string().max(170),
+        date: z.coerce.date().optional(),
+        release: z.string().regex(/^\d+\.\d+\.\d+$/).optional(),
+        page: z.string().regex(/^[a-z0-9-]+$/).optional(),
+        cover: image().optional(),
+      })
+      .refine((one) => one.date || one.release, "an article needs a date, or the release it waits for"),
 });
 
 export const collections = { docs, privacy, terms, news };

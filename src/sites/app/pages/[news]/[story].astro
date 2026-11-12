@@ -3,10 +3,10 @@ import StoryPage from "../../../../components/StoryPage.astro";
 import { NEWS_PATH, homeStories } from "../../../../content/news";
 
 export async function getStaticPaths() {
-  return (await homeStories()).map((one) => ({ params: { news: NEWS_PATH.en, version: one.version } }));
+  return (await homeStories()).map((one) => ({ params: { news: NEWS_PATH.en, story: one.page.en } }));
 }
 
-const { version } = Astro.params;
+const { story } = Astro.params;
 ---
 
-<StoryPage locale="en" version={version!} />
+<StoryPage locale="en" page={story!} />

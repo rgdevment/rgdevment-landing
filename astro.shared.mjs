@@ -32,6 +32,51 @@ function rehypeRelocate(product) {
   return () => walk;
 }
 
+const CALLOUT = {
+  en: { NOTE: 'Note', TIP: 'Tip', IMPORTANT: 'Important', WARNING: 'Warning', CAUTION: 'Caution' },
+  es: { NOTE: 'Nota', TIP: 'Consejo', IMPORTANT: 'Importante', WARNING: 'Atención', CAUTION: 'Cuidado' },
+};
+
+const writtenIn = (file) => (/[\\/]es(?:[\\/]|\.md$)/.test(String(file?.path ?? '')) ? 'es' : 'en');
+
+const element = (tagName, className, children) => ({ type: 'element', tagName, properties: className ? { className } : {}, children });
+
+function rehypeCallouts() {
+  return (tree, file) => {
+    const words = CALLOUT[writtenIn(file)];
+    const walk = (node) => {
+      node.children?.forEach(walk);
+      if (node.tagName !== 'blockquote') return;
+      const first = node.children.find((one) => one.type === 'element');
+      const opening = first?.tagName === 'p' ? first.children[0] : null;
+      const kind = opening?.type === 'text' && opening.value.match(/^\[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\][^\S\n]*\n?/i);
+      if (!kind) return;
+      opening.value = opening.value.slice(kind[0].length);
+      while (first.children[0] && (first.children[0].tagName === 'br' || first.children[0].value === '')) first.children.shift();
+      if (!first.children.length) node.children.splice(node.children.indexOf(first), 1);
+      const name = kind[1].toUpperCase();
+      node.tagName = 'aside';
+      node.properties = { className: ['callout', `callout-${name.toLowerCase()}`] };
+      node.children.unshift(element('p', ['callout-title'], [{ type: 'text', value: words[name] }]));
+    };
+    walk(tree);
+  };
+}
+
+function rehypeFigures() {
+  const walk = (node) => {
+    node.children?.forEach((child, at) => {
+      const held = child.tagName === 'p' ? child.children.filter((one) => one.type !== 'text' || one.value.trim()) : [];
+      const picture = held.length === 1 && held[0].tagName === 'img' ? held[0] : null;
+      const caption = picture?.properties?.title;
+      if (!caption) return walk(child);
+      delete picture.properties.title;
+      node.children[at] = element('figure', null, [picture, element('figcaption', null, [{ type: 'text', value: String(caption) }])]);
+    });
+  };
+  return walk;
+}
+
 // A screenshot with its size reserved does not push the text down when it arrives; the first may be what people see.
 function rehypeImages() {
   return async (tree) => {
@@ -103,11 +148,14 @@ export function shared({ product = null } = {}) {
   return {
     trailingSlash: 'always',
     integrations: [tailwind({ applyBaseStyles: false })],
+    image: { layout: 'constrained' },
     markdown: {
       syntaxHighlight: { type: 'shiki', excludeLangs: ['math', 'mermaid'] },
       remarkPlugins: [[remarkMath, { singleDollarTextMath: false }]],
       rehypePlugins: [
         [rehypeSanitize, wikiSafe],
+        rehypeCallouts,
+        rehypeFigures,
         rehypeKatex,
         rehypeRelocate(product),
         rehypeImages,
@@ -153,6 +201,19 @@ const HELP_MOVED = {
   },
 };
 
+// Tisty's first news pages were one per version, and every version is told in the changelog now.
+const NEWS_BY_VERSION = {
+  tisty: ['1.30.0', '1.30.2', '1.31.0', '1.31.3', '1.31.5', '1.32.0', '1.32.1', '1.33.0', '1.34.0', '1.34.1', '1.35.0', '1.36.0', '1.36.1', '1.36.2', '1.37.0', '1.37.1', '1.38.0', '1.39.0', '1.40.0', '1.41.0', '1.42.0', '1.43.0', '1.44.0', '1.44.1', '1.45.0', '1.46.0'],
+};
+
+const newsMoved = (product) =>
+  Object.fromEntries(
+    (NEWS_BY_VERSION[product] ?? []).flatMap((version) => [
+      [`/news/${version}/`, '/changelog/'],
+      [`/es/noticias/${version}/`, '/es/novedades/'],
+    ]),
+  );
+
 const MAIN_ONLY = ['favicon.svg', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'social.png', 'social-es.png'];
 
 async function favicon(png) {
@@ -193,7 +254,7 @@ function ownFiles(product) {
         ];
         const icon = CATALOG.find((one) => one.slug === product).icon;
         writeFileSync(at('favicon.ico'), await favicon(`./public${icon}`));
-        writeFileSync(at('_redirects'), renamed({ '/en/': '/', ...SUPPORT_MOVED, ...HELP_MOVED[product] }));
+        writeFileSync(at('_redirects'), renamed({ '/en/': '/', ...SUPPORT_MOVED, ...HELP_MOVED[product], ...newsMoved(product) }));
         drop.forEach((path) => rmSync(at(path), { force: true }));
       },
     },

@@ -1,7 +1,7 @@
 import { execFileSync } from "node:child_process";
 import { createHash } from "node:crypto";
 import { appendFileSync, existsSync, mkdirSync, readFileSync, readdirSync, rmSync, writeFileSync } from "node:fs";
-import { basename, extname, join, posix } from "node:path";
+import { basename, extname, join } from "node:path";
 import sharp from "sharp";
 import { APPS } from "./apps.mjs";
 
@@ -9,13 +9,8 @@ const CACHE = ".wikis/src";
 const OUT = ".wikis/out";
 const PRIVACY = ".wikis/privacy";
 const TERMS = ".wikis/terms";
-const NEWS = ".wikis/news";
 const ASSETS = "public/docs-assets";
 const SECTION = { en: "docs", es: "ayuda" };
-const CALLOUT = {
-  en: { NOTE: "Note", TIP: "Tip", IMPORTANT: "Important", WARNING: "Warning", CAUTION: "Caution" },
-  es: { NOTE: "Nota", TIP: "Consejo", IMPORTANT: "Importante", WARNING: "Atención", CAUTION: "Cuidado" },
-};
 
 function carries(dir, tag, help) {
   try {
@@ -37,7 +32,7 @@ function fetchHelp({ repo, product, help }) {
   const tag = tags.split("\n").find((one) => one && !one.includes("-"));
   if (!tag || !carries(dir, tag, help)) return null;
   execFileSync("git", ["-C", dir, "checkout", "-q", "--detach", tag], { stdio: "inherit" });
-  return { root: dir, dir: join(dir, help), tag };
+  return { dir: join(dir, help), tag };
 }
 
 function fetchWiki({ repo, product }) {
@@ -122,10 +117,6 @@ function rewriteLinks(text, product, pages) {
       const url = resolve(decodeURIComponent(page), hash.slice(1));
       return url ? `](${url})` : whole;
     });
-}
-
-function rewriteCallouts(text, locale) {
-  return text.replace(/^> \[!(NOTE|TIP|IMPORTANT|WARNING|CAUTION)\]\s*$/gm, (_, kind) => `> **${CALLOUT[locale][kind]}**`);
 }
 
 const smallerOf = (file) => file.replace(/\.webp$/, "-720.webp");
@@ -241,7 +232,7 @@ async function syncWiki(wiki) {
     const entry = pages.get(page);
     if (!entry) continue;
     const raw = readFileSync(join(dir, file), "utf8");
-    let body = rewriteCallouts(rewriteLinks(stripHeader(raw), wiki.product, pages), entry.locale);
+    let body = rewriteLinks(stripHeader(raw), wiki.product, pages);
     // Folio's home is English at its root, so Spanish help sends readers to its Spanish home.
     if (entry.locale === "es") body = body.replace(/\]\(https:\/\/tisty\.cl\/?\)/g, "](https://tisty.cl/es/)");
     body = await localiseImages(body, wiki.product);
@@ -265,53 +256,6 @@ async function syncWiki(wiki) {
   const from = released ? `${wiki.help} at ${released.tag}` : "wiki";
   console.log(`wikis: ${wiki.repo} → ${pages.size} pages from ${from}`);
   if (process.env.GITHUB_STEP_SUMMARY) appendFileSync(process.env.GITHUB_STEP_SUMMARY, `- ${wiki.repo}: ${pages.size} pages from ${from}\n`);
-  return released;
-}
-
-const atTag = ({ root, tag }, path, encoding) =>
-  execFileSync("git", ["-C", root, "show", `${tag}:${path}`], { encoding, maxBuffer: 1 << 26 });
-
-// A picture is read from the release itself, so an article shows the screens its version shipped with.
-async function articleImages(body, released, { product, version, folder }) {
-  let card = null;
-  for (const [whole, alt, source] of body.matchAll(/!\[([^\]]*)\]\(([^)\s]+)\)/g)) {
-    if (/^[a-z]+:/i.test(source)) continue;
-    const path = posix.normalize(posix.join(folder, source));
-    const moving = /\.gif$/i.test(path);
-    const name = `${product}-news-${version}-${basename(path)}`.replace(/\.(?:png|jpe?g)$/i, ".webp");
-    const file = join(ASSETS, name);
-    try {
-      const raw = atTag(released, path);
-      if (!existsSync(file)) {
-        writeFileSync(file, moving ? raw : await sharp(raw).resize({ width: 1600, withoutEnlargement: true }).webp({ quality: 85 }).toBuffer());
-        if (!moving) await addSmaller(file);
-      }
-      if (!card) {
-        card = `/docs-assets/${name.replace(/\.[a-z]+$/i, "-card.jpg")}`;
-        writeFileSync(`public${card}`, await sharp(raw).resize(1200, 630, { fit: "cover", position: "top" }).jpeg({ quality: 85 }).toBuffer());
-      }
-      body = body.replace(whole, `![${alt}](/docs-assets/${name})`);
-    } catch (error) {
-      console.warn(`news: ${path} could not be read at ${released.tag}: ${error.message}`);
-    }
-  }
-  return { body, card };
-}
-
-async function syncNews({ product, news }, released) {
-  const files = execFileSync("git", ["-C", released.root, "ls-tree", "-r", "--name-only", released.tag, news], { encoding: "utf8" })
-    .split("\n")
-    .filter((one) => /\/(?:en|es)\.md$/.test(one));
-  for (const file of files) {
-    const [, version, locale] = file.match(/([^/]+)\/(en|es)\.md$/);
-    const raw = atTag(released, file, "utf8");
-    const { body, card } = await articleImages(stripHeader(raw), released, { product, version, folder: posix.dirname(file) });
-    const meta = { product, version, locale, title: titleOf(raw, version), description: describe(body, locale), card };
-    const target = join(NEWS, product, version);
-    mkdirSync(target, { recursive: true });
-    writeFileSync(join(target, `${locale}.md`), `---\n${JSON.stringify(meta, null, 2)}\n---\n${body}`);
-  }
-  console.log(`news: ${product} → ${files.length} articles from ${news} at ${released.tag}`);
 }
 
 // A policy that failed to arrive stops the deploy: the page Google points people at must never go missing.
@@ -331,14 +275,10 @@ function syncPolicy({ repo, product }, { file, dir, fallback, route }) {
 rmSync(OUT, { recursive: true, force: true });
 rmSync(PRIVACY, { recursive: true, force: true });
 rmSync(TERMS, { recursive: true, force: true });
-rmSync(NEWS, { recursive: true, force: true });
 mkdirSync(ASSETS, { recursive: true });
 mkdirSync(PRIVACY, { recursive: true });
 mkdirSync(TERMS, { recursive: true });
-for (const wiki of APPS) {
-  const released = await syncWiki(wiki);
-  if (wiki.news && released) await syncNews(wiki, released);
-}
+for (const wiki of APPS) await syncWiki(wiki);
 for (const app of APPS) {
   syncPolicy(app, { file: "PRIVACY.md", dir: PRIVACY, fallback: "Privacy policy", route: "privacy" });
   if (app.terms) syncPolicy(app, { file: "TERMS.md", dir: TERMS, fallback: "Terms of use", route: "terms" });

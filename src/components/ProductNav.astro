@@ -23,7 +23,7 @@ type Item = [to: string, label: string, external: boolean];
 const items: Item[] = [
   [href(locale, es ? "precios" : "pricing"), es ? "Precios" : "Pricing", false],
   ...(compares(product.slug) ? [[href(locale, COMPARE_PATH[locale]), es ? "Comparar" : "Compare", false] as Item] : []),
-  ...(hasNews(product.slug)
+  ...((await hasNews(product.slug))
     ? [[href(locale, NEWS_PATH[locale]), es ? "Noticias" : "News", false] as Item]
     : hasChangelog(product.slug)
       ? [[href(locale, CHANGELOG_PATH[locale]), es ? "Novedades" : "What's new", false] as Item]

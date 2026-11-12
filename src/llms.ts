@@ -261,7 +261,7 @@ export async function appLlms(): Promise<Response> {
     "",
     link("Pricing", "pricing", "free in full, no paid tier"),
     link("Support", "support"),
-    ...(hasNews(product.slug) ? [link("News", NEWS_PATH.en, "one article for each version that brings something new"), `- [News feed](${canonical("en", "")}${NEWS_FEED.en})`] : []),
+    ...((await hasNews(product.slug)) ? [link("News", NEWS_PATH.en, "articles on what is new, newest first"), `- [News feed](${canonical("en", "")}${NEWS_FEED.en})`] : []),
     ...(hasChangelog(product.slug) ? [link("What's new", CHANGELOG_PATH.en, "every release, newest first"), `- [RSS feed](${canonical("en", "")}${FEED})`] : []),
     `- [Source code](${product.repo})`,
     ...(compared ? [link(compared.en.title, COMPARE_PATH.en, `what it does that ${namesOthers(compared)} do not`)] : []),
