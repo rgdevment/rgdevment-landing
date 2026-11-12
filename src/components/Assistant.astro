@@ -19,7 +19,7 @@ const copy = locale === "es" ? { label: "Copiar", done: "Copiado" } : { label: "
   <h2 class="section-title">{words.title}</h2>
   <p class="mt-3 text-muted">{words.lede}</p>
 
-  <div class="mt-10 grid grid-cols-1 gap-4 lg:grid-cols-[1.15fr_1fr]">
+  <div class="mt-10 grid grid-cols-1 gap-4">
     <div class="card min-w-0 p-6 sm:p-7">
       <ul class="space-y-4">
         {
@@ -45,10 +45,10 @@ const copy = locale === "es" ? { label: "Copiar", done: "Copiado" } : { label: "
       <p class="mt-5 text-sm text-body">{words.settings}</p>
     </div>
 
-    <div class="grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
-      <div class="card p-6">
+    <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-[3fr_2fr]">
+      <div class="card p-6 sm:p-7">
         <h3 class="text-lg font-semibold text-fg">{words.can.title}</h3>
-        <ul class="mt-3 space-y-2 text-sm text-body">
+        <ul class="mt-3 space-y-2 text-body">
           {
             words.can.items.map((one) => (
               <li class="flex gap-2">
@@ -59,9 +59,9 @@ const copy = locale === "es" ? { label: "Copiar", done: "Copiado" } : { label: "
           }
         </ul>
       </div>
-      <div class="card p-6">
+      <div class="card p-6 sm:p-7">
         <h3 class="text-lg font-semibold text-fg">{words.never.title}</h3>
-        <ul class="mt-3 space-y-2 text-sm text-body">
+        <ul class="mt-3 space-y-2 text-body">
           {
             words.never.items.map((one) => (
               <li class="flex gap-2">

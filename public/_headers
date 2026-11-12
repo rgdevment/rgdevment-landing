@@ -26,6 +26,9 @@
 /*.webp
   Cache-Control: public, max-age=2592000, stale-while-revalidate=604800
 
+/*.avif
+  Cache-Control: public, max-age=2592000, stale-while-revalidate=604800
+
 /*.svg
   Cache-Control: public, max-age=2592000, stale-while-revalidate=604800
 
