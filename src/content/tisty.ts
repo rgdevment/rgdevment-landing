@@ -13,7 +13,7 @@ export const FIXES_EN: Fixes = {
     {
       who: "Developer",
       problem: "Your NOTES.md grew to 256 KB and the agent rereads it every time.",
-      fix: "It lives as documents split by subject, in pages. The agent reads the outline and the one section it needs, about 94% less than the whole file.",
+      fix: "It lives as documents split by subject, in pages. The agent reads the outline and the one section it needs, about 97% less than the whole file.",
     },
     {
       who: "Anyone",
@@ -61,7 +61,7 @@ export const FIXES_ES: Fixes = {
     {
       who: "Desarrollo",
       problem: "Tu NOTES.md llegó a 256 KB y el agente lo relee cada vez.",
-      fix: "Vive como documentos separados por tema, en páginas. El agente lee el índice y la única sección que necesita, cerca de un 94 % menos que el archivo entero.",
+      fix: "Vive como documentos separados por tema, en páginas. El agente lee el índice y la única sección que necesita, cerca de un 97 % menos que el archivo entero.",
     },
     {
       who: "Cualquiera",
@@ -134,13 +134,14 @@ export const COST_EN: Cost = {
   less: "less",
   rows: [
     { what: "Picks up the work, with nothing new", spends: "spends about 1%", saving: "99%" },
+    { what: "Picks up and opens the task it was on", spends: "spends under 3%", saving: "97%" },
     { what: "Looks for something solved months ago", spends: "spends about 3%", saving: "97%" },
-    { what: "Looks up one subject: the outline and one section", spends: "spends about 6%, 12% at worst", saving: "88–94%" },
+    { what: "Looks up one subject: the outline and one section", spends: "spends about 3%, 12% at worst", saving: "88–97%" },
   ],
   whyTitle: "Where the saving comes from",
   why: [
-    "No document holds more than 64,000 characters, so a log that size is kept as subjects in pages.",
-    "No read brings more than about 12,000 characters; past that, a document comes back as its outline.",
+    "No single write carries more than 64,000 characters, so a long log is kept as subjects in pages.",
+    "No read brings more than about 12,000 characters unless the agent asks for a document whole to carry elsewhere; past that, a document comes back as its outline.",
     "A task's page comes whole only while it is short, about 4,000 characters; past that come its sections and the agent's latest note, and its journal is counted by size, not by number of notes.",
     "The outline says what each section weighs before anything is opened.",
     "Picking up again brings only what moved, and what is finished costs nothing until it is searched.",
@@ -154,13 +155,14 @@ export const COST_ES: Cost = {
   less: "menos",
   rows: [
     { what: "Retoma el trabajo, sin novedades", spends: "gasta cerca de un 1 %", saving: "99 %" },
+    { what: "Retoma y abre la tarea en la que estaba", spends: "gasta menos de un 3 %", saving: "97 %" },
     { what: "Busca algo resuelto hace meses", spends: "gasta cerca de un 3 %", saving: "97 %" },
-    { what: "Consulta un tema: el índice y una sección", spends: "gasta cerca de un 6 %, 12 % en el peor caso", saving: "88–94 %" },
+    { what: "Consulta un tema: el índice y una sección", spends: "gasta cerca de un 3 %, 12 % en el peor caso", saving: "88–97 %" },
   ],
   whyTitle: "De dónde sale el ahorro",
   why: [
-    "Ningún documento pasa de 64 000 caracteres, así que una bitácora de ese tamaño queda en temas y páginas.",
-    "Ninguna lectura trae más de unos 12 000 caracteres; pasado eso, un documento vuelve como su índice.",
+    "Ninguna escritura lleva más de 64 000 caracteres, así que una bitácora larga queda en temas y páginas.",
+    "Ninguna lectura trae más de unos 12 000 caracteres, salvo que el agente pida un documento entero para llevarlo a otra parte; pasado eso, un documento vuelve como su índice.",
     "La página de una tarea llega entera solo mientras es corta, unos 4000 caracteres; pasado eso llegan sus secciones y la última nota del agente, y su bitácora se mide por tamaño, no por cantidad de notas.",
     "El índice dice cuánto pesa cada sección antes de abrir nada.",
     "Retomar trae solo lo que cambió, y lo terminado no cuesta nada hasta que alguien lo busca.",
