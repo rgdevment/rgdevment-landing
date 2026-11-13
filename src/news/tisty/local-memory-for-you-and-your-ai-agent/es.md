@@ -4,15 +4,22 @@ description: "Tu agente de IA olvida entre sesiones; Tisty no. Lo mejor de doce 
 release: "1.47.0"
 page: tisty-memoria-local-para-ti-y-tu-agente-de-ia
 cover: ./lluvia-de-ideas.webp
+shows: "La Lluvia de ideas de Tisty: ideas del momento como notas adhesivas de colores, con fecha y escritas a mano"
 ---
 
-Es viernes en la tarde y vence el certificado del sitio. Otra vez. Sabes que hace exactamente un año lo renovaste, porque el aviso llegó igual de tarde. También sabes que había un paso raro: un comando que había que correr antes, una carpeta que no era la de siempre, algo que el proveedor cambió sin avisar. Buscas en el historial de la terminal, en el chat del equipo, en la libreta. Nada. Te toca resolverlo desde cero, con la misma prisa del año pasado. Y no pasa solo en el trabajo: el trámite del banco que vuelve cada marzo, la vacuna de la mascota, la configuración del router que hiciste una vez y nunca anotaste. ¿Cómo lo hice esa vez?
+Es viernes en la tarde y vence el certificado del sitio. Otra vez. Lo renovaste hace un año y había un paso raro, pero no lo anotaste en ninguna parte: ni en la terminal, ni en el chat, ni en la libreta. Lo mismo con el trámite del banco cada marzo, la vacuna de la mascota, el router. ¿Cómo lo hice esa vez?
 
-Con un agente de IA pasa lo mismo, pero todos los días. Estás a mitad de una tarea con él, sale algo urgente, cambias de tema, y al volver es como empezar de nuevo: ¿en qué estábamos? Le explicas otra vez el proyecto, lo que se decidió, lo que falló, lo que falta. Ayer lo sabía todo; hoy no recuerda nada. Así que cada quien inventa su parche: un NOTES.md escondido en el .gitignore, un archivo por sesión, un TASKS.md que se queda viejo a los tres días. La IA brilla en lo pequeño y olvida lo grande.
+Con un agente de IA pasa todos los días. Sale algo urgente, cambias de tema, y al volver: ¿en qué estábamos? Ayer lo sabía todo; hoy no recuerda nada, y el NOTES.md que armaste de parche se queda viejo a los tres días.
 
-Y en medio de todo, las ideas. Estás trabajando en algo y, de golpe, se te ocurre otra cosa. La anotas rápido donde caiga, un papel, un chat contigo mismo, una nota suelta, y sigues. Pero se acumulan y se acumulan, y un día te encuentras en una lluvia de ideas sin saber dónde quedó cada una ni qué querías decir con ella.
+Y están las ideas. Llegan mientras haces otra cosa, las anotas donde caiga, y un día te encuentras en una lluvia de ideas sin saber dónde quedó cada una.
 
-Tisty nació para eso. Una idea se anota en un segundo, sin dejar lo que hacías, y te espera en la Lluvia de ideas hasta que sepas qué hacer con ella. Lo que tienes que hacer es una tarea, con sus pasos y lo que vas anotando, y al terminarla no desaparece: queda en el Archivo, y meses después una búsqueda te dice cómo lo hiciste. Y si se repite cada año, como ese certificado, cada vuelta queda en la misma página, con lo que anotaste la vez anterior. Lo que quieres volver a leer, el manual de un sistema, las decisiones de un proyecto, vive en un documento por tema que corriges con los años. Y tu agente se conecta por MCP, retoma donde quedó y lee solo lo que necesita. Todo queda en tu equipo, en archivos Markdown que abre cualquier programa: sin cuenta, sin suscripción y sin que nadie mire cómo lo usas. Lo que no puede salir de tu empresa no sale.
+**Tisty nació para eso:**
+
+- Una idea se anota en un segundo y te espera en la Lluvia de ideas hasta que sepas qué hacer con ella.
+- Una tarea no desaparece al terminarla: queda en el Archivo, y meses después una búsqueda te dice cómo lo hiciste. Si se repite cada año, como ese certificado, cada vuelta queda en la misma página.
+- Lo que vuelves a leer, el manual de un sistema o las decisiones de un proyecto, vive en un documento por tema.
+- Tu agente se conecta por MCP, retoma donde quedó y lee solo lo que necesita.
+- Todo queda en tu equipo, en Markdown: sin cuenta, sin suscripción, sin que nadie mire cómo lo usas, y lo que no puede salir de tu empresa no sale.
 
 En doce versiones, desde fines de octubre, esa memoria creció en todas direcciones. Esto es lo que te quería contar.
 
@@ -33,8 +40,6 @@ Y no es solo para el trabajo. El trámite del banco que vuelve cada año, la rec
 ## Las ideas tienen su lugar
 
 Algunas ocurrencias todavía no son tareas ni documentos. Con 1.47, pulsas Ctrl + Shift + Space donde estés, Tab para pasar de tarea a idea, y la escribes: queda como una nota adhesiva de hasta 140 caracteres, con su fecha y su color, en la Lluvia de ideas, fija arriba de tu biblioteca.
-
-![La Lluvia de ideas de Tisty: ideas del momento como notas adhesivas de colores, con fecha y escritas a mano](./lluvia-de-ideas.webp)
 
 Las ordenas arrastrándolas, y cuando llega su momento, una se vuelve tarea o va al documento de su tema como la misma nota adhesiva. Tu agente también puede hacer una lluvia de ideas contigo y anotar solo las que te quedas. Si le pides que las ordene, te propone cuáles van juntas, cuáles se vuelven tarea y cuáles van a un documento.
 

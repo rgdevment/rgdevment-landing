@@ -44,8 +44,10 @@ const news = defineCollection({
         release: z.string().regex(/^\d+\.\d+\.\d+$/).optional(),
         page: z.string().regex(/^[a-z0-9-]+$/).optional(),
         cover: image().optional(),
+        shows: z.string().optional(),
       })
-      .refine((one) => one.date || one.release, "an article needs a date, or the release it waits for"),
+      .refine((one) => one.date || one.release, "an article needs a date, or the release it waits for")
+      .refine((one) => !one.cover || one.shows, "a cover needs the words that say what it shows"),
 });
 
 export const collections = { docs, privacy, terms, news };

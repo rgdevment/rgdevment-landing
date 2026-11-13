@@ -3,15 +3,22 @@ title: "Tisty 1.47: the working memory for you and your AI agent"
 description: "Your AI agent forgets between sessions; Tisty does not. The best of twelve versions: a brainstorm, an agent that picks up, hand-drawn diagrams, an encrypted cloud."
 release: "1.47.0"
 cover: ./brainstorm.webp
+shows: "The Brainstorm in Tisty: ideas of the moment as coloured sticky notes, dated and handwritten"
 ---
 
-It is Friday afternoon and the site's certificate expires. Again. You know you renewed it exactly a year ago, because the warning came just as late. You also know there was an odd step: a command you had to run first, a folder that was not the usual one, something the provider changed without telling anyone. You search your terminal history, the team chat, your notebook. Nothing. You have to work it out from scratch, in the same rush as last year. And it does not only happen at work: the bank paperwork that comes back every March, the pet's vaccine, the router setting you made once and never wrote down. How did I do it that time?
+It is Friday afternoon and the site's certificate expires. Again. You renewed it a year ago and there was an odd step, but you did not write it down anywhere: not in the terminal, not in the chat, not in your notebook. The same goes for the bank paperwork every March, the pet's vaccine, the router. How did I do it that time?
 
-With an AI agent the same thing happens, only every day. You are halfway through a task with it, something urgent comes up, you switch topics, and when you come back it is like starting over: where were we? You explain the project again, what was decided, what broke, what is left. Yesterday it knew everything; today it remembers nothing. So everyone invents a patch: a NOTES.md hidden in .gitignore, a file per session, a TASKS.md that goes stale in three days. AI shines at the small things and forgets the big picture.
+With an AI agent it happens every day. Something urgent comes up, you switch topics, and when you come back: where were we? Yesterday it knew everything; today it remembers nothing, and the NOTES.md you made as a patch goes stale in three days.
 
-And in the middle of it all, ideas. You are focused on something and suddenly something else comes to mind. You jot it down wherever it lands, a scrap of paper, a chat with yourself, a loose note, and carry on. But they pile up and pile up, and one day you find yourself in a brainstorm, not knowing where each idea ended up or what you meant by it.
+And then there are ideas. They come while you are on something else, you jot them wherever they land, and one day you find yourself in a brainstorm, not knowing where each one ended up.
 
-Tisty was made for that. An idea is jotted down in a second, without leaving what you were doing, and it waits for you in Brainstorm until you know what to do with it. What you have to do is a task, with its steps and whatever you note along the way, and finishing it does not make it disappear: it stays in the Archive, and months later a search tells you how you did it. And if it comes back every year, like that certificate, each round stays on the same page, with what you noted the time before. What you want to read again, the manual of a system, the decisions of a project, lives in one document per subject that you correct over the years. And your agent connects over MCP, picks up where it left off and reads only what it needs. It all stays on your computer, in Markdown files any program opens: no account, no subscription and nobody watching how you use it. What cannot leave your company does not.
+**Tisty was made for that:**
+
+- An idea is jotted down in a second and waits in Brainstorm until you know what to do with it.
+- A task does not disappear when you finish it: it stays in the Archive, and months later a search tells you how you did it. If it comes back every year, like that certificate, each round stays on the same page.
+- What you read again, the manual of a system or the decisions of a project, lives in one document per subject.
+- Your agent connects over MCP, picks up where it left off and reads only what it needs.
+- It all stays on your computer, in Markdown: no account, no subscription, nobody watching how you use it, and what cannot leave your company does not.
 
 Over twelve versions since late October, that memory has grown in every direction. This is what I wanted to tell you.
 
@@ -32,8 +39,6 @@ And it is not only for work. The bank paperwork that comes back every year, the 
 ## Ideas have a place of their own
 
 Some thoughts are not tasks or documents yet. With 1.47, press Ctrl + Shift + Space wherever you are, Tab to switch from task to idea, and type it: it waits as a sticky note of up to 140 characters, with its date and its colour, on the Brainstorm sheet pinned atop your library.
-
-![The Brainstorm in Tisty: ideas of the moment as coloured sticky notes, dated and handwritten](./brainstorm.webp)
 
 You reorder them by dragging, and when an idea's moment comes, it becomes a task or goes into the document on its subject as the same sticky note. Your agent can brainstorm with you too and jot only the ideas you keep. Ask it to sort them and it proposes which belong together, which become a task and which go into a document.
 

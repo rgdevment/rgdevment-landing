@@ -27,6 +27,7 @@ type Words = {
   older: string;
   newer: string;
   every: string;
+  toc: string;
 };
 
 const WORDS: Record<Locale, (name: string) => Words> = {
@@ -41,6 +42,7 @@ const WORDS: Record<Locale, (name: string) => Words> = {
     older: "Older",
     newer: "Newer",
     every: "Every version, with all its changes",
+    toc: "In this article",
   }),
   es: (name) => ({
     title: `Noticias de ${name}`,
@@ -53,6 +55,7 @@ const WORDS: Record<Locale, (name: string) => Words> = {
     older: "Anterior",
     newer: "Más reciente",
     every: "Cada versión, con todos sus cambios",
+    toc: "En este artículo",
   }),
 };
 
