@@ -22,8 +22,6 @@ type Words = {
   meta: string;
   lede: string;
   feed: string;
-  updates: string;
-  download: string;
   older: string;
   newer: string;
   every: string;
@@ -37,8 +35,6 @@ const WORDS: Record<Locale, (name: string) => Words> = {
     meta: `What is new in ${name}, told for the people who use it, newest first.`,
     lede: `What is new in ${name}, told for the people who use it.`,
     feed: "Follow by RSS",
-    updates: `Already using ${name}? It updates itself and tells you what is new when it does.`,
-    download: `Download ${name}`,
     older: "Older",
     newer: "Newer",
     every: "Every version, with all its changes",
@@ -50,8 +46,6 @@ const WORDS: Record<Locale, (name: string) => Words> = {
     meta: `Lo nuevo de ${name}, contado para quien lo usa, de lo más reciente a lo más antiguo.`,
     lede: `Lo nuevo de ${name}, contado para quien lo usa.`,
     feed: "Seguir por RSS",
-    updates: `¿Ya usas ${name}? Se actualiza solo y te cuenta las novedades al hacerlo.`,
-    download: `Descargar ${name}`,
     older: "Anterior",
     newer: "Más reciente",
     every: "Cada versión, con todos sus cambios",
