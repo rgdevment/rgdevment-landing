@@ -2,6 +2,7 @@
 import { Image, getImage } from "astro:assets";
 import { render } from "astro:content";
 import Crumbs from "./Crumbs.astro";
+import GetIt from "./GetIt.astro";
 import Layout from "../layouts/Layout.astro";
 import { NEWS_PATH, homeProduct, newsWords, storiesOf, storyPath } from "../content/news";
 import { cardOf } from "../content/products";
@@ -92,18 +93,12 @@ const neighbour = "block rounded-3xl border border-line p-5 transition-colors ho
               </nav>
             )
           }
-          <div class="rounded-3xl border border-line bg-sunken/60 p-5">
-            <p class="text-body">{t.updates}</p>
-            <a class="btn-primary mt-4" href={`${href(locale)}#download`}>{t.download}</a>
-          </div>
+          <GetIt product={product} locale={locale} class="border-t border-line pt-6" />
         </div>
       </aside>
     </div>
 
-    <aside class="mt-12 max-w-3xl rounded-3xl border border-line bg-sunken/60 p-6 sm:p-8 lg:hidden">
-      <p class="text-body">{t.updates}</p>
-      <a class="btn-primary mt-5" href={`${href(locale)}#download`}>{t.download}</a>
-    </aside>
+    <GetIt product={product} locale={locale} class="mt-12 max-w-3xl border-t border-line pt-6 lg:hidden" />
 
     <nav aria-label={t.short} class="mt-12 grid max-w-3xl gap-4 sm:grid-cols-2">
       {
