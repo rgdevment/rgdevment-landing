@@ -1,0 +1,48 @@
+---
+import Icon from "./Icon.astro";
+import { type Product, storeUrl } from "../content/products";
+import { installers, latestRelease } from "../content/releases";
+import { href, type Locale } from "../site";
+
+interface Props {
+  product: Product;
+  locale: Locale;
+  class?: string;
+}
+
+const { product, locale, class: placed } = Astro.props;
+const es = locale === "es";
+const store = storeUrl(product);
+const mac = installers(await latestRelease(product)).macArm;
+const install = `${href(locale)}#install`;
+const way = "inline-flex items-center gap-1.5 rounded-full border border-line px-3 py-1.5 text-sm text-fg/80 transition-colors hover:border-fg/40 hover:text-fg";
+const quiet = "underline decoration-line underline-offset-4 transition-colors hover:text-fg";
+---
+
+<div class={placed}>
+  <p class="eyebrow text-[11px]">{es ? `Descarga ${product.name}` : `Get ${product.name}`}</p>
+  <div class="mt-3 flex flex-wrap gap-2">
+    {
+      store && (
+        <a class={way} href={store} rel="noopener">
+          <Icon name="windows" class="h-3.5 w-3.5" />
+          Windows
+        </a>
+      )
+    }
+    {
+      product.cask && (
+        <a class={way} href={mac?.url ?? install}>
+          <Icon name="apple" class="h-3.5 w-3.5" />
+          macOS
+        </a>
+      )
+    }
+  </div>
+  <p class="mt-3 text-xs leading-relaxed text-muted">
+    {es ? "Gratis. También con " : "Free. Also with "}
+    {product.winget && <a class={quiet} href={install}>winget</a>}
+    {product.winget && product.cask && (es ? " y " : " and ")}
+    {product.cask && <a class={quiet} href={install}>Homebrew</a>}.
+  </p>
+</div>
