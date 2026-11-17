@@ -1,4 +1,5 @@
 ---
+import AlternativeTo from "./AlternativeTo.astro";
 import Crumbs from "./Crumbs.astro";
 import Icon from "./Icon.astro";
 import Verdict from "./Verdict.astro";
@@ -129,6 +130,13 @@ const priced = (own?: string) => (own ? href(locale, own) : undefined);
         ))
       }
     </ul>
+    {
+      product.signals?.alternativeto && (
+        <div class="mt-8">
+          <AlternativeTo url={product.signals.alternativeto} name={product.name} locale={locale} />
+        </div>
+      )
+    }
   </section>
 
   {

@@ -1,0 +1,21 @@
+---
+import type { Locale } from "../site";
+
+interface Props {
+  url: string;
+  name: string;
+  locale: Locale;
+}
+
+const { url, name, locale } = Astro.props;
+const invite =
+  locale === "es"
+    ? `¿Ya usas ${name}? Deja tu opinión en AlternativeTo y ayuda a que otros lo encuentren.`
+    : `Already using ${name}? Leave your review on AlternativeTo and help others find it.`;
+---
+
+<a class="group inline-flex flex-wrap items-center gap-x-5 gap-y-3" href={url} rel="noopener">
+  <img class="on-light h-[54px] w-auto transition group-hover:opacity-85" src="/alternativeto-light.svg" alt="" width="244" height="83" loading="lazy" decoding="async" />
+  <img class="on-dark h-[54px] w-auto transition group-hover:opacity-85" src="/alternativeto-dark.svg" alt="" width="244" height="83" loading="lazy" decoding="async" />
+  <span class="text-body underline-offset-4 group-hover:text-fg group-hover:underline">{invite}</span>
+</a>

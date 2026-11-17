@@ -138,7 +138,7 @@ export type Product = {
   formerName?: string;
   storeId?: string;
   requires?: { windows: string; macos: string };
-  signals?: { producthunt?: { url: string; post: string; badge?: boolean } };
+  signals?: { producthunt?: { url: string; post: string; badge?: boolean }; alternativeto?: string };
   winget?: string;
   cask?: string;
   /** Directories and registries with a page of their own for it. */
@@ -171,7 +171,10 @@ export const PRODUCTS: Product[] = [
     platforms: ["Windows", "macOS"],
     storeId: "9PGVWXD8X93N",
     requires: { windows: "Windows 10 (1809)", macos: "macOS 13.3" },
-    signals: { producthunt: { url: "https://www.producthunt.com/products/tisty", post: "1290086" } },
+    signals: {
+      producthunt: { url: "https://www.producthunt.com/products/tisty", post: "1290086" },
+      alternativeto: "https://alternativeto.net/software/tisty/about/",
+    },
     winget: "rgdevment.Tisty",
     cask: "tisty",
     listings: [
