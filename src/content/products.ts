@@ -273,7 +273,7 @@ export const PRODUCTS: Product[] = [
         anchor: "a-task-or-a-document",
       },
       title: "Tisty: notes, tasks and memory for you and your AI agent",
-      meta: "Shared working memory for you and your AI agent: tasks, documents and ideas in Markdown on disk, over MCP for GitHub Copilot, Claude Code and Cursor. Free.",
+      meta: "Shared working memory for you and your AI agent: tasks, documents and ideas in local Markdown, over MCP for GitHub Copilot, Claude Code and Cursor. Free.",
       problem:
         "I started building Tisty to solve a problem of my own, and little by little I saw it was not only mine. Your AI agent knows the details better than anyone, and forgets them the moment the session ends, so you explain everything again. In Tisty you see the whole, visual and easy to read, and your agent every detail: one memory, for both of you.",
       groups: [
@@ -429,7 +429,7 @@ export const PRODUCTS: Product[] = [
         anchor: "tarea-o-documento",
       },
       title: "Tisty: notas, tareas y memoria para ti y tu agente de IA",
-      meta: "Memoria de trabajo compartida para ti y tu agente de IA: tareas, documentos e ideas en Markdown en disco, vía MCP en GitHub Copilot, Claude Code y Cursor. Gratis.",
+      meta: "Memoria de trabajo compartida para ti y tu agente de IA: tareas, documentos e ideas en Markdown local, vía MCP en GitHub Copilot, Claude Code y Cursor. Gratis.",
       problem:
         "Comencé a desarrollar Tisty para resolver un problema personal, y fui viendo que ese problema no era solo mío. Tu agente de IA conoce el detalle mejor que nadie, y lo olvida en cuanto termina la sesión, así que le vuelves a explicar todo. En Tisty tú ves el conjunto, visual y fácil de leer, y tu agente cada detalle: una sola memoria, para los dos.",
       groups: [
