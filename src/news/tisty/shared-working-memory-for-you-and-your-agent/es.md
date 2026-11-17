@@ -3,8 +3,8 @@ title: "Tisty 1.48: tú ves el conjunto, tu agente cada detalle"
 description: "Una memoria de trabajo para ti y tu agente de IA: tú diriges y la ves de forma visual; tu agente trabaja el detalle y lee justo lo que necesita."
 release: "1.48.0"
 page: tisty-memoria-de-trabajo-compartida-con-tu-agente
-cover: ./dia.webp
-shows: "Hoy en Tisty: las tareas del día, lo vencido primero, con lo que viene y las rutinas a la derecha"
+cover: ./diagramas.webp
+shows: "El editor de diagramas de Tisty: un diagrama de flujo en el lienzo, las formas a la izquierda y el Mermaid que escribe a la derecha"
 ---
 
 Comencé a desarrollar Tisty para resolver un problema personal, y fui viendo que ese problema no era solo mío.
@@ -23,7 +23,7 @@ Abres **Hoy** y ves qué está vencido, qué se atrasó y qué toca, en todos tu
 
 Con 1.48 lo diriges con menos fricción. Escribes sobre la misma página que lees, sin un modo de edición de por medio. **Ctrl + P** te lleva a cualquier documento, tarea o carpeta mientras escribes su nombre. Un documento se abre en una ventana aparte, en solo lectura, junto a tu trabajo. Y la **Revisión semanal** reúne lo que espera una decisión, los documentos que tu agente marcó como pasados y los que no abres hace 60 días: cada semana ves qué quedó suelto antes de que se pierda.
 
-![Las prioridades en Tisty: los cuatro cuadrantes, hacer, planificar, delegar y prescindible, con lo que falta por clasificar arriba](./prioridades.webp)
+![Hoy en Tisty: las tareas del día, lo vencido primero, con lo que viene y las rutinas a la derecha](./dia.webp)
 
 Nada se cierra sin ti. Cuando tu agente dice que una tarea está lista, espera en **Por confirmar** hasta que la revisas y la cierras, o la devuelves.
 
