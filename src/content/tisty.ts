@@ -145,6 +145,7 @@ export const COST_EN: Cost = {
     "A task's page comes whole only while it is short, about 4,000 characters; past that come its sections and the agent's latest note, and its journal is counted by size, not by number of notes.",
     "The outline says what each section weighs before anything is opened.",
     "Picking up again brings only what moved, and what is finished costs nothing until it is searched.",
+    "A search brings ten tasks and ten documents at a time, each with the line that says it cut to 120 characters around the word.",
   ],
   caveat: "Connecting costs something too: the description of Tisty's tools weighs about a sixth of that log, a third less than it did, and a test keeps it from growing. An assistant that loads tools only as it uses them does not pay it whole; one that loads every tool each session saves 72–83%, and below some 50 KB of notes a plain file is cheaper. Counted in characters, with the JSON each answer carries included.",
 };
@@ -166,6 +167,7 @@ export const COST_ES: Cost = {
     "La página de una tarea llega entera solo mientras es corta, unos 4000 caracteres; pasado eso llegan sus secciones y la última nota del agente, y su bitácora se mide por tamaño, no por cantidad de notas.",
     "El índice dice cuánto pesa cada sección antes de abrir nada.",
     "Retomar trae solo lo que cambió, y lo terminado no cuesta nada hasta que alguien lo busca.",
+    "Una búsqueda trae diez tareas y diez documentos por vez, cada uno con la línea que lo dice recortada a 120 caracteres alrededor de la palabra.",
   ],
   caveat: "Conectarse también cuesta: la descripción de las herramientas de Tisty pesa cerca de una sexta parte de esa bitácora, un tercio menos que antes, y un test impide que vuelva a crecer. Un asistente que carga las herramientas solo a medida que las usa no la paga entera; uno que las carga todas en cada sesión ahorra entre un 72 y un 83 %, y con menos de unos 50 KB de notas un archivo plano sale más barato. Contado en caracteres, incluido el JSON que acompaña cada respuesta.",
 };
