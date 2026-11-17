@@ -197,8 +197,8 @@ export const PRODUCTS: Product[] = [
       srcEs: "/tisty-social-es.png",
       width: 1920,
       height: 1080,
-      en: "Tisty, the working memory for you and your AI agent: the archive keeps every finished task with its steps and its journal, and your agent asks how did we solve this last time? to bring one back as it was",
-      es: "Tisty, la memoria de trabajo tuya y de tu agente de IA: el archivo guarda cada tarea terminada con sus pasos y su bitácora, y tu agente pregunta ¿cómo lo resolvimos la otra vez? para traer una tal como quedó",
+      en: "Tisty, the working memory you share with your AI agent: the archive keeps every finished task with its steps and its journal, and you or your agent can ask how did we solve this last time? to bring one back as it was",
+      es: "Tisty, la memoria de trabajo que compartes con tu agente de IA: el archivo guarda cada tarea terminada con sus pasos y su bitácora, y tú o tu agente pueden comprobar ¿cómo lo resolvimos la otra vez? para traer una tal como quedó",
     },
     accent: "#86601A",
     accentDark: "#E4B559",
@@ -206,8 +206,8 @@ export const PRODUCTS: Product[] = [
     writes: true,
     mascot: "/tisty-head.svg",
     en: {
-      category: "Local memory and context for you and your AI agent: Markdown notes, tasks and documents",
-      tagline: "The working memory for you and your AI agent.",
+      category: "Shared working memory for you and your AI agent: Markdown notes, tasks and documents",
+      tagline: "You see the whole. Your agent, every detail. One shared memory.",
       mascot: {
         title: "A beaver that keeps what you build.",
         body: "A beaver gathers every branch it finds and builds with it, and what it builds stays. Tisty keeps what you work out the same way: the steps, the journal and the documents, there to find again months later.",
@@ -273,10 +273,18 @@ export const PRODUCTS: Product[] = [
         anchor: "a-task-or-a-document",
       },
       title: "Tisty: notes, tasks and memory for you and your AI agent",
-      meta: "Local memory and context for you and your AI agent: tasks, documents and ideas in Markdown on disk, over MCP for GitHub Copilot, Claude Code and Cursor. Free.",
+      meta: "Shared working memory for you and your AI agent: tasks, documents and ideas in Markdown on disk, over MCP for GitHub Copilot, Claude Code and Cursor. Free.",
       problem:
-        "An ordinary task list forgets the moment you tick the box, and your AI agent forgets the moment the session ends: six months later the same problem comes back and all you have is knowing you solved it once. In Tisty, what you solved stays, with its steps and its why, for you and for your agent.",
+        "I started building Tisty to solve a problem of my own, and little by little I saw it was not only mine. Your AI agent knows the details better than anyone, and forgets them the moment the session ends, so you explain everything again. In Tisty you see the whole, visual and easy to read, and your agent every detail: one memory, for both of you.",
       groups: [
+        {
+          title: "You and your agent",
+          points: [
+            "GitHub Copilot, Claude Code, Codex or Cursor connect over MCP and pick up where they left off.",
+            "An outline first, then one section: a fraction of what rereading your Markdown files costs.",
+            "It works your tasks as it works a document and sorts your ideas with you; ticking your steps, closing and the day stay yours.",
+          ],
+        },
         {
           title: "Capture and plan",
           points: [
@@ -292,14 +300,6 @@ export const PRODUCTS: Product[] = [
             "A finished task goes to the archive whole: its page, steps, dated journal and files.",
             "One search across open tasks, the archive and every document, even what you closed two years ago.",
             "One living document per subject, with tables, diagrams, formulas, pages and its own PDF.",
-          ],
-        },
-        {
-          title: "Your agent",
-          points: [
-            "GitHub Copilot, Claude Code, Codex or Cursor connect over MCP and pick up where they left off.",
-            "An outline first, then one section: a fraction of what rereading your Markdown files costs.",
-            "It works your tasks as it works a document and sorts your ideas with you; ticking your steps, closing and the day stay yours.",
           ],
         },
         {
@@ -362,8 +362,8 @@ export const PRODUCTS: Product[] = [
       },
     },
     es: {
-      category: "Memoria y contexto locales para ti y tu agente de IA: notas, tareas y documentos en Markdown",
-      tagline: "La memoria de trabajo tuya y de tu agente de IA.",
+      category: "Memoria de trabajo compartida para ti y tu agente de IA: notas, tareas y documentos en Markdown",
+      tagline: "Tú ves el conjunto. Tu agente, cada detalle. Una sola memoria.",
       mascot: {
         title: "Un castor que guarda lo que construyes.",
         body: "El castor junta cada rama que encuentra y construye con ella, y lo que construye se queda. Tisty guarda así lo que resuelves: los pasos, la bitácora y los documentos, listos para encontrarlos meses después.",
@@ -429,10 +429,18 @@ export const PRODUCTS: Product[] = [
         anchor: "tarea-o-documento",
       },
       title: "Tisty: notas, tareas y memoria para ti y tu agente de IA",
-      meta: "Memoria y contexto locales para ti y tu agente de IA: tareas, documentos e ideas en Markdown en disco, vía MCP en GitHub Copilot, Claude Code y Cursor. Gratis.",
+      meta: "Memoria de trabajo compartida para ti y tu agente de IA: tareas, documentos e ideas en Markdown en disco, vía MCP en GitHub Copilot, Claude Code y Cursor. Gratis.",
       problem:
-        "Una lista de tareas común olvida en cuanto marcas la casilla, y tu agente de IA olvida en cuanto termina la sesión: seis meses después vuelve el mismo problema y solo te queda saber que ya lo resolviste una vez. En Tisty, lo que resolviste se queda, con sus pasos y su porqué, para ti y para tu agente.",
+        "Comencé a desarrollar Tisty para resolver un problema personal, y fui viendo que ese problema no era solo mío. Tu agente de IA conoce el detalle mejor que nadie, y lo olvida en cuanto termina la sesión, así que le vuelves a explicar todo. En Tisty tú ves el conjunto, visual y fácil de leer, y tu agente cada detalle: una sola memoria, para los dos.",
       groups: [
+        {
+          title: "Tú y tu agente",
+          points: [
+            "GitHub Copilot, Claude Code, Codex o Cursor se conectan por MCP y retoman donde quedaron.",
+            "Primero el índice, después una sección: una fracción de lo que cuesta releer tus archivos Markdown.",
+            "Trabaja tus tareas como un documento y ordena tus ideas contigo; marcar tus pasos, cerrar y el día siguen siendo tuyos.",
+          ],
+        },
         {
           title: "Capturar y planificar",
           points: [
@@ -448,14 +456,6 @@ export const PRODUCTS: Product[] = [
             "Una tarea terminada pasa entera al archivo: su página, sus pasos, su bitácora con fecha y sus archivos.",
             "Una sola búsqueda en las tareas abiertas, el archivo y todos los documentos, aunque lo hayas cerrado hace dos años.",
             "Un documento vivo por tema, con tablas, diagramas, fórmulas, páginas y su propio PDF.",
-          ],
-        },
-        {
-          title: "Tu agente",
-          points: [
-            "GitHub Copilot, Claude Code, Codex o Cursor se conectan por MCP y retoman donde quedaron.",
-            "Primero el índice, después una sección: una fracción de lo que cuesta releer tus archivos Markdown.",
-            "Trabaja tus tareas como un documento y ordena tus ideas contigo; marcar tus pasos, cerrar y el día siguen siendo tuyos.",
           ],
         },
         {
