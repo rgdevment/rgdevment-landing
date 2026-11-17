@@ -2,8 +2,8 @@
 title: "Tisty 1.48: you see the whole, your agent every detail"
 description: "One working memory for you and your AI agent: you lead and see it all at a glance; your agent works the detail and reads just what it needs."
 release: "1.48.0"
-cover: ./day.webp
-shows: "Today in Tisty: the tasks of the day, overdue first, with what comes next and the routines on the right"
+cover: ./diagrams.webp
+shows: "The diagram editor in Tisty: a flowchart on the canvas, the shapes on the left and the Mermaid it writes on the right"
 ---
 
 I started building Tisty to solve a problem of my own, and little by little I saw it was not only mine.
@@ -22,7 +22,7 @@ You open **Today** and see what is overdue, what slipped and what is due, across
 
 With 1.48 you lead with less friction. You write on the same page you read, with no editing mode in between. **Ctrl + P** takes you to any document, task or folder as you type its name. A document opens in a window of its own, read only, beside your work. And the **Weekly review** gathers what waits to be decided, the documents your agent marked as past and the ones you have not opened in 60 days: every week you see what came loose before it gets lost.
 
-![Priorities in Tisty: the four quadrants, do, schedule, delegate and minor, with what is left to classify on top](./priorities.webp)
+![Today in Tisty: the tasks of the day, overdue first, with what comes next and the routines on the right](./day.webp)
 
 Nothing closes without you. When your agent says a task is done, it waits in **To confirm** until you review it and close it, or send it back.
 
