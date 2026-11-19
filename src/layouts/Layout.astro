@@ -43,7 +43,8 @@ const there: Locale = es ? "en" : "es";
 /// than assumed: without that the hreflang pair would point at a URL that does not exist.
 const at = (one: Locale) => paths?.[one] ?? path;
 const url = textIn ? canonical(textIn, at(textIn)) : canonical(locale, at(locale));
-const twin = locale === "en" && !noindex && !textIn ? href("es", at("es")) : null;
+const paired = !noindex && !textIn;
+const twin = locale === "en" && paired ? href("es", at("es")) : null;
 const ours = [MAIN, ...Object.keys(HOMES)];
 const owner = PRODUCTS.find((one) => one.slug === HOME_PRODUCT);
 const told = owner ? await hasNews(owner.slug) : false;
@@ -130,10 +131,10 @@ const say = es
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={url} />}
 
     {
-      !noindex && !textIn &&
+      paired &&
         LOCALES.map((one) => <link rel="alternate" hreflang={one} href={canonical(one, at(one))} />)
     }
-    {!noindex && !textIn && <link rel="alternate" hreflang="x-default" href={canonical("en", at("en"))} />}
+    {paired && <link rel="alternate" hreflang="x-default" href={canonical("en", at("en"))} />}
 
     <meta property="og:type" content={published || modified ? "article" : "website"} />
     <meta property="og:site_name" content={brand} />
@@ -218,7 +219,7 @@ const say = es
 
     <main id="content" class="relative">
       {
-        !noindex && !textIn && (
+        paired && (
           <p class="offer shell pointer-events-none absolute inset-x-0 top-2 z-30 hidden text-right" lang={there} data-nosnippet>
             <span class="pointer-events-auto inline-flex items-center rounded-full border border-line bg-surface/70 text-xs text-muted backdrop-blur">
               <a class="group inline-flex items-center gap-2 py-1 pr-2 pl-1 transition hover:text-fg" href={href(there, at(there))} hreflang={there}>
