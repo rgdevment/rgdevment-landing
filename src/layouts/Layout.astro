@@ -12,7 +12,7 @@ import { COMPARE_PATH, comparisonOf } from "../content/compare";
 import { NEWS_FEED, NEWS_PATH, hasNews } from "../content/news";
 import { privacyPath } from "../content/privacy";
 import { termsPath } from "../content/terms";
-import { MAIN } from "../hosts";
+import { HOMES, MAIN } from "../hosts";
 import { AUTHOR, DOMAIN, HOME_PRODUCT, LOCALES, PERSON_ID, WEBSITE_ID, canonical, href, mainHref, type Locale } from "../site";
 
 interface Props {
@@ -43,6 +43,9 @@ const there: Locale = es ? "en" : "es";
 /// than assumed: without that the hreflang pair would point at a URL that does not exist.
 const at = (one: Locale) => paths?.[one] ?? path;
 const url = textIn ? canonical(textIn, at(textIn)) : canonical(locale, at(locale));
+const paired = !noindex && !textIn;
+const twin = locale === "en" && paired ? href("es", at("es")) : null;
+const ours = [MAIN, ...Object.keys(HOMES)];
 const owner = PRODUCTS.find((one) => one.slug === HOME_PRODUCT);
 const told = owner ? await hasNews(owner.slug) : false;
 const brand = owner?.name ?? "rgdevment";
@@ -128,10 +131,10 @@ const say = es
     {noindex ? <meta name="robots" content="noindex" /> : <link rel="canonical" href={url} />}
 
     {
-      !noindex && !textIn &&
+      paired &&
         LOCALES.map((one) => <link rel="alternate" hreflang={one} href={canonical(one, at(one))} />)
     }
-    {!noindex && !textIn && <link rel="alternate" hreflang="x-default" href={canonical("en", at("en"))} />}
+    {paired && <link rel="alternate" hreflang="x-default" href={canonical("en", at("en"))} />}
 
     <meta property="og:type" content={published || modified ? "article" : "website"} />
     <meta property="og:site_name" content={brand} />
@@ -154,14 +157,19 @@ const say = es
     <meta name="twitter:image" content={social} />
     <meta name="twitter:image:alt" content={title} />
 
-    <script is:inline>
+    <script is:inline define:vars={{ twin, ours }}>
+      const root = document.documentElement;
+      const spanish = /^es\b/i.test(navigator.language);
+      let dismissed = false;
       try {
         const chosen = localStorage.getItem("theme");
-        if (chosen === "dark" || chosen === "light") document.documentElement.dataset.theme = chosen;
-        if (localStorage.getItem("offer") !== "no") document.documentElement.dataset.wants = /^es\b/i.test(navigator.language) ? "es" : "en";
-      } catch {
-        document.documentElement.dataset.wants = /^es\b/i.test(navigator.language) ? "es" : "en";
-      }
+        if (chosen === "dark" || chosen === "light") root.dataset.theme = chosen;
+        dismissed = localStorage.getItem("offer") === "no";
+      } catch {}
+      // Whoever comes from one of these sites picked this language there, so only an arrival from elsewhere is moved.
+      const fromUs = [location.origin, ...ours].some((origin) => document.referrer.startsWith(`${origin}/`));
+      if (twin && spanish && !dismissed && !fromUs) location.replace(`${twin}${location.search}${location.hash}`);
+      else if (!dismissed) root.dataset.wants = spanish ? "es" : "en";
     </script>
     <meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0e0d0b" media="(prefers-color-scheme: dark)" />
@@ -211,7 +219,7 @@ const say = es
 
     <main id="content" class="relative">
       {
-        !noindex && !textIn && (
+        paired && (
           <p class="offer shell pointer-events-none absolute inset-x-0 top-2 z-30 hidden text-right" lang={there} data-nosnippet>
             <span class="pointer-events-auto inline-flex items-center rounded-full border border-line bg-surface/70 text-xs text-muted backdrop-blur">
               <a class="group inline-flex items-center gap-2 py-1 pr-2 pl-1 transition hover:text-fg" href={href(there, at(there))} hreflang={there}>
