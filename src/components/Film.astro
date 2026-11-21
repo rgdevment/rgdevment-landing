@@ -17,7 +17,7 @@ const { width, height } = await sharp(`./public${poster}`).metadata();
   <p class="mt-3 max-w-3xl text-muted">{film.lede}</p>
   <div class="relative mx-auto mt-10 max-w-5xl" data-film data-play={film.play} data-pause={film.pause}>
     <video
-      class="block h-auto w-full rounded-md border border-white/10 bg-night shadow-[0_24px_50px_-24px_rgb(40_25_5/0.55)] sm:rounded-lg"
+      class="block h-auto w-full rounded-[0.52%/1%] bg-night shadow-[0_18px_22px_-6px_rgb(40_25_5/0.35)]"
       width={width}
       height={height}
       poster={versioned(poster)}

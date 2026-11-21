@@ -34,10 +34,10 @@ async function pictureOf(image: string, alt: string) {
 
 const slides = await Promise.all(
   screens.map(async (one) => {
-    const light = (await pictureOf(one.image, one.alt))!;
+    const light = await pictureOf(one.image, one.alt);
     const dark = await pictureOf(`${one.image}-dark`, one.alt);
-    const shades = dark ? [{ shade: "light", picture: light }, { shade: "dark", picture: dark }] : [{ shade: undefined, picture: light }];
-    return { ...one, shades };
+    if (!light || !dark) throw new Error(`Screens: ${one.image} needs its light and its dark capture`);
+    return { ...one, shades: [{ shade: "light", picture: light }, { shade: "dark", picture: dark }] };
   }),
 );
 
@@ -52,7 +52,7 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
   data-stop={say.stop}
   data-start={say.start}
 >
-  <div class="halo absolute inset-x-0 top-0 -z-10 aspect-[1440/758] scale-x-[1.03] scale-y-[1.12] sm:scale-x-[1.08] sm:scale-y-[1.16] rounded-[40%]" aria-hidden="true"></div>
+  <div class="halo absolute inset-x-0 top-0 -z-10 aspect-[1558/818] scale-x-[1.03] scale-y-[1.12] sm:scale-x-[1.08] sm:scale-y-[1.16] rounded-[40%]" aria-hidden="true"></div>
   <div class="strip relative flex snap-x snap-mandatory gap-6 overflow-x-auto" tabindex="0" data-strip>
     {
       slides.map((one, at) => (
@@ -62,11 +62,11 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
           aria-roledescription={say.slide}
           aria-label={`${at + 1} / ${slides.length}: ${one.label}`}
         >
-          <div class="flex aspect-[1440/758] justify-center">
+          <div class="flex aspect-[1558/818] items-center justify-center px-4 sm:px-6">
             {at === 0 ? (
               one.shades.map(({ shade, picture }) => (
                 <div class="contents" data-shade={shade}>
-                  <ScreenPicture {...picture} sizes={SCREEN_SIZES} />
+                  <ScreenPicture {...picture} sizes={SCREEN_SIZES} first />
                 </div>
               ))
             ) : (
@@ -240,6 +240,7 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
     let current = 0;
     let playing = !still.matches;
     let timer = 0;
+    let heading: number | undefined;
 
     const opened = new Set<HTMLElement>();
     const reveal = (slide: HTMLElement) => {
@@ -262,8 +263,10 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
     matchMedia("(prefers-color-scheme: dark)").addEventListener("change", reshade);
 
     const go = (at: number) => {
-      const slide = slides[(at + slides.length) % slides.length];
+      const index = (at + slides.length) % slides.length;
+      const slide = slides[index];
       reveal(slide);
+      heading = still.matches ? undefined : index;
       strip.scrollTo({ left: slide.offsetLeft, behavior: still.matches ? "auto" : "smooth" });
     };
 
@@ -299,7 +302,13 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
 
     const seen = new IntersectionObserver(
       (entries) => {
-        for (const entry of entries) if (entry.isIntersecting) show(slides.indexOf(entry.target as HTMLElement));
+        for (const entry of entries) {
+          const at = slides.indexOf(entry.target as HTMLElement);
+          // A smooth scroll passes the slides in between, and those must not take over from where it is heading.
+          if (!entry.isIntersecting || (heading !== undefined && at !== heading)) continue;
+          heading = undefined;
+          show(at);
+        }
       },
       { root: strip, threshold: 0.6 },
     );
@@ -344,8 +353,20 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
       play(false);
       go(to());
     });
-    strip.addEventListener("pointerdown", () => play(false));
-    strip.addEventListener("wheel", (event) => Math.abs(event.deltaX) > Math.abs(event.deltaY) && play(false), { passive: true });
+    strip.addEventListener("scrollend", () => (heading = undefined));
+    strip.addEventListener("pointerdown", () => {
+      heading = undefined;
+      play(false);
+    });
+    strip.addEventListener(
+      "wheel",
+      (event) => {
+        if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
+        heading = undefined;
+        play(false);
+      },
+      { passive: true },
+    );
     back.addEventListener("click", () => {
       play(false);
       go(Math.max(current - 1, 0));

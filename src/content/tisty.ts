@@ -488,7 +488,7 @@ export const SCREENS_EN: Screen[] = [
     label: "Brainsty",
     title: "Everything you keep, as one network",
     text: "Brainsty draws your documents, tasks and tags as one map you turn and zoom. What you linked shows strong, and what is alike though nobody tied it shows apart, with no AI.",
-    alt: "Brainsty in Tisty: 1,931 nodes and 2,811 connections drawn as one network, squares for documents and circles for tasks, with the search on top and the legend folded in the corner",
+    alt: "Brainsty in Tisty: nearly 2,000 nodes and 2,800 connections drawn from afar as one network, squares for documents and circles for tasks, with the network search on top and the legend folded in the corner",
   },
   {
     image: "/tisty-screen-en-10-agents",
@@ -496,13 +496,6 @@ export const SCREENS_EN: Screen[] = [
     title: "Your agents' rules, in one place",
     text: "The Agents folder brings the rules, skills and memory of Claude, Codex, Copilot and Gemini into Tisty as documents. Bring copies them; Bring and sync also writes what you change back to each agent, with a backup first.",
     alt: "Tisty's window «Your agents, in one place»: what it found for Claude, Codex and Copilot, and the buttons Bring and Bring and sync",
-  },
-  {
-    image: "/tisty-screen-en-06-today",
-    label: "Today",
-    title: "Late is not overdue",
-    text: "You type a task the way you would say it and Tisty picks out the date. Today puts the overdue ones first and, beside them, what the coming days bring.",
-    alt: "Tisty's Tasks on Today: overdue, due-soon and late tasks, the panel of the chosen task on the right and the coming days along the bottom",
   },
   {
     image: "/tisty-screen-en-08-task",
@@ -524,13 +517,6 @@ export const SCREENS_EN: Screen[] = [
     title: "One line a day, only for you",
     text: "The Diary is one Markdown book a year, a page a month. Each day shows the tasks you closed, and your agent does not read it until you open it.",
     alt: "Tisty's Diary on Friday 20 November: a box for what happened today, the entries of the days before with the tasks closed on each, and the months of Diary 2026 in the sidebar",
-  },
-  {
-    image: "/tisty-screen-en-07-folio",
-    label: "Folio",
-    title: "Share what you know, encrypted",
-    text: "Folio hands over a document as a link to read, encrypted on your computer and signed by you. Whoever gets it opens it in any browser, with no account.",
-    alt: "A Tisty document shared through Folio, with the panel that shows it is shared and its link to read",
   },
 ];
 
@@ -575,7 +561,7 @@ export const SCREENS_ES: Screen[] = [
     label: "Brainsty",
     title: "Todo lo que guardas, como una sola red",
     text: "Brainsty dibuja tus documentos, tareas y etiquetas como un solo mapa que giras y acercas. Lo que enlazaste se ve fuerte, y lo que se parece sin que nadie lo uniera se ve aparte, sin IA.",
-    alt: "Brainsty en Tisty: 1931 nodos y 2811 conexiones dibujados como una sola red, cuadrados para los documentos y círculos para las tareas, con el buscador arriba y la leyenda plegada en la esquina",
+    alt: "Brainsty en Tisty: cerca de 2000 nodos y 2800 conexiones dibujados de lejos como una sola red, cuadrados para los documentos y círculos para las tareas, con el buscador de la red arriba y la leyenda plegada en la esquina",
   },
   {
     image: "/tisty-screen-es-10-agentes",
@@ -583,13 +569,6 @@ export const SCREENS_ES: Screen[] = [
     title: "Las reglas de tus agentes, en un solo lugar",
     text: "La carpeta Agentes trae a Tisty las reglas, skills y memoria de Claude, Codex, Copilot y Gemini como documentos. Traer las copia; Traer y sincronizar además lleva a cada agente lo que cambies, con un respaldo antes.",
     alt: "La ventana de Tisty «Tus agentes, en un solo lugar»: lo que encontró de Claude, Codex y Copilot, y los botones Traer y Traer y sincronizar",
-  },
-  {
-    image: "/tisty-screen-es-06-hoy",
-    label: "Hoy",
-    title: "Atrasada no es vencida",
-    text: "Escribes la tarea tal como la dices y Tisty saca la fecha. Hoy pone primero las vencidas y, al lado, lo que traen los próximos días.",
-    alt: "Las Tareas de Tisty en Hoy: las vencidas, las por vencer y las atrasadas, el panel de la tarea elegida a la derecha y los próximos días abajo",
   },
   {
     image: "/tisty-screen-es-08-tarea",
@@ -611,12 +590,5 @@ export const SCREENS_ES: Screen[] = [
     title: "Una línea al día, solo para ti",
     text: "El Diario es un libro en Markdown por año, una página por mes. Cada día muestra las tareas que cerraste, y tu agente no lo lee mientras no lo abras.",
     alt: "El Diario de Tisty el viernes 20 de noviembre: un recuadro para lo que pasó hoy, las entradas de los días anteriores con las tareas cerradas en cada uno y los meses del Diario 2026 en la barra lateral",
-  },
-  {
-    image: "/tisty-screen-es-07-folio",
-    label: "Folio",
-    title: "Comparte lo que sabes, cifrado",
-    text: "Folio entrega un documento con un link para leer, cifrado en tu equipo y firmado por ti. Quien lo recibe lo abre en cualquier navegador, sin cuenta.",
-    alt: "Un documento de Tisty compartido con Folio, con el panel que muestra que está compartido y su link para leer",
   },
 ];

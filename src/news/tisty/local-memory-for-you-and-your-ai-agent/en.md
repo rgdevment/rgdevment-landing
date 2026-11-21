@@ -1,6 +1,6 @@
 ---
 title: "Tisty 1.47: the working memory for you and your AI agent"
-description: "Your AI agent forgets between sessions; Tisty does not. The best of twelve versions: a brainstorm, an agent that picks up, hand-drawn diagrams, an encrypted cloud."
+description: "Your AI agent forgets between sessions; Tisty does not. The best of twelve versions: a brainstorm, an agent that picks up, diagrams by hand, an encrypted cloud."
 release: "1.47.0"
 cover: ./brainstorm.webp
 shows: "The Brainstorm in Tisty: ideas of the moment as coloured sticky notes, dated and handwritten"
