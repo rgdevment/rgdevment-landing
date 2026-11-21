@@ -20,7 +20,7 @@ const { width, height } = await sharp(`./public${poster}`).metadata();
       class="block h-auto w-full rounded-[0.52%/1%] bg-night shadow-[0_18px_22px_-6px_rgb(40_25_5/0.35)]"
       width={width}
       height={height}
-      poster={versioned(poster)}
+      data-poster={versioned(poster)}
       aria-label={film.label}
       muted
       loop
@@ -68,6 +68,15 @@ const { width, height } = await sharp(`./public${poster}`).metadata();
       if (wanted && seen) video.play().catch(() => {});
       else video.pause();
     };
+
+    new IntersectionObserver(
+      ([entry], watcher) => {
+        if (!entry.isIntersecting) return;
+        watcher.disconnect();
+        video.poster = video.dataset.poster!;
+      },
+      { rootMargin: "300px 0px" },
+    ).observe(video);
 
     video.controls = false;
     turn.classList.replace("hidden", "grid");

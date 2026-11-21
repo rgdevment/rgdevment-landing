@@ -1,9 +1,10 @@
 ---
 import ProductPage from "../../../../components/ProductPage.astro";
+import TistyHome from "../../../../components/tisty/TistyHome.astro";
 import { PRODUCTS } from "../../../../content/products";
 import { HOME_PRODUCT } from "../../../../site";
 
 const product = PRODUCTS.find((one) => one.slug === HOME_PRODUCT)!;
 ---
 
-<ProductPage product={product} locale="es" />
+{product.slug === "tisty" ? <TistyHome product={product} locale="es" /> : <ProductPage product={product} locale="es" />}

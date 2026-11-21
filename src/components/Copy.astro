@@ -1,0 +1,16 @@
+<script is:inline>
+  document.querySelectorAll(".copy").forEach((one) => {
+    const label = one.getAttribute("aria-label");
+    one.addEventListener("click", () => {
+      navigator.clipboard?.writeText(one.dataset.copy || "");
+      one.classList.add("text-flame");
+      one.setAttribute("aria-label", one.dataset.done || label);
+      const said = document.querySelector("[data-announce]");
+      if (said) said.textContent = one.dataset.done || "";
+      setTimeout(() => {
+        one.classList.remove("text-flame");
+        one.setAttribute("aria-label", label);
+      }, 1200);
+    });
+  });
+</script>

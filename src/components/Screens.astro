@@ -1,10 +1,8 @@
 ---
-import sharp from "sharp";
 import ScreenPicture from "./ScreenPicture.astro";
 import type { Screen } from "../content/products";
-import { SCREEN_SIZES, srcsetOf, variantsOf } from "../screens";
+import { SCREEN_SIZES, shadesOf } from "../screens";
 import type { Locale } from "../site";
-import { versioned } from "../versioned";
 
 interface Props {
   name: string;
@@ -25,21 +23,7 @@ const say = {
   start: es ? "Reanudar el avance automático" : "Start moving on its own",
 };
 
-async function pictureOf(image: string, alt: string) {
-  const webp = variantsOf(image, "webp");
-  if (!webp.length) return null;
-  const { width, height } = await sharp(`./public${webp.at(-1)!.path}`).metadata();
-  return { width, height, alt, avif: srcsetOf(image, "avif"), webp: srcsetOf(image, "webp"), fallback: versioned(webp[0].path) };
-}
-
-const slides = await Promise.all(
-  screens.map(async (one) => {
-    const light = await pictureOf(one.image, one.alt);
-    const dark = await pictureOf(`${one.image}-dark`, one.alt);
-    if (!light || !dark) throw new Error(`Screens: ${one.image} needs its light and its dark capture`);
-    return { ...one, shades: [{ shade: "light", picture: light }, { shade: "dark", picture: dark }] };
-  }),
-);
+const slides = await Promise.all(screens.map(async (one) => ({ ...one, shades: await shadesOf(one) })));
 
 const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted transition hover:bg-fg/5 hover:text-fg aria-disabled:opacity-30";
 ---
@@ -66,7 +50,7 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
             {at === 0 ? (
               one.shades.map(({ shade, picture }) => (
                 <div class="contents" data-shade={shade}>
-                  <ScreenPicture {...picture} sizes={SCREEN_SIZES} first />
+                  <ScreenPicture {...picture} sizes={SCREEN_SIZES} />
                 </div>
               ))
             ) : (
@@ -150,28 +134,6 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
 
   .strip[data-ready]::-webkit-scrollbar {
     display: none;
-  }
-
-  [data-shade="dark"] {
-    display: none;
-  }
-
-  :global(:root[data-theme="dark"]) [data-shade="dark"] {
-    display: contents;
-  }
-
-  :global(:root[data-theme="dark"]) [data-shade="light"] {
-    display: none;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :global(:root:not([data-theme="light"])) [data-shade="dark"] {
-      display: contents;
-    }
-
-    :global(:root:not([data-theme="light"])) [data-shade="light"] {
-      display: none;
-    }
   }
 
   .halo {

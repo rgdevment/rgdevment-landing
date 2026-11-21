@@ -8,10 +8,11 @@ interface Props {
   alt: string;
   sizes: string;
   later?: boolean;
-  first?: boolean;
+  /// Fetched first, though still only the one the theme shows.
+  priority?: boolean;
 }
 
-const { avif, webp, fallback, width, height, alt, sizes, later = false, first = false } = Astro.props;
+const { avif, webp, fallback, width, height, alt, sizes, later = false, priority = false } = Astro.props;
 const source = later ? { "data-srcset": avif } : { srcset: avif };
 const image = later ? { "data-src": fallback, "data-srcset": webp } : { src: fallback, srcset: webp };
 ---
@@ -24,8 +25,8 @@ const image = later ? { "data-src": fallback, "data-srcset": webp } : { src: fal
     width={width}
     height={height}
     alt={alt}
-    loading={later ? undefined : first ? "eager" : "lazy"}
-    fetchpriority={first ? "high" : "low"}
+    loading={later ? undefined : "lazy"}
+    fetchpriority={priority ? "high" : "low"}
     decoding="async"
     class="max-h-full max-w-full drop-shadow-[0_14px_12px_rgb(40_25_5/0.3)]"
   />

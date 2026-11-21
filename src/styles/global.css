@@ -218,3 +218,31 @@
     display: none;
   }
 }
+
+[data-shade="dark"] {
+  display: none;
+}
+
+:root[data-theme="dark"] [data-shade="dark"] {
+  display: contents;
+}
+
+:root[data-theme="dark"] [data-shade="light"] {
+  display: none;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) [data-shade="dark"] {
+    display: contents;
+  }
+
+  :root:not([data-theme="light"]) [data-shade="light"] {
+    display: none;
+  }
+}
+
+/* A section well below the first screen is laid out only as it comes near. */
+.stage {
+  content-visibility: auto;
+  contain-intrinsic-size: auto 720px;
+}

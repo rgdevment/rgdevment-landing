@@ -1,0 +1,42 @@
+---
+import Icon from "./Icon.astro";
+import { href, type Locale } from "../site";
+
+type Question = { q: string; a: string; link?: { label: string; path: string } };
+
+interface Props {
+  locale: Locale;
+  questions: Question[];
+  class?: string;
+}
+
+const { locale, questions, class: className } = Astro.props;
+---
+
+<section class:list={["shell mt-24 sm:mt-32", className]}>
+  <div class="mx-auto max-w-3xl">
+    <h2 class="section-title">{locale === "es" ? "Preguntas frecuentes" : "Frequently asked questions"}</h2>
+    <div class="mt-8 divide-y divide-line border-y border-line">
+      {
+        questions.map((one, at) => (
+          <details class="faq group py-2" open={at === 0}>
+            <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-4 text-lg font-semibold text-fg">
+              <h3>{one.q}</h3>
+              <Icon name="chevron" class="h-5 w-5 shrink-0 text-muted transition group-open:rotate-180" />
+            </summary>
+            <p class="pb-5 text-body">
+              {one.a}
+              {one.link && (
+                <a class="ml-1 inline-flex items-center gap-1 font-medium text-fg hover:underline" href={href(locale, one.link.path)}>
+                  {one.link.label}
+                  <Icon name="arrow" class="h-3.5 w-3.5" />
+                </a>
+              )}
+            </p>
+          </details>
+        ))
+      }
+    </div>
+    <slot />
+  </div>
+</section>

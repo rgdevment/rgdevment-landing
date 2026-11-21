@@ -1,0 +1,39 @@
+---
+import type { Product } from "../../content/products";
+import { inkOf, words } from "../../content/products";
+import type { Topic } from "../../content/topics";
+import type { Locale } from "../../site";
+
+interface Props {
+  product: Product;
+  locale: Locale;
+  on: Topic;
+  title?: string;
+}
+
+const { product, locale, on, title } = Astro.props;
+const ink = inkOf(product);
+const groups = (words(product, locale).groups ?? []).filter((one) => one.on === on);
+---
+
+<section class="stage shell mt-24 sm:mt-32">
+  {title && <h2 class="section-title">{title}</h2>}
+  <div class:list={["grid grid-cols-1 gap-4", { "md:grid-cols-2": groups.length > 1, "mt-10": title }]}>
+    {
+      groups.map((group) => (
+        <div class="card p-6 sm:p-8">
+          <h3 class="accent-ink text-xl font-semibold" style={ink}>{group.title}</h3>
+          <ul class="mt-4 space-y-3">
+            {group.points.map((one) => (
+              <li class="flex gap-2.5 text-body">
+                <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full" style={`background: ${product.accent}`} aria-hidden="true" />
+                <span>{one}</span>
+              </li>
+            ))}
+          </ul>
+        </div>
+      ))
+    }
+  </div>
+  <slot />
+</section>

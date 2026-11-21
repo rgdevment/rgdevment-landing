@@ -1,0 +1,81 @@
+---
+import Cards from "./Cards.astro";
+import Fixes from "./Fixes.astro";
+import Groups from "./Groups.astro";
+import ScreenFigure from "./ScreenFigure.astro";
+import Icon from "../Icon.astro";
+import Journey from "../Journey.astro";
+import { docPath } from "../../content/docs";
+import { type Product, inkOf, words } from "../../content/products";
+import { ALONE_PAGE } from "../../content/tisty-pages";
+import { screensOf } from "../../content/tisty";
+import { href, type Locale } from "../../site";
+
+interface Props {
+  product: Product;
+  locale: Locale;
+}
+
+const { product, locale } = Astro.props;
+const t = words(product, locale);
+const say = ALONE_PAGE[locale];
+const ink = inkOf(product);
+const kinds = t.kinds!;
+const first = t.firstRun!;
+const shown = screensOf(t.screens!, ["ideas", "priorities", "diagrams"]);
+const help = (page = "") => href(locale, docPath(locale, product.slug, page));
+const more = "inline-flex items-center gap-1.5 font-medium text-fg hover:underline";
+---
+
+<section class="shell mt-16 sm:mt-24">
+  <h2 class="section-title">{kinds.title}</h2>
+  <p class="mt-3 max-w-3xl text-muted">{kinds.lede}</p>
+  <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
+    {
+      kinds.cards.map((one) => (
+        <div class="card p-6 sm:p-7">
+          <h3 class="accent-ink text-xl font-semibold" style={ink}>{one.title}</h3>
+          <p class="mt-2 text-body">{one.body}</p>
+        </div>
+      ))
+    }
+  </div>
+  <div class="card mt-4 p-6 sm:p-7">
+    <h3 class="text-xl font-semibold">{kinds.spike.title}</h3>
+    <p class="mt-2 text-body">{kinds.spike.lede}</p>
+    <Journey steps={kinds.spike.steps} accent={product.accent} />
+  </div>
+  <a class:list={[more, "mt-6"]} href={`${help(kinds.page)}#${kinds.anchor}`}>
+    {kinds.more}
+    <Icon name="arrow" class="h-4 w-4" />
+  </a>
+</section>
+
+<Cards product={product} locale={locale} title={say.daily.title} lede={say.daily.lede} cards={say.daily.cards} />
+
+<section class="stage shell mt-24 sm:mt-32">
+  <h2 class="section-title">{say.screens}</h2>
+  <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-12 lg:grid-cols-3">
+    {shown.map((one) => <ScreenFigure screen={one} sizes="(min-width: 1024px) 340px, calc(100vw - 2.5rem)" />)}
+  </div>
+</section>
+
+<Groups product={product} locale={locale} on="alone" title={say.features} />
+
+<Fixes product={product} fixes={t.fixes!} on="alone" />
+
+<section class="stage shell mt-24 sm:mt-32">
+  <div class="flex flex-col gap-4 rounded-3xl border border-dashed border-line p-6 sm:flex-row sm:items-start sm:p-7">
+    <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-sunken text-fg">
+      <Icon name="book" class="h-5 w-5" />
+    </span>
+    <div>
+      <h2 class="text-lg font-semibold text-fg">{first.title}</h2>
+      <p class="mt-1.5 text-body">{first.body}</p>
+      <a class:list={[more, "mt-3"]} href={`${help()}#${first.anchor}`}>
+        {first.link}
+        <Icon name="arrow" class="h-4 w-4" />
+      </a>
+    </div>
+  </div>
+</section>

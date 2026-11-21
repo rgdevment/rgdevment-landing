@@ -1,0 +1,137 @@
+---
+import AgentBody from "./AgentBody.astro";
+import AloneBody from "./AloneBody.astro";
+import DataBody from "./DataBody.astro";
+import Copy from "../Copy.astro";
+import Crumbs from "../Crumbs.astro";
+import Faq from "../Faq.astro";
+import Icon from "../Icon.astro";
+import Layout from "../../layouts/Layout.astro";
+import { GUIDES, written } from "../../content/guides";
+import { PRODUCTS, cardOf, inkOf, words } from "../../content/products";
+import { faqSchema } from "../../content/schema";
+import { AGENT_PAGE, ALONE_PAGE, DATA_PAGE, HOME } from "../../content/tisty-pages";
+import { TOPICS, TOPIC_LABEL, TOPIC_PATH, type Topic } from "../../content/topics";
+import { HOME_PRODUCT, appId, canonical, crumbs, href, type Locale } from "../../site";
+
+interface Props {
+  topic: Topic;
+  locale: Locale;
+}
+
+const { topic, locale } = Astro.props;
+const product = PRODUCTS.find((one) => one.slug === HOME_PRODUCT)!;
+const t = words(product, locale);
+const say = { agent: AGENT_PAGE, alone: ALONE_PAGE, data: DATA_PAGE }[topic][locale];
+const path = TOPIC_PATH[topic][locale];
+const ink = inkOf(product);
+const questions = t.faq.filter((one) => one.on === topic);
+const GUIDES_ON: Record<Topic, string[]> = {
+  agent: ["assistant-reads-notes", "agent-memory-between-sessions"],
+  alone: [],
+  data: ["notes-outlive-the-app", "share-a-document"],
+};
+const own = GUIDES_ON[topic];
+const guides = GUIDES.filter((one) => own.includes(one.id)).map((one) => written(one, locale));
+const doors = HOME[locale].doors;
+const others = TOPICS.filter((one) => one !== topic).map((one) => ({
+  to: href(locale, TOPIC_PATH[one][locale]),
+  title: TOPIC_LABEL[one][locale],
+  line: { agent: doors.agent.line, alone: doors.alone.line, data: HOME[locale].data.lede }[one],
+}));
+const trail: [string, string][] = [[product.name, ""], [say.heading, path]];
+
+const schema = [
+  crumbs(locale, trail),
+  {
+    "@context": "https://schema.org",
+    "@type": "WebPage",
+    url: canonical(locale, path),
+    name: say.title,
+    description: say.meta,
+    inLanguage: locale,
+    about: { "@id": appId(product.slug) },
+  },
+  ...(questions.length ? [faqSchema(questions)] : []),
+];
+---
+
+<Layout
+  title={say.title}
+  description={say.meta}
+  image={cardOf(product, locale)}
+  imageAlt={product.shot![locale]}
+  locale={locale}
+  paths={TOPIC_PATH[topic]}
+  schema={schema}
+>
+  <section class="relative isolate overflow-hidden" style={`--accent: ${product.accent}`}>
+    <div
+      class="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[30rem] w-[56rem] -translate-x-1/2 rounded-full opacity-[0.14] blur-3xl"
+      style="background: radial-gradient(closest-side, var(--accent), transparent)"
+      aria-hidden="true"
+    ></div>
+    <div class="shell pt-6 sm:pt-14">
+      <Crumbs locale={locale} trail={trail} />
+      <header class="mt-8 max-w-3xl sm:mt-12">
+        <h1 class="text-4xl font-semibold tracking-[-0.02em] sm:text-5xl">{say.heading}</h1>
+        <p class="accent-ink mt-5 text-2xl font-medium leading-snug sm:text-3xl" style={ink}>{say.lede}</p>
+        <p class="mt-5 text-lg text-body">{say.intro}</p>
+      </header>
+    </div>
+  </section>
+
+  {topic === "agent" && <AgentBody product={product} locale={locale} />}
+  {topic === "alone" && <AloneBody product={product} locale={locale} />}
+  {topic === "data" && <DataBody product={product} locale={locale} />}
+
+  {questions.length > 0 && <Faq locale={locale} questions={questions} class="stage" />}
+
+  {
+    guides.length > 0 && (
+      <section class="stage shell mt-24 sm:mt-32">
+        <h2 class="section-title">{say.guides}</h2>
+        <ul class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {guides.map((one) => (
+            <li>
+              <a class="card-link group block h-full p-6" href={href(locale, one.slug)}>
+                <span class="flex items-start justify-between gap-4">
+                  <span class="text-lg font-semibold leading-snug text-fg">{one.title}</span>
+                  <Icon name="arrow" class="mt-1 h-4 w-4 shrink-0 text-muted transition group-hover:translate-x-0.5" />
+                </span>
+                <span class="mt-2 block text-sm text-muted">{one.description}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  <section class="stage shell mt-24 sm:mt-32">
+    <div class="border-t border-line pt-10">
+      <h2 class="eyebrow">{say.others}</h2>
+      <ul class="mt-6 grid grid-cols-1 gap-4 sm:grid-cols-2">
+        {
+          others.map((one) => (
+            <li>
+              <a class="card-link group flex h-full items-center gap-4 p-6" href={one.to}>
+                <span class="min-w-0">
+                  <span class="accent-ink block text-lg font-semibold" style={ink}>{one.title}</span>
+                  <span class="mt-1 block text-sm text-muted">{one.line}</span>
+                </span>
+                <Icon name="arrow" class="ml-auto h-4 w-4 shrink-0 text-muted transition group-hover:translate-x-0.5" />
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+      <a class="mt-8 inline-flex items-center gap-1.5 font-medium text-fg hover:underline" href={`${href(locale)}#download`}>
+        {locale === "es" ? `Descargar ${product.name}` : `Download ${product.name}`}
+        <Icon name="arrow" class="h-4 w-4" />
+      </a>
+    </div>
+  </section>
+
+  <Copy />
+</Layout>
