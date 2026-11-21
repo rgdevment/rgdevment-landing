@@ -55,7 +55,8 @@ const ownCard = owner && cardOf(owner, locale);
 const terms = owner && (await getEntry("terms", owner.slug));
 const compared = comparisonOf(owner?.slug ?? null);
 const card = image ?? ownCard ?? { src: es ? "/social-es.png" : "/social.png", width: 1200, height: 630 };
-const cardType = /\.jpe?g$/i.test(new URL(card.src, DOMAIN).pathname) ? "image/jpeg" : "image/png";
+const cardExtension = new URL(card.src, DOMAIN).pathname.split(".").pop()!.toLowerCase();
+const cardType = ({ jpg: "image/jpeg", jpeg: "image/jpeg", webp: "image/webp" } as Record<string, string>)[cardExtension] ?? "image/png";
 const social = new URL(card.src, DOMAIN).toString();
 
 const site = [

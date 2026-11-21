@@ -42,6 +42,7 @@ const slides = await Promise.all(
     return { ...one, shades, only: light ? undefined : "dark" };
   }),
 );
+const lit = slides.filter((one) => !one.only);
 
 const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted transition hover:bg-fg/5 hover:text-fg aria-disabled:opacity-30";
 ---
@@ -64,7 +65,7 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
           data-label={one.label}
           role="group"
           aria-roledescription={say.slide}
-          aria-label={`${at + 1} / ${slides.length}: ${one.label}`}
+          aria-label={one.only ? one.label : `${lit.indexOf(one) + 1} / ${lit.length}: ${one.label}`}
         >
           <div class="flex aspect-[1440/758] justify-center">
             {at === 0 ? (
@@ -271,7 +272,7 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
     };
     const shown = () => slides.flatMap((slide, index) => (getComputedStyle(slide).display === "none" ? [] : [index]));
     const after = (at: number) => shown().find((index) => index > at);
-    const before = (at: number) => shown().findLast((index) => index < at);
+    const before = (at: number) => shown().filter((index) => index < at).pop();
     const number = () => {
       const on = shown();
       on.forEach((index, place) => slides[index].setAttribute("aria-label", `${place + 1} / ${on.length}: ${slides[index].dataset.label}`));
@@ -287,7 +288,8 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
     const reshade = () => {
       opened.forEach(reveal);
       number();
-      go(shown().includes(current) ? current : (before(current) ?? after(current)!), true);
+      const stay = shown().includes(current) ? current : (before(current) ?? after(current));
+      if (stay !== undefined) go(stay, true);
     };
     new MutationObserver(reshade).observe(document.documentElement, { attributeFilter: ["data-theme"] });
     matchMedia("(prefers-color-scheme: dark)").addEventListener("change", reshade);
@@ -296,7 +298,8 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
       clearTimeout(timer);
       const running = playing && held.size === 0;
       box.toggleAttribute("data-running", running);
-      if (running) timer = window.setTimeout(() => go(after(current) ?? shown()[0]), TURN);
+      const next = after(current) ?? shown()[0];
+      if (running && next !== undefined) timer = window.setTimeout(() => go(next), TURN);
     };
 
     const show = (at: number) => {
@@ -356,18 +359,19 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
     box.addEventListener("focusin", (event) => hold("focus", (event.target as HTMLElement).matches(":focus-visible")));
     box.addEventListener("focusout", (event) => box.contains(event.relatedTarget as Node) || hold("focus", false));
 
-    const keys: Record<string, () => number> = {
+    const keys: Record<string, () => number | undefined> = {
       ArrowLeft: () => before(current) ?? current,
       ArrowRight: () => after(current) ?? current,
       Home: () => shown()[0],
-      End: () => shown().at(-1)!,
+      End: () => shown().pop(),
     };
     strip.addEventListener("keydown", (event) => {
       const to = keys[event.key];
       if (!to) return;
       event.preventDefault();
       play(false);
-      go(to());
+      const at = to();
+      if (at !== undefined) go(at);
     });
     strip.addEventListener("pointerdown", () => play(false));
     strip.addEventListener("wheel", (event) => Math.abs(event.deltaX) > Math.abs(event.deltaY) && play(false), { passive: true });
@@ -395,6 +399,6 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
     box.querySelector<HTMLElement>("[data-controls]")!.hidden = false;
     number();
     play(playing);
-    show(shown()[0]);
+    show(shown()[0] ?? 0);
   }
 </script>
