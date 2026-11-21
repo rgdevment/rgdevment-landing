@@ -64,6 +64,6 @@ Si agregas los recordatorios de Tisty en **Configuración › Asistentes**, cada
 
 ## Pruébalo
 
-Tisty es gratis y lo seguirá siendo, bajo la licencia AGPL-3.0, para Windows y macOS, y se actualiza solo. Si ya lo usas, al abrirlo te cuenta lo nuevo. Si llegas recién, la guía de bienvenida empieza contigo y tu agente, y tiene una página que te deja probar Brainsty sobre la propia guía.
+Tisty es gratis y lo seguirá siendo, bajo la licencia AGPL-3.0, para Windows y macOS, y se actualiza solo. Si ya lo usas, al abrirlo te cuenta lo nuevo. Si llegas recién, la guía de bienvenida empieza contigo y tu agente, y tiene una página que te deja probar Brainsty sobre la propia guía. Y si prefieres trabajar por tu cuenta, sin agente, Brainsty, el historial y todo lo demás son igual de tuyos.
 
 Gracias a todos los que lo usan cada día y me cuentan lo que falta. Brainsty es lo que prometí la vez anterior, y ya está aquí.

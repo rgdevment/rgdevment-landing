@@ -63,6 +63,6 @@ If you add Tisty's reminders in **Settings › Assistants**, every session start
 
 ## Try it
 
-Tisty is free and will stay free, under the AGPL-3.0 licence, for Windows and macOS, and it updates itself. If you already use it, it tells you what is new when it opens. If you are new, the welcome guide starts with you and your agent, and has a page that lets you try Brainsty on the guide itself.
+Tisty is free and will stay free, under the AGPL-3.0 licence, for Windows and macOS, and it updates itself. If you already use it, it tells you what is new when it opens. If you are new, the welcome guide starts with you and your agent, and has a page that lets you try Brainsty on the guide itself. If you would rather work on your own, with no agent, Brainsty, the history and the rest are just as much yours.
 
 Thank you to everyone who uses it every day and tells me what is missing. Brainsty is what I promised last time, and it is here.
