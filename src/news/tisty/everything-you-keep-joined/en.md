@@ -43,8 +43,6 @@ Brainsty joins them with an amber curve, apart from every line someone wrote, an
 
 Lucas asks his agent to tidy «Saturday walks» and it leaves out the times. In the panel beside the document, **See the history** lists its earlier versions, newest first, with who wrote each one: Lucas, or Claude Code. **What changed** marks in red what the agent took out and in green what it put in, and **Go back to this version** brings it back.
 
-![The history of a document in Tisty: its earlier versions on the left with the time and who wrote each one, and on the right what changed, in red and green](./history.webp)
-
 Tisty keeps a version when someone writes after a quiet half hour, or when the one writing changes, so what the agent replaced never mixes with what Lucas wrote. The versions stay on that computer, 30 days unless he chooses fewer, and **Empty the history** takes away a text he deleted on purpose.
 
 ## Your agents' rules, in one place

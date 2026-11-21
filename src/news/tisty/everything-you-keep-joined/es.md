@@ -44,8 +44,6 @@ Brainsty las une con una curva ámbar, aparte de toda línea que alguien escribi
 
 Lucas le pide a su agente que ordene «Paseos del sábado» y lo deja sin los horarios. En el panel junto al documento, **Ver el historial** lista sus versiones anteriores, la más nueva primero, con quién escribió cada una: Lucas, o Claude Code. **Qué cambió** marca en rojo lo que el agente quitó y en verde lo que puso, y **Volver a esta versión** lo trae de vuelta.
 
-![El historial de un documento en Tisty: sus versiones anteriores a la izquierda con la hora y quién escribió cada una, y a la derecha lo que cambió, en rojo y verde](./historial.webp)
-
 Tisty guarda una versión cuando alguien escribe después de media hora sin cambios, o cuando cambia quien escribe, así que lo que reemplazó el agente nunca se mezcla con lo que escribió Lucas. Las versiones quedan en ese equipo, 30 días salvo que elija menos, y **Vaciar el historial** se lleva un texto que borró a propósito.
 
 ## Las reglas de tus agentes, en un solo lugar
