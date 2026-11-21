@@ -1,0 +1,61 @@
+---
+import Cards from "./Cards.astro";
+import Fixes from "./Fixes.astro";
+import Icon from "../Icon.astro";
+import OnDisk from "../OnDisk.astro";
+import Sharing from "../Sharing.astro";
+import { privacyPath } from "../../content/privacy";
+import { type Product, words } from "../../content/products";
+import { DATA_PAGE } from "../../content/tisty-pages";
+import { href, type Locale } from "../../site";
+
+interface Props {
+  product: Product;
+  locale: Locale;
+}
+
+const { product, locale } = Astro.props;
+const t = words(product, locale);
+const say = DATA_PAGE[locale];
+const es = locale === "es";
+const link = "inline-flex items-center gap-1.5 text-sm font-medium text-flame-ink hover:underline";
+---
+
+<OnDisk proof={t.proof!} />
+
+<Cards product={product} locale={locale} title={say.keeps.title} cards={say.keeps.cards} />
+
+<Sharing product={product} words={t.sharing!} locale={locale} />
+
+<Fixes product={product} fixes={t.fixes!} on="data" />
+
+<section class="shell mt-24 sm:mt-32">
+  <div class="flex flex-col gap-5 rounded-3xl border border-flame/25 bg-flame-tint p-7 sm:flex-row sm:items-start sm:p-9">
+    <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-surface text-flame-ink">
+      <Icon name="shield" class="h-6 w-6" />
+    </span>
+    <div>
+      <h2 class="text-2xl font-semibold">{say.licence.title}</h2>
+      <p class="mt-2 text-body">{t.privacy} {say.licence.body}</p>
+      <p class="mt-3 text-body">{say.licence.free}</p>
+      <p class="mt-4 flex flex-wrap gap-x-6 gap-y-2">
+        <a class={link} href={href(locale, privacyPath(locale, product.slug))}>{say.licence.policy}</a>
+        <a class={link} href={product.repo} rel="noopener">{say.licence.source}</a>
+      </p>
+    </div>
+  </div>
+</section>
+
+{
+  product.mascot && t.mascot && (
+    <section class="shell mt-16">
+      <div class="card flex flex-col items-center gap-6 p-7 text-center sm:flex-row sm:p-9 sm:text-left">
+        <img src={product.mascot} alt={es ? `Mascota de ${product.name}` : `${product.name}'s mascot`} width="120" height="108" loading="lazy" decoding="async" class="h-24 w-auto shrink-0 sm:h-28" />
+        <div>
+          <h2 class="text-2xl font-semibold">{t.mascot.title}</h2>
+          <p class="mt-2 text-body">{t.mascot.body}</p>
+        </div>
+      </div>
+    </section>
+  )
+}

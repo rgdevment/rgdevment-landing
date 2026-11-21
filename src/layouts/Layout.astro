@@ -12,6 +12,7 @@ import { COMPARE_PATH, comparisonOf } from "../content/compare";
 import { NEWS_FEED, NEWS_PATH, hasNews } from "../content/news";
 import { privacyPath } from "../content/privacy";
 import { termsPath } from "../content/terms";
+import { TOPICS, TOPICS_OF, TOPIC_LABEL, TOPIC_PATH } from "../content/topics";
 import { HOMES, MAIN } from "../hosts";
 import { AUTHOR, DOMAIN, HOME_PRODUCT, LOCALES, PERSON_ID, WEBSITE_ID, canonical, href, mainHref, type Locale } from "../site";
 
@@ -28,6 +29,7 @@ interface Props {
   path?: string;
   paths?: Partial<Record<Locale, string>>;
   image?: { src: string; width: number; height: number };
+  imageAlt?: string;
   published?: string;
   modified?: string;
   here?: string;
@@ -35,7 +37,7 @@ interface Props {
   noindex?: boolean;
 }
 
-const { title, description, locale, contentLang = locale, textIn, path = "", paths, image, published, modified, here, schema, noindex } = Astro.props;
+const { title, description, locale, contentLang = locale, textIn, path = "", paths, image, imageAlt, published, modified, here, schema, noindex } = Astro.props;
 const es = locale === "es";
 const there: Locale = es ? "en" : "es";
 
@@ -54,10 +56,12 @@ const ownCard = owner && cardOf(owner, locale);
 // An app's own site points at its policies from the foot, where people look for them.
 const terms = owner && (await getEntry("terms", owner.slug));
 const compared = comparisonOf(owner?.slug ?? null);
+const topics = owner?.slug === TOPICS_OF ? TOPICS : [];
 const card = image ?? ownCard ?? { src: es ? "/social-es.png" : "/social.png", width: 1200, height: 630 };
 const cardExtension = new URL(card.src, DOMAIN).pathname.split(".").pop()!.toLowerCase();
 const cardType = ({ jpg: "image/jpeg", jpeg: "image/jpeg", webp: "image/webp" } as Record<string, string>)[cardExtension] ?? "image/png";
 const social = new URL(card.src, DOMAIN).toString();
+const cardAlt = imageAlt ?? (!image && ownCard ? owner.shot![locale] : title);
 
 const site = [
   {
@@ -147,7 +151,7 @@ const say = es
     <meta property="og:image:type" content={cardType} />
     <meta property="og:image:width" content={String(card.width)} />
     <meta property="og:image:height" content={String(card.height)} />
-    <meta property="og:image:alt" content={title} />
+    <meta property="og:image:alt" content={cardAlt} />
     <meta property="og:locale" content={(textIn ?? contentLang) === "es" ? "es_LA" : "en_US"} />
     <meta property="og:locale:alternate" content={(textIn ?? contentLang) === "es" ? "en_US" : "es_LA"} />
     {published && <meta property="article:published_time" content={published} />}
@@ -157,7 +161,7 @@ const say = es
     <meta name="twitter:title" content={full} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={social} />
-    <meta name="twitter:image:alt" content={title} />
+    <meta name="twitter:image:alt" content={cardAlt} />
 
     <script is:inline define:vars={{ twin, ours }}>
       const root = document.documentElement;
@@ -284,6 +288,7 @@ const say = es
           <div>
             <p class="eyebrow">{say.site}</p>
             <ul class="mt-4 space-y-2.5 text-sm">
+              {topics.map((one) => <li><a class="text-body transition-colors hover:text-fg" href={href(locale, TOPIC_PATH[one][locale])}>{TOPIC_LABEL[one][locale]}</a></li>)}
               <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "guias" : "guides")}>{say.guides}</a></li>
               <li><a class="text-body transition-colors hover:text-fg" href={href(locale, es ? "precios" : "pricing")}>{say.pricing}</a></li>
               {told && <li><a class="text-body transition-colors hover:text-fg" href={href(locale, NEWS_PATH[locale])}>{say.stories}</a></li>}

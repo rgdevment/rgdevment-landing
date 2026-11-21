@@ -1,0 +1,139 @@
+---
+import Icon from "./Icon.astro";
+import ProductHunt from "./ProductHunt.astro";
+import { type Product, storeUrl } from "../content/products";
+import { type Release, installers, megabytes } from "../content/releases";
+import { href, type Locale } from "../site";
+
+interface Props {
+  product: Product;
+  locale: Locale;
+  release: Release | null;
+  docs?: string;
+  compare?: { label: string; path: string; ink: string } | null;
+  start?: boolean;
+  /// A phone installs nothing, so its first screen keeps the buttons and leaves the details to the install section.
+  compact?: boolean;
+}
+
+const { product, locale, release, docs, compare, start = false, compact = false } = Astro.props;
+const fine = ["text-xs leading-relaxed text-muted", { "hidden sm:block": compact }];
+const es = locale === "es";
+const store = storeUrl(product);
+const kit = installers(release);
+const macDirect = product.requires ? kit.macArm : undefined;
+const quiet = "inline-block py-1 underline decoration-muted underline-offset-4 transition hover:text-fg";
+
+const say = {
+  getWin: es ? "Descargar para Windows" : "Download for Windows",
+  getMac: es ? "Descargar para macOS" : "Download for macOS",
+  orLater: es ? "o posterior" : "or later",
+  or: es ? "o el" : "or the",
+  installer: es ? "instalador" : "installer",
+  ways: es ? "Todas las formas de instalarlo" : "Every way to install it",
+  docs: es ? "Ayuda" : "Documentation",
+  onProductHunt: es ? `${product.name} en Product Hunt` : `${product.name} on Product Hunt`,
+};
+---
+
+<!-- Both links ship in the HTML; the script only decides which one is dressed as the main one,
+     so a reader without scripts, and any crawler, still sees every platform. -->
+<div id="download" class:list={["group", compact ? "mt-8 sm:mt-10" : "mt-10"]}>
+  <div class:list={["flex flex-wrap items-start justify-center gap-3 sm:gap-6", { "lg:justify-start": start }]}>
+    {
+      store && (
+        <div class="flex max-w-[18rem] flex-col items-center gap-2.5">
+          <a
+            class="btn-ghost px-6 py-3.5 group-data-[os=win]:border-transparent group-data-[os=win]:bg-fg group-data-[os=win]:text-canvas group-data-[os=win]:hover:bg-fg/85"
+            href={store}
+            rel="noopener"
+          >
+            <Icon name="windows" class="h-4 w-4" />
+            {say.getWin}
+          </a>
+          {product.requires && (
+            <p class:list={fine}>
+              <span class="block whitespace-nowrap">{product.requires.windows} {say.orLater}</span>
+              <span class="block whitespace-nowrap">
+                Microsoft Store
+                {product.winget && (
+                  <>
+                    {" "}· <a class={quiet} href="#install">winget</a>
+                  </>
+                )}
+              </span>
+              {kit.win && (
+                <span class="block whitespace-nowrap">
+                  {say.or} <a class={quiet} href={kit.win.url}>{say.installer} .exe · {megabytes(kit.win, locale)}</a>
+                </span>
+              )}
+            </p>
+          )}
+        </div>
+      )
+    }
+    {
+      product.cask && (
+        <div class="flex max-w-[18rem] flex-col items-center gap-2.5">
+          <a
+            class="btn-ghost px-6 py-3.5 group-data-[os=mac]:border-transparent group-data-[os=mac]:bg-fg group-data-[os=mac]:text-canvas group-data-[os=mac]:hover:bg-fg/85"
+            href={macDirect?.url ?? "#install"}
+          >
+            <Icon name="apple" class="h-4 w-4" />
+            {say.getMac}
+          </a>
+          {macDirect && (
+            <p class:list={fine}>
+              <span class="block whitespace-nowrap">{product.requires!.macos} {say.orLater}</span>
+              <span class="block whitespace-nowrap">Apple Silicon · .dmg · {megabytes(macDirect, locale)}</span>
+              <span class="block whitespace-nowrap">
+                {kit.macIntel && (
+                  <>
+                    Intel: <a class={quiet} href={kit.macIntel.url}>.dmg · {megabytes(kit.macIntel, locale)}</a> ·{" "}
+                  </>
+                )}
+                <a class={quiet} href="#install">Homebrew</a>
+              </span>
+            </p>
+          )}
+        </div>
+      )
+    }
+  </div>
+  <p class="mt-4 text-sm text-muted">
+    <a class="underline decoration-muted underline-offset-4 transition hover:text-fg" href="#install">{say.ways}</a>
+    {docs && (
+      <>
+        <span class="px-2" aria-hidden="true">·</span>
+        <a class="underline decoration-muted underline-offset-4 transition hover:text-fg" href={docs}>{say.docs}</a>
+      </>
+    )}
+  </p>
+  {
+    compare && (
+      <p class="mt-5">
+        <a class="accent-ink inline-flex items-center gap-1.5 font-medium hover:underline" style={compare.ink} href={href(locale, compare.path)}>
+          {compare.label}
+          <Icon name="arrow" class="h-4 w-4" />
+        </a>
+      </p>
+    )
+  }
+  {
+    product.signals?.producthunt?.badge && (
+      <p class="mt-6">
+        <ProductHunt url={product.signals.producthunt.url} post={product.signals.producthunt.post} label={say.onProductHunt} />
+      </p>
+    )
+  }
+</div>
+
+<script is:inline>
+  (() => {
+    const box = document.getElementById("download");
+    if (!box) return;
+    const said = navigator.userAgentData?.platform || navigator.userAgent || "";
+    const os = /mac|iphone|ipad/i.test(said) ? "mac" : /win/i.test(said) ? "win" : "";
+    if (os) box.dataset.os = os;
+  })();
+</script>
