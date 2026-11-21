@@ -271,6 +271,8 @@ const EN: Words = {
     body: [
       "Tisty has no AI inside, on purpose: it keeps your memory and context, and the assistant you already use reads them. GitHub Copilot, Claude Code, Codex or Cursor connect over its local MCP server, with no account and nothing sent over the network.",
       "An AI agent is stateless: it forgets the moment the session ends. With Tisty it asks what changed since last time, opens the task it was on with its ticked steps and dated journal, and reads a long document by its outline and one section instead of the whole file. On a 256 KB Markdown log, picking up the work costs about 99% less than rereading it.",
+      "It walks the same map you see in Brainsty: one search reaches everything, the archive included, and a document's card says who cites it before the agent reads one section. What Tisty thinks is alike comes apart, found by shared words and a word list, never by a model, so the agent never takes it for a link someone wrote.",
+      "It can list a document's earlier versions, kept on your computer, and go back to one. And the Agents folder keeps its rules, skills and memory as documents you read and arrange, synced to its own files if you want: the agent proposes a change, and it reaches those files only once you approve it.",
       "What it learns stays written down for next time, on your disk, where you can follow and audit it, and closing a task is always yours.",
     ],
     link: { label: "Give your AI coding agent memory that lasts between sessions", url: "https://rgdevment.dev/guides/ai-agent-memory-between-sessions/" },
@@ -452,6 +454,8 @@ const ES: Words = {
     body: [
       "Tisty no trae IA dentro, a propósito: guarda tu memoria y tu contexto, y el asistente que ya usas los lee. GitHub Copilot, Claude Code, Codex o Cursor se conectan por su servidor MCP local, sin cuenta y sin enviar nada por la red.",
       "Un agente de IA no guarda estado: olvida en cuanto termina la sesión. Con Tisty pregunta qué cambió desde la última vez, abre la tarea en la que estaba con sus pasos marcados y su bitácora con fechas, y lee un documento largo por su índice y una sección en vez del archivo entero. Sobre una bitácora de 256 KB en Markdown, retomar el trabajo cuesta cerca de un 99 % menos que releerla.",
+      "Recorre el mismo mapa que ves en Brainsty: una sola búsqueda llega a todo, el archivo incluido, y la ficha de un documento dice quién lo cita antes de que el agente lea una sección. Lo que Tisty cree que se parece llega aparte, encontrado por palabras en común y una lista de palabras, nunca por un modelo, así que el agente nunca lo toma por un enlace que alguien escribió.",
+      "Puede listar las versiones anteriores de un documento, guardadas en tu equipo, y volver a una. Y la carpeta Agentes guarda sus reglas, skills y memoria como documentos que lees y ordenas, sincronizados con sus propios archivos si quieres: el agente propone un cambio, y llega a esos archivos solo cuando tú lo apruebas.",
       "Lo que aprende queda escrito para la próxima vez, en tu disco, donde puedes seguirlo y revisarlo, y cerrar una tarea siempre es tuyo.",
     ],
     link: { label: "Dale a tu agente de IA una memoria que dure entre sesiones", url: "https://rgdevment.dev/es/guias/memoria-para-tu-agente-de-ia-entre-sesiones/" },
