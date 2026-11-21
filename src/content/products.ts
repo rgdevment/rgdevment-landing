@@ -1,6 +1,3 @@
-import { AGENTS } from "./agents";
-import { FREE } from "./tisty-pages";
-import type { Topic } from "./topics";
 import type { Locale } from "../site";
 import {
   ASSISTANT_EN,
@@ -51,7 +48,6 @@ export type Assistant = {
 };
 
 export type Screen = {
-  key: string;
   image: string;
   label: string;
   title: string;
@@ -85,7 +81,7 @@ export type Fixes = {
   title: string;
   lede: string;
   said: { problem: string; fix: string };
-  rows: { who: string; on: Topic; problem: string; fix: string }[];
+  rows: { who: string; problem: string; fix: string }[];
 };
 
 export type Day = {
@@ -107,15 +103,15 @@ export type Cost = {
 
 type Words = {
   tagline: string;
-  category: string;
-  /// Said right under the tagline, so the first screen speaks to both ways of using it.
+  /// Both uses in one line, right under the tagline.
   hybrid?: string;
+  category: string;
   /// Only where name plus tagline runs past what a result page shows.
   title?: string;
   meta: string;
   problem: string;
   what?: string[];
-  groups?: { title: string; on?: Topic; points: string[] }[];
+  groups?: { title: string; points: string[] }[];
   privacy: string;
   /// What its own site's pricing page promises about the data, beside the price.
   data?: { line: string; checks: string[] };
@@ -134,8 +130,7 @@ type Words = {
     page: string;
     anchor: string;
   };
-  /// Where each question is shown; every one still reaches the summary for assistants.
-  faq: { q: string; a: string; on?: "home" | Topic; link?: { label: string; path: string } }[];
+  faq: { q: string; a: string; link?: { label: string; path: string } }[];
   firstRun?: { title: string; body: string; link: string; anchor: string };
   proof?: Proof;
   assistant?: Assistant;
@@ -293,15 +288,14 @@ export const PRODUCTS: Product[] = [
         anchor: "a-task-or-a-document",
       },
       title: "Tisty: notes, tasks and memory for you and your AI agent",
-      meta: "Shared working memory for you and your AI agent, or just for you: notes, tasks and documents in local Markdown, over MCP. Free and open source.",
+      meta: "Shared working memory for you and your AI agent: tasks, documents and ideas in local Markdown, over MCP for GitHub Copilot, Claude Code and Cursor. Free.",
       problem:
         "I started building Tisty to solve a problem of my own, and little by little I saw it was not only mine. Your AI agent knows the details better than anyone, and forgets them the moment the session ends, so you explain everything again. In Tisty you see the whole, visual and easy to read, and your agent every detail: one memory, for both of you. And if you would rather work in a more personal way, just for you and with no agent, Tisty is just as much yours.",
       groups: [
         {
           title: "You and your agent",
-          on: "agent",
           points: [
-            `${AGENTS.en.or} connect over MCP and pick up where they left off.`,
+            "GitHub Copilot, Claude Code, Codex or Cursor connect over MCP and pick up where they left off.",
             "An outline first, then one section: a fraction of what rereading your Markdown files costs.",
             "It works your tasks as it works a document and sorts your ideas with you; ticking your steps, closing and the day stay yours.",
             "The Agents folder keeps your agents' rules, skills and memory as documents, synced with their files if you want; an agent only proposes a change, and you approve it.",
@@ -309,7 +303,6 @@ export const PRODUCTS: Product[] = [
         },
         {
           title: "Capture and plan",
-          on: "alone",
           points: [
             "Type «call the bank at 3» in the quick capture, open from anywhere, and it is a task with its hour.",
             "Today puts the urgent first: overdue only past its deadline, late when the day you planned slipped by.",
@@ -319,7 +312,6 @@ export const PRODUCTS: Product[] = [
         },
         {
           title: "Remember",
-          on: "alone",
           points: [
             "A finished task goes to the archive whole: its page, steps, dated journal and files.",
             "One search across open tasks, the archive and every document, even what you closed two years ago.",
@@ -330,7 +322,6 @@ export const PRODUCTS: Product[] = [
         },
         {
           title: "Your data is yours",
-          on: "data",
           points: [
             "Documents in Markdown and tasks in a log you can read, on your own disk.",
             "Synced through your Google Drive, OneDrive or WebDAV server, encrypted with a phrase only you know if you want, or through a folder you already sync.",
@@ -352,40 +343,29 @@ export const PRODUCTS: Product[] = [
       },
       faq: [
         {
-          q: "Do I need an AI agent to use Tisty?",
-          on: "home",
-          a: "No. Tisty is complete without one: the quick capture, Today, your ideas, the archive, the diary and Brainsty all work for you alone, and the first run asks only your language and where your copies go. With an agent, it is the memory you share.",
-        },
-        {
-          q: "Is Tisty free?",
-          on: "home",
-          a: FREE.en,
-        },
-        {
           q: "What happens to my notes if Tisty disappears?",
-          on: "home",
           a: "Nothing. Your documents are Markdown files any editor opens, and your tasks a log of JSON lines that cat, grep or jq read. Both stay on your disk.",
         },
         {
           q: "How is it different from Obsidian, Notion or Todoist?",
-          on: "home",
           a: "Tisty keeps tasks and documents in one store and one search on your own disk, and finishing a task keeps everything it gathered instead of hiding it. Each of the others is stronger at something, and the comparison says where.",
           link: { label: "See how it differs", path: "compare" },
         },
         {
           q: "How do I give my AI agent a memory between sessions?",
-          on: "home",
-          a: `Connect Tisty over MCP: ${AGENTS.en.and} take one line. The agent then starts each session by asking what moved since its last one and which tasks press, then opening the task it was on, files its work as tasks with steps and a journal, and keeps what it learns in documents, on your machine, behind a door you close with one click.`,
+          a: "Connect Tisty over MCP: GitHub Copilot in VS Code, Claude Code, Codex, Cursor and Gemini CLI take one line. The agent then starts each session by asking what moved since its last one and which tasks press, then opening the task it was on, files its work as tasks with steps and a journal, and keeps what it learns in documents, on your machine, behind a door you close with one click.",
         },
         {
           q: "Does it replace CLAUDE.md, AGENTS.md or a memory-bank folder?",
-          on: "agent",
           a: "For what moves, yes. Instructions that rarely move, such as how to build and the conventions, stay in the files your repository hands the assistant. Progress, decisions, what was ruled out and what is left go in Tisty, dated, searchable and read a section at a time. And the files in your home folder, like ~/.claude/CLAUDE.md or ~/.codex/AGENTS.md, the Agents folder brings into Tisty as documents and, if you sync it, keeps up to date with a backup first.",
         },
         {
           q: "Can I draw diagrams?",
-          on: "alone",
           a: "Yes. A mermaid block draws it, and mind maps, database schemas, freeform diagrams with every Mermaid shape and class diagrams are also drawn by hand in a window of their own, saved as the same text, shown on the page as you drew them and exported as PNG, JPG or SVG.",
+        },
+        {
+          q: "Do I need an AI agent to use Tisty?",
+          a: "No. The agent is one way to use it, not the condition: the quick capture, Today, your ideas, the archive, the diary and Brainsty all work for you alone, and the first run asks only your language and where your copies go. You connect an agent only if you want one.",
         },
       ],
       proof: PROOF_EN,
@@ -473,15 +453,14 @@ export const PRODUCTS: Product[] = [
         anchor: "tarea-o-documento",
       },
       title: "Tisty: notas, tareas y memoria para ti y tu agente de IA",
-      meta: "Memoria de trabajo compartida para ti y tu agente de IA, o solo para ti: notas, tareas y documentos en Markdown local, por MCP. Gratis y de código abierto.",
+      meta: "Memoria de trabajo compartida para ti y tu agente de IA: tareas, documentos e ideas en Markdown local, vía MCP en GitHub Copilot, Claude Code y Cursor. Gratis.",
       problem:
         "Comencé a desarrollar Tisty para resolver un problema personal, y fui viendo que ese problema no era solo mío. Tu agente de IA conoce el detalle mejor que nadie, y lo olvida en cuanto termina la sesión, así que le vuelves a explicar todo. En Tisty tú ves el conjunto, visual y fácil de leer, y tu agente cada detalle: una sola memoria, para los dos. Y si prefieres trabajar de una manera más personal, solo para ti y sin agente, Tisty es igual de tuyo.",
       groups: [
         {
           title: "Tú y tu agente",
-          on: "agent",
           points: [
-            `${AGENTS.es.or} se conectan por MCP y retoman donde quedaron.`,
+            "GitHub Copilot, Claude Code, Codex o Cursor se conectan por MCP y retoman donde quedaron.",
             "Primero el índice, después una sección: una fracción de lo que cuesta releer tus archivos Markdown.",
             "Trabaja tus tareas como un documento y ordena tus ideas contigo; marcar tus pasos, cerrar y el día siguen siendo tuyos.",
             "La carpeta Agentes guarda las reglas, skills y memoria de tus agentes como documentos, sincronizados con sus archivos si quieres; un agente solo propone un cambio, y tú lo apruebas.",
@@ -489,7 +468,6 @@ export const PRODUCTS: Product[] = [
         },
         {
           title: "Capturar y planificar",
-          on: "alone",
           points: [
             "Escribe «llamar al banco a las 3» en la captura rápida, que se abre desde cualquier parte, y es una tarea con su hora.",
             "Hoy pone primero lo urgente: vence solo lo que pasó su límite, se atrasa lo que no hiciste el día que planeaste.",
@@ -499,7 +477,6 @@ export const PRODUCTS: Product[] = [
         },
         {
           title: "Recordar",
-          on: "alone",
           points: [
             "Una tarea terminada pasa entera al archivo: su página, sus pasos, su bitácora con fecha y sus archivos.",
             "Una sola búsqueda en las tareas abiertas, el archivo y todos los documentos, aunque lo hayas cerrado hace dos años.",
@@ -510,7 +487,6 @@ export const PRODUCTS: Product[] = [
         },
         {
           title: "Tus datos son tuyos",
-          on: "data",
           points: [
             "Documentos en Markdown y tareas en un registro legible, en tu propio disco.",
             "Se sincronizan por tu Google Drive, OneDrive o servidor WebDAV, cifrados si quieres con una frase que solo tú conoces, o por una carpeta que ya sincronizas.",
@@ -532,40 +508,29 @@ export const PRODUCTS: Product[] = [
       },
       faq: [
         {
-          q: "¿Necesito un agente de IA para usar Tisty?",
-          on: "home",
-          a: "No. Tisty está completo sin uno: la captura rápida, Hoy, tus ideas, el archivo, el diario y Brainsty funcionan solo para ti, y al abrirlo por primera vez solo te pregunta tu idioma y adónde van tus copias. Con un agente, es la memoria que comparten.",
-        },
-        {
-          q: "¿Tisty es gratis?",
-          on: "home",
-          a: FREE.es,
-        },
-        {
           q: "¿Qué pasa con mis notas si Tisty desaparece?",
-          on: "home",
           a: "Nada. Tus documentos son archivos Markdown que abre cualquier editor, y tus tareas, un registro de líneas JSON que leen cat, grep o jq. Los dos se quedan en tu disco.",
         },
         {
           q: "¿En qué se diferencia de Obsidian, Notion o Todoist?",
-          on: "home",
           a: "Tisty guarda tareas y documentos en un mismo lugar y una misma búsqueda, en tu propio disco, y terminar una tarea conserva todo lo que reunió en vez de esconderlo. Cada uno de los otros es más fuerte en algo, y la comparación dice en qué.",
           link: { label: "Ver en qué se diferencia", path: "comparar" },
         },
         {
           q: "¿Cómo le doy a mi agente de IA una memoria entre sesiones?",
-          on: "home",
-          a: `Conecta Tisty por MCP: ${AGENTS.es.and} lo hacen con una línea. Desde ahí, el agente empieza cada sesión preguntando qué cambió desde la anterior y qué tareas apremian, y abriendo la tarea en la que estaba, anota su trabajo como tareas con pasos y bitácora, y guarda lo que aprende en documentos, en tu equipo, tras una puerta que cierras con un clic.`,
+          a: "Conecta Tisty por MCP: GitHub Copilot en VS Code, Claude Code, Codex, Cursor y Gemini CLI lo hacen con una línea. Desde ahí, el agente empieza cada sesión preguntando qué cambió desde la anterior y qué tareas apremian, y abriendo la tarea en la que estaba, anota su trabajo como tareas con pasos y bitácora, y guarda lo que aprende en documentos, en tu equipo, tras una puerta que cierras con un clic.",
         },
         {
           q: "¿Reemplaza a CLAUDE.md, AGENTS.md o una carpeta memory-bank?",
-          on: "agent",
           a: "Para lo que se mueve, sí. Las instrucciones que casi no se mueven, como compilar y las convenciones, siguen en los archivos que tu repositorio le entrega al asistente. El avance, las decisiones, lo descartado y lo que falta van en Tisty, con fecha, buscables y leídos una sección a la vez. Y los archivos de tu carpeta personal, como ~/.claude/CLAUDE.md o ~/.codex/AGENTS.md, la carpeta Agentes los trae a Tisty como documentos y, si la sincronizas, los mantiene al día con un respaldo antes.",
         },
         {
           q: "¿Puedo dibujar diagramas?",
-          on: "alone",
           a: "Sí. Un bloque mermaid lo dibuja, y los mapas mentales, los esquemas de base de datos, los diagramas libres con todas las formas de Mermaid y los de clases también se dibujan a mano en su propia ventana, se guardan como el mismo texto, se ven en la página tal como los dibujaste y se exportan como PNG, JPG o SVG.",
+        },
+        {
+          q: "¿Necesito un agente de IA para usar Tisty?",
+          a: "No. El agente es una forma de usarlo, no la condición: la captura rápida, Hoy, tus ideas, el archivo, el diario y Brainsty funcionan solo para ti, y al abrirlo por primera vez solo te pregunta tu idioma y adónde van tus copias. Conectas un agente solo si quieres.",
         },
       ],
       proof: PROOF_ES,

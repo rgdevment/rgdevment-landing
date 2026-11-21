@@ -8,8 +8,6 @@ import { CHANGELOG_PATH, FEED, hasChangelog } from "./content/changelog";
 import { COMPARE_PATH, comparisonOf, namesOthers } from "./content/compare";
 import { NEWS_FEED, NEWS_PATH, hasNews } from "./content/news";
 import { installers, latestRelease, megabytes } from "./content/releases";
-import { AGENT_PAGE, ALONE_PAGE, DATA_PAGE } from "./content/tisty-pages";
-import { TOPICS_OF, TOPIC_PATH } from "./content/topics";
 import { MAIN, homeOf, relocate } from "./hosts";
 import { AUTHOR, DOMAIN, HOME_PRODUCT, canonical, type Locale } from "./site";
 
@@ -144,21 +142,6 @@ function memory(product: Product): string[] {
   ];
 }
 
-function topics(product: Product, link: (title: string, path: string, note?: string) => string): string[] {
-  if (product.slug !== TOPICS_OF) return [];
-  const pages = [
-    [AGENT_PAGE.en, TOPIC_PATH.agent],
-    [ALONE_PAGE.en, TOPIC_PATH.alone],
-    [DATA_PAGE.en, TOPIC_PATH.data],
-  ] as const;
-  return [
-    "## With your agent, on your own, and where your data lives",
-    "",
-    ...pages.map(([page, path]) => `${link(page.heading, path.en, page.meta)} ([español](${canonical("es", path.es)}))`),
-    "",
-  ];
-}
-
 function sharing(product: Product): string[] {
   const said = product.en.sharing;
   if (!said) return [];
@@ -241,7 +224,6 @@ export async function appLlms(): Promise<Response> {
     ...(t.hybrid ? [t.hybrid, ""] : []),
     t.problem,
     "",
-    ...topics(product, link),
     "## What it does",
     "",
     ...(t.what ?? []).map((one) => `- ${one}`),

@@ -181,6 +181,18 @@ const SUPPORT_MOVED = {
   '/es/apoyar/': `${MAIN}/es/colaborar/`,
 };
 
+// The three pages of the short home lasted a day; their addresses go back to the home.
+const TOPIC_GONE = {
+  tisty: {
+    '/with-your-agent/': '/',
+    '/on-your-own/': '/',
+    '/your-data/': '/',
+    '/es/con-tu-agente/': '/es/',
+    '/es/solo-para-ti/': '/es/',
+    '/es/tus-datos/': '/es/',
+  },
+};
+
 // Tisty's Markdown pages moved to a site of their own, and search engines still send people to the old addresses.
 const HELP_MOVED = {
   tisty: {
@@ -254,7 +266,7 @@ function ownFiles(product) {
         ];
         const icon = CATALOG.find((one) => one.slug === product).icon;
         writeFileSync(at('favicon.ico'), await favicon(`./public${icon}`));
-        writeFileSync(at('_redirects'), renamed({ '/en/': '/', ...SUPPORT_MOVED, ...HELP_MOVED[product], ...newsMoved(product) }));
+        writeFileSync(at('_redirects'), renamed({ '/en/': '/', ...SUPPORT_MOVED, ...HELP_MOVED[product], ...TOPIC_GONE[product], ...newsMoved(product) }));
         drop.forEach((path) => rmSync(at(path), { force: true }));
       },
     },

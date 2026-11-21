@@ -7,7 +7,6 @@ import { latestRelease } from "../../../content/releases";
 import { CHANGELOG_PATH, hasChangelog } from "../../../content/changelog";
 import { COMPARE_PATH, compares } from "../../../content/compare";
 import { docEntries, newsEntries, sitemap } from "../../../sitemap";
-import { TOPICS, TOPICS_OF, TOPIC_PATH } from "../../../content/topics";
 import { HOME_PRODUCT } from "../../../site";
 
 const product = HOME_PRODUCT!;
@@ -16,7 +15,6 @@ export const GET: APIRoute = async () => {
   const release = await latestRelease(PRODUCTS.find((one) => one.slug === product)!);
   return sitemap([
     { en: product, es: product, priority: "1.0", lastmod: release?.date.slice(0, 10) },
-    ...(product === TOPICS_OF ? TOPICS.map((one) => ({ ...TOPIC_PATH[one], priority: "0.8" })) : []),
     { en: privacyPath("en", product), es: privacyPath("es", product), priority: "0.4", textIn: "en" as const },
     ...((await getEntry("terms", product))
       ? [{ en: termsPath("en", product), es: termsPath("es", product), priority: "0.3", textIn: "en" as const }]

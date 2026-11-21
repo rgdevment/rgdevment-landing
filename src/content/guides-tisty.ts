@@ -1,4 +1,3 @@
-import { AGENTS } from "./agents";
 import type { Guide } from "./guide";
 
 export const TISTY_GUIDES: Guide[] = [
@@ -201,7 +200,7 @@ export const TISTY_GUIDES: Guide[] = [
       slug: "guides/ai-agent-memory-between-sessions",
       title: "Give your AI coding agent memory that lasts between sessions",
       description:
-        "Your AI coding agent forgets everything when a session ends. Why Markdown files fall short, and a memory your agent reads by section.",
+        "GitHub Copilot, Claude Code, Codex and Cursor forget everything when a session ends. Why Markdown files fall short, and a memory your agent reads by section.",
       lede: "Your agent is brilliant at the file in front of it and forgets the picture: why something was decided six months ago, what failed last time, what is still left. Every new session starts with you explaining the project again.",
       nativeTitle: "What people usually do",
       nativeSteps: [
@@ -238,7 +237,7 @@ export const TISTY_GUIDES: Guide[] = [
         },
         {
           q: "Which assistants can use it?",
-          a: `Any that speaks MCP: ${AGENTS.en.and} connect with one line, and Settings › Assistants in Tisty connects the ones it finds on your computer.`,
+          a: "Any that speaks MCP: GitHub Copilot in VS Code, Claude Code, Codex, Cursor and Gemini CLI connect with one line, and Settings › Assistants in Tisty connects the ones it finds on your computer.",
         },
       ],
     },
@@ -246,7 +245,7 @@ export const TISTY_GUIDES: Guide[] = [
       slug: "guias/memoria-para-tu-agente-de-ia-entre-sesiones",
       title: "Dale a tu agente de IA una memoria que dure entre sesiones",
       description:
-        "Tu agente de IA de programación olvida todo entre sesiones. Por qué el Markdown de siempre no basta, y una memoria que tu agente lee por secciones.",
+        "GitHub Copilot, Claude Code, Codex y Cursor olvidan todo entre sesiones. Por qué el Markdown de siempre no basta, y una memoria que tu agente lee por secciones.",
       lede: "Tu agente brilla con el archivo que tiene delante y olvida el panorama: por qué se decidió algo hace seis meses, qué falló la última vez, qué falta todavía. Cada sesión nueva empieza contigo explicando otra vez el proyecto.",
       nativeTitle: "Lo que suele hacerse",
       nativeSteps: [
@@ -283,7 +282,7 @@ export const TISTY_GUIDES: Guide[] = [
         },
         {
           q: "¿Qué asistentes pueden usarlo?",
-          a: `Cualquiera que hable MCP: ${AGENTS.es.and} se conectan con una línea, y Configuración › Asistentes en Tisty conecta los que encuentra en tu equipo.`,
+          a: "Cualquiera que hable MCP: GitHub Copilot en VS Code, Claude Code, Codex, Cursor y Gemini CLI se conectan con una línea, y Configuración › Asistentes en Tisty conecta los que encuentra en tu equipo.",
         },
       ],
     },

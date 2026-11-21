@@ -1,5 +1,3 @@
-import { TOPIC_PAGES } from "./content/topics";
-
 export const MAIN = "https://rgdevment.dev";
 
 /// A product that owns a domain is its home page there, and everything else lives on the main site.
@@ -13,7 +11,7 @@ export const HOMES: Record<string, string> = {
 const FORMER: Record<string, string> = { copypaste: "copanda" };
 
 /// Pages a product's own site keeps for itself, showing only that product.
-const OWN = ["pricing", "precios", "compare", "comparar", "changelog", "novedades", "news", "noticias", ...TOPIC_PAGES];
+const OWN = ["pricing", "precios", "compare", "comparar", "changelog", "novedades", "news", "noticias"];
 
 export function homeOf(product: string): string | undefined {
   return Object.keys(HOMES).find((domain) => HOMES[domain] === product);
