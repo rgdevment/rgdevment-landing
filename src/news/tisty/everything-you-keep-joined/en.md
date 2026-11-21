@@ -3,7 +3,7 @@ title: "Tisty 1.49: everything you keep, joined"
 description: "Brainsty draws everything you keep as one network, each document keeps what it said before, and your agents' rules live in one place you approve."
 release: "1.49.0"
 cover: ./network.webp
-shows: "Brainsty in Tisty: documents, tasks and tags drawn as one network in the content panel, with an amber curve between two things that are alike and the legend open in the corner"
+shows: "Brainsty in Tisty: documents, tasks and tags drawn from afar as one network in the content panel, with lights travelling its lines, the search on top and the legend folded in the corner"
 ---
 
 I started building Tisty to solve a problem of my own, and little by little I saw it was not only mine.
@@ -53,7 +53,7 @@ Yisset works with Claude Code, Codex and Gemini, and each one reads its rules fr
 
 A rule in **Global** reaches every assistant on the computer. A change made outside Tisty is never written over. And when Yisset asks her agent to add a rule, it does not write it: the change waits on the card, beside what she approved, until she says yes.
 
-![The Agents folder in Tisty: Global, Claude, Codex and Gemini in the sidebar, and the card of a rule with what is approved and what the agent proposes](./agents.webp)
+![The window Your agents, in one place in Tisty: what it found for Claude, Codex and Copilot, a note that Gemini has nothing yet, and the buttons Bring and Bring and sync](./agents.webp)
 
 Each computer decides what it applies, and nothing is read from her agents until she clicks the folder.
 

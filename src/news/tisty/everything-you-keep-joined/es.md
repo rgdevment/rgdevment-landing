@@ -4,7 +4,7 @@ description: "Brainsty dibuja todo lo que guardas como una sola red, cada docume
 release: "1.49.0"
 page: tisty-todo-lo-que-guardas-unido
 cover: ./red.webp
-shows: "Brainsty en Tisty: documentos, tareas y etiquetas dibujados como una sola red en el panel de contenido, con una curva ámbar entre dos cosas que se parecen y la leyenda abierta en la esquina"
+shows: "Brainsty en Tisty: documentos, tareas y etiquetas dibujados de lejos como una sola red en el panel de contenido, con luces que recorren sus líneas, el buscador arriba y la leyenda plegada en la esquina"
 ---
 
 Comencé a desarrollar Tisty para resolver un problema personal, y fui viendo que ese problema no era solo mío.
@@ -54,7 +54,7 @@ Yisset trabaja con Claude Code, Codex y Gemini, y cada uno lee sus reglas de su 
 
 Una regla en **Global** llega a cada asistente del equipo. Un cambio hecho por fuera de Tisty nunca se pisa. Y cuando Yisset le pide a su agente que agregue una regla, no la escribe: el cambio espera en la ficha, junto a lo que ella aprobó, hasta que dice que sí.
 
-![La carpeta Agentes en Tisty: Global, Claude, Codex y Gemini en la barra lateral, y la ficha de una regla con lo aprobado y lo que propone el agente](./agentes.webp)
+![La ventana Tus agentes, en un solo lugar de Tisty: lo que encontró de Claude, Codex y Copilot, un aviso de que Gemini todavía no tiene nada, y los botones Traer y Traer y sincronizar](./agentes.webp)
 
 Cada equipo decide qué aplica, y no se lee nada de sus agentes hasta que hace clic en la carpeta.
 
