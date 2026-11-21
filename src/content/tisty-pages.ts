@@ -66,7 +66,7 @@ export const HOME: Record<Locale, HomeWords> = {
         line: SYMPTOM.en,
         points: [
           "It asks what moved and opens the task it was on, instead of rereading everything.",
-          "It reads the outline and one section: about 3% of what rereading a 256 KB log costs.",
+          "It reads the outline and one section: about 3% of what rereading a 256 KB log costs, 12% at worst.",
           "Everything it writes carries its name, and what it calls done waits for you under To confirm.",
           "It never closes or deletes. Deciding and closing stay yours.",
         ],
@@ -105,7 +105,7 @@ export const HOME: Record<Locale, HomeWords> = {
         line: SYMPTOM.es,
         points: [
           "Pregunta qué cambió y abre la tarea en la que estaba, en vez de releerlo todo.",
-          "Lee el índice y una sección: cerca de un 3 % de lo que cuesta releer una bitácora de 256 KB.",
+          "Lee el índice y una sección: cerca de un 3 % de lo que cuesta releer una bitácora de 256 KB, un 12 % en el peor caso.",
           "Todo lo que escribe lleva su nombre, y lo que da por hecho te espera en Por confirmar.",
           "Nunca cierra ni borra. Decidir y cerrar siguen siendo tuyos.",
         ],

@@ -29,7 +29,7 @@ const link = "inline-flex items-center gap-1.5 text-sm font-medium text-flame-in
 
 <Fixes product={product} fixes={t.fixes!} on="data" />
 
-<section class="stage shell mt-24 sm:mt-32">
+<section class="shell mt-24 sm:mt-32">
   <div class="flex flex-col gap-5 rounded-3xl border border-flame/25 bg-flame-tint p-7 sm:flex-row sm:items-start sm:p-9">
     <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-surface text-flame-ink">
       <Icon name="shield" class="h-6 w-6" />
@@ -48,7 +48,7 @@ const link = "inline-flex items-center gap-1.5 text-sm font-medium text-flame-in
 
 {
   product.mascot && t.mascot && (
-    <section class="stage shell mt-16">
+    <section class="shell mt-16">
       <div class="card flex flex-col items-center gap-6 p-7 text-center sm:flex-row sm:p-9 sm:text-left">
         <img src={product.mascot} alt={es ? `Mascota de ${product.name}` : `${product.name}'s mascot`} width="120" height="108" loading="lazy" decoding="async" class="h-24 w-auto shrink-0 sm:h-28" />
         <div>

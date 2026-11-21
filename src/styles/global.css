@@ -241,7 +241,6 @@
   }
 }
 
-/* A section well below the first screen is laid out only as it comes near. */
 .stage {
   content-visibility: auto;
   contain-intrinsic-size: auto 720px;
