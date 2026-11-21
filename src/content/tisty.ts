@@ -1,4 +1,4 @@
-import type { Assistant, Cost, Day, Fixes, Proof, Screen, Sharing } from "./products";
+import type { Assistant, Cost, Day, Film, Fixes, Proof, Screen, Sharing } from "./products";
 
 export const FIXES_EN: Fixes = {
   title: "Real problems, real fixes",
@@ -429,13 +429,31 @@ export const SHARING_ES: Sharing = {
   anchor: "compartir",
 };
 
+export const FILM_EN: Film = {
+  video: "/tisty-brainsty",
+  title: "Brainsty: everything you keep, joined",
+  lede: "Your documents, tasks and tags as one map that slowly turns. Up close each one shows its title, and a click opens its card with what points at it. What is alike though nobody tied it shows apart, found by shared words and a word list, with no AI.",
+  label: "Brainsty in Tisty: the network of documents, tasks and tags turns, comes closer until every title shows, and opens the card of the document Household budget 2026",
+  play: "Play the video",
+  pause: "Pause the video",
+};
+
+export const FILM_ES: Film = {
+  video: "/tisty-brainsty",
+  title: "Brainsty: todo lo que guardas, unido",
+  lede: "Tus documentos, tareas y etiquetas como un solo mapa que gira despacio. De cerca cada uno muestra su título, y un clic abre su ficha con lo que apunta a él. Lo que se parece sin que nadie lo uniera se ve aparte, encontrado por palabras en común y una lista de palabras, sin IA.",
+  label: "Brainsty en Tisty: la red de documentos, tareas y etiquetas gira, se acerca hasta mostrar cada título y abre la ficha del documento Household budget 2026",
+  play: "Reproducir el video",
+  pause: "Pausar el video",
+};
+
 export const SCREENS_EN: Screen[] = [
   {
     image: "/tisty-screen-en-01-archive",
     label: "Archive",
     title: "Months later, as it was left",
     text: "A finished task goes to the Archive with its steps and its journal, and a search by you or your AI agent brings it back whole.",
-    alt: "Tisty's Archive on the Routines tab, with the Weekly review open beside it: 27 of 27 rounds kept, its longest run and the hour it usually gets done",
+    alt: "Tisty's Archive on the Stories tab: the search box, a chart of the months since February 2026, its counts and the finished tasks by month, some of them done by an agent",
   },
   {
     image: "/tisty-screen-en-02-diagrams",
@@ -466,11 +484,46 @@ export const SCREENS_EN: Screen[] = [
     alt: "The Tisty document «What is Tisty?» with its outline beside it, and buttons to read it in English or Spanish and to pick the paper size",
   },
   {
+    image: "/tisty-screen-en-09-brainsty",
+    label: "Brainsty",
+    title: "Everything you keep, as one network",
+    text: "Brainsty draws your documents, tasks and tags as one map you turn and zoom. What you linked shows strong, and what is alike though nobody tied it shows apart, with no AI.",
+    alt: "Brainsty in Tisty: 1,931 nodes and 2,811 connections drawn as one network, squares for documents and circles for tasks, with the search on top and the legend folded in the corner",
+  },
+  {
+    image: "/tisty-screen-en-10-agents",
+    label: "Agents",
+    title: "Your agents' rules, in one place",
+    text: "The Agents folder brings the rules, skills and memory of Claude, Codex, Copilot and Gemini into Tisty as documents. Bring copies them; Bring and sync also writes what you change back to each agent, with a backup first.",
+    alt: "Tisty's window «Your agents, in one place»: what it found for Claude, Codex and Copilot, and the buttons Bring and Bring and sync",
+  },
+  {
     image: "/tisty-screen-en-06-today",
     label: "Today",
     title: "Late is not overdue",
     text: "You type a task the way you would say it and Tisty picks out the date. Today puts the overdue ones first and, beside them, what the coming days bring.",
-    alt: "Tisty's Today view: overdue and due-soon tasks, and beside them the coming days, the priorities and the lists",
+    alt: "Tisty's Tasks on Today: overdue, due-soon and late tasks, the panel of the chosen task on the right and the coming days along the bottom",
+  },
+  {
+    image: "/tisty-screen-en-08-task",
+    label: "Task page",
+    title: "A task keeps its whole story",
+    text: "Its description, what done means and its steps, and beside them what it carries and a dated trail of everything that happened to it.",
+    alt: "A task's page in Tisty: its description, what done means and its steps, and on the right what it carries and its dated trail",
+  },
+  {
+    image: "/tisty-screen-en-11-weekly-review",
+    label: "Weekly review",
+    title: "Leave the week in order",
+    text: "Three stops: what is left to decide, what you marked as past, and the documents you have not opened in a while, to archive with one click.",
+    alt: "Tisty's Weekly review: To decide with 38 ideas waiting, Marked as past with nothing left, and 14 documents not opened in a while, each with its Archive button",
+  },
+  {
+    image: "/tisty-screen-en-12-diary",
+    label: "Diary",
+    title: "One line a day, only for you",
+    text: "The Diary is one Markdown book a year, a page a month. Each day shows the tasks you closed, and your agent does not read it until you open it.",
+    alt: "Tisty's Diary on Friday 20 November: a box for what happened today, the entries of the days before with the tasks closed on each, and the months of Diary 2026 in the sidebar",
   },
   {
     image: "/tisty-screen-en-07-folio",
@@ -487,7 +540,7 @@ export const SCREENS_ES: Screen[] = [
     label: "Archivo",
     title: "Meses después, tal como quedó",
     text: "Una tarea terminada pasa al Archivo con sus pasos y su bitácora, y una búsqueda tuya o de tu agente de IA la trae de vuelta entera.",
-    alt: "El Archivo de Tisty en la pestaña Rutinas, con la Revisión semanal abierta al lado: 27 de 27 vueltas cumplidas, la racha más larga y la hora a la que suele cumplirse",
+    alt: "El Archivo de Tisty en la pestaña Historias: el buscador, un gráfico de los meses desde febrero de 2026, sus cifras y las tareas terminadas por mes, algunas hechas por un agente",
   },
   {
     image: "/tisty-screen-es-02-diagramas",
@@ -518,11 +571,46 @@ export const SCREENS_ES: Screen[] = [
     alt: "El documento de Tisty «¿Qué es Tisty?» con su índice al lado y los botones para leerlo en español o en inglés y elegir el papel",
   },
   {
+    image: "/tisty-screen-es-09-brainsty",
+    label: "Brainsty",
+    title: "Todo lo que guardas, como una sola red",
+    text: "Brainsty dibuja tus documentos, tareas y etiquetas como un solo mapa que giras y acercas. Lo que enlazaste se ve fuerte, y lo que se parece sin que nadie lo uniera se ve aparte, sin IA.",
+    alt: "Brainsty en Tisty: 1931 nodos y 2811 conexiones dibujados como una sola red, cuadrados para los documentos y círculos para las tareas, con el buscador arriba y la leyenda plegada en la esquina",
+  },
+  {
+    image: "/tisty-screen-es-10-agentes",
+    label: "Agentes",
+    title: "Las reglas de tus agentes, en un solo lugar",
+    text: "La carpeta Agentes trae a Tisty las reglas, skills y memoria de Claude, Codex, Copilot y Gemini como documentos. Traer las copia; Traer y sincronizar además lleva a cada agente lo que cambies, con un respaldo antes.",
+    alt: "La ventana de Tisty «Tus agentes, en un solo lugar»: lo que encontró de Claude, Codex y Copilot, y los botones Traer y Traer y sincronizar",
+  },
+  {
     image: "/tisty-screen-es-06-hoy",
     label: "Hoy",
     title: "Atrasada no es vencida",
     text: "Escribes la tarea tal como la dices y Tisty saca la fecha. Hoy pone primero las vencidas y, al lado, lo que traen los próximos días.",
-    alt: "La vista Hoy de Tisty: las tareas vencidas y por vencer, y al lado los próximos días, las prioridades y las listas",
+    alt: "Las Tareas de Tisty en Hoy: las vencidas, las por vencer y las atrasadas, el panel de la tarea elegida a la derecha y los próximos días abajo",
+  },
+  {
+    image: "/tisty-screen-es-08-tarea",
+    label: "Página de tarea",
+    title: "Una tarea guarda toda su historia",
+    text: "Su descripción, cuándo está lista y sus pasos, y al lado lo que lleva y un trayecto con fecha de todo lo que le pasó.",
+    alt: "La página de una tarea en Tisty: su descripción, cuándo está lista y sus pasos, y a la derecha lo que lleva y su trayecto con fecha",
+  },
+  {
+    image: "/tisty-screen-es-11-revision-semanal",
+    label: "Revisión semanal",
+    title: "Deja la semana en orden",
+    text: "Tres paradas: lo que falta por decidir, lo que marcaste como pasado y los documentos que hace tiempo no abres, para archivarlos con un clic.",
+    alt: "La Revisión semanal de Tisty: Por decidir con 38 ideas por ordenar, Marcados como pasados sin nada pendiente y 17 documentos que hace tiempo no abres, cada uno con su botón Archivar",
+  },
+  {
+    image: "/tisty-screen-es-12-diario",
+    label: "Diario",
+    title: "Una línea al día, solo para ti",
+    text: "El Diario es un libro en Markdown por año, una página por mes. Cada día muestra las tareas que cerraste, y tu agente no lo lee mientras no lo abras.",
+    alt: "El Diario de Tisty el viernes 20 de noviembre: un recuadro para lo que pasó hoy, las entradas de los días anteriores con las tareas cerradas en cada uno y los meses del Diario 2026 en la barra lateral",
   },
   {
     image: "/tisty-screen-es-07-folio",

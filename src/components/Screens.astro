@@ -25,12 +25,19 @@ const say = {
   start: es ? "Reanudar el avance automático" : "Start moving on its own",
 };
 
+async function pictureOf(image: string, alt: string) {
+  const webp = variantsOf(image, "webp");
+  if (!webp.length) return null;
+  const { width, height } = await sharp(`./public${webp.at(-1)!.path}`).metadata();
+  return { width, height, alt, avif: srcsetOf(image, "avif"), webp: srcsetOf(image, "webp"), fallback: versioned(webp[0].path) };
+}
+
 const slides = await Promise.all(
   screens.map(async (one) => {
-    const webp = variantsOf(one.image, "webp");
-    const { width, height } = await sharp(`./public${webp.at(-1)!.path}`).metadata();
-    const picture = { width, height, alt: one.alt, avif: srcsetOf(one.image, "avif"), webp: srcsetOf(one.image, "webp"), fallback: versioned(webp[0].path) };
-    return { ...one, picture };
+    const light = (await pictureOf(one.image, one.alt))!;
+    const dark = await pictureOf(`${one.image}-dark`, one.alt);
+    const shades = dark ? [{ shade: "light", picture: light }, { shade: "dark", picture: dark }] : [{ shade: undefined, picture: light }];
+    return { ...one, shades };
   }),
 );
 
@@ -57,14 +64,26 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
         >
           <div class="flex aspect-[1440/758] justify-center">
             {at === 0 ? (
-              <ScreenPicture {...one.picture} sizes={SCREEN_SIZES} />
+              one.shades.map(({ shade, picture }) => (
+                <div class="contents" data-shade={shade}>
+                  <ScreenPicture {...picture} sizes={SCREEN_SIZES} />
+                </div>
+              ))
             ) : (
               <>
                 <div class="later contents">
-                  <ScreenPicture {...one.picture} sizes={SCREEN_SIZES} later />
+                  {one.shades.map(({ shade, picture }) => (
+                    <div class="contents" data-shade={shade}>
+                      <ScreenPicture {...picture} sizes={SCREEN_SIZES} later />
+                    </div>
+                  ))}
                 </div>
                 <noscript>
-                  <ScreenPicture {...one.picture} sizes={SCREEN_SIZES} />
+                  {one.shades.map(({ shade, picture }) => (
+                    <div class="contents" data-shade={shade}>
+                      <ScreenPicture {...picture} sizes={SCREEN_SIZES} />
+                    </div>
+                  ))}
                 </noscript>
               </>
             )}
@@ -131,6 +150,28 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
 
   .strip[data-ready]::-webkit-scrollbar {
     display: none;
+  }
+
+  [data-shade="dark"] {
+    display: none;
+  }
+
+  :global(:root[data-theme="dark"]) [data-shade="dark"] {
+    display: contents;
+  }
+
+  :global(:root[data-theme="dark"]) [data-shade="light"] {
+    display: none;
+  }
+
+  @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme="light"])) [data-shade="dark"] {
+      display: contents;
+    }
+
+    :global(:root:not([data-theme="light"])) [data-shade="light"] {
+      display: none;
+    }
   }
 
   .halo {
@@ -200,16 +241,25 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
     let playing = !still.matches;
     let timer = 0;
 
+    const opened = new Set<HTMLElement>();
     const reveal = (slide: HTMLElement) => {
-      for (const node of slide.querySelectorAll<HTMLElement>("[data-srcset]")) {
-        node.setAttribute("srcset", node.dataset.srcset!);
-        node.removeAttribute("data-srcset");
+      opened.add(slide);
+      for (const picture of slide.querySelectorAll("picture")) {
+        const shade = picture.closest<HTMLElement>("[data-shade]");
+        if (shade && getComputedStyle(shade).display === "none") continue;
+        for (const node of picture.querySelectorAll<HTMLElement>("[data-srcset]")) {
+          node.setAttribute("srcset", node.dataset.srcset!);
+          node.removeAttribute("data-srcset");
+        }
+        const image = picture.querySelector<HTMLImageElement>("img[data-src]");
+        if (!image) continue;
+        image.src = image.dataset.src!;
+        image.removeAttribute("data-src");
       }
-      const image = slide.querySelector<HTMLImageElement>("img[data-src]");
-      if (!image) return;
-      image.src = image.dataset.src!;
-      image.removeAttribute("data-src");
     };
+    const reshade = () => opened.forEach(reveal);
+    new MutationObserver(reshade).observe(document.documentElement, { attributeFilter: ["data-theme"] });
+    matchMedia("(prefers-color-scheme: dark)").addEventListener("change", reshade);
 
     const go = (at: number) => {
       const slide = slides[(at + slides.length) % slides.length];
