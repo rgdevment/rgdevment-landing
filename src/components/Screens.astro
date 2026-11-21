@@ -253,6 +253,7 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
     let current = 0;
     let playing = !still.matches;
     let timer = 0;
+    let heading: number | undefined;
 
     const opened = new Set<HTMLElement>();
     const reveal = (slide: HTMLElement) => {
@@ -281,7 +282,9 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
     const go = (at: number, instant = false) => {
       const slide = slides[at];
       reveal(slide);
-      strip.scrollTo({ left: slide.offsetLeft, behavior: instant || still.matches ? "auto" : "smooth" });
+      const smooth = !instant && !still.matches;
+      heading = smooth ? at : undefined;
+      strip.scrollTo({ left: slide.offsetLeft, behavior: smooth ? "smooth" : "auto" });
       show(at);
     };
 
@@ -327,7 +330,13 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
 
     const seen = new IntersectionObserver(
       (entries) => {
-        for (const entry of entries) if (entry.isIntersecting) show(slides.indexOf(entry.target as HTMLElement));
+        for (const entry of entries) {
+          const at = slides.indexOf(entry.target as HTMLElement);
+          // A smooth scroll passes the slides in between, and those must not take over from where it is heading.
+          if (!entry.isIntersecting || (heading !== undefined && at !== heading)) continue;
+          heading = undefined;
+          show(at);
+        }
       },
       { root: strip, threshold: 0.6 },
     );
@@ -373,8 +382,20 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
       const at = to();
       if (at !== undefined) go(at);
     });
-    strip.addEventListener("pointerdown", () => play(false));
-    strip.addEventListener("wheel", (event) => Math.abs(event.deltaX) > Math.abs(event.deltaY) && play(false), { passive: true });
+    strip.addEventListener("scrollend", () => (heading = undefined));
+    strip.addEventListener("pointerdown", () => {
+      heading = undefined;
+      play(false);
+    });
+    strip.addEventListener(
+      "wheel",
+      (event) => {
+        if (Math.abs(event.deltaX) <= Math.abs(event.deltaY)) return;
+        heading = undefined;
+        play(false);
+      },
+      { passive: true },
+    );
     back.addEventListener("click", () => {
       play(false);
       go(before(current) ?? current);
