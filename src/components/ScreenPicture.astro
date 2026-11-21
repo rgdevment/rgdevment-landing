@@ -8,9 +8,10 @@ interface Props {
   alt: string;
   sizes: string;
   later?: boolean;
+  first?: boolean;
 }
 
-const { avif, webp, fallback, width, height, alt, sizes, later = false } = Astro.props;
+const { avif, webp, fallback, width, height, alt, sizes, later = false, first = false } = Astro.props;
 const source = later ? { "data-srcset": avif } : { srcset: avif };
 const image = later ? { "data-src": fallback, "data-srcset": webp } : { src: fallback, srcset: webp };
 ---
@@ -23,9 +24,9 @@ const image = later ? { "data-src": fallback, "data-srcset": webp } : { src: fal
     width={width}
     height={height}
     alt={alt}
-    loading={later ? undefined : "lazy"}
-    fetchpriority="low"
+    loading={later ? undefined : first ? "eager" : "lazy"}
+    fetchpriority={first ? "high" : "low"}
     decoding="async"
-    class="h-full w-auto max-w-full rounded-[1%/1.9%] border border-white/10 shadow-[0_24px_50px_-24px_rgb(40_25_5/0.55)]"
+    class="max-h-full max-w-full drop-shadow-[0_14px_12px_rgb(40_25_5/0.3)]"
   />
 </picture>

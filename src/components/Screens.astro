@@ -36,13 +36,10 @@ const slides = await Promise.all(
   screens.map(async (one) => {
     const light = await pictureOf(one.image, one.alt);
     const dark = await pictureOf(`${one.image}-dark`, one.alt);
-    if (!light && !dark) throw new Error(`Screens: no capture for ${one.image}`);
-    const shades = light && dark ? [{ shade: "light", picture: light }, { shade: "dark", picture: dark }] : [{ shade: undefined, picture: (light ?? dark)! }];
-    // A capture taken only in dark would show a dark window on the light page, so that slide waits for the dark theme.
-    return { ...one, shades, only: light ? undefined : "dark" };
+    if (!light || !dark) throw new Error(`Screens: ${one.image} needs its light and its dark capture`);
+    return { ...one, shades: [{ shade: "light", picture: light }, { shade: "dark", picture: dark }] };
   }),
 );
-const lit = slides.filter((one) => !one.only);
 
 const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted transition hover:bg-fg/5 hover:text-fg aria-disabled:opacity-30";
 ---
@@ -55,23 +52,21 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
   data-stop={say.stop}
   data-start={say.start}
 >
-  <div class="halo absolute inset-x-0 top-0 -z-10 aspect-[1440/758] scale-x-[1.03] scale-y-[1.12] sm:scale-x-[1.08] sm:scale-y-[1.16] rounded-[40%]" aria-hidden="true"></div>
+  <div class="halo absolute inset-x-0 top-0 -z-10 aspect-[1558/818] scale-x-[1.03] scale-y-[1.12] sm:scale-x-[1.08] sm:scale-y-[1.16] rounded-[40%]" aria-hidden="true"></div>
   <div class="strip relative flex snap-x snap-mandatory gap-6 overflow-x-auto" tabindex="0" data-strip>
     {
       slides.map((one, at) => (
         <figure
           class="w-full shrink-0 snap-center"
-          data-only={one.only}
-          data-label={one.label}
           role="group"
           aria-roledescription={say.slide}
-          aria-label={one.only ? one.label : `${lit.indexOf(one) + 1} / ${lit.length}: ${one.label}`}
+          aria-label={`${at + 1} / ${slides.length}: ${one.label}`}
         >
-          <div class="flex aspect-[1440/758] justify-center">
+          <div class="flex aspect-[1558/818] items-center justify-center px-4 sm:px-6">
             {at === 0 ? (
               one.shades.map(({ shade, picture }) => (
                 <div class="contents" data-shade={shade}>
-                  <ScreenPicture {...picture} sizes={SCREEN_SIZES} />
+                  <ScreenPicture {...picture} sizes={SCREEN_SIZES} first />
                 </div>
               ))
             ) : (
@@ -120,7 +115,7 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
       <ul class="flex items-center">
         {
           slides.map((one, at) => (
-            <li data-only={one.only}>
+            <li>
               <button type="button" class="grid h-9 place-items-center px-1" aria-label={one.label} data-go={at}>
                 <span class="dot relative block h-1.5 overflow-hidden rounded-full bg-fg/20" aria-hidden="true">
                   <span class="fill absolute inset-0 rounded-full bg-fg" />
@@ -157,13 +152,8 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
     display: none;
   }
 
-  [data-shade="dark"],
-  [data-only="dark"] {
+  [data-shade="dark"] {
     display: none;
-  }
-
-  :global(:root[data-theme="dark"]) [data-only="dark"] {
-    display: revert;
   }
 
   :global(:root[data-theme="dark"]) [data-shade="dark"] {
@@ -175,10 +165,6 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
   }
 
   @media (prefers-color-scheme: dark) {
-    :global(:root:not([data-theme="light"])) [data-only="dark"] {
-      display: revert;
-    }
-
     :global(:root:not([data-theme="light"])) [data-shade="dark"] {
       display: contents;
     }
@@ -249,6 +235,7 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
     const back = box.querySelector<HTMLButtonElement>('[data-step="back"]')!;
     const forth = box.querySelector<HTMLButtonElement>('[data-step="forth"]')!;
     const turn = box.querySelector<HTMLButtonElement>("[data-turn]")!;
+    const last = slides.length - 1;
     const held = new Set<string>();
     let current = 0;
     let playing = !still.matches;
@@ -271,45 +258,30 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
         image.removeAttribute("data-src");
       }
     };
-    const shown = () => slides.flatMap((slide, index) => (getComputedStyle(slide).display === "none" ? [] : [index]));
-    const after = (at: number) => shown().find((index) => index > at);
-    const before = (at: number) => shown().filter((index) => index < at).pop();
-    const number = () => {
-      const on = shown();
-      on.forEach((index, place) => slides[index].setAttribute("aria-label", `${place + 1} / ${on.length}: ${slides[index].dataset.label}`));
-    };
-
-    const go = (at: number, instant = false) => {
-      const slide = slides[at];
-      reveal(slide);
-      const smooth = !instant && !still.matches;
-      heading = smooth ? at : undefined;
-      strip.scrollTo({ left: slide.offsetLeft, behavior: smooth ? "smooth" : "auto" });
-      show(at);
-    };
-
-    const reshade = () => {
-      opened.forEach(reveal);
-      number();
-      const stay = shown().includes(current) ? current : (before(current) ?? after(current));
-      if (stay !== undefined) go(stay, true);
-    };
+    const reshade = () => opened.forEach(reveal);
     new MutationObserver(reshade).observe(document.documentElement, { attributeFilter: ["data-theme"] });
     matchMedia("(prefers-color-scheme: dark)").addEventListener("change", reshade);
+
+    const go = (at: number) => {
+      const index = (at + slides.length) % slides.length;
+      const slide = slides[index];
+      reveal(slide);
+      heading = still.matches ? undefined : index;
+      strip.scrollTo({ left: slide.offsetLeft, behavior: still.matches ? "auto" : "smooth" });
+    };
 
     const schedule = () => {
       clearTimeout(timer);
       const running = playing && held.size === 0;
       box.toggleAttribute("data-running", running);
-      const next = after(current) ?? shown()[0];
-      if (running && next !== undefined) timer = window.setTimeout(() => go(next), TURN);
+      if (running) timer = window.setTimeout(() => go(current + 1), TURN);
     };
 
     const show = (at: number) => {
       current = at;
       dots.forEach((dot, index) => dot.setAttribute("aria-current", String(index === at)));
-      back.setAttribute("aria-disabled", String(before(at) === undefined));
-      forth.setAttribute("aria-disabled", String(after(at) === undefined));
+      back.setAttribute("aria-disabled", String(at === 0));
+      forth.setAttribute("aria-disabled", String(at === last));
       schedule();
     };
 
@@ -368,19 +340,18 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
     box.addEventListener("focusin", (event) => hold("focus", (event.target as HTMLElement).matches(":focus-visible")));
     box.addEventListener("focusout", (event) => box.contains(event.relatedTarget as Node) || hold("focus", false));
 
-    const keys: Record<string, () => number | undefined> = {
-      ArrowLeft: () => before(current) ?? current,
-      ArrowRight: () => after(current) ?? current,
-      Home: () => shown()[0],
-      End: () => shown().pop(),
+    const keys: Record<string, () => number> = {
+      ArrowLeft: () => Math.max(current - 1, 0),
+      ArrowRight: () => Math.min(current + 1, last),
+      Home: () => 0,
+      End: () => last,
     };
     strip.addEventListener("keydown", (event) => {
       const to = keys[event.key];
       if (!to) return;
       event.preventDefault();
       play(false);
-      const at = to();
-      if (at !== undefined) go(at);
+      go(to());
     });
     strip.addEventListener("scrollend", () => (heading = undefined));
     strip.addEventListener("pointerdown", () => {
@@ -398,11 +369,11 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
     );
     back.addEventListener("click", () => {
       play(false);
-      go(before(current) ?? current);
+      go(Math.max(current - 1, 0));
     });
     forth.addEventListener("click", () => {
       play(false);
-      go(after(current) ?? current);
+      go(Math.min(current + 1, last));
     });
     dots.forEach((dot, index) =>
       dot.addEventListener("click", () => {
@@ -418,8 +389,7 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
     box.style.setProperty("--turn", `${TURN}ms`);
     strip.dataset.ready = "";
     box.querySelector<HTMLElement>("[data-controls]")!.hidden = false;
-    number();
     play(playing);
-    show(shown()[0] ?? 0);
+    show(0);
   }
 </script>
