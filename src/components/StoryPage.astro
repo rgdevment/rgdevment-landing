@@ -47,7 +47,7 @@ const posting = {
 const neighbour = "block rounded-3xl border border-line p-5 transition-colors hover:border-fg/30";
 ---
 
-<Layout title={title} description={description} locale={locale} paths={paths} published={story.date} image={image} imageAlt={image && shows} schema={[crumbs(locale, trail), posting]}>
+<Layout title={title} description={description} locale={locale} paths={paths} published={story.date} image={image} schema={[crumbs(locale, trail), posting]}>
   <article class="shell pt-10 sm:pt-14" style={`--accent: ${product.accent}`}>
     <Crumbs locale={locale} trail={trail} />
     <header class="mt-10 max-w-4xl">

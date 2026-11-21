@@ -1,10 +1,13 @@
 ---
-import Copy from "./Copy.astro";
 import Crumbs from "./Crumbs.astro";
-import Download from "./Download.astro";
-import Faq from "./Faq.astro";
 import Icon from "./Icon.astro";
-import Install from "./Install.astro";
+import Journey from "./Journey.astro";
+import Assistant from "./Assistant.astro";
+import OnDisk from "./OnDisk.astro";
+import Sharing from "./Sharing.astro";
+import ProductHunt from "./ProductHunt.astro";
+import Film from "./Film.astro";
+import Screens from "./Screens.astro";
 import Shot from "./Shot.astro";
 import WritingMark from "./WritingMark.astro";
 import Layout from "../layouts/Layout.astro";
@@ -13,10 +16,10 @@ import { COMPARE_PATH, comparisonOf } from "../content/compare";
 import { bySection, docPath, docsOf } from "../content/docs";
 import { privacyPath } from "../content/privacy";
 import { GUIDES, written } from "../content/guides";
-import { PRODUCTS, type Product, cardOf, inkOf, shotSrc, words, iconAlt } from "../content/products";
-import { latestRelease, releaseDate, stars } from "../content/releases";
-import { appSchema, faqSchema } from "../content/schema";
-import { DOMAIN, HOME_PRODUCT, canonical, crumbs, href, type Locale } from "../site";
+import { PRODUCTS, type Product, brewSteps, cardOf, inkOf, releasesUrl, shotSrc, storeUrl, words, iconAlt } from "../content/products";
+import { installers, latestRelease, megabytes, releaseDate, stars } from "../content/releases";
+import { variantsOf } from "../screens";
+import { DOMAIN, HOME_PRODUCT, PERSON_ID, appId, canonical, crumbs, href, type Locale } from "../site";
 
 interface Props {
   product: Product;
@@ -28,14 +31,22 @@ const t = words(product, locale);
 const compared = comparisonOf(product.slug);
 const compare = compared && { label: compared[locale].heading, path: COMPARE_PATH[locale] };
 const es = locale === "es";
+const store = storeUrl(product);
+const releases = releasesUrl(product);
 const path = product.slug;
 const shot = shotSrc(product, locale);
+const brew = brewSteps(product);
 const ink = inkOf(product);
+const fixes = t.fixes;
+const cost = t.cost;
 const social = cardOf(product, locale);
 
 const release = await latestRelease(product);
+const kit = installers(release);
 const starCount = product.signals ? await stars(product) : null;
+const macDirect = product.requires ? kit.macArm : undefined;
 const licence = `${product.repo}/blob/main/LICENSE`;
+const quiet = "inline-block py-1 underline decoration-muted underline-offset-4 transition hover:text-fg";
 const docs = await docsOf(product.slug, locale);
 const docIndex = docPath(locale, product.slug);
 const docSections = bySection(docs);
@@ -45,13 +56,26 @@ const others = PRODUCTS.filter((one) => one.slug !== product.slug);
 const say = {
   guides: es ? "Guías" : "Guides",
   guidesLede: es ? "Para sacarle partido, o para resolver el problema sin instalar nada." : "To get more out of it, or to solve the problem without installing anything.",
+  install: es ? "Cómo se instala" : "How to install it",
+  installLede: es ? "Elige el camino que prefieras. Ninguno pide cuenta." : "Pick whichever route you prefer. None of them asks for an account.",
   privacy: es ? "Privacidad" : "Privacy",
   policy: es ? "Leer la política de privacidad" : "Read the privacy policy",
+  faq: es ? "Preguntas frecuentes" : "Frequently asked questions",
   source: es ? "Ver el código fuente" : "View the source code",
   free: es ? "Gratis y de código abierto" : "Free and open source",
+  direct: es ? "Descarga directa" : "Direct download",
+  ways: es ? "Todas las formas de instalarlo" : "Every way to install it",
+  copy: es ? "Copiar" : "Copy",
+  copied: es ? "Copiado" : "Copied",
+  getWin: es ? "Descargar para Windows" : "Download for Windows",
+  getMac: es ? "Descargar para macOS" : "Download for macOS",
   onGithub: es ? "Código fuente en GitHub" : "Source code on GitHub",
+  onProductHunt: es ? `${product.name} en Product Hunt` : `${product.name} on Product Hunt`,
   stars: es ? "Estrellas en GitHub" : "Stars on GitHub",
+  orLater: es ? "o posterior" : "or later",
   differs: es ? `¿Qué diferencia a ${product.name} de otros?` : `What sets ${product.name} apart from others?`,
+  or: es ? "o el" : "or the",
+  installer: es ? "instalador" : "installer",
   others: es ? "Del mismo taller" : "From the same workshop",
   notes: es ? "Notas de la versión" : "Release notes",
   docs: es ? "Ayuda" : "Documentation",
@@ -61,10 +85,60 @@ const say = {
   noTelemetry: es ? "Sin telemetría" : "No telemetry",
 };
 
-const help = docs.length > 0 ? canonical(locale, docPath(locale, product.slug)) : product.repo;
+const screenshot = t.screens
+  ? t.screens.map((one) => ({
+      "@type": "ImageObject",
+      contentUrl: new URL(variantsOf(one.image, "webp").at(-1)!.path, DOMAIN).toString(),
+      name: one.title,
+      caption: one.alt,
+      inLanguage: locale,
+    }))
+  : shot && new URL(shot, DOMAIN).toString();
+
 const schema = [
-  appSchema(product, locale, release, help, shot && new URL(shot, DOMAIN).toString()),
-  faqSchema(t.faq),
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "@id": appId(product.slug),
+    name: product.name,
+    ...(product.formerName ? { alternateName: product.formerName } : {}),
+    description: t.meta,
+    ...(t.keywords ? { keywords: t.keywords.join(", ") } : {}),
+    ...(t.groups ? { featureList: t.groups.flatMap((group) => group.points) } : {}),
+    applicationCategory: "UtilitiesApplication",
+    operatingSystem: product.platforms.join(", "),
+    url: canonical("en", path),
+    inLanguage: ["en", "es"],
+    image: new URL(product.icon, DOMAIN).toString(),
+    ...(screenshot ? { screenshot } : {}),
+    downloadUrl: releases,
+    ...(release ? { softwareVersion: release.version, dateModified: release.date } : {}),
+    ...(store ? { installUrl: store } : {}),
+    sameAs: [
+      product.repo,
+      ...(store ? [store] : []),
+      ...(product.signals?.producthunt ? [product.signals.producthunt.url] : []),
+      ...(product.signals?.alternativeto ? [product.signals.alternativeto] : []),
+      ...(product.listings ?? []).map(([, url]) => url),
+    ],
+    license: licence,
+    isAccessibleForFree: true,
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+    author: { "@id": PERSON_ID },
+    softwareHelp: {
+      "@type": "CreativeWork",
+      url: docs.length > 0 ? canonical(locale, docPath(locale, product.slug)) : product.repo,
+    },
+  },
+  {
+    "@context": "https://schema.org",
+    "@type": "FAQPage",
+    mainEntity: t.faq.map((one) => ({
+      "@type": "Question",
+      name: one.q,
+      acceptedAnswer: { "@type": "Answer", text: one.a },
+    })),
+  },
   ...(HOME_PRODUCT ? [] : [crumbs(locale, [[product.name, path]])]),
 ];
 ---
@@ -128,13 +202,97 @@ const schema = [
 
         <div class="flex flex-col">
 
-        <Download
-          product={product}
-          locale={locale}
-          release={release}
-          docs={docs.length > 0 ? href(locale, docIndex) : undefined}
-          compare={compare && { label: say.differs, path: compare.path, ink }}
-        />
+        <!-- Both links ship in the HTML; the script only decides which one is dressed as the main one,
+             so a reader without scripts, and any crawler, still sees every platform. -->
+        <div id="download" class="group mt-10">
+          <div class="flex flex-wrap items-start justify-center gap-3 sm:gap-6">
+            {
+              store && (
+                <div class="flex max-w-[18rem] flex-col items-center gap-2.5">
+                  <a
+                    class="btn-ghost px-6 py-3.5 group-data-[os=win]:border-transparent group-data-[os=win]:bg-fg group-data-[os=win]:text-canvas group-data-[os=win]:hover:bg-fg/85"
+                    href={store}
+                    rel="noopener"
+                  >
+                    <Icon name="windows" class="h-4 w-4" />
+                    {say.getWin}
+                  </a>
+                  {product.requires && (
+                    <p class="text-xs leading-relaxed text-muted">
+                      <span class="block whitespace-nowrap">{product.requires.windows} {say.orLater}</span>
+                      <span class="block whitespace-nowrap">
+                        Microsoft Store
+                        {product.winget && (
+                          <>
+                            {" "}· <a class={quiet} href="#install">winget</a>
+                          </>
+                        )}
+                      </span>
+                      {kit.win && (
+                        <span class="block whitespace-nowrap">
+                          {say.or} <a class={quiet} href={kit.win.url}>{say.installer} .exe · {megabytes(kit.win, locale)}</a>
+                        </span>
+                      )}
+                    </p>
+                  )}
+                </div>
+              )
+            }
+            {
+              product.cask && (
+                <div class="flex max-w-[18rem] flex-col items-center gap-2.5">
+                  <a
+                    class="btn-ghost px-6 py-3.5 group-data-[os=mac]:border-transparent group-data-[os=mac]:bg-fg group-data-[os=mac]:text-canvas group-data-[os=mac]:hover:bg-fg/85"
+                    href={macDirect?.url ?? "#install"}
+                  >
+                    <Icon name="apple" class="h-4 w-4" />
+                    {say.getMac}
+                  </a>
+                  {macDirect && (
+                    <p class="text-xs leading-relaxed text-muted">
+                      <span class="block whitespace-nowrap">{product.requires!.macos} {say.orLater}</span>
+                      <span class="block whitespace-nowrap">Apple Silicon · .dmg · {megabytes(macDirect, locale)}</span>
+                      <span class="block whitespace-nowrap">
+                        {kit.macIntel && (
+                          <>
+                            Intel: <a class={quiet} href={kit.macIntel.url}>.dmg · {megabytes(kit.macIntel, locale)}</a> ·{" "}
+                          </>
+                        )}
+                        <a class={quiet} href="#install">Homebrew</a>
+                      </span>
+                    </p>
+                  )}
+                </div>
+              )
+            }
+          </div>
+          <p class="mt-4 text-sm text-muted">
+            <a class="underline decoration-muted underline-offset-4 transition hover:text-fg" href="#install">{say.ways}</a>
+            {docs.length > 0 && (
+              <>
+                <span class="px-2" aria-hidden="true">·</span>
+                <a class="underline decoration-muted underline-offset-4 transition hover:text-fg" href={href(locale, docIndex)}>{say.docs}</a>
+              </>
+            )}
+          </p>
+          {
+            compare && (
+              <p class="mt-5">
+                <a class="accent-ink inline-flex items-center gap-1.5 font-medium hover:underline" style={ink} href={href(locale, compare.path)}>
+                  {say.differs}
+                  <Icon name="arrow" class="h-4 w-4" />
+                </a>
+              </p>
+            )
+          }
+          {
+            product.signals?.producthunt?.badge && (
+              <p class="mt-6">
+                <ProductHunt url={product.signals.producthunt.url} post={product.signals.producthunt.post} label={say.onProductHunt} />
+              </p>
+            )
+          }
+        </div>
         <ul class="mt-7 flex flex-wrap justify-center gap-2 sm:order-first">
           {
             product.platforms.map((one) => (
@@ -175,7 +333,9 @@ const schema = [
       </header>
 
       {
-        product.shot && (
+        t.screens ? (
+          <Screens name={product.name} screens={t.screens} locale={locale} />
+        ) : product.shot && (
           <div class="relative mx-auto mt-16 max-w-5xl">
             <div
               class="absolute inset-x-10 -bottom-6 top-10 -z-10 rounded-[2rem] opacity-30 blur-3xl"
@@ -191,8 +351,51 @@ const schema = [
     </div>
   </section>
 
+  {t.film && <Film film={t.film} />}
+
+  {
+    fixes && (
+      <section class="shell mt-24 sm:mt-32">
+        <h2 class="section-title">{fixes.title}</h2>
+        <p class="mt-3 text-muted">{fixes.lede}</p>
+        <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
+          {fixes.rows.map((one) => (
+            <div class="card p-6 sm:p-7">
+              <p class="accent-ink text-xs font-medium uppercase tracking-[0.12em]" style={ink}>{one.who}</p>
+              <p class="eyebrow mt-4">{fixes.said.problem}</p>
+              <h3 class="mt-1.5 text-lg font-semibold">{one.problem}</h3>
+              <div class="mt-5 border-l-2 pl-4" style={`border-color: ${product.accent}`}>
+                <p class="accent-ink text-xs font-medium uppercase tracking-[0.12em]" style={ink}>{fixes.said.fix}</p>
+                <p class="mt-1.5 text-body">{one.fix}</p>
+              </div>
+            </div>
+          ))}
+        </div>
+      </section>
+    )
+  }
+
   <section class="shell mt-24 sm:mt-32">
     <h2 class="section-title">{es ? `Qué hace ${product.name}` : `What ${product.name} does`}</h2>
+    {
+      t.groups && (
+        <div class="mt-10 grid grid-cols-1 gap-4 md:grid-cols-2">
+          {t.groups.map((group) => (
+            <div class="card p-6 sm:p-8">
+              <h3 class="accent-ink text-xl font-semibold" style={ink}>{group.title}</h3>
+              <ul class="mt-4 space-y-3">
+                {group.points.map((one) => (
+                  <li class="flex gap-2.5 text-body">
+                    <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full" style={`background: ${product.accent}`} aria-hidden="true" />
+                    <span>{one}</span>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          ))}
+        </div>
+      )
+    }
     {
       compare && (
         <a class="mt-6 inline-flex items-center gap-1.5 font-medium text-fg hover:underline" href={href(locale, compare.path)}>
@@ -218,6 +421,94 @@ const schema = [
   </section>
 
   {
+    cost && (
+      <section class="shell mt-24 sm:mt-32">
+        <div class="relative isolate overflow-hidden rounded-[2rem] border border-line p-6 sm:p-10 lg:p-12" style={`--accent: ${product.accent}`}>
+          <div
+            class="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[28rem] w-[52rem] -translate-x-1/2 rounded-full opacity-[0.16] blur-3xl"
+            style="background: radial-gradient(closest-side, var(--accent), transparent)"
+            aria-hidden="true"
+          ></div>
+          <h2 class="section-title">{cost.title}</h2>
+          <p class="mt-3 text-lg text-body">{cost.lede}</p>
+          <ul class="mt-10 grid gap-4 md:grid-cols-2">
+            {cost.rows.map((one) => (
+              <li class="card flex flex-col p-6 sm:p-7">
+                <p class="accent-ink text-5xl font-semibold tracking-[-0.03em] sm:text-6xl" style={ink}>{one.saving}</p>
+                <p class="eyebrow mt-1">{cost.less}</p>
+                <p class="mt-5 font-medium text-fg">{one.what}</p>
+                <p class="mt-1 text-sm text-muted">{one.spends}</p>
+              </li>
+            ))}
+          </ul>
+          <h3 class="mt-10 text-xl font-semibold">{cost.whyTitle}</h3>
+          <ul class="mt-4 grid grid-cols-1 gap-3 sm:grid-cols-2">
+            {cost.why.map((one) => (
+              <li class="flex gap-2.5 text-body">
+                <span class="mt-2.5 h-1.5 w-1.5 shrink-0 rounded-full" style={`background: ${product.accent}`} aria-hidden="true" />
+                <span>{one}</span>
+              </li>
+            ))}
+          </ul>
+          <p class="mt-6 text-sm text-muted">{cost.caveat}</p>
+        </div>
+      </section>
+    )
+  }
+
+  {
+    t.kinds && (
+      <section class="shell mt-24 sm:mt-32">
+        <h2 class="section-title">{t.kinds.title}</h2>
+        <p class="mt-3 text-muted">{t.kinds.lede}</p>
+        <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {t.kinds.cards.map((one) => (
+            <div class="card p-6 sm:p-7">
+              <h3 class="accent-ink text-xl font-semibold" style={ink}>{one.title}</h3>
+              <p class="mt-2 text-body">{one.body}</p>
+            </div>
+          ))}
+        </div>
+        <div class="card mt-4 p-6 sm:p-7">
+          <h3 class="text-xl font-semibold">{t.kinds.spike.title}</h3>
+          <p class="mt-2 text-body">{t.kinds.spike.lede}</p>
+          <Journey steps={t.kinds.spike.steps} accent={product.accent} />
+        </div>
+        <a
+          class="mt-6 inline-flex items-center gap-1.5 font-medium text-fg hover:underline"
+          href={`${href(locale, docPath(locale, product.slug, t.kinds.page))}#${t.kinds.anchor}`}
+        >
+          {t.kinds.more}
+          <Icon name="arrow" class="h-4 w-4" />
+        </a>
+      </section>
+    )
+  }
+
+  {
+    t.day && (
+      <section class="shell mt-24 sm:mt-32">
+        <h2 class="section-title">{t.day.title}</h2>
+        <p class="mt-3 text-muted">{t.day.lede}</p>
+        <ol class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-4">
+          {t.day.steps.map((one, at) => (
+            <li class="card p-6">
+              <span class="accent-ink text-sm font-medium" style={ink}>
+                {String(at + 1).padStart(2, "0")}
+              </span>
+              <h3 class="mt-3 text-lg font-semibold">{one.title}</h3>
+              <p class="mt-1.5 text-body">{one.body}</p>
+            </li>
+          ))}
+        </ol>
+        <p class="mt-8 text-xl leading-snug text-fg">{t.day.close}</p>
+      </section>
+    )
+  }
+
+  {t.proof && <OnDisk proof={t.proof} />}
+
+  {
     product.mascot && t.mascot && (
       <section class="shell mt-16">
         <div class="card flex flex-col items-center gap-6 p-7 text-center sm:flex-row sm:p-9 sm:text-left">
@@ -230,6 +521,10 @@ const schema = [
       </section>
     )
   }
+
+  {t.assistant && product.mcp && <Assistant product={product} words={t.assistant} locale={locale} />}
+
+  {t.sharing && <Sharing product={product} words={t.sharing} locale={locale} />}
 
   <section class="shell mt-16">
     <div class="flex flex-col gap-5 rounded-3xl border border-flame/25 bg-flame-tint p-7 sm:flex-row sm:items-center sm:p-9">
@@ -246,7 +541,120 @@ const schema = [
     </div>
   </section>
 
-  <Install product={product} locale={locale} />
+  <section id="install" class="shell mt-24 scroll-mt-24 sm:mt-32">
+    <h2 class="section-title">{say.install}</h2>
+    <p class="mt-3 text-muted">{say.installLede}</p>
+
+    <div class="mt-10 grid grid-cols-1 gap-4 sm:grid-cols-2">
+      {
+        store && (
+          <a class="card-link group flex items-center gap-4 p-5" href={store} rel="noopener">
+            <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-sunken text-fg">
+              <Icon name="windows" class="h-5 w-5" />
+            </span>
+            <span class="min-w-0">
+              <span class="block font-semibold text-fg">Microsoft Store</span>
+              <span class="mt-0.5 block text-sm text-muted">Windows</span>
+            </span>
+            <Icon name="arrow" class="ml-auto h-4 w-4 shrink-0 text-muted transition group-hover:translate-x-0.5" />
+          </a>
+        )
+      }
+
+      {
+        product.cask && (
+          <div class="card p-5">
+            <div class="flex items-center gap-4">
+              <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-sunken text-fg">
+                <Icon name="apple" class="h-5 w-5" />
+              </span>
+              <span>
+                <span class="block font-semibold text-fg">Homebrew</span>
+                <span class="mt-0.5 block text-sm text-muted">macOS</span>
+              </span>
+            </div>
+            <div class="mt-4 flex items-start gap-2 rounded-2xl bg-night py-3 pr-2 pl-4">
+              <code class="flex-1 overflow-x-auto font-mono text-[13px] text-stone-100">
+                {brew.map((line, at) => (
+                  <span class:list={["block whitespace-nowrap", { "mt-1": at > 0 }]}>
+                    <span class="select-none text-stone-400">$ </span>{line}
+                  </span>
+                ))}
+              </code>
+              <button
+                type="button"
+                class="copy shrink-0 rounded-lg p-1.5 text-stone-400 transition hover:bg-night-soft hover:text-white"
+                data-copy={brew.join("\n")}
+                aria-label={say.copy}
+                data-done={say.copied}
+              >
+                <Icon name="copy" class="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        )
+      }
+
+      {
+        product.winget && (
+          <div class="card p-5">
+            <div class="flex items-center gap-4">
+              <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-sunken text-fg">
+                <Icon name="windows" class="h-5 w-5" />
+              </span>
+              <span>
+                <span class="block font-semibold text-fg">winget</span>
+                <span class="mt-0.5 block text-sm text-muted">Windows</span>
+              </span>
+            </div>
+            <div class="mt-4 flex items-center gap-2 rounded-2xl bg-night py-2.5 pr-2 pl-4">
+              <code class="flex-1 overflow-x-auto whitespace-nowrap font-mono text-[13px] text-stone-100">
+                <span class="select-none text-stone-400">$ </span>winget install {product.winget}
+              </code>
+              <button
+                type="button"
+                class="copy shrink-0 rounded-lg p-1.5 text-stone-400 transition hover:bg-night-soft hover:text-white"
+                data-copy={`winget install ${product.winget}`}
+                aria-label={say.copy}
+                data-done={say.copied}
+              >
+                <Icon name="copy" class="h-4 w-4" />
+              </button>
+            </div>
+          </div>
+        )
+      }
+
+      <a class="card-link group flex items-center gap-4 p-5" href={releases} rel="noopener">
+        <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-sunken text-fg">
+          <Icon name="download" class="h-5 w-5" />
+        </span>
+        <span class="min-w-0">
+          <span class="block font-semibold text-fg">GitHub Releases</span>
+          <span class="mt-0.5 block text-sm text-muted">{say.direct}</span>
+        </span>
+        <Icon name="arrow" class="ml-auto h-4 w-4 shrink-0 text-muted transition group-hover:translate-x-0.5" />
+      </a>
+    </div>
+
+    {
+      t.firstRun && (
+        <div class="mt-4 flex flex-col gap-4 rounded-3xl border border-dashed border-line p-6 sm:flex-row sm:items-start sm:p-7">
+          <span class="grid h-12 w-12 shrink-0 place-items-center rounded-2xl bg-sunken text-fg">
+            <Icon name="book" class="h-5 w-5" />
+          </span>
+          <div>
+            <h3 class="text-lg font-semibold text-fg">{t.firstRun.title}</h3>
+            <p class="mt-1.5 text-body">{t.firstRun.body}</p>
+            <a class="mt-3 inline-flex items-center gap-1.5 font-medium text-fg hover:underline" href={`${href(locale, docIndex)}#${t.firstRun.anchor}`}>
+              {t.firstRun.link}
+              <Icon name="arrow" class="h-4 w-4" />
+            </a>
+          </div>
+        </div>
+      )
+    }
+  </section>
 
   {
     docs.length > 0 && (
@@ -281,7 +689,32 @@ const schema = [
     )
   }
 
-  <Faq locale={locale} questions={t.faq} />
+  <section class="shell mt-24 sm:mt-32">
+    <div class="mx-auto max-w-3xl">
+      <h2 class="section-title">{say.faq}</h2>
+      <div class="mt-8 divide-y divide-line border-y border-line">
+        {
+          t.faq.map((one, at) => (
+            <details class="faq group py-2" open={at === 0}>
+              <summary class="flex cursor-pointer list-none items-center justify-between gap-6 py-4 text-lg font-semibold text-fg">
+                <h3>{one.q}</h3>
+                <Icon name="chevron" class="h-5 w-5 shrink-0 text-muted transition group-open:rotate-180" />
+              </summary>
+              <p class="pb-5 text-body">
+                {one.a}
+                {one.link && (
+                  <a class="ml-1 inline-flex items-center gap-1 font-medium text-fg hover:underline" href={href(locale, one.link.path)}>
+                    {one.link.label}
+                    <Icon name="arrow" class="h-3.5 w-3.5" />
+                  </a>
+                )}
+              </p>
+            </details>
+          ))
+        }
+      </div>
+    </div>
+  </section>
 
   {
     guides.length > 0 && (
@@ -331,5 +764,27 @@ const schema = [
     </ul>
   </section>
 
-  <Copy />
+  <script is:inline>
+    (() => {
+      const box = document.getElementById("download");
+      if (!box) return;
+      const said = navigator.userAgentData?.platform || navigator.userAgent || "";
+      const os = /mac|iphone|ipad/i.test(said) ? "mac" : /win/i.test(said) ? "win" : "";
+      if (os) box.dataset.os = os;
+    })();
+    document.querySelectorAll(".copy").forEach((one) => {
+      const label = one.getAttribute("aria-label");
+      one.addEventListener("click", () => {
+        navigator.clipboard?.writeText(one.dataset.copy || "");
+        one.classList.add("text-flame");
+        one.setAttribute("aria-label", one.dataset.done || label);
+        const said = document.querySelector("[data-announce]");
+        if (said) said.textContent = one.dataset.done || "";
+        setTimeout(() => {
+          one.classList.remove("text-flame");
+          one.setAttribute("aria-label", label);
+        }, 1200);
+      });
+    });
+  </script>
 </Layout>

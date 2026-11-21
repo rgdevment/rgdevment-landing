@@ -1,4 +1,3 @@
-import { AGENTS } from "./agents";
 import type { Assistant, Cost, Day, Film, Fixes, Proof, Screen, Sharing } from "./products";
 
 export const FIXES_EN: Fixes = {
@@ -8,49 +7,41 @@ export const FIXES_EN: Fixes = {
   rows: [
     {
       who: "Developer",
-      on: "agent",
       problem: "Every new session, you explain the project to your agent again.",
       fix: "It asks what moved since last time, opens the task «Move payments to v2» with its ticked steps and reads what it noted yesterday: the webhook fails on old signatures, retrying ruled out. It carries on from there.",
     },
     {
       who: "Developer",
-      on: "agent",
       problem: "Your NOTES.md grew to 256 KB and the agent rereads it every time.",
       fix: "It lives as documents split by subject, in pages. The agent reads the outline and the one section it needs, about 97% less than the whole file.",
     },
     {
       who: "Anyone",
-      on: "alone",
       problem: "You solved this eight months ago and cannot remember how.",
       fix: "A search for «timeouts on save» brings back the archived task as it was left: its steps, its journal and the line saying the cause was a missing index.",
     },
     {
       who: "PM",
-      on: "agent",
       problem: "A month later somebody asks why it was decided that way.",
       fix: "One living document per subject, «Checkout decisions», each decision dated with its why. The agent finds it and quotes it instead of reopening the debate.",
     },
     {
       who: "QA",
-      on: "agent",
       problem: "The same screen breaks again and nobody remembers last time's cases.",
       fix: "The archived regression task keeps its cases as steps, with what was seen in each.",
     },
     {
       who: "Handover",
-      on: "data",
       problem: "Context passed from PM to PO, or from developer to QA, pasted into a chat.",
       fix: "You hand over the document through Folio: encrypted on your machine before it leaves, signed by you, gone on its own after the days without use you choose.",
     },
     {
       who: "Business rules",
-      on: "data",
       problem: "What must not end up in somebody else's database.",
       fix: "Tisty keeps it on your disk and sends it nowhere. What your agent reads goes where that agent goes, so pair it with one your company allows.",
     },
     {
       who: "At home",
-      on: "alone",
       problem: "The bank paperwork that comes back every year.",
       fix: "Next year, the archived task tells you how you did it last time.",
     },
@@ -64,49 +55,41 @@ export const FIXES_ES: Fixes = {
   rows: [
     {
       who: "Desarrollo",
-      on: "agent",
       problem: "En cada sesión nueva le vuelves a explicar el proyecto a tu agente.",
       fix: "Pregunta qué cambió desde la última vez, abre la tarea «Migrar pagos a v2» con sus pasos marcados y lee lo que anotó ayer: el webhook falla con firmas viejas, reintentar quedó descartado. Sigue desde ahí.",
     },
     {
       who: "Desarrollo",
-      on: "agent",
       problem: "Tu NOTES.md llegó a 256 KB y el agente lo relee cada vez.",
       fix: "Vive como documentos separados por tema, en páginas. El agente lee el índice y la única sección que necesita, cerca de un 97 % menos que el archivo entero.",
     },
     {
       who: "Cualquiera",
-      on: "alone",
       problem: "Resolviste esto hace ocho meses y no recuerdas cómo.",
       fix: "Buscar «timeouts al guardar» trae la tarea archivada tal como quedó: sus pasos, su bitácora y la línea que dice que la causa era un índice que faltaba.",
     },
     {
       who: "PM",
-      on: "agent",
       problem: "Un mes después alguien pregunta por qué se decidió así.",
       fix: "Un documento vivo por tema, «Decisiones de checkout», con cada decisión fechada y su porqué. El agente lo encuentra y lo cita en vez de reabrir el debate.",
     },
     {
       who: "QA",
-      on: "agent",
       problem: "La misma pantalla vuelve a fallar y nadie recuerda los casos de la vez anterior.",
       fix: "La tarea de regresión archivada guarda los casos como pasos, con lo que se vio en cada uno.",
     },
     {
       who: "Traspaso",
-      on: "data",
       problem: "El contexto que pasa de PM a PO, o de desarrollo a QA, pegado en un chat.",
       fix: "Entregas el documento con Folio: se cifra en tu equipo antes de salir, va firmado por ti y se va solo tras los días sin uso que elijas.",
     },
     {
       who: "Reglas de negocio",
-      on: "data",
       problem: "Lo que no puede terminar en la base de datos de otro.",
       fix: "Tisty lo guarda en tu disco y no lo manda a ninguna parte. Lo que lee tu agente va adonde va ese agente, así que úsalo con uno que tu empresa permita.",
     },
     {
       who: "En casa",
-      on: "alone",
       problem: "El trámite del banco que vuelve cada año.",
       fix: "El año siguiente, la tarea archivada te dice cómo lo hiciste la vez anterior.",
     },
@@ -294,7 +277,7 @@ Peso: ==11,4 kg=={green} ::heart red::`,
 
 export const ASSISTANT_EN: Assistant = {
   title: "Connect your assistant",
-  lede: `Tisty has no AI inside: it keeps your memory, and the assistant you already use reads and adds to it. ${AGENTS.en.or} connect over MCP, on this machine only, with no port, no account and no key. Your assistant picks up where it left off, files its work as tasks with steps, ticks them as it goes and keeps what it learns in documents, all where you can follow and audit it.`,
+  lede: "Tisty has no AI inside: it keeps your memory, and the assistant you already use reads and adds to it. GitHub Copilot, Claude Code, Codex, Cursor or Gemini CLI connect over MCP, on this machine only, with no port, no account and no key. Your assistant picks up where it left off, files its work as tasks with steps, ticks them as it goes and keeps what it learns in documents, all where you can follow and audit it.",
   settings: "Or open Settings › Assistants: it finds the assistants installed on this computer and connects them with one click.",
   other: "Any other client, such as VS Code or Cursor",
   can: {
@@ -338,7 +321,7 @@ export const ASSISTANT_EN: Assistant = {
 
 export const ASSISTANT_ES: Assistant = {
   title: "Conecta tu asistente",
-  lede: `Tisty no tiene IA dentro: guarda tu memoria, y el asistente que ya usas la lee y la amplía. ${AGENTS.es.or} se conectan por MCP, solo en este equipo, sin puerto, sin cuenta y sin clave. Tu asistente retoma donde quedó, anota su trabajo como tareas con pasos, los marca a medida que avanza y guarda lo que aprende en documentos, todo donde puedes seguirlo y revisarlo.`,
+  lede: "Tisty no tiene IA dentro: guarda tu memoria, y el asistente que ya usas la lee y la amplía. GitHub Copilot, Claude Code, Codex, Cursor o Gemini CLI se conectan por MCP, solo en este equipo, sin puerto, sin cuenta y sin clave. Tu asistente retoma donde quedó, anota su trabajo como tareas con pasos, los marca a medida que avanza y guarda lo que aprende en documentos, todo donde puedes seguirlo y revisarlo.",
   settings: "O abre Configuración › Asistentes: encuentra los asistentes instalados en este equipo y los conecta con un clic.",
   other: "Cualquier otro cliente, como VS Code o Cursor",
   can: {
@@ -478,7 +461,6 @@ export const FILM_ES: Film = {
 
 export const SCREENS_EN: Screen[] = [
   {
-    key: "archive",
     image: "/tisty-screen-en-01-archive",
     label: "Archive",
     title: "Months later, as it was left",
@@ -486,7 +468,6 @@ export const SCREENS_EN: Screen[] = [
     alt: "Tisty's Archive on the Stories tab: the search box, a chart of the months since February 2026, its counts and the finished tasks by month, some of them done by an agent",
   },
   {
-    key: "diagrams",
     image: "/tisty-screen-en-02-diagrams",
     label: "Diagrams",
     title: "Diagrams that stay text",
@@ -494,7 +475,6 @@ export const SCREENS_EN: Screen[] = [
     alt: "Tisty's freeform diagram editor: a flowchart on the canvas, the shapes on the left and, on the right, the Mermaid it writes into the document live",
   },
   {
-    key: "ideas",
     image: "/tisty-screen-en-03-brainstorm",
     label: "Ideas",
     title: "Ideas, before they become tasks",
@@ -502,7 +482,6 @@ export const SCREENS_EN: Screen[] = [
     alt: "Tisty's Ideas sheet, with its light bulb: short ideas on coloured sticky notes, each with its date and time",
   },
   {
-    key: "priorities",
     image: "/tisty-screen-en-04-priorities",
     label: "Priorities",
     title: "Urgent is not always important",
@@ -510,7 +489,6 @@ export const SCREENS_EN: Screen[] = [
     alt: "Tisty's Priorities view: tasks spread across Do, Schedule, Delegate and Minor, by urgent and important",
   },
   {
-    key: "documents",
     image: "/tisty-screen-en-05-documents",
     label: "Documents",
     title: "What you know, one document per subject",
@@ -518,7 +496,6 @@ export const SCREENS_EN: Screen[] = [
     alt: "The Tisty document «What is Tisty?» with its outline beside it, and buttons to read it in English or Spanish and to pick the paper size",
   },
   {
-    key: "brainsty",
     image: "/tisty-screen-en-09-brainsty",
     label: "Brainsty",
     title: "Everything you keep, as one network",
@@ -526,7 +503,6 @@ export const SCREENS_EN: Screen[] = [
     alt: "Brainsty in Tisty: nearly 2,000 nodes and 2,800 connections drawn from afar as one network, squares for documents and circles for tasks, with the network search on top and the legend folded in the corner",
   },
   {
-    key: "agents",
     image: "/tisty-screen-en-10-agents",
     label: "Agents",
     title: "Your agents' rules, in one place",
@@ -534,7 +510,6 @@ export const SCREENS_EN: Screen[] = [
     alt: "Tisty's window «Your agents, in one place»: what it found for Claude, Codex and Copilot, and the buttons Bring and Bring and sync",
   },
   {
-    key: "task",
     image: "/tisty-screen-en-08-task",
     label: "Task page",
     title: "A task keeps its whole story",
@@ -542,7 +517,6 @@ export const SCREENS_EN: Screen[] = [
     alt: "A task's page in Tisty: its description, what done means and its steps, and on the right what it carries and its dated trail",
   },
   {
-    key: "week",
     image: "/tisty-screen-en-11-weekly-review",
     label: "Weekly review",
     title: "Leave the week in order",
@@ -550,7 +524,6 @@ export const SCREENS_EN: Screen[] = [
     alt: "Tisty's Weekly review: To decide with 38 ideas waiting, Marked as past with nothing left, and 14 documents not opened in a while, each with its Archive button",
   },
   {
-    key: "diary",
     image: "/tisty-screen-en-12-diary",
     label: "Diary",
     title: "One line a day, only for you",
@@ -561,7 +534,6 @@ export const SCREENS_EN: Screen[] = [
 
 export const SCREENS_ES: Screen[] = [
   {
-    key: "archive",
     image: "/tisty-screen-es-01-archivo",
     label: "Archivo",
     title: "Meses después, tal como quedó",
@@ -569,7 +541,6 @@ export const SCREENS_ES: Screen[] = [
     alt: "El Archivo de Tisty en la pestaña Historias: el buscador, un gráfico de los meses desde febrero de 2026, sus cifras y las tareas terminadas por mes, algunas hechas por un agente",
   },
   {
-    key: "diagrams",
     image: "/tisty-screen-es-02-diagramas",
     label: "Diagramas",
     title: "Diagramas que siguen siendo texto",
@@ -577,7 +548,6 @@ export const SCREENS_ES: Screen[] = [
     alt: "El editor de diagramas libres de Tisty: un diagrama de flujo en el lienzo, las formas a la izquierda y, a la derecha, el Mermaid que escribe en el documento en vivo",
   },
   {
-    key: "ideas",
     image: "/tisty-screen-es-03-lluvia-de-ideas",
     label: "Ideas",
     title: "Las ideas, antes de ser tareas",
@@ -585,7 +555,6 @@ export const SCREENS_ES: Screen[] = [
     alt: "La hoja Ideas de Tisty, con su ampolleta: ideas cortas en notas adhesivas de colores, cada una con su fecha y hora",
   },
   {
-    key: "priorities",
     image: "/tisty-screen-es-04-prioridades",
     label: "Prioridades",
     title: "Urgente no siempre es importante",
@@ -593,7 +562,6 @@ export const SCREENS_ES: Screen[] = [
     alt: "La vista Prioridades de Tisty: las tareas repartidas en Hacer, Planificar, Delegar y Prescindible, según lo urgente y lo importante",
   },
   {
-    key: "documents",
     image: "/tisty-screen-es-05-documentos",
     label: "Documentos",
     title: "Lo que sabes, en un documento por tema",
@@ -601,7 +569,6 @@ export const SCREENS_ES: Screen[] = [
     alt: "El documento de Tisty «¿Qué es Tisty?» con su índice al lado y los botones para leerlo en español o en inglés y elegir el papel",
   },
   {
-    key: "brainsty",
     image: "/tisty-screen-es-09-brainsty",
     label: "Brainsty",
     title: "Todo lo que guardas, como una sola red",
@@ -609,7 +576,6 @@ export const SCREENS_ES: Screen[] = [
     alt: "Brainsty en Tisty: cerca de 2000 nodos y 2800 conexiones dibujados de lejos como una sola red, cuadrados para los documentos y círculos para las tareas, con el buscador de la red arriba y la leyenda plegada en la esquina",
   },
   {
-    key: "agents",
     image: "/tisty-screen-es-10-agentes",
     label: "Agentes",
     title: "Las reglas de tus agentes, en un solo lugar",
@@ -617,7 +583,6 @@ export const SCREENS_ES: Screen[] = [
     alt: "La ventana de Tisty «Tus agentes, en un solo lugar»: lo que encontró de Claude, Codex y Copilot, y los botones Traer y Traer y sincronizar",
   },
   {
-    key: "task",
     image: "/tisty-screen-es-08-tarea",
     label: "Página de tarea",
     title: "Una tarea guarda toda su historia",
@@ -625,7 +590,6 @@ export const SCREENS_ES: Screen[] = [
     alt: "La página de una tarea en Tisty: su descripción, cuándo está lista y sus pasos, y a la derecha lo que lleva y su trayecto con fecha",
   },
   {
-    key: "week",
     image: "/tisty-screen-es-11-revision-semanal",
     label: "Revisión semanal",
     title: "Deja la semana en orden",
@@ -633,7 +597,6 @@ export const SCREENS_ES: Screen[] = [
     alt: "La Revisión semanal de Tisty: Por decidir con 38 ideas por ordenar, Marcados como pasados sin nada pendiente y 17 documentos que hace tiempo no abres, cada uno con su botón Archivar",
   },
   {
-    key: "diary",
     image: "/tisty-screen-es-12-diario",
     label: "Diario",
     title: "Una línea al día, solo para ti",
@@ -641,11 +604,3 @@ export const SCREENS_ES: Screen[] = [
     alt: "El Diario de Tisty el viernes 20 de noviembre: un recuadro para lo que pasó hoy, las entradas de los días anteriores con las tareas cerradas en cada uno y los meses del Diario 2026 en la barra lateral",
   },
 ];
-
-export function screensOf(screens: Screen[], keys: string[]): Screen[] {
-  return keys.map((key) => {
-    const found = screens.find((one) => one.key === key);
-    if (!found) throw new Error(`Screens: no screen called ${key}`);
-    return found;
-  });
-}
