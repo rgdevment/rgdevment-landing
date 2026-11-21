@@ -11,9 +11,13 @@ interface Props {
   release: Release | null;
   docs?: string;
   compare?: { label: string; path: string; ink: string } | null;
+  start?: boolean;
+  /// A phone installs nothing, so its first screen keeps the buttons and leaves the details to the install section.
+  compact?: boolean;
 }
 
-const { product, locale, release, docs, compare } = Astro.props;
+const { product, locale, release, docs, compare, start = false, compact = false } = Astro.props;
+const fine = ["text-xs leading-relaxed text-muted", { "hidden sm:block": compact }];
 const es = locale === "es";
 const store = storeUrl(product);
 const kit = installers(release);
@@ -34,8 +38,8 @@ const say = {
 
 <!-- Both links ship in the HTML; the script only decides which one is dressed as the main one,
      so a reader without scripts, and any crawler, still sees every platform. -->
-<div id="download" class="group mt-10">
-  <div class="flex flex-wrap items-start justify-center gap-3 sm:gap-6">
+<div id="download" class:list={["group", compact ? "mt-8 sm:mt-10" : "mt-10"]}>
+  <div class:list={["flex flex-wrap items-start justify-center gap-3 sm:gap-6", { "lg:justify-start": start }]}>
     {
       store && (
         <div class="flex max-w-[18rem] flex-col items-center gap-2.5">
@@ -48,7 +52,7 @@ const say = {
             {say.getWin}
           </a>
           {product.requires && (
-            <p class="text-xs leading-relaxed text-muted">
+            <p class:list={fine}>
               <span class="block whitespace-nowrap">{product.requires.windows} {say.orLater}</span>
               <span class="block whitespace-nowrap">
                 Microsoft Store
@@ -79,7 +83,7 @@ const say = {
             {say.getMac}
           </a>
           {macDirect && (
-            <p class="text-xs leading-relaxed text-muted">
+            <p class:list={fine}>
               <span class="block whitespace-nowrap">{product.requires!.macos} {say.orLater}</span>
               <span class="block whitespace-nowrap">Apple Silicon · .dmg · {megabytes(macDirect, locale)}</span>
               <span class="block whitespace-nowrap">

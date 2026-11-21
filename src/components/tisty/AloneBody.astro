@@ -55,8 +55,8 @@ const more = "inline-flex items-center gap-1.5 font-medium text-fg hover:underli
 
 <section class="stage shell mt-24 sm:mt-32">
   <h2 class="section-title">{say.screens}</h2>
-  <div class="mt-10 grid grid-cols-1 gap-x-6 gap-y-12 lg:grid-cols-3">
-    {shown.map((one) => <ScreenFigure screen={one} sizes="(min-width: 1024px) 340px, calc(100vw - 2.5rem)" />)}
+  <div class="mt-10 grid grid-cols-1 gap-6 lg:grid-cols-3">
+    {shown.map((one) => <ScreenFigure screen={one} sizes="(min-width: 1024px) 340px, calc(100vw - 2.5rem)" caption={false} />)}
   </div>
 </section>
 
