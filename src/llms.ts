@@ -221,6 +221,7 @@ export async function appLlms(): Promise<Response> {
     `> ${t.meta}`,
     "",
     ...(t.formerly ? [t.formerly, ""] : []),
+    ...(t.hybrid ? [t.hybrid, ""] : []),
     t.problem,
     "",
     "## What it does",

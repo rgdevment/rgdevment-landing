@@ -103,6 +103,8 @@ export type Cost = {
 
 type Words = {
   tagline: string;
+  /// Both uses in one line, right under the tagline.
+  hybrid?: string;
   category: string;
   /// Only where name plus tagline runs past what a result page shows.
   title?: string;
@@ -220,6 +222,7 @@ export const PRODUCTS: Product[] = [
     en: {
       category: "Shared working memory for you and your AI agent: Markdown notes, tasks and documents",
       tagline: "You see the whole. Your agent, every detail. One shared memory.",
+      hybrid: "With your agent, it is the memory you share. On your own, it is your place for notes, documents and tasks.",
       mascot: {
         title: "A beaver that keeps what you build.",
         body: "A beaver gathers every branch it finds and builds with it, and what it builds stays. Tisty keeps what you work out the same way: the steps, the journal and the documents, there to find again months later.",
@@ -384,6 +387,7 @@ export const PRODUCTS: Product[] = [
     es: {
       category: "Memoria de trabajo compartida para ti y tu agente de IA: notas, tareas y documentos en Markdown",
       tagline: "Tú ves el conjunto. Tu agente, cada detalle. Una sola memoria.",
+      hybrid: "Con tu agente, es la memoria que comparten. Solo para ti, es tu lugar para notas, documentos y tareas.",
       mascot: {
         title: "Un castor que guarda lo que construyes.",
         body: "El castor junta cada rama que encuentra y construye con ella, y lo que construye se queda. Tisty guarda así lo que resuelves: los pasos, la bitácora y los documentos, listos para encontrarlos meses después.",

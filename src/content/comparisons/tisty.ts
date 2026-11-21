@@ -1,4 +1,4 @@
-import { type Comparison, type Words, no, part, soon, yes } from "./marks";
+import { type Comparison, type Words, no, part, yes } from "./marks";
 
 const RIVALS = [
   { name: "Tisty", url: "https://github.com/rgdevment/Tisty" },
@@ -228,7 +228,7 @@ const EN: Words = {
     },
     {
       label: "Phone apps",
-      cells: [soon(), yes(), yes(), yes(), yes(), yes(), yes()],
+      cells: [no(), yes(), yes(), yes(), yes(), yes(), yes()],
     },
     {
       label: "Linux",
@@ -411,7 +411,7 @@ const ES: Words = {
     },
     {
       label: "Apps para el teléfono",
-      cells: [soon(), yes(), yes(), yes(), yes(), yes(), yes()],
+      cells: [no(), yes(), yes(), yes(), yes(), yes(), yes()],
     },
     {
       label: "Linux",

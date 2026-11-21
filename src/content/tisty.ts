@@ -2,7 +2,7 @@ import type { Assistant, Cost, Day, Film, Fixes, Proof, Screen, Sharing } from "
 
 export const FIXES_EN: Fixes = {
   title: "Real problems, real fixes",
-  lede: "What people actually run into after months of working with an AI assistant, and what happens instead when the memory lives in Tisty.",
+  lede: "What people actually run into after months of notes, tasks and work with an AI assistant, and what happens instead when the memory lives in Tisty.",
   said: { problem: "The problem", fix: "With Tisty" },
   rows: [
     {
@@ -50,7 +50,7 @@ export const FIXES_EN: Fixes = {
 
 export const FIXES_ES: Fixes = {
   title: "Problemas reales, soluciones reales",
-  lede: "Lo que de verdad le pasa a quien trabaja meses con un asistente de IA, y lo que pasa en cambio cuando la memoria vive en Tisty.",
+  lede: "Lo que de verdad pasa tras meses de notas, tareas y trabajo con un asistente de IA, y lo que pasa en cambio cuando la memoria vive en Tisty.",
   said: { problem: "El problema", fix: "Con Tisty" },
   rows: [
     {
@@ -489,20 +489,6 @@ export const SCREENS_EN: Screen[] = [
     alt: "Tisty's Priorities view: tasks spread across Do, Schedule, Delegate and Minor, by urgent and important",
   },
   {
-    image: "/tisty-screen-en-05-documents",
-    label: "Documents",
-    title: "What you know, one document per subject",
-    text: "A document you correct in place, with its outline beside it, so your AI agent reads the outline first and then only the section it needs.",
-    alt: "The Tisty document «What is Tisty?» with its outline beside it, and buttons to read it in English or Spanish and to pick the paper size",
-  },
-  {
-    image: "/tisty-screen-en-09-brainsty",
-    label: "Brainsty",
-    title: "Everything you keep, as one network",
-    text: "Brainsty draws your documents, tasks and tags as one map you turn and zoom. What you linked shows strong, and what is alike though nobody tied it shows apart, with no AI.",
-    alt: "Brainsty in Tisty: nearly 2,000 nodes and 2,800 connections drawn from afar as one network, squares for documents and circles for tasks, with the network search on top and the legend folded in the corner",
-  },
-  {
     image: "/tisty-screen-en-10-agents",
     label: "Agents",
     title: "Your agents' rules, in one place",
@@ -560,20 +546,6 @@ export const SCREENS_ES: Screen[] = [
     title: "Urgente no siempre es importante",
     text: "Cada tarea en su cuadrante de la matriz de Eisenhower: hacer, planificar, delegar o prescindible, y lo que falta por clasificar esperando a un lado.",
     alt: "La vista Prioridades de Tisty: las tareas repartidas en Hacer, Planificar, Delegar y Prescindible, según lo urgente y lo importante",
-  },
-  {
-    image: "/tisty-screen-es-05-documentos",
-    label: "Documentos",
-    title: "Lo que sabes, en un documento por tema",
-    text: "Un documento que corriges en su lugar, con su índice al lado: así tu agente de IA lee primero el índice y después solo la sección que necesita.",
-    alt: "El documento de Tisty «¿Qué es Tisty?» con su índice al lado y los botones para leerlo en español o en inglés y elegir el papel",
-  },
-  {
-    image: "/tisty-screen-es-09-brainsty",
-    label: "Brainsty",
-    title: "Todo lo que guardas, como una sola red",
-    text: "Brainsty dibuja tus documentos, tareas y etiquetas como un solo mapa que giras y acercas. Lo que enlazaste se ve fuerte, y lo que se parece sin que nadie lo uniera se ve aparte, sin IA.",
-    alt: "Brainsty en Tisty: cerca de 2000 nodos y 2800 conexiones dibujados de lejos como una sola red, cuadrados para los documentos y círculos para las tareas, con el buscador de la red arriba y la leyenda plegada en la esquina",
   },
   {
     image: "/tisty-screen-es-10-agentes",
