@@ -287,7 +287,7 @@ export const PRODUCTS: Product[] = [
       title: "Tisty: notes, tasks and memory for you and your AI agent",
       meta: "Shared working memory for you and your AI agent: tasks, documents and ideas in local Markdown, over MCP for GitHub Copilot, Claude Code and Cursor. Free.",
       problem:
-        "I started building Tisty to solve a problem of my own, and little by little I saw it was not only mine. Your AI agent knows the details better than anyone, and forgets them the moment the session ends, so you explain everything again. In Tisty you see the whole, visual and easy to read, and your agent every detail: one memory, for both of you.",
+        "I started building Tisty to solve a problem of my own, and little by little I saw it was not only mine. Your AI agent knows the details better than anyone, and forgets them the moment the session ends, so you explain everything again. In Tisty you see the whole, visual and easy to read, and your agent every detail: one memory, for both of you. And if you would rather work in a more personal way, just for you and with no agent, Tisty is just as much yours.",
       groups: [
         {
           title: "You and your agent",
@@ -356,6 +356,10 @@ export const PRODUCTS: Product[] = [
         {
           q: "Can I draw diagrams?",
           a: "Yes. A mermaid block draws it, and mind maps, database schemas, freeform diagrams with every Mermaid shape and class diagrams are also drawn by hand in a window of their own, saved as the same text, shown on the page as you drew them and exported as PNG, JPG or SVG.",
+        },
+        {
+          q: "Do I need an AI agent to use Tisty?",
+          a: "No. The agent is one way to use it, not the condition: the quick capture, Today, your ideas, the archive, the diary and Brainsty all work for you alone, and the first run asks only your language and where your copies go. You connect an agent only if you want one.",
         },
       ],
       proof: PROOF_EN,
@@ -444,7 +448,7 @@ export const PRODUCTS: Product[] = [
       title: "Tisty: notas, tareas y memoria para ti y tu agente de IA",
       meta: "Memoria de trabajo compartida para ti y tu agente de IA: tareas, documentos e ideas en Markdown local, vía MCP en GitHub Copilot, Claude Code y Cursor. Gratis.",
       problem:
-        "Comencé a desarrollar Tisty para resolver un problema personal, y fui viendo que ese problema no era solo mío. Tu agente de IA conoce el detalle mejor que nadie, y lo olvida en cuanto termina la sesión, así que le vuelves a explicar todo. En Tisty tú ves el conjunto, visual y fácil de leer, y tu agente cada detalle: una sola memoria, para los dos.",
+        "Comencé a desarrollar Tisty para resolver un problema personal, y fui viendo que ese problema no era solo mío. Tu agente de IA conoce el detalle mejor que nadie, y lo olvida en cuanto termina la sesión, así que le vuelves a explicar todo. En Tisty tú ves el conjunto, visual y fácil de leer, y tu agente cada detalle: una sola memoria, para los dos. Y si prefieres trabajar de una manera más personal, solo para ti y sin agente, Tisty es igual de tuyo.",
       groups: [
         {
           title: "Tú y tu agente",
@@ -513,6 +517,10 @@ export const PRODUCTS: Product[] = [
         {
           q: "¿Puedo dibujar diagramas?",
           a: "Sí. Un bloque mermaid lo dibuja, y los mapas mentales, los esquemas de base de datos, los diagramas libres con todas las formas de Mermaid y los de clases también se dibujan a mano en su propia ventana, se guardan como el mismo texto, se ven en la página tal como los dibujaste y se exportan como PNG, JPG o SVG.",
+        },
+        {
+          q: "¿Necesito un agente de IA para usar Tisty?",
+          a: "No. El agente es una forma de usarlo, no la condición: la captura rápida, Hoy, tus ideas, el archivo, el diario y Brainsty funcionan solo para ti, y al abrirlo por primera vez solo te pregunta tu idioma y adónde van tus copias. Conectas un agente solo si quieres.",
         },
       ],
       proof: PROOF_ES,
