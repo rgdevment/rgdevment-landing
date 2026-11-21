@@ -1,4 +1,4 @@
-import type { Assistant, Cost, Day, Fixes, Proof, Screen, Sharing } from "./products";
+import type { Assistant, Cost, Day, Film, Fixes, Proof, Screen, Sharing } from "./products";
 
 export const FIXES_EN: Fixes = {
   title: "Real problems, real fixes",
@@ -427,6 +427,24 @@ export const SHARING_ES: Sharing = {
   more: "Cómo compartir, en la ayuda",
   page: "documentos",
   anchor: "compartir",
+};
+
+export const FILM_EN: Film = {
+  video: "/tisty-brainsty",
+  title: "Brainsty: everything you keep, joined",
+  lede: "Your documents, tasks and tags as one map that slowly turns. Up close each one shows its title, and a click opens its card with what points at it. What is alike though nobody tied it shows apart, found by shared words and a word list, with no AI.",
+  label: "Brainsty in Tisty: the network of documents, tasks and tags turns, comes closer until every title shows, and opens the card of the document Household budget 2026",
+  play: "Play the video",
+  pause: "Pause the video",
+};
+
+export const FILM_ES: Film = {
+  video: "/tisty-brainsty",
+  title: "Brainsty: todo lo que guardas, unido",
+  lede: "Tus documentos, tareas y etiquetas como un solo mapa que gira despacio. De cerca cada uno muestra su título, y un clic abre su ficha con lo que apunta a él. Lo que se parece sin que nadie lo uniera se ve aparte, encontrado por palabras en común y una lista de palabras, sin IA.",
+  label: "Brainsty en Tisty: la red de documentos, tareas y etiquetas gira, se acerca hasta mostrar cada título y abre la ficha del documento Household budget 2026",
+  play: "Reproducir el video",
+  pause: "Pausar el video",
 };
 
 export const SCREENS_EN: Screen[] = [

@@ -6,6 +6,7 @@ import Assistant from "./Assistant.astro";
 import OnDisk from "./OnDisk.astro";
 import Sharing from "./Sharing.astro";
 import ProductHunt from "./ProductHunt.astro";
+import Film from "./Film.astro";
 import Screens from "./Screens.astro";
 import Shot from "./Shot.astro";
 import WritingMark from "./WritingMark.astro";
@@ -349,6 +350,8 @@ const schema = [
       }
     </div>
   </section>
+
+  {t.film && <Film film={t.film} />}
 
   {
     fixes && (

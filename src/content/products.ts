@@ -10,6 +10,8 @@ import {
   FIXES_ES,
   PROOF_EN,
   PROOF_ES,
+  FILM_EN,
+  FILM_ES,
   SCREENS_EN,
   SCREENS_ES,
   SHARING_EN,
@@ -51,6 +53,15 @@ export type Screen = {
   title: string;
   text: string;
   alt: string;
+};
+
+export type Film = {
+  video: string;
+  title: string;
+  lede: string;
+  label: string;
+  play: string;
+  pause: string;
 };
 
 export type Sharing = {
@@ -123,6 +134,7 @@ type Words = {
   assistant?: Assistant;
   sharing?: Sharing;
   screens?: Screen[];
+  film?: Film;
   fixes?: Fixes;
   day?: Day;
   cost?: Cost;
@@ -350,6 +362,7 @@ export const PRODUCTS: Product[] = [
       assistant: ASSISTANT_EN,
       sharing: SHARING_EN,
       screens: SCREENS_EN,
+      film: FILM_EN,
       fixes: FIXES_EN,
       day: DAY_EN,
       cost: COST_EN,
@@ -506,6 +519,7 @@ export const PRODUCTS: Product[] = [
       assistant: ASSISTANT_ES,
       sharing: SHARING_ES,
       screens: SCREENS_ES,
+      film: FILM_ES,
       fixes: FIXES_ES,
       day: DAY_ES,
       cost: COST_ES,
