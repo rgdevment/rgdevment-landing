@@ -19,12 +19,11 @@ const SCREENS = [
   ["es-04-prioridades", "Priodidad - ES - claro.png", "Prioridades - ES - obscuro.png"],
   ["en-05-documents", "Que es Tisty - EN - claro.png", "Que es Tisty - EN - obscuro.png"],
   ["es-05-documentos", "Que es Tisty - ES - claro.png", "Que es Tisty - ES - obscuro.png"],
-  ["en-06-today", "Task - EN - obscuro.png"],
-  ["es-06-hoy", "Task - ES - obscuro.png"],
+  ["en-06-today", null, "Task - EN - obscuro.png"],
+  ["es-06-hoy", null, "Task - ES - obscuro.png"],
   ["en-08-task", "TaskFull - EN - claro.png", "TaskFull - EN - obscuro.png"],
   ["es-08-tarea", "TaskFull - ES - claro.png", "TaskFull - ES - obscuro.png"],
-  ["en-09-brainsty", "Brainsty.png"],
-  ["es-09-brainsty", "Brainsty.png"],
+  ["en-09-brainsty", null, "Brainsty.png"],
   ["en-10-agents", "traer agentes - EN - claro.png", "traer agentes - EN - obscuro.png"],
   ["es-10-agentes", "traer agentes - ES - claro.png", "traer agentes - ES - obscuro.png"],
   ["en-11-weekly-review", "Semana - EN - claro.png", "Semana - EN - obscuro.png"],
@@ -39,7 +38,7 @@ if (!folder) {
   process.exit(1);
 }
 
-const missing = [...new Set(SCREENS.flatMap(([, ...captures]) => captures))].filter((capture) => !existsSync(join(folder, capture)));
+const missing = [...new Set(SCREENS.flatMap(([, ...captures]) => captures.filter(Boolean)))].filter((capture) => !existsSync(join(folder, capture)));
 if (missing.length) {
   console.error(`screens: missing in ${folder}: ${missing.join(", ")}`);
   process.exit(1);
@@ -69,6 +68,6 @@ async function save(capture, stem) {
 }
 
 for (const [name, light, dark] of SCREENS) {
-  await save(light, `public/tisty-screen-${name}`);
+  if (light) await save(light, `public/tisty-screen-${name}`);
   if (dark) await save(dark, `public/tisty-screen-${name}-dark`);
 }

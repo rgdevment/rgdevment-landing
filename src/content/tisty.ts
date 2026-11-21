@@ -525,13 +525,6 @@ export const SCREENS_EN: Screen[] = [
     text: "The Diary is one Markdown book a year, a page a month. Each day shows the tasks you closed, and your agent does not read it until you open it.",
     alt: "Tisty's Diary on Friday 20 November: a box for what happened today, the entries of the days before with the tasks closed on each, and the months of Diary 2026 in the sidebar",
   },
-  {
-    image: "/tisty-screen-en-07-folio",
-    label: "Folio",
-    title: "Share what you know, encrypted",
-    text: "Folio hands over a document as a link to read, encrypted on your computer and signed by you. Whoever gets it opens it in any browser, with no account.",
-    alt: "A Tisty document shared through Folio, with the panel that shows it is shared and its link to read",
-  },
 ];
 
 export const SCREENS_ES: Screen[] = [
@@ -571,13 +564,6 @@ export const SCREENS_ES: Screen[] = [
     alt: "El documento de Tisty «¿Qué es Tisty?» con su índice al lado y los botones para leerlo en español o en inglés y elegir el papel",
   },
   {
-    image: "/tisty-screen-es-09-brainsty",
-    label: "Brainsty",
-    title: "Todo lo que guardas, como una sola red",
-    text: "Brainsty dibuja tus documentos, tareas y etiquetas como un solo mapa que giras y acercas. Lo que enlazaste se ve fuerte, y lo que se parece sin que nadie lo uniera se ve aparte, sin IA.",
-    alt: "Brainsty en Tisty: 1931 nodos y 2811 conexiones dibujados como una sola red, cuadrados para los documentos y círculos para las tareas, con el buscador arriba y la leyenda plegada en la esquina",
-  },
-  {
     image: "/tisty-screen-es-10-agentes",
     label: "Agentes",
     title: "Las reglas de tus agentes, en un solo lugar",
@@ -611,12 +597,5 @@ export const SCREENS_ES: Screen[] = [
     title: "Una línea al día, solo para ti",
     text: "El Diario es un libro en Markdown por año, una página por mes. Cada día muestra las tareas que cerraste, y tu agente no lo lee mientras no lo abras.",
     alt: "El Diario de Tisty el viernes 20 de noviembre: un recuadro para lo que pasó hoy, las entradas de los días anteriores con las tareas cerradas en cada uno y los meses del Diario 2026 en la barra lateral",
-  },
-  {
-    image: "/tisty-screen-es-07-folio",
-    label: "Folio",
-    title: "Comparte lo que sabes, cifrado",
-    text: "Folio entrega un documento con un link para leer, cifrado en tu equipo y firmado por ti. Quien lo recibe lo abre en cualquier navegador, sin cuenta.",
-    alt: "Un documento de Tisty compartido con Folio, con el panel que muestra que está compartido y su link para leer",
   },
 ];

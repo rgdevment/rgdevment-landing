@@ -88,7 +88,7 @@ const say = {
 const screenshot = t.screens
   ? t.screens.map((one) => ({
       "@type": "ImageObject",
-      contentUrl: new URL(variantsOf(one.image, "webp").at(-1)!.path, DOMAIN).toString(),
+      contentUrl: new URL((variantsOf(one.image, "webp").at(-1) ?? variantsOf(`${one.image}-dark`, "webp").at(-1)!).path, DOMAIN).toString(),
       name: one.title,
       caption: one.alt,
       inLanguage: locale,

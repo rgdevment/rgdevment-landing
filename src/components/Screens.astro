@@ -34,10 +34,12 @@ async function pictureOf(image: string, alt: string) {
 
 const slides = await Promise.all(
   screens.map(async (one) => {
-    const light = (await pictureOf(one.image, one.alt))!;
+    const light = await pictureOf(one.image, one.alt);
     const dark = await pictureOf(`${one.image}-dark`, one.alt);
-    const shades = dark ? [{ shade: "light", picture: light }, { shade: "dark", picture: dark }] : [{ shade: undefined, picture: light }];
-    return { ...one, shades };
+    if (!light && !dark) throw new Error(`Screens: no capture for ${one.image}`);
+    const shades = light && dark ? [{ shade: "light", picture: light }, { shade: "dark", picture: dark }] : [{ shade: undefined, picture: (light ?? dark)! }];
+    // A capture taken only in dark would show a dark window on the light page, so that slide waits for the dark theme.
+    return { ...one, shades, only: light ? undefined : "dark" };
   }),
 );
 
@@ -58,6 +60,8 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
       slides.map((one, at) => (
         <figure
           class="w-full shrink-0 snap-center"
+          data-only={one.only}
+          data-label={one.label}
           role="group"
           aria-roledescription={say.slide}
           aria-label={`${at + 1} / ${slides.length}: ${one.label}`}
@@ -115,7 +119,7 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
       <ul class="flex items-center">
         {
           slides.map((one, at) => (
-            <li>
+            <li data-only={one.only}>
               <button type="button" class="grid h-9 place-items-center px-1" aria-label={one.label} data-go={at}>
                 <span class="dot relative block h-1.5 overflow-hidden rounded-full bg-fg/20" aria-hidden="true">
                   <span class="fill absolute inset-0 rounded-full bg-fg" />
@@ -152,8 +156,13 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
     display: none;
   }
 
-  [data-shade="dark"] {
+  [data-shade="dark"],
+  [data-only="dark"] {
     display: none;
+  }
+
+  :global(:root[data-theme="dark"]) [data-only="dark"] {
+    display: revert;
   }
 
   :global(:root[data-theme="dark"]) [data-shade="dark"] {
@@ -165,6 +174,10 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
   }
 
   @media (prefers-color-scheme: dark) {
+    :global(:root:not([data-theme="light"])) [data-only="dark"] {
+      display: revert;
+    }
+
     :global(:root:not([data-theme="light"])) [data-shade="dark"] {
       display: contents;
     }
@@ -235,7 +248,6 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
     const back = box.querySelector<HTMLButtonElement>('[data-step="back"]')!;
     const forth = box.querySelector<HTMLButtonElement>('[data-step="forth"]')!;
     const turn = box.querySelector<HTMLButtonElement>("[data-turn]")!;
-    const last = slides.length - 1;
     const held = new Set<string>();
     let current = 0;
     let playing = !still.matches;
@@ -257,28 +269,41 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
         image.removeAttribute("data-src");
       }
     };
-    const reshade = () => opened.forEach(reveal);
+    const shown = () => slides.flatMap((slide, index) => (getComputedStyle(slide).display === "none" ? [] : [index]));
+    const after = (at: number) => shown().find((index) => index > at);
+    const before = (at: number) => shown().findLast((index) => index < at);
+    const number = () => {
+      const on = shown();
+      on.forEach((index, place) => slides[index].setAttribute("aria-label", `${place + 1} / ${on.length}: ${slides[index].dataset.label}`));
+    };
+
+    const go = (at: number, instant = false) => {
+      const slide = slides[at];
+      reveal(slide);
+      strip.scrollTo({ left: slide.offsetLeft, behavior: instant || still.matches ? "auto" : "smooth" });
+      show(at);
+    };
+
+    const reshade = () => {
+      opened.forEach(reveal);
+      number();
+      go(shown().includes(current) ? current : (before(current) ?? after(current)!), true);
+    };
     new MutationObserver(reshade).observe(document.documentElement, { attributeFilter: ["data-theme"] });
     matchMedia("(prefers-color-scheme: dark)").addEventListener("change", reshade);
-
-    const go = (at: number) => {
-      const slide = slides[(at + slides.length) % slides.length];
-      reveal(slide);
-      strip.scrollTo({ left: slide.offsetLeft, behavior: still.matches ? "auto" : "smooth" });
-    };
 
     const schedule = () => {
       clearTimeout(timer);
       const running = playing && held.size === 0;
       box.toggleAttribute("data-running", running);
-      if (running) timer = window.setTimeout(() => go(current + 1), TURN);
+      if (running) timer = window.setTimeout(() => go(after(current) ?? shown()[0]), TURN);
     };
 
     const show = (at: number) => {
       current = at;
       dots.forEach((dot, index) => dot.setAttribute("aria-current", String(index === at)));
-      back.setAttribute("aria-disabled", String(at === 0));
-      forth.setAttribute("aria-disabled", String(at === last));
+      back.setAttribute("aria-disabled", String(before(at) === undefined));
+      forth.setAttribute("aria-disabled", String(after(at) === undefined));
       schedule();
     };
 
@@ -332,10 +357,10 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
     box.addEventListener("focusout", (event) => box.contains(event.relatedTarget as Node) || hold("focus", false));
 
     const keys: Record<string, () => number> = {
-      ArrowLeft: () => Math.max(current - 1, 0),
-      ArrowRight: () => Math.min(current + 1, last),
-      Home: () => 0,
-      End: () => last,
+      ArrowLeft: () => before(current) ?? current,
+      ArrowRight: () => after(current) ?? current,
+      Home: () => shown()[0],
+      End: () => shown().at(-1)!,
     };
     strip.addEventListener("keydown", (event) => {
       const to = keys[event.key];
@@ -348,11 +373,11 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
     strip.addEventListener("wheel", (event) => Math.abs(event.deltaX) > Math.abs(event.deltaY) && play(false), { passive: true });
     back.addEventListener("click", () => {
       play(false);
-      go(Math.max(current - 1, 0));
+      go(before(current) ?? current);
     });
     forth.addEventListener("click", () => {
       play(false);
-      go(Math.min(current + 1, last));
+      go(after(current) ?? current);
     });
     dots.forEach((dot, index) =>
       dot.addEventListener("click", () => {
@@ -368,7 +393,8 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
     box.style.setProperty("--turn", `${TURN}ms`);
     strip.dataset.ready = "";
     box.querySelector<HTMLElement>("[data-controls]")!.hidden = false;
+    number();
     play(playing);
-    show(0);
+    show(shown()[0]);
   }
 </script>
