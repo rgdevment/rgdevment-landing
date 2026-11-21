@@ -233,7 +233,7 @@ export const TISTY_GUIDES: Guide[] = [
       faq: [
         {
           q: "Does Tisty replace CLAUDE.md or AGENTS.md?",
-          a: "No, it sits beside them. Instructions that rarely move stay in the files your repository hands the assistant; progress, decisions, what was ruled out and what is left go in Tisty.",
+          a: "It sits beside the ones in your repository: instructions that rarely move stay there; progress, decisions, what was ruled out and what is left go in Tisty. The ones in your home folder, like ~/.claude/CLAUDE.md, the Agents folder brings into Tisty as documents and, if you sync it, keeps up to date for every agent.",
         },
         {
           q: "Which assistants can use it?",
@@ -278,7 +278,7 @@ export const TISTY_GUIDES: Guide[] = [
       faq: [
         {
           q: "¿Tisty reemplaza a CLAUDE.md o AGENTS.md?",
-          a: "No, va al lado. Las instrucciones que casi no se mueven siguen en los archivos que tu repositorio le entrega al asistente; el avance, las decisiones, lo descartado y lo que falta van en Tisty.",
+          a: "Va al lado de los de tu repositorio: las instrucciones que casi no se mueven siguen ahí; el avance, las decisiones, lo descartado y lo que falta van en Tisty. Los de tu carpeta personal, como ~/.claude/CLAUDE.md, la carpeta Agentes los trae a Tisty como documentos y, si la sincronizas, los mantiene al día para cada agente.",
         },
         {
           q: "¿Qué asistentes pueden usarlo?",
