@@ -219,7 +219,7 @@ export const PRODUCTS: Product[] = [
       },
       kinds: {
         title: "A task or a document?",
-        lede: "Tisty keeps two kinds of things, and telling them apart is most of using it well. Something you will do is a task. Something you will come back to is a document. Before either, there is often an idea: a thought caught on the fly, a few words in Brainstorm, waiting to become a task, go into a document or be set aside.",
+        lede: "Tisty keeps two kinds of things, and telling them apart is most of using it well. Something you will do is a task. Something you will come back to is a document. Before either, there is often an idea: a thought caught on the fly, a few words in Ideas, waiting to become a task, go into a document or be set aside.",
         cards: [
           {
             title: "A task",
@@ -283,6 +283,7 @@ export const PRODUCTS: Product[] = [
             "GitHub Copilot, Claude Code, Codex or Cursor connect over MCP and pick up where they left off.",
             "An outline first, then one section: a fraction of what rereading your Markdown files costs.",
             "It works your tasks as it works a document and sorts your ideas with you; ticking your steps, closing and the day stay yours.",
+            "The Agents folder keeps your agents' rules, skills and memory as documents, synced with their files if you want; an agent only proposes a change, and you approve it.",
           ],
         },
         {
@@ -290,7 +291,7 @@ export const PRODUCTS: Product[] = [
           points: [
             "Type «call the bank at 3» in the quick capture, open from anywhere, and it is a task with its hour.",
             "Today puts the urgent first: overdue only past its deadline, late when the day you planned slipped by.",
-            "Press Tab in the quick capture and it is an idea: a sticky note in Brainstorm, up to 140 characters, that you turn into a task or a document later.",
+            "Press Tab in the quick capture and it is an idea: a sticky note in Ideas, up to 140 characters, that you turn into a task or a document later.",
             "Steps, parts and the Eisenhower matrix by its name: do, schedule, delegate, minor.",
           ],
         },
@@ -300,6 +301,8 @@ export const PRODUCTS: Product[] = [
             "A finished task goes to the archive whole: its page, steps, dated journal and files.",
             "One search across open tasks, the archive and every document, even what you closed two years ago.",
             "One living document per subject, with tables, diagrams, formulas, pages and its own PDF.",
+            "Brainsty draws everything you keep as one network: what you linked, the tasks a document cites and, apart, what Tisty thinks is alike, with no AI.",
+            "Each document keeps its earlier versions on your computer: see what changed and go back to it.",
           ],
         },
         {
@@ -339,7 +342,7 @@ export const PRODUCTS: Product[] = [
         },
         {
           q: "Does it replace CLAUDE.md, AGENTS.md or a memory-bank folder?",
-          a: "It sits beside them. Instructions that rarely move, such as how to build and the conventions, stay in the files your repository hands the assistant. Progress, decisions, what was ruled out and what is left go in Tisty, dated, searchable and read a section at a time.",
+          a: "For what moves, yes. Instructions that rarely move, such as how to build and the conventions, stay in the files your repository hands the assistant. Progress, decisions, what was ruled out and what is left go in Tisty, dated, searchable and read a section at a time. And the files in your home folder, like ~/.claude/CLAUDE.md or ~/.codex/AGENTS.md, the Agents folder brings into Tisty as documents and, if you sync it, keeps up to date with a backup first.",
         },
         {
           q: "Can I draw diagrams?",
@@ -439,6 +442,7 @@ export const PRODUCTS: Product[] = [
             "GitHub Copilot, Claude Code, Codex o Cursor se conectan por MCP y retoman donde quedaron.",
             "Primero el índice, después una sección: una fracción de lo que cuesta releer tus archivos Markdown.",
             "Trabaja tus tareas como un documento y ordena tus ideas contigo; marcar tus pasos, cerrar y el día siguen siendo tuyos.",
+            "La carpeta Agentes guarda las reglas, skills y memoria de tus agentes como documentos, sincronizados con sus archivos si quieres; un agente solo propone un cambio, y tú lo apruebas.",
           ],
         },
         {
@@ -446,7 +450,7 @@ export const PRODUCTS: Product[] = [
           points: [
             "Escribe «llamar al banco a las 3» en la captura rápida, que se abre desde cualquier parte, y es una tarea con su hora.",
             "Hoy pone primero lo urgente: vence solo lo que pasó su límite, se atrasa lo que no hiciste el día que planeaste.",
-            "Pulsa Tab en la captura rápida y es una idea: una nota adhesiva en la Lluvia de ideas, de hasta 140 caracteres, que después conviertes en tarea o en documento.",
+            "Pulsa Tab en la captura rápida y es una idea: una nota adhesiva en Ideas, de hasta 140 caracteres, que después conviertes en tarea o en documento.",
             "Pasos, partes y la matriz de Eisenhower por su nombre: hacer, planificar, delegar, prescindible.",
           ],
         },
@@ -456,6 +460,8 @@ export const PRODUCTS: Product[] = [
             "Una tarea terminada pasa entera al archivo: su página, sus pasos, su bitácora con fecha y sus archivos.",
             "Una sola búsqueda en las tareas abiertas, el archivo y todos los documentos, aunque lo hayas cerrado hace dos años.",
             "Un documento vivo por tema, con tablas, diagramas, fórmulas, páginas y su propio PDF.",
+            "Brainsty dibuja todo lo que guardas como una sola red: lo que enlazaste, las tareas que cita un documento y, aparte, lo que Tisty cree que se parece, sin IA.",
+            "Cada documento guarda sus versiones anteriores en tu equipo: ves qué cambió y vuelves a eso.",
           ],
         },
         {
@@ -495,7 +501,7 @@ export const PRODUCTS: Product[] = [
         },
         {
           q: "¿Reemplaza a CLAUDE.md, AGENTS.md o una carpeta memory-bank?",
-          a: "Va al lado. Las instrucciones que casi no se mueven, como compilar y las convenciones, siguen en los archivos que tu repositorio le entrega al asistente. El avance, las decisiones, lo descartado y lo que falta van en Tisty, con fecha, buscables y leídos una sección a la vez.",
+          a: "Para lo que se mueve, sí. Las instrucciones que casi no se mueven, como compilar y las convenciones, siguen en los archivos que tu repositorio le entrega al asistente. El avance, las decisiones, lo descartado y lo que falta van en Tisty, con fecha, buscables y leídos una sección a la vez. Y los archivos de tu carpeta personal, como ~/.claude/CLAUDE.md o ~/.codex/AGENTS.md, la carpeta Agentes los trae a Tisty como documentos y, si la sincronizas, los mantiene al día con un respaldo antes.",
         },
         {
           q: "¿Puedo dibujar diagramas?",
