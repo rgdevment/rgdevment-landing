@@ -116,7 +116,7 @@ const quiet = "grid h-9 w-9 shrink-0 place-items-center rounded-full text-muted 
         {
           slides.map((one, at) => (
             <li>
-              <button type="button" class="grid h-9 place-items-center px-1" aria-label={one.label} data-go={at}>
+              <button type="button" class="grid h-9 min-w-6 place-items-center px-1" aria-label={one.label} data-go={at}>
                 <span class="dot relative block h-1.5 overflow-hidden rounded-full bg-fg/20" aria-hidden="true">
                   <span class="fill absolute inset-0 rounded-full bg-fg" />
                 </span>
