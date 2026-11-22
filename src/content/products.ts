@@ -103,8 +103,12 @@ export type Cost = {
 
 type Words = {
   tagline: string;
-  /// Both uses in one line, right under the tagline.
+  /// Both uses in one line; llms.txt opens with it.
   hybrid?: string;
+  /// What the app is, in plain words, for someone who has never heard of it. It takes the place of `problem` on the first screen.
+  plain?: string;
+  /// How to try it, in three steps, right under the screens.
+  start?: { title: string; steps: { title: string; body: string }[] };
   category: string;
   /// Only where name plus tagline runs past what a result page shows.
   title?: string;
@@ -223,6 +227,15 @@ export const PRODUCTS: Product[] = [
       category: "Shared working memory for you and your AI agent: Markdown notes, tasks and documents",
       tagline: "You see the whole. Your agent, every detail. One shared memory.",
       hybrid: "With your agent, it is the memory you share. On your own, it is your place for notes, documents and tasks.",
+      plain: "Tisty is a desktop app for your notes, documents and tasks. You write them, your AI agent reads them and carries on from there, and everything stays on your disk, in Markdown. It works whole without an agent too.",
+      start: {
+        title: "Start in three steps",
+        steps: [
+          { title: "Download it", body: "For Windows or macOS. Free, with no account and nothing to set up." },
+          { title: "Write your first task or note", body: "Type «call the bank at 3» and it is a task with its hour. The welcome guide shows the rest from inside." },
+          { title: "Connect your agent, if you use one", body: "One click in Settings › Assistants, and Claude Code, GitHub Copilot, Codex or Cursor pick up where they left off." },
+        ],
+      },
       mascot: {
         title: "A beaver that keeps what you build.",
         body: "A beaver gathers every branch it finds and builds with it, and what it builds stays. Tisty keeps what you work out the same way: the steps, the journal and the documents, there to find again months later.",
@@ -388,6 +401,15 @@ export const PRODUCTS: Product[] = [
       category: "Memoria de trabajo compartida para ti y tu agente de IA: notas, tareas y documentos en Markdown",
       tagline: "Tú ves el conjunto. Tu agente, cada detalle. Una sola memoria.",
       hybrid: "Con tu agente, es la memoria que comparten. Solo para ti, es tu lugar para notas, documentos y tareas.",
+      plain: "Tisty es una app de escritorio para tus notas, documentos y tareas. Las escribes tú, tu agente de IA las lee y sigue desde ahí, y todo queda en tu disco, en Markdown. También funciona completa sin agente.",
+      start: {
+        title: "Empieza en tres pasos",
+        steps: [
+          { title: "Descárgalo", body: "Para Windows o macOS. Gratis, sin cuenta y sin nada que configurar." },
+          { title: "Escribe tu primera tarea o nota", body: "Escribe «llamar al banco a las 3» y es una tarea con su hora. La guía de bienvenida te muestra el resto desde dentro." },
+          { title: "Conecta tu agente, si usas uno", body: "Un clic en Configuración › Asistentes, y Claude Code, GitHub Copilot, Codex o Cursor retoman donde quedaron." },
+        ],
+      },
       mascot: {
         title: "Un castor que guarda lo que construyes.",
         body: "El castor junta cada rama que encuentra y construye con ella, y lo que construye se queda. Tisty guarda así lo que resuelves: los pasos, la bitácora y los documentos, listos para encontrarlos meses después.",
