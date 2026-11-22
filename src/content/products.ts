@@ -108,7 +108,7 @@ type Words = {
   /// Both uses in one line; llms.txt opens with it.
   hybrid?: string;
   /// What the app is, in plain words, for someone who has never heard of it. It takes the place of `problem` on the first screen.
-  plain?: string;
+  plain?: string[];
   /// Why it exists, in two lines, where the first screen no longer tells it.
   story?: string;
   /// How to try it, in three steps, right under the screens.
@@ -232,7 +232,10 @@ export const PRODUCTS: Product[] = [
       tagline: "You see the whole. Your agent, every detail. One shared memory.",
       hybrid: "It works without an agent too, the traditional way: your notes, documents and tasks, by hand and at your own pace.",
       story: "I started building Tisty to solve a problem of my own, and little by little I saw it was not only mine: everyone ran into it, and each solved it their own way.",
-      plain: "Tisty is a desktop app where you write and your AI agent reads and carries on from there. Everything stays on your disk, in Markdown. It works without an agent too, the traditional way: your notes, documents and tasks, by hand and at your own pace.",
+      plain: [
+        "Tisty is a desktop app where you plan your tasks in natural language and keep what you know: steps, linked documents, ideas and a diary. Brainsty draws it all joined, as one network.",
+        "You and your AI agent read and write in that same memory, on your disk, in Markdown. It works without an agent too, the traditional way: your notes, documents and tasks, by hand and at your own pace.",
+      ],
       start: {
         title: "Start in three steps",
         steps: [
@@ -407,7 +410,10 @@ export const PRODUCTS: Product[] = [
       tagline: "Tú ves el conjunto. Tu agente, cada detalle. Una sola memoria.",
       hybrid: "También funciona sin agente, a la manera tradicional: tus notas, documentos y tareas, a mano y a tu ritmo.",
       story: "Comencé a desarrollar Tisty para resolver un problema personal, y fui viendo que ese problema no era solo mío: a todos les pasaba, y cada uno lo resolvía a su manera.",
-      plain: "Tisty es una app de escritorio donde tú escribes y tu agente de IA lee y sigue desde ahí. Todo queda en tu disco, en Markdown. También funciona sin agente, a la manera tradicional: tus notas, documentos y tareas, a mano y a tu ritmo.",
+      plain: [
+        "Tisty es una app de escritorio donde planificas tus tareas en lenguaje natural y guardas lo que sabes: pasos, documentos enlazados, ideas y un diario. Brainsty lo dibuja todo unido, como una sola red.",
+        "Tú y tu agente de IA leen y escriben en esa misma memoria, en tu disco, en Markdown. También funciona sin agente, a la manera tradicional: tus notas, documentos y tareas, a mano y a tu ritmo.",
+      ],
       start: {
         title: "Empieza en tres pasos",
         steps: [
