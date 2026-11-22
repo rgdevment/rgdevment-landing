@@ -224,10 +224,10 @@ export const PRODUCTS: Product[] = [
     writes: true,
     mascot: "/tisty-head.svg",
     en: {
-      category: "Shared working memory for you and your AI agent: Markdown notes, tasks and documents",
+      category: "Shared working memory for you and your AI agent: notes, documents and tasks in local Markdown",
       tagline: "You see the whole. Your agent, every detail. One shared memory.",
-      hybrid: "With your agent, it is the memory you share. On your own, it is your place for notes, documents and tasks.",
-      plain: "Tisty is a desktop app for your notes, documents and tasks. You write them, your AI agent reads them and carries on from there, and everything stays on your disk, in Markdown. It works whole without an agent too.",
+      hybrid: "It works without an agent too, the traditional way: your notes, documents and tasks, by hand and at your own pace.",
+      plain: "Tisty is a desktop app where you write and your AI agent reads and carries on from there. Everything stays on your disk, in Markdown. It works without an agent too, the traditional way: your notes, documents and tasks, by hand and at your own pace.",
       start: {
         title: "Start in three steps",
         steps: [
@@ -301,7 +301,7 @@ export const PRODUCTS: Product[] = [
         anchor: "a-task-or-a-document",
       },
       title: "Tisty: notes, tasks and memory for you and your AI agent",
-      meta: "Shared working memory for you and your AI agent: tasks, documents and ideas in local Markdown, over MCP for GitHub Copilot, Claude Code and Cursor. Free.",
+      meta: "Shared working memory for you and your AI agent: notes, documents and tasks in local Markdown, over MCP for GitHub Copilot, Claude Code and Cursor. Free.",
       problem:
         "I started building Tisty to solve a problem of my own, and little by little I saw it was not only mine. Your AI agent knows the details better than anyone, and forgets them the moment the session ends, so you explain everything again. In Tisty you see the whole, visual and easy to read, and your agent every detail: one memory, for both of you. And if you would rather work in a more personal way, just for you and with no agent, Tisty is just as much yours.",
       groups: [
@@ -398,10 +398,10 @@ export const PRODUCTS: Product[] = [
       },
     },
     es: {
-      category: "Memoria de trabajo compartida para ti y tu agente de IA: notas, tareas y documentos en Markdown",
+      category: "Memoria de trabajo compartida para ti y tu agente de IA: notas, documentos y tareas en Markdown local",
       tagline: "Tú ves el conjunto. Tu agente, cada detalle. Una sola memoria.",
-      hybrid: "Con tu agente, es la memoria que comparten. Solo para ti, es tu lugar para notas, documentos y tareas.",
-      plain: "Tisty es una app de escritorio para tus notas, documentos y tareas. Las escribes tú, tu agente de IA las lee y sigue desde ahí, y todo queda en tu disco, en Markdown. También funciona completa sin agente.",
+      hybrid: "También funciona sin agente, a la manera tradicional: tus notas, documentos y tareas, a mano y a tu ritmo.",
+      plain: "Tisty es una app de escritorio donde tú escribes y tu agente de IA lee y sigue desde ahí. Todo queda en tu disco, en Markdown. También funciona sin agente, a la manera tradicional: tus notas, documentos y tareas, a mano y a tu ritmo.",
       start: {
         title: "Empieza en tres pasos",
         steps: [
@@ -475,7 +475,7 @@ export const PRODUCTS: Product[] = [
         anchor: "tarea-o-documento",
       },
       title: "Tisty: notas, tareas y memoria para ti y tu agente de IA",
-      meta: "Memoria de trabajo compartida para ti y tu agente de IA: tareas, documentos e ideas en Markdown local, vía MCP en GitHub Copilot, Claude Code y Cursor. Gratis.",
+      meta: "Memoria de trabajo compartida para ti y tu agente de IA: notas, documentos y tareas en Markdown local, vía MCP en GitHub Copilot, Claude Code y Cursor. Gratis.",
       problem:
         "Comencé a desarrollar Tisty para resolver un problema personal, y fui viendo que ese problema no era solo mío. Tu agente de IA conoce el detalle mejor que nadie, y lo olvida en cuanto termina la sesión, así que le vuelves a explicar todo. En Tisty tú ves el conjunto, visual y fácil de leer, y tu agente cada detalle: una sola memoria, para los dos. Y si prefieres trabajar de una manera más personal, solo para ti y sin agente, Tisty es igual de tuyo.",
       groups: [
