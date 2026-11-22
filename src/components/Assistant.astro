@@ -1,5 +1,6 @@
 ---
 import Icon from "./Icon.astro";
+import More from "./More.astro";
 import { docPath } from "../content/docs";
 import type { Assistant, Product } from "../content/products";
 import { href, type Locale } from "../site";
@@ -45,6 +46,7 @@ const copy = locale === "es" ? { label: "Copiar", done: "Copiado" } : { label: "
       <p class="mt-5 text-sm text-body">{words.settings}</p>
     </div>
 
+    <More label={locale === "es" ? "Ver qué puede hacer y qué nunca hace" : "See what it can do and what it never does"}>
     <div class="grid gap-4 md:grid-cols-2 lg:grid-cols-[3fr_2fr]">
       <div class="card p-6 sm:p-7">
         <h3 class="text-lg font-semibold text-fg">{words.can.title}</h3>
@@ -73,6 +75,7 @@ const copy = locale === "es" ? { label: "Copiar", done: "Copiado" } : { label: "
         </ul>
       </div>
     </div>
+    </More>
   </div>
 
   <div class="mt-4 flex flex-col gap-4 rounded-3xl border border-flame/25 bg-flame-tint p-6 sm:flex-row sm:items-center sm:p-7">
