@@ -71,6 +71,8 @@ const say = {
   copy: es ? "Copiar" : "Copy",
   copied: es ? "Copiado" : "Copied",
   getWin: es ? "Descargar para Windows" : "Download for Windows",
+  costBadge: es ? "Lo que tu agente deja de releer en cada sesión" : "What your agent stops rereading every session",
+  costHow: es ? "Cómo se midió" : "How it was measured",
   moreCases: (left: number) => (es ? `Ver ${left} casos más` : `See ${left} more cases`),
   moreSteps: (from: number, to: number) => (es ? `Ver los pasos ${from} a ${to}` : `See steps ${from} to ${to}`),
   getMac: es ? "Descargar para macOS" : "Download for macOS",
@@ -357,6 +359,30 @@ const schema = [
   </section>
 
   {
+    cost && (
+      <section class="shell mt-16 sm:mt-20">
+        <a
+          href="#cost"
+          class="card group flex flex-col gap-x-8 gap-y-3 p-6 transition hover:border-fg/25 sm:flex-row sm:items-center sm:p-8"
+        >
+          <p class="flex items-baseline gap-3">
+            <span class="accent-ink text-6xl font-semibold tracking-[-0.03em] sm:text-7xl" style={ink}>{cost.rows[0].saving}</span>
+            <span class="eyebrow">{cost.less}</span>
+          </p>
+          <p class="flex-1 text-lg text-body">
+            <span class="block font-medium text-fg">{say.costBadge}</span>
+            <span class="block text-muted">{cost.rows[0].what}: {cost.rows[0].spends}.</span>
+          </p>
+          <span class="inline-flex items-center gap-1.5 font-medium text-fg group-hover:underline">
+            {say.costHow}
+            <Icon name="arrow" class="h-4 w-4" />
+          </span>
+        </a>
+      </section>
+    )
+  }
+
+  {
     t.start && (
       <section class="shell mt-20 sm:mt-24">
         <h2 class="section-title">{t.start.title}</h2>
@@ -462,7 +488,7 @@ const schema = [
 
   {
     cost && (
-      <section class="shell mt-24 sm:mt-32">
+      <section id="cost" class="shell mt-24 scroll-mt-24 sm:mt-32">
         <div class="relative isolate overflow-hidden rounded-[2rem] border border-line p-6 sm:p-10 lg:p-12" style={`--accent: ${product.accent}`}>
           <div
             class="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[28rem] w-[52rem] -translate-x-1/2 rounded-full opacity-[0.16] blur-3xl"
