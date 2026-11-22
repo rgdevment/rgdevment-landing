@@ -231,9 +231,9 @@ export const PRODUCTS: Product[] = [
       start: {
         title: "Start in three steps",
         steps: [
-          { title: "Download it", body: "For Windows or macOS. Free, with no account and nothing to set up." },
+          { title: "Download it", body: "For Windows or macOS. Free, with no account." },
           { title: "Write your first task or note", body: "Type «call the bank at 3» and it is a task with its hour. The welcome guide shows the rest from inside." },
-          { title: "Connect your agent, if you use one", body: "One click in Settings › Assistants, and Claude Code, GitHub Copilot, Codex or Cursor pick up where they left off." },
+          { title: "Connect your agent, if you use one", body: "One click in Settings › Assistants, and GitHub Copilot, Claude Code, Codex or Cursor pick up where they left off." },
         ],
       },
       mascot: {
@@ -405,9 +405,9 @@ export const PRODUCTS: Product[] = [
       start: {
         title: "Empieza en tres pasos",
         steps: [
-          { title: "Descárgalo", body: "Para Windows o macOS. Gratis, sin cuenta y sin nada que configurar." },
+          { title: "Descárgalo", body: "Para Windows o macOS. Gratis y sin cuenta." },
           { title: "Escribe tu primera tarea o nota", body: "Escribe «llamar al banco a las 3» y es una tarea con su hora. La guía de bienvenida te muestra el resto desde dentro." },
-          { title: "Conecta tu agente, si usas uno", body: "Un clic en Configuración › Asistentes, y Claude Code, GitHub Copilot, Codex o Cursor retoman donde quedaron." },
+          { title: "Conecta tu agente, si usas uno", body: "Un clic en Configuración › Asistentes, y GitHub Copilot, Claude Code, Codex o Cursor retoman donde quedaron." },
         ],
       },
       mascot: {
