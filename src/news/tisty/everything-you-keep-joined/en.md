@@ -16,12 +16,12 @@ And every agent you use reads its rules from a file of its own, CLAUDE.md here a
 
 **Tisty was made for that:**
 
-- What you keep is joined as you write, and you see it as one map.
+- What you keep is joined as you write, and Brainsty draws it as one network.
 - What nobody tied but is about the same thing shows apart, with its why and with no AI.
 - Every document keeps what it said before.
 - Your agents' rules live in one place, and a change your agent wants waits for you.
-- Your agent walks that same map instead of reading everything.
-- It all stays on your computer, in Markdown, with no account.
+- Your agent reads and writes in that same memory, and walks it through the network instead of reading everything.
+- Your tasks in natural language, with their steps, your linked documents, Ideas and the Diary stay on your computer, in Markdown, with no account.
 
 It works without an agent too, the traditional way: your notes, documents and tasks, by hand and at your own pace. This is what I wanted to tell you.
 
@@ -57,7 +57,7 @@ Each computer decides what it applies, and nothing is read from the agents until
 
 ## Your agent walks it, without reading it all
 
-The network you see is the index your agent reads. Mario asks an agent how the site certificate was renewed last year, and it finds the answer with a single search, the Archive included. From a document it reads the card first, with its sections and who cites it, and then only the part it needs. What Tisty thinks is alike reaches it apart, so it never takes it for a link someone wrote.
+The network you see is the one your agent walks, and what it writes is joined in it just like what you write. Mario asks an agent how the site certificate was renewed last year, and it finds the answer with a single search, the Archive included. From a document it reads the card first, with its sections and who cites it, and then only the part it needs. What Tisty thinks is alike reaches it apart, so it never takes it for a link someone wrote.
 
 GitHub Copilot, Claude Code, Codex or Cursor connect over Tisty's local MCP server.
 

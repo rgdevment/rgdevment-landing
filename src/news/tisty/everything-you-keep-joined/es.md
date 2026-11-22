@@ -17,12 +17,12 @@ Y cada agente que usas lee sus reglas de un archivo propio, CLAUDE.md aquí y AG
 
 **Tisty nació para eso:**
 
-- Lo que guardas queda unido mientras escribes, y lo ves como un solo mapa.
+- Lo que guardas queda unido mientras escribes, y Brainsty lo dibuja como una sola red.
 - Lo que nadie unió pero habla de lo mismo aparece aparte, con su porqué y sin IA.
 - Cada documento guarda lo que decía antes.
 - Las reglas de tus agentes viven en un solo lugar, y un cambio que quiere tu agente te espera.
-- Tu agente recorre ese mismo mapa en vez de leerlo todo.
-- Todo queda en tu equipo, en Markdown y sin cuenta.
+- Tu agente lee y escribe en esa misma memoria, y la recorre por la red en vez de leerlo todo.
+- Tus tareas en lenguaje natural, con sus pasos, tus documentos enlazados, Ideas y el Diario quedan en tu equipo, en Markdown y sin cuenta.
 
 También funciona sin agente, a la manera tradicional: tus notas, documentos y tareas, a mano y a tu ritmo. Esto es lo que te quería contar.
 
@@ -58,7 +58,7 @@ Cada equipo decide qué aplica, y no se lee nada de sus agentes hasta que hace c
 
 ## Tu agente la recorre, sin leerlo todo
 
-La red que tú ves es el índice que lee tu agente. Mario le pregunta a su agente cómo renovó el certificado del sitio el año pasado, y el agente lo encuentra con una sola búsqueda, el Archivo incluido. De un documento lee primero su ficha, con sus secciones y quién lo cita, y después solo la parte que necesita. Lo que Tisty cree que se parece le llega aparte, así que nunca lo confunde con un enlace que alguien escribió.
+La red que tú ves es la que recorre tu agente, y lo que escribe queda unido en ella igual que lo tuyo. Mario le pregunta a su agente cómo renovó el certificado del sitio el año pasado, y el agente lo encuentra con una sola búsqueda, el Archivo incluido. De un documento lee primero su ficha, con sus secciones y quién lo cita, y después solo la parte que necesita. Lo que Tisty cree que se parece le llega aparte, así que nunca lo confunde con un enlace que alguien escribió.
 
 GitHub Copilot, Claude Code, Codex o Cursor se conectan por el servidor MCP local de Tisty.
 
