@@ -27,9 +27,9 @@ It works without an agent too, the traditional way: your notes, documents and ta
 
 ## Everything you keep, joined
 
-Marisol keeps «House repairs», a document with the roof, the plumbing and the quotes. While writing, Marisol types two brackets and a few words of a title, and the document links to «Gutter notes»; if it is renamed later, the link still gets there. In the same document, the / menu cites the task «Ask for the roof quote» as a live card: its date, its steps and a box to tick right there. Beside each document, **Linked from** says who names it.
+Marisol keeps «House repairs», a document with the roof, the plumbing and the quotes. While writing, they type two brackets and a few words of a title, and the document links to «Gutter notes»; if it is renamed later, the link still gets there. In the same document, the / menu cites the task «Ask for the roof quote» as a live card: its date, its steps and a box to tick right there. Beside each document, **Linked from** says who names it.
 
-Then Marisol opens **Brainsty**, under the task views in the sidebar. Everything Marisol keeps is there as one network: documents as squares, tasks as circles in their list's colour, tags as faint dots. From afar it is a map of every project, slowly turning like a globe while a few lights walk its lines. Up close, every title shows and each thing is its own icon. A click opens its card, with what it is, its dates, what points at it and its link; **Open** goes there.
+Then Marisol opens **Brainsty**, under the task views in the sidebar. Everything they keep is there as one network: documents as squares, tasks as circles in their list's colour, tags as faint dots. From afar it is a map of every project, slowly turning like a globe while a few lights walk its lines. Up close, every title shows and each thing is its own icon. A click opens its card, with what it is, its dates, what points at it and its link; **Open** goes there.
 
 What someone wrote weighs most. A citation or a mention draws two things together and shows strong; a shared tag barely moves them. And what Marisol put away stays away: a hidden or dropped task, and the diary, are not in the network.
 
@@ -41,7 +41,7 @@ Brainsty joins them with an amber curve, apart from every line someone wrote, an
 
 ## Go back to what a document said
 
-Lucas asks an agent to tidy «Saturday walks» and it leaves out the times. In the panel beside the document, **See the history** lists its earlier versions, newest first, with who wrote each one: Lucas, or Claude Code. **What changed** marks in red what the agent took out and in green what it put in, and **Go back to this version** brings it back. The same goes for a paragraph Lucas deleted last week: it is still in an earlier version.
+Lucas asks an agent to tidy «Saturday walks» and it leaves out the times. In the panel beside the document, **See the history** lists its earlier versions, newest first, with who wrote each one: Lucas, or Claude Code. **What changed** marks in red what the agent took out and in green what it put in, and **Go back to this version** brings it back. And a paragraph Lucas deleted by hand last week is still in an earlier version too.
 
 Tisty keeps a version when someone writes after a quiet half hour, or when the one writing changes, so what the agent replaced never mixes with what Lucas wrote. The versions stay on that computer, 30 days unless Lucas chooses fewer, and **Empty the history** takes away a text deleted on purpose.
 
@@ -49,7 +49,7 @@ Tisty keeps a version when someone writes after a quiet half hour, or when the o
 
 Yisset works with Claude Code, Codex and GitHub Copilot, and each one reads its rules from its own file. The **Agents** folder, at the top of the Library, brings those files into Tisty as documents, with their skills and their memory. **Bring** copies them, to read and arrange them; **Bring and sync** also writes a rule changed once into each agent's file, with a backup before every overwrite.
 
-A rule in **Global** reaches all of Yisset's assistants. A change made outside Tisty is never written over. And when Yisset asks an agent to add a rule, it does not write it: the change waits on the card, beside what Yisset approved, until Yisset says yes.
+A rule in **Global** reaches all of Yisset's assistants. A change made outside Tisty is never written over. And when Yisset asks an agent to add a rule, it does not write it: the change waits on the card, beside what they approved, until they say yes.
 
 ![The window Your agents, in one place in Tisty: what it found for Claude, Codex and Copilot, a note that Gemini has nothing yet, and the buttons Bring and Bring and sync](./agents.webp)
 
@@ -57,11 +57,11 @@ Each computer decides what it applies, and nothing is read from the agents until
 
 ## Your agent walks it, without reading it all
 
-The network you see is the index your agent reads. Mario asks theirs how the site certificate was renewed last year: with a single search it reaches everything, the Archive included; it reads a document's card, with its sections and who cites it, before reading only the part it needs; and it gets what Tisty thinks is alike apart, so it never takes it for a link someone wrote.
+The network you see is the index your agent reads. Mario asks an agent how the site certificate was renewed last year, and it finds the answer with a single search, the Archive included. From a document it reads the card first, with its sections and who cites it, and then only the part it needs. What Tisty thinks is alike reaches it apart, so it never takes it for a link someone wrote.
+
+GitHub Copilot, Claude Code, Codex or Cursor connect over Tisty's local MCP server.
 
 If you add Tisty's reminders in **Settings › Assistants**, every session starts with the tasks your agent left open, and a turn that changed files without noting anything in Tisty is handed back once. And what you put away stays away from it too: a hidden task named inside your writing reaches your agent as «a task out of sight», and comes back intact if it rewrites that document.
-
-It works with GitHub Copilot, Claude Code, Codex or Cursor, and any assistant that speaks MCP.
 
 ## Try it
 

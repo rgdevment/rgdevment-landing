@@ -42,7 +42,7 @@ Brainsty las une con una curva ámbar, aparte de toda línea que alguien escribi
 
 ## Vuelve a lo que decía un documento
 
-Lucas le pide a su agente que ordene «Paseos del sábado» y lo deja sin los horarios. En el panel junto al documento, **Ver el historial** lista sus versiones anteriores, la más nueva primero, con quién escribió cada una: Lucas, o Claude Code. **Qué cambió** marca en rojo lo que el agente quitó y en verde lo que puso, y **Volver a esta versión** lo trae de vuelta. Lo mismo con un párrafo que él mismo borró la semana pasada: sigue en una versión de antes.
+Lucas le pide a su agente que ordene «Paseos del sábado» y lo deja sin los horarios. En el panel junto al documento, **Ver el historial** lista sus versiones anteriores, la más nueva primero, con quién escribió cada una: Lucas, o Claude Code. **Qué cambió** marca en rojo lo que el agente quitó y en verde lo que puso, y **Volver a esta versión** lo trae de vuelta. Y si fue Lucas quien borró un párrafo la semana pasada, también sigue en una versión de antes.
 
 Tisty guarda una versión cuando alguien escribe después de media hora sin cambios, o cuando cambia quien escribe, así que lo que reemplazó el agente nunca se mezcla con lo que escribió Lucas. Las versiones quedan en ese equipo, 30 días salvo que elija menos, y **Vaciar el historial** se lleva un texto que borró a propósito.
 
@@ -58,11 +58,11 @@ Cada equipo decide qué aplica, y no se lee nada de sus agentes hasta que hace c
 
 ## Tu agente la recorre, sin leerlo todo
 
-La red que tú ves es el índice que lee tu agente. Mario le pregunta al suyo cómo renovó el certificado del sitio el año pasado: con una sola búsqueda llega a todo, el Archivo incluido; lee la ficha de un documento, con sus secciones y quién lo cita, antes de leer solo la parte que necesita, y recibe aparte lo que Tisty cree que se parece, así que nunca lo confunde con un enlace que alguien escribió.
+La red que tú ves es el índice que lee tu agente. Mario le pregunta a su agente cómo renovó el certificado del sitio el año pasado, y el agente lo encuentra con una sola búsqueda, el Archivo incluido. De un documento lee primero su ficha, con sus secciones y quién lo cita, y después solo la parte que necesita. Lo que Tisty cree que se parece le llega aparte, así que nunca lo confunde con un enlace que alguien escribió.
+
+GitHub Copilot, Claude Code, Codex o Cursor se conectan por el servidor MCP local de Tisty.
 
 Si agregas los recordatorios de Tisty en **Configuración › Asistentes**, cada sesión empieza con las tareas que tu agente dejó abiertas, y un turno que cambió archivos sin anotar nada en Tisty se le devuelve una vez. Y lo que apartas también queda lejos de él: una tarea oculta nombrada dentro de lo que escribiste le llega como «a task out of sight», y vuelve intacta si reescribe ese documento.
-
-Funciona con GitHub Copilot, Claude Code, Codex o Cursor, y cualquier asistente con MCP.
 
 ## Pruébalo
 
