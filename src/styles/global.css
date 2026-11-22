@@ -218,3 +218,25 @@
     display: none;
   }
 }
+
+.more-toggle {
+  display: inline-flex;
+  cursor: pointer;
+  list-style: none;
+  align-items: center;
+  gap: 0.5rem;
+  border-radius: 9999px;
+  border: 1px solid rgb(var(--line));
+  padding: 0.625rem 1.125rem;
+  font-weight: 500;
+  color: rgb(var(--fg));
+}
+.more-toggle::-webkit-details-marker {
+  display: none;
+}
+.more-toggle:hover {
+  border-color: rgb(var(--fg) / 0.25);
+}
+.more[open] .more-arrow {
+  transform: rotate(180deg);
+}

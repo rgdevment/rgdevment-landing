@@ -21,6 +21,11 @@ export const FIXES_EN: Fixes = {
       fix: "A search for «timeouts on save» brings back the archived task as it was left: its steps, its journal and the line saying the cause was a missing index.",
     },
     {
+      who: "At home",
+      problem: "The bank paperwork that comes back every year.",
+      fix: "Next year, the archived task tells you how you did it last time.",
+    },
+    {
       who: "PM",
       problem: "A month later somebody asks why it was decided that way.",
       fix: "One living document per subject, «Checkout decisions», each decision dated with its why. The agent finds it and quotes it instead of reopening the debate.",
@@ -39,11 +44,6 @@ export const FIXES_EN: Fixes = {
       who: "Business rules",
       problem: "What must not end up in somebody else's database.",
       fix: "Tisty keeps it on your disk and sends it nowhere. What your agent reads goes where that agent goes, so pair it with one your company allows.",
-    },
-    {
-      who: "At home",
-      problem: "The bank paperwork that comes back every year.",
-      fix: "Next year, the archived task tells you how you did it last time.",
     },
   ],
 };
@@ -69,6 +69,11 @@ export const FIXES_ES: Fixes = {
       fix: "Buscar «timeouts al guardar» trae la tarea archivada tal como quedó: sus pasos, su bitácora y la línea que dice que la causa era un índice que faltaba.",
     },
     {
+      who: "En casa",
+      problem: "El trámite del banco que vuelve cada año.",
+      fix: "El año siguiente, la tarea archivada te dice cómo lo hiciste la vez anterior.",
+    },
+    {
       who: "PM",
       problem: "Un mes después alguien pregunta por qué se decidió así.",
       fix: "Un documento vivo por tema, «Decisiones de checkout», con cada decisión fechada y su porqué. El agente lo encuentra y lo cita en vez de reabrir el debate.",
@@ -87,11 +92,6 @@ export const FIXES_ES: Fixes = {
       who: "Reglas de negocio",
       problem: "Lo que no puede terminar en la base de datos de otro.",
       fix: "Tisty lo guarda en tu disco y no lo manda a ninguna parte. Lo que lee tu agente va adonde va ese agente, así que úsalo con uno que tu empresa permita.",
-    },
-    {
-      who: "En casa",
-      problem: "El trámite del banco que vuelve cada año.",
-      fix: "El año siguiente, la tarea archivada te dice cómo lo hiciste la vez anterior.",
     },
   ],
 };
@@ -181,6 +181,7 @@ const LOG = (title: string, entry: string) =>
 
 export const PROOF_EN: Proof = {
   title: "What stays on your disk",
+  more: "See the files as they are",
   lede: "No database to export from and no format to decode. This is what Tisty keeps in its folder, as it looks after a few months of use.",
   doc: {
     name: "docs/2hq2p1ax-0003.md",
@@ -229,6 +230,7 @@ Weight: ==11.4 kg=={green} ::heart red::`,
 
 export const PROOF_ES: Proof = {
   title: "Lo que queda en tu disco",
+  more: "Ver los archivos tal como quedan",
   lede: "Sin base de datos de la que exportar ni formato que descifrar. Esto es lo que Tisty guarda en su carpeta, tal como se ve tras unos meses de uso.",
   doc: {
     name: "docs/2hq2p1ax-0003.md",
