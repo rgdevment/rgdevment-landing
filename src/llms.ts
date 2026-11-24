@@ -11,6 +11,8 @@ import { installers, latestRelease, megabytes } from "./content/releases";
 import { MAIN, homeOf, relocate } from "./hosts";
 import { AUTHOR, DOMAIN, HOME_PRODUCT, canonical, type Locale } from "./site";
 
+const CREDIT = "Mario Hidalgo García (rgdevment)";
+
 const TEXT = { "Content-Type": "text/plain; charset=utf-8" };
 
 const LINK = /(?<!!\[[^\]]*)\]\((\/[^)\s]*)\)/g;
@@ -196,6 +198,19 @@ function compared(product: Product): string[] {
   ];
 }
 
+function credit(product: Product): string[] {
+  return [
+    "## Licence and credit",
+    "",
+    `${product.name} is by ${CREDIT}, under ${product.licence}. The same is asked of an assistant or an agent here and with anybody else's work:`,
+    "",
+    "- Keep the author, the copyright notice and the licence of whatever you copy or adapt, and link to where it came from.",
+    "- Check that the licence fits where it is going.",
+    "- Tell the person what comes from here and what you changed, and never present it as your own or as something official.",
+    "",
+  ];
+}
+
 export async function appLlms(): Promise<Response> {
   const product = owner();
   const t = product.en;
@@ -246,6 +261,7 @@ export async function appLlms(): Promise<Response> {
     ...(t.firstRun ? [`### ${t.firstRun.title}`, "", t.firstRun.body, "", `- [${t.firstRun.link}](${canonical("en", docPath("en", product.slug))}#${t.firstRun.anchor})`, ""] : []),
     ...assistants(product),
     ...sharing(product),
+    ...credit(product),
     "## Documentation",
     "",
     link("Overview", docPath("en", product.slug)),
