@@ -45,6 +45,16 @@ export function appId(product: string): string {
   return `${canonical("en", product)}#app`;
 }
 
+export function appRef(product: { slug: string; name: string; subCategory?: string }) {
+  return {
+    "@id": appId(product.slug),
+    "@type": "SoftwareApplication",
+    name: product.name,
+    ...(product.subCategory ? { applicationSubCategory: product.subCategory } : {}),
+    url: canonical("en", product.slug),
+  };
+}
+
 export const PERSON_ID = `${MAIN}/#person`;
 export const WEBSITE_ID = `${DOMAIN}/#website`;
 

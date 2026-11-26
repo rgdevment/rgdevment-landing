@@ -114,6 +114,8 @@ type Words = {
   /// How to try it, in three steps, right under the screens.
   start?: { title: string; steps: { title: string; body: string }[] };
   category: string;
+  /// Concise category label for cross-links and footer disambiguation.
+  shortKind: string;
   /// Only where name plus tagline runs past what a result page shows.
   title?: string;
   meta: string;
@@ -154,6 +156,7 @@ type Words = {
 export type Product = {
   slug: string;
   name: string;
+  subCategory: string;
   repo: string;
   licence: string;
   platforms: string[];
@@ -188,6 +191,7 @@ export const PRODUCTS: Product[] = [
   {
     slug: "tisty",
     name: "Tisty",
+    subCategory: "Note-taking, Task Management & Local MCP Memory",
     repo: "https://github.com/rgdevment/Tisty",
     licence: "AGPL-3.0-only",
     platforms: ["Windows", "macOS"],
@@ -229,6 +233,7 @@ export const PRODUCTS: Product[] = [
     mascot: "/tisty-head.svg",
     en: {
       category: "Shared working memory for you and your AI agent: notes, documents and tasks in local Markdown",
+      shortKind: "Notes, tasks & MCP memory",
       tagline: "You see the whole. Your agent, every detail. One shared memory.",
       hybrid: "It works without an agent too, the traditional way: your notes, documents and tasks, by hand and at your own pace.",
       story: "I started building Tisty to solve a problem of my own, and little by little I saw it was not only mine: everyone ran into it, and each solved it their own way.",
@@ -407,6 +412,7 @@ export const PRODUCTS: Product[] = [
     },
     es: {
       category: "Memoria de trabajo compartida para ti y tu agente de IA: notas, documentos y tareas en Markdown local",
+      shortKind: "Notas, tareas y memoria MCP",
       tagline: "Tú ves el conjunto. Tu agente, cada detalle. Una sola memoria.",
       hybrid: "También funciona sin agente, a la manera tradicional: tus notas, documentos y tareas, a mano y a tu ritmo.",
       story: "Comencé a desarrollar Tisty para resolver un problema personal, y fui viendo que ese problema no era solo mío: a todos les pasaba, y cada uno lo resolvía a su manera.",
@@ -587,6 +593,7 @@ export const PRODUCTS: Product[] = [
   {
     slug: "linkunbound",
     name: "LinkUnbound",
+    subCategory: "Browser Picker & Link Router",
     repo: "https://github.com/rgdevment/LinkUnbound",
     licence: "GPL-3.0-only",
     platforms: ["Windows", "macOS"],
@@ -607,6 +614,7 @@ export const PRODUCTS: Product[] = [
     mascot: "/linkunbound-head.svg",
     en: {
       category: "Browser picker for Windows and macOS",
+      shortKind: "Browser picker & link router",
       title: "LinkUnbound: browser picker for Windows and macOS",
       tagline: "Choose which browser opens every link.",
       mascot: {
@@ -655,6 +663,7 @@ export const PRODUCTS: Product[] = [
     },
     es: {
       category: "Selector de navegador para Windows y macOS",
+      shortKind: "Selector de navegador",
       title: "LinkUnbound: selector de navegador para Windows y macOS",
       tagline: "Elige con qué navegador se abre cada enlace.",
       mascot: {
@@ -705,6 +714,7 @@ export const PRODUCTS: Product[] = [
   {
     slug: "copanda",
     name: "CoPanda",
+    subCategory: "Clipboard History Manager",
     formerName: "CopyPaste",
     repo: "https://github.com/rgdevment/CopyPaste",
     licence: "GPL-3.0-only",
@@ -725,6 +735,7 @@ export const PRODUCTS: Product[] = [
     mascot: "/copanda-head.svg",
     en: {
       category: "Clipboard manager for Windows and macOS",
+      shortKind: "Clipboard history manager",
       tagline: "An extra thumb for your clipboard.",
       title: "CoPanda: free clipboard history manager, Windows and macOS",
       meta: "Free, open source clipboard manager for Windows and macOS, formerly CopyPaste. A searchable local history that skips your password manager. No account.",
@@ -774,6 +785,7 @@ export const PRODUCTS: Product[] = [
     },
     es: {
       category: "Gestor de portapapeles para Windows y macOS",
+      shortKind: "Historial de portapapeles",
       tagline: "Un pulgar extra para tu portapapeles.",
       title: "CoPanda: gestor e historial de portapapeles, Windows y macOS",
       meta: "Gestor de portapapeles gratis y libre para Windows y macOS, antes CopyPaste. Historial local con búsqueda que ignora tu gestor de contraseñas. Sin cuenta.",

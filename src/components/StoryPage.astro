@@ -6,7 +6,7 @@ import GetIt from "./GetIt.astro";
 import Layout from "../layouts/Layout.astro";
 import { NEWS_PATH, homeProduct, newsWords, storiesOf, storyPath } from "../content/news";
 import { cardOf } from "../content/products";
-import { DOMAIN, PERSON_ID, appId, canonical, crumbs, href, longDate, type Locale } from "../site";
+import { DOMAIN, PERSON_ID, WEBSITE_ID, appRef, canonical, crumbs, href, longDate, type Locale } from "../site";
 
 interface Props {
   locale: Locale;
@@ -36,12 +36,14 @@ const posting = {
   headline: title,
   description,
   datePublished: story.date,
+  dateModified: story.date,
   inLanguage: locale,
   url,
+  isPartOf: { "@id": WEBSITE_ID },
   mainEntityOfPage: url,
   author: { "@id": PERSON_ID },
   publisher: { "@id": PERSON_ID },
-  about: { "@id": appId(product.slug) },
+  about: appRef(product),
   ...(card ? { image: new URL(card.src, DOMAIN).toString() } : {}),
 };
 const neighbour = "block rounded-3xl border border-line p-5 transition-colors hover:border-fg/30";

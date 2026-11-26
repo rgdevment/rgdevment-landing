@@ -240,3 +240,53 @@
 .more[open] .more-arrow {
   transform: rotate(180deg);
 }
+
+@media (max-width: 767px) {
+  .compare-table,
+  .compare-table tbody {
+    display: block;
+  }
+
+  .compare-row {
+    display: block;
+    margin-bottom: 1rem;
+    border-radius: 1.5rem;
+    border: 1px solid rgb(var(--line));
+    background: rgb(var(--surface));
+    padding: 1.25rem;
+  }
+
+  .compare-rowhead {
+    display: block;
+    padding: 0 0 0.75rem;
+    font-size: 1.0625rem;
+    font-weight: 600;
+    line-height: 1.35;
+  }
+
+  .compare-cell {
+    display: grid;
+    grid-template-columns: 7rem minmax(0, 1fr);
+    gap: 0.75rem;
+    align-items: start;
+    border-top: 1px solid rgb(var(--line));
+    padding: 0.55rem 0;
+  }
+
+  .compare-cell::before {
+    content: attr(data-label);
+    font-weight: 500;
+    color: rgb(var(--fg));
+  }
+
+  .compare-own {
+    margin-bottom: 0.5rem;
+    border-top: 0;
+    border-radius: 1rem;
+    padding: 0.75rem;
+  }
+
+  .compare-own::before {
+    font-weight: 600;
+  }
+}

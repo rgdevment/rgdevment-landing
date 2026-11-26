@@ -1,6 +1,6 @@
 import type { APIRoute } from "astro";
 import { PRODUCTS } from "../../../content/products";
-import { getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import { privacyPath } from "../../../content/privacy";
 import { termsPath } from "../../../content/terms";
 import { latestRelease } from "../../../content/releases";
@@ -16,7 +16,7 @@ export const GET: APIRoute = async () => {
   return sitemap([
     { en: product, es: product, priority: "1.0", lastmod: release?.date.slice(0, 10) },
     { en: privacyPath("en", product), es: privacyPath("es", product), priority: "0.4", textIn: "en" as const },
-    ...((await getEntry("terms", product))
+    ...((await getCollection("terms")).some((one) => one.id === product)
       ? [{ en: termsPath("en", product), es: termsPath("es", product), priority: "0.3", textIn: "en" as const }]
       : []),
     { en: "pricing", es: "precios", priority: "0.5" },

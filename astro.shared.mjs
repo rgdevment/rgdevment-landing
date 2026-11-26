@@ -1,4 +1,6 @@
 import { cpSync, existsSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
+import { join } from 'node:path';
+import { fileURLToPath } from 'node:url';
 import { rehypeHeadingIds } from '@astrojs/markdown-remark';
 import tailwind from '@astrojs/tailwind';
 import rehypeAutolinkHeadings from 'rehype-autolink-headings';
@@ -7,7 +9,7 @@ import rehypeSanitize, { defaultSchema } from 'rehype-sanitize';
 import remarkMath from 'remark-math';
 import sharp from 'sharp';
 import { PRODUCTS as CATALOG } from './src/content/products.ts';
-import { HOMES, MAIN, homeOf, relocate, renamed } from './src/hosts.ts';
+import { HOMES, MAIN, homeOf, redirects, relocate, renamed } from './src/hosts.ts';
 
 const PRODUCTS = Object.values(HOMES);
 
@@ -111,7 +113,26 @@ const versionOf = (name) => JSON.parse(readFileSync(`./node_modules/${name}/pack
 const MERMAID = `_astro/mermaid-${versionOf('mermaid')}`;
 const KATEX = `_astro/katex-${versionOf('katex')}`;
 
-// Mermaid ships already built: bundling it again took nine tenths of every build for the few pages that draw a diagram.
+function scanHtml(root) {
+  let mermaid = false;
+  let math = false;
+  const walk = (folder) => {
+    for (const entry of readdirSync(folder, { withFileTypes: true })) {
+      if (mermaid && math) return;
+      const full = join(folder, entry.name);
+      if (entry.isDirectory()) walk(full);
+      else if (entry.name.endsWith('.html')) {
+        const html = readFileSync(full, 'utf8');
+        if (!mermaid && html.includes('language-mermaid')) mermaid = true;
+        if (!math && (html.includes('katex.min.css') || html.includes('class="katex"'))) math = true;
+      }
+    }
+  };
+  walk(root);
+  return { mermaid, math };
+}
+
+// Mermaid and KaTeX ship already built and are copied only into sites whose compiled HTML actually references them.
 function vendored() {
   return {
     name: 'vendored',
@@ -129,16 +150,21 @@ function vendored() {
       },
       'astro:build:done': ({ dir }) => {
         const to = (path) => new URL(path, dir);
-        cpSync('./node_modules/mermaid/dist/mermaid.esm.min.mjs', to(`${MERMAID}/mermaid.esm.min.mjs`));
-        cpSync('./node_modules/mermaid/dist/chunks/mermaid.esm.min', to(`${MERMAID}/chunks/mermaid.esm.min`), {
-          recursive: true,
-          filter: (path) => !path.endsWith('.map'),
-        });
-        cpSync('./node_modules/katex/dist/katex.min.css', to(`${KATEX}/katex.min.css`));
-        cpSync('./node_modules/katex/dist/fonts', to(`${KATEX}/fonts`), {
-          recursive: true,
-          filter: (path) => !/\.(?:woff|ttf)$/.test(path),
-        });
+        const used = scanHtml(fileURLToPath(dir));
+        if (used.mermaid) {
+          cpSync('./node_modules/mermaid/dist/mermaid.esm.min.mjs', to(`${MERMAID}/mermaid.esm.min.mjs`));
+          cpSync('./node_modules/mermaid/dist/chunks/mermaid.esm.min', to(`${MERMAID}/chunks/mermaid.esm.min`), {
+            recursive: true,
+            filter: (path) => !path.endsWith('.map'),
+          });
+        }
+        if (used.math) {
+          cpSync('./node_modules/katex/dist/katex.min.css', to(`${KATEX}/katex.min.css`));
+          cpSync('./node_modules/katex/dist/fonts', to(`${KATEX}/fonts`), {
+            recursive: true,
+            filter: (path) => !/\.(?:woff|ttf)$/.test(path),
+          });
+        }
       },
     },
   };
@@ -251,26 +277,42 @@ async function favicon(png) {
   return Buffer.concat([head, ...frames]);
 }
 
-// public/ is shared, so each app's site drops what belongs to the others and takes its own /favicon.ico,
-// which browsers and search engines ask for on their own, so it carries only the small sizes they draw.
-function ownFiles(product) {
+// public/ is shared, so each site drops what belongs only to the others and builds its own manifest/favicon icons.
+export function ownFiles(product = null) {
   return {
     name: 'own-files',
     hooks: {
       'astro:build:done': async ({ dir }) => {
         const at = (path) => new URL(path, dir);
+        if (!product) {
+          writeFileSync(at('_redirects'), redirects() + renamed({ '/en/': '/' }));
+          rmSync(at('docs-assets/'), { recursive: true, force: true });
+          const appOnly = (name) =>
+            PRODUCTS.some((one) => name.startsWith(`${one}-`)) && !name.includes('-social');
+          readdirSync(at('.'))
+            .filter(appOnly)
+            .forEach((path) => rmSync(at(path), { force: true }));
+          return;
+        }
         const others = PRODUCTS.filter((one) => one !== product);
         const foreign = (name) => others.some((one) => name.startsWith(`${one}-`) || name.startsWith(`${one}.`));
         const drop = [
           ...MAIN_ONLY,
           ...readdirSync(at('.')).filter(foreign),
           ...readdirSync(at('icons/')).filter((name) => name.endsWith('.ico')).map((name) => `icons/${name}`),
-          ...readdirSync(at('docs-assets/')).filter((name) => !name.startsWith(`${product}-`)).map((name) => `docs-assets/${name}`),
+          ...(existsSync(at('docs-assets/'))
+            ? readdirSync(at('docs-assets/')).filter((name) => !name.startsWith(`${product}-`)).map((name) => `docs-assets/${name}`)
+            : []),
         ];
         const icon = CATALOG.find((one) => one.slug === product).icon;
-        writeFileSync(at('favicon.ico'), await favicon(`./public${icon}`));
-        writeFileSync(at('_redirects'), renamed({ '/en/': '/', ...SUPPORT_MOVED, ...HELP_MOVED[product], ...TOPIC_GONE[product], ...newsMoved(product) }));
         drop.forEach((path) => rmSync(at(path), { force: true }));
+        writeFileSync(at('favicon.ico'), await favicon(`./public${icon}`));
+        await Promise.all(
+          [192, 512].map(async (size) =>
+            writeFileSync(at(`icon-${size}.png`), await sharp(`./public${icon}`).resize(size, size).png({ compressionLevel: 9 }).toBuffer()),
+          ),
+        );
+        writeFileSync(at('_redirects'), renamed({ '/en/': '/', ...SUPPORT_MOVED, ...HELP_MOVED[product], ...TOPIC_GONE[product], ...newsMoved(product) }));
       },
     },
   };

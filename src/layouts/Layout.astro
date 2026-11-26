@@ -1,12 +1,12 @@
 ---
 import "../styles/global.css";
 import textFont from "@fontsource-variable/inter/files/inter-latin-wght-normal.woff2?url";
-import { getEntry } from "astro:content";
+import { getCollection } from "astro:content";
 import Icon from "../components/Icon.astro";
 import Logo from "../components/Logo.astro";
 import Nav from "../components/Nav.astro";
 import ProductNav from "../components/ProductNav.astro";
-import { PRODUCTS, cardOf, iconAlt } from "../content/products";
+import { PRODUCTS, cardOf, iconAlt, words } from "../content/products";
 import { CHANGELOG_PATH, FEED, hasChangelog } from "../content/changelog";
 import { COMPARE_PATH, comparisonOf } from "../content/compare";
 import { NEWS_FEED, NEWS_PATH, hasNews } from "../content/news";
@@ -44,15 +44,15 @@ const there: Locale = es ? "en" : "es";
 const at = (one: Locale) => paths?.[one] ?? path;
 const url = textIn ? canonical(textIn, at(textIn)) : canonical(locale, at(locale));
 const paired = !noindex && !textIn;
-const twin = locale === "en" && paired ? href("es", at("es")) : null;
-const ours = [MAIN, ...Object.keys(HOMES)];
 const owner = PRODUCTS.find((one) => one.slug === HOME_PRODUCT);
 const told = owner ? await hasNews(owner.slug) : false;
 const brand = owner?.name ?? "rgdevment";
 const full = title.includes(brand) || title.length > 44 ? title : `${title} · ${brand}`;
 const ownCard = owner && cardOf(owner, locale);
 // An app's own site points at its policies from the foot, where people look for them.
-const terms = owner && (await getEntry("terms", owner.slug));
+const terms = owner && (await getCollection("terms")).find((one) => one.id === owner.slug);
+const ogLocale = locale === "es" ? "es_CL" : "en_US";
+const ogAlternate = locale === "es" ? "en_US" : "es_CL";
 const compared = comparisonOf(owner?.slug ?? null);
 const card = image ?? ownCard ?? { src: es ? "/social-es.png" : "/social.png", width: 1200, height: 630 };
 const cardExtension = new URL(card.src, DOMAIN).pathname.split(".").pop()!.toLowerCase();
@@ -140,7 +140,7 @@ const say = es
 
     <meta property="og:type" content={published || modified ? "article" : "website"} />
     <meta property="og:site_name" content={brand} />
-    <meta property="og:url" content={url} />
+    {!noindex && <meta property="og:url" content={url} />}
     <meta property="og:title" content={full} />
     <meta property="og:description" content={description} />
     <meta property="og:image" content={social} />
@@ -148,18 +148,20 @@ const say = es
     <meta property="og:image:width" content={String(card.width)} />
     <meta property="og:image:height" content={String(card.height)} />
     <meta property="og:image:alt" content={title} />
-    <meta property="og:locale" content={(textIn ?? contentLang) === "es" ? "es_LA" : "en_US"} />
-    <meta property="og:locale:alternate" content={(textIn ?? contentLang) === "es" ? "en_US" : "es_LA"} />
+    <meta property="og:locale" content={ogLocale} />
+    {paired && <meta property="og:locale:alternate" content={ogAlternate} />}
     {published && <meta property="article:published_time" content={published} />}
     {modified && <meta property="article:modified_time" content={modified} />}
     {(published || modified) && <meta property="article:author" content={AUTHOR.name} />}
     <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@rgdevment" />
+    <meta name="twitter:creator" content="@rgdevment" />
     <meta name="twitter:title" content={full} />
     <meta name="twitter:description" content={description} />
     <meta name="twitter:image" content={social} />
     <meta name="twitter:image:alt" content={title} />
 
-    <script is:inline define:vars={{ twin, ours }}>
+    <script is:inline>
       const root = document.documentElement;
       const spanish = /^es\b/i.test(navigator.language);
       let dismissed = false;
@@ -168,10 +170,7 @@ const say = es
         if (chosen === "dark" || chosen === "light") root.dataset.theme = chosen;
         dismissed = localStorage.getItem("offer") === "no";
       } catch {}
-      // Whoever comes from one of these sites picked this language there, so only an arrival from elsewhere is moved.
-      const fromUs = [location.origin, ...ours].some((origin) => document.referrer.startsWith(`${origin}/`));
-      if (twin && spanish && !dismissed && !fromUs) location.replace(`${twin}${location.search}${location.hash}`);
-      else if (!dismissed) root.dataset.wants = spanish ? "es" : "en";
+      if (!dismissed) root.dataset.wants = spanish ? "es" : "en";
     </script>
     <meta name="theme-color" content="#faf8f4" media="(prefers-color-scheme: light)" />
     <meta name="theme-color" content="#0e0d0b" media="(prefers-color-scheme: dark)" />
@@ -268,13 +267,16 @@ const say = es
         <nav aria-label={say.footer} class="grid gap-12 sm:col-span-2 sm:grid-cols-2">
           <div>
             <p class="eyebrow">{say.apps}</p>
-            <ul class="mt-4 space-y-2.5 text-sm">
+            <ul class="mt-4 space-y-3 text-sm">
               {
                 PRODUCTS.map((one) => (
                   <li>
-                    <a class="inline-flex items-center gap-2.5 text-body transition-colors hover:text-fg" href={href(locale, one.slug)}>
-                      <img src={one.icon} alt={iconAlt(one, locale)} width="20" height="20" class="h-5 w-5 rounded-md" loading="lazy" />
-                      {one.name}
+                    <a class="group inline-flex items-start gap-2.5 text-body transition-colors hover:text-fg" href={href(locale, one.slug)}>
+                      <img src={one.icon} alt={iconAlt(one, locale)} width="20" height="20" class="mt-0.5 h-5 w-5 shrink-0 rounded-md" loading="lazy" />
+                      <span>
+                        <span class="block font-medium text-fg group-hover:underline">{one.name}</span>
+                        <span class="block text-xs text-muted">{words(one, locale).shortKind}</span>
+                      </span>
                     </a>
                   </li>
                 ))

@@ -20,7 +20,7 @@ const written = locale === "en" ? undefined : "en";
 const day = (date: string) => longDate(date, locale);
 ---
 
-<Layout title={t.title} description={t.meta} locale={locale} textIn="en" paths={CHANGELOG_PATH} schema={crumbs(locale, trail)}>
+<Layout title={t.seo} description={t.meta} locale={locale} textIn="en" paths={CHANGELOG_PATH} schema={crumbs(locale, trail)}>
   <section class="shell pt-10 sm:pt-14" style={`--accent: ${product.accent}`}>
     <Crumbs locale={locale} trail={trail} />
     <header class="mt-10">

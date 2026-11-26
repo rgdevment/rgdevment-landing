@@ -16,6 +16,7 @@ export type Note = { product: Product; version: string; date: string; url: strin
 
 type Words = {
   title: string;
+  seo: string;
   short: string;
   meta: string;
   lede: string;
@@ -28,6 +29,7 @@ type Words = {
 const WORDS: Record<Locale, (name: string) => Words> = {
   en: (name) => ({
     title: `What's new in ${name}`,
+    seo: `${name} changelog and release notes`,
     short: "What's new",
     meta: `Every ${name} release, newest first: what each version changed for you, from its release notes.`,
     lede: `What each version of ${name} changed, newest first, as its release notes tell it.`,
@@ -37,6 +39,7 @@ const WORDS: Record<Locale, (name: string) => Words> = {
   }),
   es: (name) => ({
     title: `Novedades de ${name}`,
+    seo: `Novedades y notas de versión de ${name}`,
     short: "Novedades",
     meta: `Cada versión de ${name}, de la más nueva a la más antigua: qué cambió para ti en cada una, según sus notas.`,
     lede: `Qué cambió en cada versión de ${name}, de la más nueva a la más antigua, tal como lo cuentan sus notas.`,
@@ -93,7 +96,8 @@ function split(product: Product, version: string, body: string): { headline?: st
 
 async function note(product: Product, release: Published, version: string): Promise<Note> {
   const { headline, text } = split(product, version, release.body);
-  const { code } = await (await processor).render(text);
+  const safeText = text.replace(/http:\/\/((?:www\.)?(?:tisty|linkunbound|copanda)\.app|rgdevment\.dev)/gi, "https://$1");
+  const { code } = await (await processor).render(safeText);
   return { product, version, date: release.date, url: release.url, headline, html: code };
 }
 

@@ -122,6 +122,7 @@ const schema = {
     name: p.name,
     description: words(p, locale).meta,
     applicationCategory: "UtilitiesApplication",
+    applicationSubCategory: p.subCategory,
     operatingSystem: p.platforms.join(", "),
     url: canonical(locale, p.slug),
     image: new URL(p.icon, DOMAIN).toString(),

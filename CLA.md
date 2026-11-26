@@ -1,11 +1,10 @@
 # Contributor License Agreement
 
-rgdevment.com Individual Contributor License Agreement, version 1.2.
+rgdevment-landing (rgdevment.dev) Individual Contributor License Agreement, version 1.2.
 
-Thank you for contributing to rgdevment.com. This agreement exists for one reason:
-rgdevment.com is released under the AGPL-3.0 **and** offered under separate
-[commercial terms](docs/COMMERCIAL.md) to organisations that cannot comply
-with the AGPL. Offering those commercial terms requires the right to license
+Thank you for contributing to rgdevment-landing (`rgdevment.dev`). This agreement exists so the
+repository can stay released under the AGPL-3.0 **and** be maintained cleanly under
+[licensing terms](docs/COMMERCIAL.md) when an organisation needs written terms outside the AGPL. Offering those commercial terms requires the right to license
 the whole codebase that way — including your contribution. Without this
 agreement from every contributor, that right does not exist and the dual model
 collapses.
@@ -35,8 +34,8 @@ one You submitted before**. Code reaches a project by more routes than a Pull
 Request, and a signature that only looked forward would leave those earlier
 routes unaccounted for.
 
-**"Project Owner"** means Mario Hidalgo G. (rgdevment), the copyright holder
-and maintainer of rgdevment.com, and whoever holds those rights after him — a
+**"Project Owner"** means Mario Hidalgo (rgdevment), the copyright holder
+and maintainer of rgdevment-landing (`rgdevment.dev`), and whoever holds those rights after him — a
 successor, or anyone the project is assigned or transferred to, in whole or in
 part. The licences You grant below run to them on the same terms, and to no
 wider ones.

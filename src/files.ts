@@ -24,7 +24,10 @@ function app() {
   return {
     name: product.name,
     description: product.en.meta,
-    icons: [{ src: product.icon, sizes: "150x150", type: "image/png" }],
+    icons: [
+      { src: "/icon-192.png", sizes: "192x192", type: "image/png" },
+      { src: "/icon-512.png", sizes: "512x512", type: "image/png" },
+    ],
   };
 }
 
@@ -36,8 +39,8 @@ export function manifest(): Response {
     description,
     start_url: "/",
     display: "browser",
-    background_color: "#f6f5f2",
-    theme_color: "#f6f5f2",
+    background_color: "#faf8f4",
+    theme_color: "#faf8f4",
   };
   const rows = icons.map((one) => `    { "src": "${one.src}", "sizes": "${one.sizes}", "type": "${one.type}" }`);
   const body = `${JSON.stringify(head, null, 2).slice(0, -2)},\n  "icons": [\n${rows.join(",\n")}\n  ]\n}\n`;
