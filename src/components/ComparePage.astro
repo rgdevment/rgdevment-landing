@@ -5,7 +5,9 @@ import Icon from "./Icon.astro";
 import Verdict from "./Verdict.astro";
 import Layout from "../layouts/Layout.astro";
 import { COMPARE_PATH, comparisonOf, tally } from "../content/compare";
+import { GUIDES, written } from "../content/guides";
 import { PRODUCTS, inkOf } from "../content/products";
+import { versusOf, versusPath } from "../content/versus";
 import { HOME_PRODUCT, appRef, canonical, crumbs, href, type Locale } from "../site";
 
 interface Props {
@@ -13,6 +15,7 @@ interface Props {
 }
 
 const { locale } = Astro.props;
+const es = locale === "es";
 const compared = comparisonOf(HOME_PRODUCT)!;
 const t = compared[locale];
 const path = COMPARE_PATH[locale];
@@ -23,6 +26,19 @@ const only = tally(t);
 const tint = "bg-[color-mix(in_srgb,var(--accent)_10%,transparent)]";
 const [, ...others] = compared.rivals;
 const priced = (own?: string) => (own ? href(locale, own) : undefined);
+const headToHead = versusOf(product.slug);
+const guides = GUIDES.filter((one) => one.product === product.slug);
+const extraCopy = es
+  ? {
+      versusTitle: "Comparativas cara a cara",
+      guidesTitle: `Guías relacionadas sobre ${product.name}`,
+      guidesLede: "Primero la solución que ya trae tu sistema; después, dónde ayuda la herramienta.",
+    }
+  : {
+      versusTitle: "Head-to-head comparisons",
+      guidesTitle: `Related ${product.name} guides`,
+      guidesLede: "First the setting your system already has; then where the tool helps.",
+    };
 ---
 
 <Layout
@@ -179,6 +195,49 @@ const priced = (own?: string) => (own ? href(locale, own) : undefined);
       {t.back}
     </a>
   </section>
+
+  {
+    headToHead.length > 0 && (
+      <section class="shell mt-16">
+        <h2 class="eyebrow">{extraCopy.versusTitle}</h2>
+        <ul class="mt-4 grid gap-4 sm:grid-cols-2">
+          {headToHead.map((one) => (
+            <li>
+              <a class="card-link group flex items-center justify-between gap-4 p-5" href={href(locale, versusPath(locale, one.slug))}>
+                <span class="min-w-0">
+                  <span class="block text-lg font-semibold text-fg">{one[locale].heading}</span>
+                  <span class="mt-1 block text-sm text-muted">{one[locale].meta}</span>
+                </span>
+                <Icon name="arrow" class="h-4 w-4 shrink-0 text-muted transition group-hover:translate-x-0.5" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    guides.length > 0 && (
+      <section class="shell mt-20">
+        <h2 class="section-title">{extraCopy.guidesTitle}</h2>
+        <p class="mt-3 text-muted">{extraCopy.guidesLede}</p>
+        <ul class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {guides.map((one) => (
+            <li>
+              <a class="card-link group block h-full p-6" href={href(locale, written(one, locale).slug)}>
+                <span class="flex items-start justify-between gap-4">
+                  <span class="text-lg font-semibold leading-snug text-fg">{written(one, locale).title}</span>
+                  <Icon name="arrow" class="mt-1 h-4 w-4 shrink-0 text-muted transition group-hover:translate-x-0.5" />
+                </span>
+                <span class="mt-2 block text-sm text-muted">{written(one, locale).description}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
 
   <section class="shell mt-20">
     <h2 class="eyebrow">{t.sources}</h2>

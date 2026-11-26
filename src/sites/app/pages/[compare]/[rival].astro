@@ -1,0 +1,16 @@
+---
+import VersusPage from "../../../../components/VersusPage.astro";
+import { COMPARE_PATH } from "../../../../content/compare";
+import { versusOf } from "../../../../content/versus";
+import { HOME_PRODUCT } from "../../../../site";
+
+export function getStaticPaths() {
+  return versusOf(HOME_PRODUCT).map((one) => ({
+    params: { compare: COMPARE_PATH.en, rival: one.slug },
+  }));
+}
+
+const { rival } = Astro.params;
+---
+
+<VersusPage locale="en" rival={rival!} />

@@ -6,6 +6,7 @@ import { termsPath } from "../../../content/terms";
 import { latestRelease } from "../../../content/releases";
 import { CHANGELOG_PATH, hasChangelog } from "../../../content/changelog";
 import { COMPARE_PATH, compares } from "../../../content/compare";
+import { versusOf, versusPath } from "../../../content/versus";
 import { docEntries, newsEntries, sitemap } from "../../../sitemap";
 import { HOME_PRODUCT } from "../../../site";
 
@@ -24,6 +25,7 @@ export const GET: APIRoute = async () => {
       ? [{ en: CHANGELOG_PATH.en, es: CHANGELOG_PATH.es, priority: "0.5", lastmod: release?.date.slice(0, 10), textIn: "en" as const }]
       : []),
     ...(compares(product) ? [{ en: COMPARE_PATH.en, es: COMPARE_PATH.es, priority: "0.6" }] : []),
+    ...versusOf(product).map((one) => ({ en: versusPath("en", one.slug), es: versusPath("es", one.slug), priority: "0.7" })),
     ...(await newsEntries()),
     ...(await docEntries(product)),
   ]);

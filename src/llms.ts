@@ -6,6 +6,7 @@ import { PRODUCTS, type Product, brewSteps, releasesUrl, storeUrl } from "./cont
 import { privacyPath } from "./content/privacy";
 import { CHANGELOG_PATH, FEED, hasChangelog } from "./content/changelog";
 import { COMPARE_PATH, comparisonOf, namesOthers } from "./content/compare";
+import { versusOf, versusPath } from "./content/versus";
 import { NEWS_FEED, NEWS_PATH, hasNews } from "./content/news";
 import { installers, latestRelease, megabytes } from "./content/releases";
 import { MAIN, homeOf, relocate } from "./hosts";
@@ -282,6 +283,7 @@ export async function appLlms(): Promise<Response> {
     ...(hasChangelog(product.slug) ? [link("What's new", CHANGELOG_PATH.en, "every release, newest first"), `- [RSS feed](${canonical("en", "")}${FEED})`] : []),
     `- [Source code](${product.repo})`,
     ...(compared ? [link(compared.en.title, COMPARE_PATH.en, `what it does that ${namesOthers(compared)} do not`)] : []),
+    ...versusOf(product.slug).map((one) => link(one.en.title, versusPath("en", one.slug), one.en.meta)),
     `- [Español](${canonical("es", "")}): ${product.es.tagline}`,
     `- [Ayuda en español](${canonical("es", docPath("es", product.slug))})`,
     `- [More tools by ${AUTHOR.handle}](${MAIN}/llms.txt)`,
@@ -323,7 +325,11 @@ export function mainLlms(): string {
   const comparisons = PRODUCTS.flatMap((product) => {
     const compared = comparisonOf(product.slug);
     const home = homeOf(product.slug);
-    return compared ? [`- [${compared.en.title}](${home}/${COMPARE_PATH.en}/) ([español](${home}/es/${COMPARE_PATH.es}/)): ${compared.en.meta}`] : [];
+    const base = compared ? [`- [${compared.en.title}](${home}/${COMPARE_PATH.en}/) ([español](${home}/es/${COMPARE_PATH.es}/)): ${compared.en.meta}`] : [];
+    const heads = versusOf(product.slug).map(
+      (one) => `- [${one.en.title}](${home}/${versusPath("en", one.slug)}/) ([español](${home}/es/${versusPath("es", one.slug)}/)): ${one.en.meta}`,
+    );
+    return [...base, ...heads];
   });
   const changelogs = PRODUCTS.filter((product) => hasChangelog(product.slug)).map((product) => {
     const home = homeOf(product.slug);
