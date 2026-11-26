@@ -195,4 +195,178 @@ export const COPANDA_GUIDES: Guide[] = [
       ],
     },
   },
+  {
+    id: "clipboard-offline-ocr",
+    product: "copanda",
+    published: "2026-11-26",
+    en: {
+      slug: "guides/extract-text-from-clipboard-screenshots-offline-ocr",
+      title: "Extract text from clipboard screenshots with offline OCR",
+      description:
+        "How to copy text out of screenshots natively on Windows and macOS, and how to make every screenshot in your clipboard history searchable offline.",
+      lede: "You take a screenshot of an error message, a receipt or a slide, paste it into chat, and an hour later you need the code inside it. Both Windows and macOS can read text on screen, yet neither makes your past screenshots searchable.",
+      nativeTitle: "First, the tools Windows and macOS already give you",
+      nativeSteps: [
+        {
+          title: "On Windows: Snipping Tool or PowerToys Text Extractor",
+          body: "Open Snipping Tool's Text Actions on a screenshot, or press Win+Shift+T with Microsoft PowerToys to drag a box and copy text from the screen.",
+        },
+        {
+          title: "On macOS: Live Text in Preview or Quick Look",
+          body: "Open a saved screenshot in Preview or press Space in Finder and select the text directly inside the image.",
+        },
+      ],
+      gapTitle: "Where those tools stop",
+      gap: [
+        "They only work on the image in front of you right now; you cannot search across twenty screenshots you copied yesterday.",
+        "If you copied an image straight to the clipboard without saving a file, macOS loses it the next time you press Cmd+C.",
+        "They do not transform what you extract — formatting JSON, converting a HEX color or stripping styles still takes extra steps.",
+      ],
+      toolTitle: "Searching and copying text inside clipboard images locally",
+      tool: [
+        "CoPanda runs offline OCR locally on screenshots you copy, so typing a word from an image finds that screenshot in your history immediately.",
+        "Extract and paste the recognized text as plain text in one step, without uploading screenshots to any cloud service.",
+        "Pair it with Paste as… to format or minify JSON, convert HEX/RGB/HSL colors or change text case on the fly.",
+        "Free and open source under GPL-3.0 for Windows and macOS, with no account and no telemetry.",
+      ],
+      faq: [
+        {
+          q: "Does CoPanda upload my screenshots to recognize text?",
+          a: "No. OCR runs locally on your computer using your system's capabilities, so screenshots never leave your disk.",
+        },
+        {
+          q: "Can I search for words that only appeared inside an image?",
+          a: "Yes. CoPanda indexes the text recognized inside copied images so the same search box finds both text entries and screenshots.",
+        },
+      ],
+    },
+    es: {
+      slug: "guias/extraer-texto-de-capturas-en-el-portapapeles-ocr-local",
+      title: "Extraer texto de capturas en el portapapeles con OCR local",
+      description:
+        "Cómo copiar texto desde capturas con las herramientas nativas de Windows y macOS, y cómo buscar dentro de cualquier captura guardada en tu portapapeles sin nube.",
+      lede: "Haces una captura de un error, una boleta o una presentación, la pegas en un chat y una hora después necesitas el código que salía en esa imagen. Windows y macOS leen texto en pantalla, pero ninguno te deja buscar dentro de tus capturas pasadas.",
+      nativeTitle: "Primero, lo que ya traen Windows y macOS",
+      nativeSteps: [
+        {
+          title: "En Windows: Herramienta Recortes o PowerToys Text Extractor",
+          body: "Usa Acciones de texto en Recortes sobre una captura abierta, o instala Microsoft PowerToys y pulsa Win+Shift+T para seleccionar un área en pantalla.",
+        },
+        {
+          title: "En macOS: Texto en vivo en Vista Previa o Vista Rápida",
+          body: "Abre una captura guardada en Vista Previa o pulsa Espacio en el Finder para seleccionar directamente el texto dentro de la imagen.",
+        },
+      ],
+      gapTitle: "Dónde se quedan cortas",
+      gap: [
+        "Solo sirven sobre la imagen que tienes delante: no puedes buscar una palabra entre veinte capturas que copiaste ayer.",
+        "Si copiaste la captura directo al portapapeles sin guardarla como archivo, macOS la borra en cuanto pulsas Cmd+C otra vez.",
+        "No transforman lo copiado: formatear un JSON, pasar un color HEX a RGB o pegar sin estilos exige abrir otra herramienta.",
+      ],
+      toolTitle: "Buscar y copiar texto dentro de tus capturas en local",
+      tool: [
+        "CoPanda ejecuta OCR 100 % local sobre las capturas que copias, así que escribir una palabra de la imagen encuentra esa captura en tu historial al instante.",
+        "Extrae y pega el texto reconocido como texto plano en un paso, sin subir tus imágenes a ninguna nube.",
+        "Combínalo con Pegar como… para formatear o minificar JSON, convertir colores HEX/RGB/HSL o cambiar mayúsculas al pegar.",
+        "Gratuito y de código abierto bajo GPL-3.0 para Windows y macOS, sin cuenta y sin telemetría.",
+      ],
+      faq: [
+        {
+          q: "¿CoPanda sube mis capturas a internet para leer el texto?",
+          a: "No. El OCR se ejecuta localmente en tu equipo, así que ninguna imagen sale de tu disco.",
+        },
+        {
+          q: "¿Puedo buscar palabras que solo aparecían dentro de una imagen?",
+          a: "Sí. CoPanda indexa el texto reconocido en las capturas copiadas para que el mismo buscador encuentre textos e imágenes.",
+        },
+      ],
+    },
+  },
+  {
+    id: "maccy-ditto-alternative",
+    product: "copanda",
+    published: "2026-11-26",
+    en: {
+      slug: "guides/maccy-and-ditto-alternative-windows-mac",
+      title: "A Maccy and Ditto alternative for both Windows and macOS",
+      description:
+        "Ditto is Windows-only and Maccy is macOS-only. What to consider if you work across both systems and want one open source clipboard manager.",
+      lede: "If you use Ditto on Windows or Maccy on macOS, you already know how good a lightweight open source clipboard manager feels. The friction starts the day you use both systems and have to learn two shortcuts, two search habits and two backup formats.",
+      nativeTitle: "Why people start with Ditto or Maccy",
+      nativeSteps: [
+        {
+          title: "Ditto on Windows",
+          body: "Open source, fast and battle-tested on Windows, with network sync and deep settings — but Windows-only and dated visually.",
+        },
+        {
+          title: "Maccy on macOS",
+          body: "Open source, minimal and native to macOS, loved for its speed — but unavailable on Windows and without built-in screenshot OCR or JSON/color paste transforms.",
+        },
+      ],
+      gapTitle: "What you still miss across two machines",
+      gap: [
+        "Different apps, different shortcuts and different export formats between your Windows PC and your Mac.",
+        "In Ditto, excluding password managers often means maintaining manual executable exclusion lists rather than relying purely on system secret flags.",
+        "Neither combines local screenshot OCR and Paste as… transforms (JSON formatting, HEX/RGB/HSL color conversion) out of the box on both platforms.",
+      ],
+      toolTitle: "One open source clipboard manager for both",
+      tool: [
+        "CoPanda runs natively on both Windows and macOS under GPL-3.0 with the same search, filters and portable backup file.",
+        "It automatically ignores secrets marked by 1Password, Bitwarden and other desktop password managers.",
+        "Includes offline OCR for screenshots and Paste as… transforms for developers and designers.",
+        "Free, open source, local-first, with no account and no telemetry.",
+      ],
+      faq: [
+        {
+          q: "Is there a Maccy equivalent for Windows?",
+          a: "Maccy itself is macOS-only. CoPanda brings a similarly fast, open source, local-first clipboard history to both Windows and macOS, plus offline OCR and Paste as… transforms.",
+        },
+        {
+          q: "Does CoPanda replace Ditto if I need LAN clipboard sync?",
+          a: "If you rely on Ditto's built-in peer-to-peer LAN sync between Windows PCs, Ditto is stronger there. CoPanda stays strictly local on each machine with manual backup export/import.",
+        },
+      ],
+    },
+    es: {
+      slug: "guias/alternativa-a-maccy-en-windows-y-ditto-en-mac",
+      title: "Alternativa a Maccy en Windows y a Ditto en Mac",
+      description:
+        "Ditto solo existe en Windows y Maccy solo en macOS. Qué conviene revisar si trabajas en ambos sistemas y buscas un solo gestor de portapapeles libre.",
+      lede: "Si usas Ditto en Windows o Maccy en macOS, ya sabes lo cómodo que es un gestor de portapapeles libre y ligero. La fricción aparece cuando trabajas en ambos sistemas y te toca mantener dos atajos, dos formas de buscar y dos formatos distintos.",
+      nativeTitle: "Por qué tanta gente empieza con Ditto o Maccy",
+      nativeSteps: [
+        {
+          title: "Ditto en Windows",
+          body: "De código abierto, rápido y muy probado en Windows, con sincronización por red local y muchos ajustes, pero exclusivo de Windows.",
+        },
+        {
+          title: "Maccy en macOS",
+          body: "De código abierto, minimalista y muy veloz en Mac, pero no existe en Windows ni trae OCR sobre capturas o transformaciones de pegado integradas.",
+        },
+      ],
+      gapTitle: "Qué sigue faltando entre Windows y Mac",
+      gap: [
+        "Dos programas distintos, dos memorias musculares y copias de seguridad incompatibles entre tu PC y tu Mac.",
+        "En Ditto, excluir gestores de contraseñas suele requerir listas manuales de ejecutables en vez de apoyarse solo en las marcas de secreto del sistema.",
+        "Ninguno combina de serie OCR local en capturas y Pegar como… (formatear JSON, convertir colores HEX/RGB/HSL) en ambas plataformas.",
+      ],
+      toolTitle: "Un solo gestor libre para los dos sistemas",
+      tool: [
+        "CoPanda corre en Windows y macOS bajo licencia GPL-3.0 con la misma búsqueda, los mismos filtros y copias de seguridad portables.",
+        "Ignora automáticamente lo que 1Password, Bitwarden y otros gestores de escritorio marcan como secreto.",
+        "Incluye OCR offline sobre capturas y Pegar como… para desarrollo y diseño.",
+        "Gratis, de código abierto, 100 % local, sin cuenta y sin telemetría.",
+      ],
+      faq: [
+        {
+          q: "¿Existe un equivalente a Maccy para Windows?",
+          a: "Maccy es exclusivo de macOS. CoPanda ofrece un historial rápido, libre y local tanto en Windows como en macOS, sumando OCR offline y transformaciones al pegar.",
+        },
+        {
+          q: "¿CoPanda reemplaza a Ditto si necesito sincronizar por red local?",
+          a: "Si dependes de la sincronización LAN directa entre equipos Windows de Ditto, Ditto sigue siendo más fuerte en eso. CoPanda se mantiene estrictamente local con exportación e importación manual.",
+        },
+      ],
+    },
+  },
 ];

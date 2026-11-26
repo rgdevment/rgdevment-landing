@@ -394,4 +394,186 @@ export const TISTY_GUIDES: Guide[] = [
       ],
     },
   },
+  {
+    id: "sync-claude-md-agents-md",
+    product: "tisty",
+    published: "2026-11-26",
+    en: {
+      slug: "guides/sync-claude-md-agents-md-across-agents",
+      title: "Sync CLAUDE.md, AGENTS.md and skills across AI coding agents",
+      description:
+        "How developers try to keep CLAUDE.md, AGENTS.md, Copilot instructions and skills in sync across tools, where symlinks break, and a safer local workflow.",
+      lede: "If you use Claude Code, Codex, GitHub Copilot and Cursor on the same machine, you quickly end up maintaining the same rules in four dotfiles. Edit one preference in ~/.claude/CLAUDE.md and the other agents keep following last month's rule.",
+      nativeTitle: "What developers usually try first",
+      nativeSteps: [
+        {
+          title: "Keep one master file in dotfiles and create symlinks",
+          body: "Point ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md and other agent files at one source file in your dotfiles repository.",
+        },
+        {
+          title: "Copy changes across tools by hand",
+          body: "Works when you only change a rule once a quarter, until an agent updates its own copy and silently drifts from the others.",
+        },
+      ],
+      gapTitle: "Where symlinks and copies break down",
+      gap: [
+        "On Windows, symlinks often require Developer Mode or administrator privileges and break across WSL and native paths.",
+        "There is no human review step when an AI agent edits its own instructions or skills on disk.",
+        "Rules, skills and long-term project notes end up scattered across hidden folders with no shared search or version history.",
+      ],
+      toolTitle: "Managing agent rules and skills as reviewed documents",
+      tool: [
+        "Tisty's Agents folder brings your global agent rules, skills and memory into regular Markdown documents on your disk.",
+        "When you enable sync, Tisty keeps each agent's files aligned without fragile cross-platform symlinks.",
+        "An AI agent can propose a change to its rules over MCP, and the change reaches its files on disk only after you approve it.",
+        "Free and open source under AGPL-3.0 for Windows and macOS, with local version history and no account.",
+      ],
+      faq: [
+        {
+          q: "Can an AI agent overwrite my CLAUDE.md or AGENTS.md silently through Tisty?",
+          a: "No. Over MCP, an agent can only propose a change to rules or skills; nothing is written to its configuration files until you review and approve it.",
+        },
+        {
+          q: "Does this replace repository-level CLAUDE.md or AGENTS.md files?",
+          a: "No. Project-specific conventions stay in each Git repository, while your personal cross-project rules, skills and working memory stay unified and synced in Tisty.",
+        },
+      ],
+    },
+    es: {
+      slug: "guias/sincronizar-claude-md-y-agents-md-entre-agentes",
+      title: "Sincronizar CLAUDE.md, AGENTS.md y skills entre agentes de IA",
+      description:
+        "Cómo intentan muchos desarrolladores mantener CLAUDE.md, AGENTS.md y skills sincronizados entre herramientas, dónde fallan los symlinks y una forma local más segura.",
+      lede: "Si usas Claude Code, Codex, GitHub Copilot y Cursor en el mismo equipo, pronto acabas manteniendo las mismas reglas en cuatro archivos ocultos. Cambias una preferencia en ~/.claude/CLAUDE.md y los demás agentes siguen aplicando la versión del mes pasado.",
+      nativeTitle: "Lo que suele probarse primero",
+      nativeSteps: [
+        {
+          title: "Mantener un archivo maestro en dotfiles y enlazarlo con symlinks",
+          body: "Apuntar ~/.claude/CLAUDE.md, ~/.codex/AGENTS.md y los demás archivos a un único origen dentro de tu repositorio de dotfiles.",
+        },
+        {
+          title: "Copiar los cambios a mano entre herramientas",
+          body: "Funciona si apenas cambias tus reglas, hasta que un agente modifica su propia copia y deja de coincidir con el resto.",
+        },
+      ],
+      gapTitle: "Dónde se rompen los symlinks y las copias",
+      gap: [
+        "En Windows los symlinks suelen exigir Modo de desarrollador o permisos elevados y se rompen entre rutas nativas y WSL.",
+        "No existe un paso de aprobación humana cuando un agente de IA edita directamente sus propias reglas o skills en disco.",
+        "Las reglas, skills y notas de proyecto quedan repartidas en carpetas ocultas sin búsqueda común ni historial de versiones.",
+      ],
+      toolTitle: "Gestionar reglas y skills como documentos con aprobación",
+      tool: [
+        "La carpeta Agentes de Tisty trae tus reglas globales, skills y memoria como documentos Markdown corrientes en tu disco.",
+        "Si activas la sincronización, Tisty mantiene alineados los archivos de cada agente sin depender de symlinks frágiles.",
+        "Un agente puede proponer un cambio a sus reglas por MCP, y ese cambio solo llega a sus archivos en disco cuando tú lo apruebas.",
+        "Gratuito y de código abierto bajo AGPL-3.0 para Windows y macOS, con historial local de versiones y sin cuenta.",
+      ],
+      faq: [
+        {
+          q: "¿Puede un agente sobrescribir mi CLAUDE.md o AGENTS.md en silencio desde Tisty?",
+          a: "No. Por MCP un agente solo puede proponer un cambio en reglas o skills; nada se escribe en sus archivos de configuración hasta que tú lo revisas y apruebas.",
+        },
+        {
+          q: "¿Esto reemplaza al CLAUDE.md o AGENTS.md dentro de cada repositorio?",
+          a: "No. Las convenciones propias de un repo siguen en ese repo, mientras tus reglas personales, skills y memoria transversal viven unificadas en Tisty.",
+        },
+      ],
+    },
+  },
+  {
+    id: "connect-mcp-memory-clients",
+    product: "tisty",
+    published: "2026-11-26",
+    en: {
+      slug: "guides/connect-local-mcp-memory-claude-code-cursor-vscode",
+      title: "Connect local MCP memory in Claude Code, Cursor and VS Code",
+      description:
+        "How to connect a local Model Context Protocol memory server to Claude Code, Cursor, GitHub Copilot in VS Code or Gemini CLI without cloud accounts or API keys.",
+      lede: "Most MCP memory servers ask you to run a separate background daemon, manage a vector database or create a cloud API key. If you only want your coding agents to share readable tasks and Markdown notes on your own machine, setup should take two minutes.",
+      nativeTitle: "Connecting by hand over standard MCP",
+      nativeSteps: [
+        {
+          title: "Install Tisty on Windows or macOS",
+          body: "Install from Microsoft Store, winget, Homebrew or GitHub Releases. The local MCP server comes built into the desktop app — no open network port and no account.",
+        },
+        {
+          title: "Use Settings › Agents for one-click setup",
+          body: "Tisty detects Claude Code, GitHub Copilot in VS Code, Codex, Cursor and Gemini CLI on your computer and writes their MCP entry for you.",
+        },
+        {
+          title: "Or add the MCP command directly",
+          body: "In Claude Code run /plugin install tisty --marketplace rgdevment/mcp-plugins; in Gemini CLI run gemini extensions install https://github.com/rgdevment/mcp-plugins; in Cursor or VS Code add npx -y tisty-mcp.",
+        },
+      ],
+      gapTitle: "What to check before trusting any MCP memory server",
+      gap: [
+        "Does it let an agent delete your files or close your own tasks without confirmation?",
+        "Does it force the agent to reread giant Markdown logs every session, burning tokens?",
+        "Can you read and audit everything the agent wrote in a clean desktop view and plain files on disk?",
+      ],
+      toolTitle: "Clear boundaries built into Tisty's MCP tools",
+      tool: [
+        "Your agent reads outlines first and only the section it needs, avoiding full-file rereads across sessions.",
+        "An agent can propose tasks, tick its own steps and add dated journal entries, while closing tasks, deleting documents and changing your due dates stay strictly yours.",
+        "Closing the MCP door takes one click in Settings › Agents, immediately refusing every agent request.",
+        "Listed in the official GitHub MCP Registry as io.github.rgdevment/tisty, free and open source under AGPL-3.0.",
+      ],
+      faq: [
+        {
+          q: "Do I need an API key or a cloud account to use Tisty over MCP?",
+          a: "No. Tisty's MCP server runs strictly on your own machine over local stdio, with no API key, no open network port and no cloud account.",
+        },
+        {
+          q: "Can Claude Code and Cursor share the exact same memory?",
+          a: "Yes. Both clients connect to the same local Tisty workspace, so work started in one agent can be picked up by another without copying notes by hand.",
+        },
+      ],
+    },
+    es: {
+      slug: "guias/conectar-memoria-mcp-local-claude-code-cursor-vscode",
+      title: "Conectar memoria MCP local en Claude Code, Cursor y VS Code",
+      description:
+        "Cómo conectar un servidor local de memoria MCP en Claude Code, Cursor, GitHub Copilot en VS Code o Gemini CLI sin cuentas en la nube ni claves API.",
+      lede: "Casi todos los servidores MCP de memoria te piden levantar un servicio aparte, mantener una base vectorial o sacar una clave en la nube. Si solo quieres que tus agentes compartan tareas y notas en Markdown legibles en tu equipo, conectarlo debería tomar dos minutos.",
+      nativeTitle: "Conectar en dos minutos por MCP estándar",
+      nativeSteps: [
+        {
+          title: "Instala Tisty en Windows o macOS",
+          body: "Desde Microsoft Store, winget, Homebrew o GitHub Releases. El servidor MCP viene dentro de la app de escritorio, sin puertos abiertos ni cuenta.",
+        },
+        {
+          title: "Usa Configuración › Agentes con un clic",
+          body: "Tisty detecta Claude Code, GitHub Copilot en VS Code, Codex, Cursor y Gemini CLI instalados en tu equipo y configura su entrada MCP automáticamente.",
+        },
+        {
+          title: "O añade el comando MCP a mano",
+          body: "En Claude Code usa /plugin install tisty --marketplace rgdevment/mcp-plugins; en Gemini CLI usa gemini extensions install https://github.com/rgdevment/mcp-plugins; en Cursor o VS Code añade npx -y tisty-mcp.",
+        },
+      ],
+      gapTitle: "Qué revisar antes de conectar cualquier memoria MCP",
+      gap: [
+        "¿Puede el agente borrar tus documentos o cerrar tareas tuyas sin pedirte confirmación?",
+        "¿Obliga al agente a releer archivos Markdown gigantes en cada sesión desperdiciando contexto?",
+        "¿Puedes ver y auditar fácilmente todo lo que anotó en una interfaz limpia y en archivos reales en tu disco?",
+      ],
+      toolTitle: "Límites claros integrados en el MCP de Tisty",
+      tool: [
+        "Tu agente lee primero el índice y después solo la sección que necesita, evitando releer archivos enteros entre sesiones.",
+        "Puede proponer tareas, marcar sus propios pasos y anotar en la bitácora con fecha, mientras cerrar tareas, borrar documentos o cambiar tus fechas sigue siendo solo tuyo.",
+        "Cerrar la puerta MCP toma un clic en Configuración › Agentes y rechaza al instante cualquier intento.",
+        "Publicado en el Registro oficial de MCP en GitHub como io.github.rgdevment/tisty, gratis y de código abierto bajo AGPL-3.0.",
+      ],
+      faq: [
+        {
+          q: "¿Necesito una clave API o cuenta en la nube para usar Tisty por MCP?",
+          a: "No. El servidor MCP de Tisty corre solo en tu equipo por stdio local, sin clave API, sin puerto abierto y sin cuenta.",
+        },
+        {
+          q: "¿Pueden Claude Code y Cursor compartir exactamente la misma memoria?",
+          a: "Sí. Ambos clientes se conectan al mismo espacio local de Tisty, así que el trabajo que empieza un agente puede retomarlo otro sin copiar contexto a mano.",
+        },
+      ],
+    },
+  },
 ];
