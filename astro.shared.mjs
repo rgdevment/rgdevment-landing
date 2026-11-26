@@ -123,8 +123,8 @@ function scanHtml(root) {
       if (entry.isDirectory()) walk(full);
       else if (entry.name.endsWith('.html')) {
         const html = readFileSync(full, 'utf8');
-        if (!mermaid && html.includes('language-mermaid')) mermaid = true;
-        if (!math && (html.includes('katex.min.css') || html.includes('class="katex"'))) math = true;
+        if (!mermaid && (html.includes('<code class="language-mermaid"') || html.includes('data-language="mermaid"'))) mermaid = true;
+        if (!math && (html.includes('/katex.min.css"') || html.includes('class="katex"'))) math = true;
       }
     }
   };

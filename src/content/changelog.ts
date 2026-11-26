@@ -96,9 +96,9 @@ function split(product: Product, version: string, body: string): { headline?: st
 
 async function note(product: Product, release: Published, version: string): Promise<Note> {
   const { headline, text } = split(product, version, release.body);
-  const safeText = text.replace(/http:\/\/((?:www\.)?(?:tisty|linkunbound|copanda)\.app|rgdevment\.dev)/gi, "https://$1");
-  const { code } = await (await processor).render(safeText);
-  return { product, version, date: release.date, url: release.url, headline, html: code };
+  const { code } = await (await processor).render(text);
+  const httpsHtml = code.replace(/http:\/\/((?:www\.)?(?:tisty|linkunbound|copanda)\.app|rgdevment\.dev)/gi, "https://$1");
+  return { product, version, date: release.date, url: release.url, headline, html: httpsHtml };
 }
 
 const written = new Map<string, Promise<Note[]>>();
