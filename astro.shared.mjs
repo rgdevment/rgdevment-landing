@@ -255,7 +255,7 @@ const newsMoved = (product) =>
     ]),
   );
 
-const MAIN_ONLY = ['favicon.svg', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'social.png', 'social-es.png'];
+const MAIN_ONLY = ['favicon.svg', 'apple-touch-icon.png', 'icon-192.png', 'icon-512.png', 'social.png', 'social-es.png', 'avatar-mario.webp'];
 
 async function favicon(png) {
   const sizes = [16, 32, 48];

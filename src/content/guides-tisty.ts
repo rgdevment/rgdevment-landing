@@ -237,7 +237,7 @@ export const TISTY_GUIDES: Guide[] = [
         },
         {
           q: "Which assistants can use it?",
-          a: "Any that speaks MCP: GitHub Copilot in VS Code, Claude Code, Codex, Cursor and Gemini CLI connect with one line, and Settings › Assistants in Tisty connects the ones it finds on your computer.",
+          a: "Any that speaks MCP: GitHub Copilot in VS Code, Claude Code, Codex, Cursor and Gemini CLI connect with one line, and Settings › Agents in Tisty connects the ones it finds on your computer.",
         },
       ],
     },

@@ -85,9 +85,9 @@ function assistants(product: Product): string[] {
   if (!product.mcp) return [];
   const said = product.en.assistant;
   return [
-    "## Connect an assistant",
+    "## Connect an agent",
     "",
-    `Its MCP server comes inside the app, listed in the MCP Registry as \`${product.mcp.registry}\`. With ${product.name} installed, Settings › Assistants connects the assistants it finds; by hand:`,
+    `Its MCP server comes inside the app, listed in the MCP Registry as \`${product.mcp.registry}\`. With ${product.name} installed, Settings › Agents connects the agents it finds; by hand:`,
     "",
     ...product.mcp.connect.map(({ who, command }) => `- ${who ?? "Any other client, such as VS Code or Cursor"}: \`${command}\``),
     ...(product.listings?.length ? ["", "Also listed at:", "", ...product.listings.map(([name, url]) => `- [${name}](${url})`)] : []),

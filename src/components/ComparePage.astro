@@ -21,7 +21,7 @@ const trail: [string, string][] = [[product.name, ""], [t.short, path]];
 const ink = inkOf(product);
 const only = tally(t);
 const tint = "bg-[color-mix(in_srgb,var(--accent)_10%,transparent)]";
-const [featured, ...others] = compared.rivals;
+const [, ...others] = compared.rivals;
 const priced = (own?: string) => (own ? href(locale, own) : undefined);
 ---
 

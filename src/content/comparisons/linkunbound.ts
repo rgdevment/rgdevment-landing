@@ -5,6 +5,8 @@ const RIVALS = [
   { name: "Switchbar", url: "https://webcatalog.io/en/switchbar" },
   { name: "Browser Tamer", url: "https://github.com/aloneguid/bt" },
   { name: "BrowserPicker", url: "https://github.com/mortenn/BrowserPicker" },
+  { name: "Browserosaurus", url: "https://github.com/will-stone/browserosaurus" },
+  { name: "OpenWith", url: "https://openwith.io" },
   { name: "Finicky", url: "https://github.com/johnste/finicky" },
   { name: "Velja", url: "https://sindresorhus.com/velja" },
   { name: "Choosy", url: "https://choosy.app" },
@@ -40,6 +42,19 @@ const SOURCES: [string, string[]][] = [
     ],
   ],
   [
+    "Browserosaurus",
+    [
+      "https://github.com/will-stone/browserosaurus",
+      "https://github.com/will-stone/browserosaurus/blob/main/LICENSE",
+    ],
+  ],
+  [
+    "OpenWith",
+    [
+      "https://openwith.io/",
+    ],
+  ],
+  [
     "Finicky",
     [
       "https://github.com/johnste/finicky",
@@ -68,13 +83,13 @@ const SOURCES: [string, string[]][] = [
 ];
 
 const EN: Words = {
-  title: "LinkUnbound vs Finicky, Velja and Choosy: browser pickers",
-  heading: "How LinkUnbound differs from Switchbar, Browser Tamer, BrowserPicker, Finicky, Velja and Choosy",
+  title: "LinkUnbound vs Browserosaurus, OpenWith, Finicky & Velja",
+  heading: "How LinkUnbound differs from Browserosaurus, OpenWith, Switchbar, Browser Tamer, BrowserPicker, Finicky, Velja and Choosy",
   short: "How LinkUnbound differs",
-  meta: "Free, open source browser picker for Windows and macOS, compared with Finicky, Velja, Choosy, Switchbar, Browser Tamer and BrowserPicker, with sources.",
+  meta: "Free, open source browser picker for Windows and macOS, compared with Browserosaurus, OpenWith, Finicky, Velja, Choosy, Switchbar, Browser Tamer and BrowserPicker.",
   lede: "One app for Windows and macOS that asks which browser and profile should open each link, or remembers it for you. A rule matches the site, the profile or the app the link came from, and you set it from the settings, with no file to write. Free, open source, with no account and no telemetry. Here is what it does that other browser pickers do not, and where they are stronger.",
   only: "Yes in {own} of these {total}; the closest of the others, in {best}",
-  checked: "Checked on 10 November 2026 against each project's own pages, listed at the foot. A no means its own pages do not offer it. These change, so go and look.",
+  checked: "Checked on 26 November 2026 against each project's own pages, listed at the foot. A no means its own pages do not offer it. These change, so go and look.",
   marks: { yes: "Yes", part: "Partly", no: "No", soon: "Soon" },
   rows: [
     {
@@ -84,6 +99,8 @@ const EN: Words = {
         yes(),
         no("Windows and Linux; macOS announced"),
         no("Windows only"),
+        no("macOS only; no longer maintained"),
+        yes("Windows, macOS and Linux"),
         no("macOS only"),
         no("macOS 26 or later only"),
         no("macOS 15.6 or later only"),
@@ -96,6 +113,8 @@ const EN: Words = {
         no("Rules by address only"),
         yes("By process and window title"),
         no("Rules by address only"),
+        no("Picker only; no rule engine"),
+        no("URL pattern rules only"),
         yes("In its JavaScript config"),
         yes(),
         yes(),
@@ -108,6 +127,8 @@ const EN: Words = {
         yes(),
         yes("Chromium and Firefox, containers included"),
         yes("Chromium only"),
+        no("Browsers only"),
+        yes(),
         part("Named in its config file"),
         yes(),
         yes("Chromium only"),
@@ -120,6 +141,8 @@ const EN: Words = {
         yes("By remembering a choice"),
         yes("Lua scripting is optional"),
         yes(),
+        no("No rules"),
+        part("Free tier caps rules at 3"),
         part("A JavaScript file; a visual editor only in an alpha"),
         yes(),
         yes(),
@@ -132,6 +155,8 @@ const EN: Words = {
         part("Expands short links; SafeLinks not named"),
         yes("With an un-shortener too"),
         part("Optional redirect probing; SafeLinks not named"),
+        no(),
+        part("URL rewriting in Pro; SafeLinks not named"),
         part("Only rewrites you write yourself"),
         yes("Known redirect wrappers"),
         no("Expands short links only in the picker"),
@@ -144,6 +169,8 @@ const EN: Words = {
         part("Keys 1 to 9; position not documented"),
         part("Keys 1 to 9, on the cursor's screen"),
         part("Keys 1 to 9; position not documented"),
+        yes("Near cursor, custom hotkeys"),
+        part("Arrow keys and Enter"),
         no("No picker"),
         part("Letter keys; position not documented"),
         yes("Under the pointer, with ⌘1 to 9"),
@@ -151,7 +178,7 @@ const EN: Words = {
     },
     {
       label: "A private window from the picker",
-      cells: [yes("Hold Shift"), no("Not documented"), yes(), yes("Hold Alt"), no("No picker"), yes(), part("Some Chromium browsers")],
+      cells: [yes("Hold Shift"), no("Not documented"), yes(), yes("Hold Alt"), no("Not documented"), no("Not documented"), no("No picker"), yes(), part("Some Chromium browsers")],
     },
     {
       label: "Signed automatic updates",
@@ -160,6 +187,8 @@ const EN: Words = {
         no("Not documented"),
         no("Through winget; builds are unsigned"),
         no("Not documented"),
+        no("Retired; no new releases"),
+        part("Proprietary updater"),
         part("Checks for a new version"),
         yes("Through the Mac App Store"),
         part("Checks for a new version"),
@@ -168,11 +197,11 @@ const EN: Words = {
     {
       label: "Free, with no paid tier",
       own: "pricing",
-      cells: [yes(), yes(), yes("Donations only"), yes(), yes(), no("Paid, with a trial"), no("Paid")],
+      cells: [yes(), yes(), yes("Donations only"), yes(), yes(), no("Freemium: 2 browsers & 3 rules free; Pro paid"), yes(), no("Paid, with a trial"), no("Paid")],
     },
     {
       label: "Open source",
-      cells: [yes("GPL-3.0-only"), no(), yes("Apache-2.0"), yes("MIT"), yes("MIT"), no(), no()],
+      cells: [yes("GPL-3.0-only"), no(), yes("Apache-2.0"), yes("MIT"), yes("GPL-3.0"), no("Proprietary"), yes("MIT"), no(), no()],
     },
     {
       label: "No telemetry",
@@ -181,6 +210,8 @@ const EN: Words = {
         no("Usage data and error reports, per WebCatalog's policy"),
         yes("Removed in version 6"),
         part("Its pages do not say"),
+        yes("Local Electron app"),
+        part("License SDK activation"),
         part("Its pages do not say"),
         part("Anonymous crash reports"),
         yes(),
@@ -188,7 +219,7 @@ const EN: Words = {
     },
     {
       label: "Linux",
-      cells: [no(), no(), yes(), no(), no(), no(), no()],
+      cells: [no(), no(), yes(), no(), no(), yes("AppImage"), no(), no(), no()],
     },
   ],
   stronger: {
@@ -200,6 +231,8 @@ const EN: Words = {
           { name: "Switchbar", text: "Sends links into WebCatalog's desktop apps and spaces, and email links to Gmail, Outlook or Apple Mail, with browser extensions and Handoff on a Mac." },
           { name: "Browser Tamer", text: "Runs on Linux, finds Firefox profiles and containers on its own, removes trackers with ClearURLs, and lets you script rules in Lua with a debugger." },
           { name: "BrowserPicker", text: "A portable build that registers without administrator rights, browsers ordered by how often you pick them, and Zen and Firefox containers." },
+          { name: "Browserosaurus", text: "Established the classic macOS keyboard picker workflow with single-letter hotkeys and inspired several macOS forks, though it is no longer maintained." },
+          { name: "OpenWith", text: "Runs on Linux (AppImage) as well as Windows and macOS, includes companion browser extensions, 7 visual themes and URL rewriting in its Pro version." },
           { name: "Finicky", text: "Rules and address rewrites written in JavaScript or TypeScript, as far as you want to take them, down to the title of the window the link came from." },
           { name: "Velja", text: "Removes more than 200 tracking parameters, transforms addresses in JavaScript, has Shortcuts actions, and opens Zoom, Teams, Meet and Figma links straight in their apps." },
           { name: "Choosy", text: "Rules that also match modifier keys, how many browsers are running, the kind of link, AirDrop and Handoff, plus browser extensions and an address API." },
@@ -213,13 +246,13 @@ const EN: Words = {
 };
 
 const ES: Words = {
-  title: "LinkUnbound vs Finicky y Velja: selectores de navegador",
-  heading: "En qué se diferencia LinkUnbound de Switchbar, Browser Tamer, BrowserPicker, Finicky, Velja y Choosy",
+  title: "LinkUnbound vs Browserosaurus, OpenWith, Finicky y Velja",
+  heading: "En qué se diferencia LinkUnbound de Browserosaurus, OpenWith, Switchbar, Browser Tamer, BrowserPicker, Finicky, Velja y Choosy",
   short: "En qué se diferencia LinkUnbound",
-  meta: "Selector de navegador gratis y libre para Windows y macOS, comparado con Finicky, Velja, Choosy, Switchbar, Browser Tamer y BrowserPicker, con fuentes.",
+  meta: "Selector de navegador gratis y libre para Windows y macOS, comparado con Browserosaurus, OpenWith, Finicky, Velja, Choosy, Switchbar, Browser Tamer y BrowserPicker.",
   lede: "Una sola app para Windows y macOS que te pregunta qué navegador y qué perfil abren cada enlace, o lo recuerda por ti. Una regla se fija en el sitio, en el perfil o en la app de la que vino el enlace, y la armas desde la configuración, sin escribir ningún archivo. Gratis, de código abierto, sin cuenta y sin telemetría. Aquí está lo que hace y que otros selectores de navegador no, y dónde ellos son más fuertes.",
   only: "Sí en {own} de estas {total}; el más cercano de los otros, en {best}",
-  checked: "Revisado el 10 de noviembre de 2026 en las páginas de cada proyecto, enlazadas al pie. Un no quiere decir que sus propias páginas no lo ofrecen. Esto cambia, así que conviene ir a mirar.",
+  checked: "Revisado el 26 de noviembre de 2026 en las páginas de cada proyecto, enlazadas al pie. Un no quiere decir que sus propias páginas no lo ofrecen. Esto cambia, así que conviene ir a mirar.",
   marks: { yes: "Sí", part: "En parte", no: "No", soon: "Pronto" },
   rows: [
     {
@@ -229,6 +262,8 @@ const ES: Words = {
         yes(),
         no("Windows y Linux; macOS anunciado"),
         no("Solo Windows"),
+        no("Solo macOS; ya no se mantiene"),
+        yes("Windows, macOS y Linux"),
         no("Solo macOS"),
         no("Solo macOS 26 o posterior"),
         no("Solo macOS 15.6 o posterior"),
@@ -241,6 +276,8 @@ const ES: Words = {
         no("Reglas solo por dirección"),
         yes("Por proceso y título de ventana"),
         no("Reglas solo por dirección"),
+        no("Solo selector; sin motor de reglas"),
+        no("Solo reglas por patrón de URL"),
         yes("En su configuración en JavaScript"),
         yes(),
         yes(),
@@ -253,6 +290,8 @@ const ES: Words = {
         yes(),
         yes("Chromium y Firefox, contenedores incluidos"),
         yes("Solo Chromium"),
+        no("Solo navegadores"),
+        yes(),
         part("Se nombran en su archivo de configuración"),
         yes(),
         yes("Solo Chromium"),
@@ -265,6 +304,8 @@ const ES: Words = {
         yes("Recordando una elección"),
         yes("Los scripts en Lua son opcionales"),
         yes(),
+        no("No tiene reglas"),
+        part("La versión gratis limita a 3 reglas"),
         part("Un archivo JavaScript; editor visual solo en una alfa"),
         yes(),
         yes(),
@@ -277,6 +318,8 @@ const ES: Words = {
         part("Expande enlaces cortos; no nombra SafeLinks"),
         yes("Y además expande enlaces cortos"),
         part("Sondeo de redirecciones opcional; no nombra SafeLinks"),
+        no(),
+        part("Reescritura de URLs en Pro; no nombra SafeLinks"),
         part("Solo las reescrituras que escribas tú"),
         yes("Envoltorios de redirección conocidos"),
         no("Expande enlaces cortos solo en el selector"),
@@ -289,6 +332,8 @@ const ES: Words = {
         part("Teclas del 1 al 9; posición no documentada"),
         part("Teclas del 1 al 9, en la pantalla del cursor"),
         part("Teclas del 1 al 9; posición no documentada"),
+        yes("Cerca del cursor, atajos propios"),
+        part("Flechas y Enter"),
         no("No tiene selector"),
         part("Teclas con letras; posición no documentada"),
         yes("Bajo el puntero, con ⌘1 a 9"),
@@ -296,7 +341,7 @@ const ES: Words = {
     },
     {
       label: "Una ventana privada desde el selector",
-      cells: [yes("Con Shift"), no("No documentado"), yes(), yes("Con Alt"), no("No tiene selector"), yes(), part("Algunos navegadores Chromium")],
+      cells: [yes("Con Shift"), no("No documentado"), yes(), yes("Con Alt"), no("No documentado"), no("No documentado"), no("No tiene selector"), yes(), part("Algunos navegadores Chromium")],
     },
     {
       label: "Actualizaciones automáticas firmadas",
@@ -305,6 +350,8 @@ const ES: Words = {
         no("No documentado"),
         no("Por winget; versiones sin firmar"),
         no("No documentado"),
+        no("Retirado; sin versiones nuevas"),
+        part("Actualizador propietario"),
         part("Revisa si hay versión nueva"),
         yes("Por la Mac App Store"),
         part("Revisa si hay versión nueva"),
@@ -313,11 +360,11 @@ const ES: Words = {
     {
       label: "Gratis, sin versión de pago",
       own: "precios",
-      cells: [yes(), yes(), yes("Solo donaciones"), yes(), yes(), no("De pago, con prueba"), no("De pago")],
+      cells: [yes(), yes(), yes("Solo donaciones"), yes(), yes(), no("Freemium: 2 navegadores y 3 reglas gratis; Pro de pago"), yes(), no("De pago, con prueba"), no("De pago")],
     },
     {
       label: "Código abierto",
-      cells: [yes("GPL-3.0-only"), no(), yes("Apache-2.0"), yes("MIT"), yes("MIT"), no(), no()],
+      cells: [yes("GPL-3.0-only"), no(), yes("Apache-2.0"), yes("MIT"), yes("GPL-3.0"), no("Propietario"), yes("MIT"), no(), no()],
     },
     {
       label: "Sin telemetría",
@@ -326,6 +373,8 @@ const ES: Words = {
         no("Datos de uso e informes de errores, según la política de WebCatalog"),
         yes("La quitó en la versión 6"),
         part("Sus páginas no lo dicen"),
+        yes("App local en Electron"),
+        part("Activación por SDK de licencia"),
         part("Sus páginas no lo dicen"),
         part("Informes de fallos anónimos"),
         yes(),
@@ -333,7 +382,7 @@ const ES: Words = {
     },
     {
       label: "Linux",
-      cells: [no(), no(), yes(), no(), no(), no(), no()],
+      cells: [no(), no(), yes(), no(), no(), yes("AppImage"), no(), no(), no()],
     },
   ],
   stronger: {
@@ -345,6 +394,8 @@ const ES: Words = {
           { name: "Switchbar", text: "Manda enlaces a las apps de escritorio y espacios de WebCatalog, y los de correo a Gmail, Outlook o Apple Mail, con extensiones para el navegador y Handoff en Mac." },
           { name: "Browser Tamer", text: "Funciona en Linux, encuentra solo los perfiles y contenedores de Firefox, quita rastreadores con ClearURLs y deja programar reglas en Lua con un depurador." },
           { name: "BrowserPicker", text: "Una versión portable que se registra sin permisos de administrador, navegadores ordenados según cuánto los eliges, y contenedores de Zen y Firefox." },
+          { name: "Browserosaurus", text: "Popularizó en macOS el selector rápido con teclas de una letra e inspiró varios forks, aunque ya no recibe mantenimiento." },
+          { name: "OpenWith", text: "Funciona en Linux (AppImage) además de Windows y macOS, ofrece extensiones para navegadores, 7 temas visuales y reescritura de URLs en su versión Pro." },
           { name: "Finicky", text: "Reglas y reescrituras de direcciones escritas en JavaScript o TypeScript, tan lejos como quieras llevarlas, hasta el título de la ventana de la que vino el enlace." },
           { name: "Velja", text: "Quita más de 200 parámetros de rastreo, transforma direcciones con JavaScript, tiene acciones para Atajos y abre los enlaces de Zoom, Teams, Meet y Figma directo en sus apps." },
           { name: "Choosy", text: "Reglas que también miran las teclas modificadoras, cuántos navegadores están abiertos, el tipo de enlace, AirDrop y Handoff, además de extensiones para el navegador y una API de direcciones." },

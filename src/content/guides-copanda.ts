@@ -5,6 +5,7 @@ export const COPANDA_GUIDES: Guide[] = [
     id: "windows-clipboard-history",
     product: "copanda",
     published: "2026-09-24",
+    updated: "2026-11-26",
     en: {
       slug: "guides/windows-clipboard-history",
       title: "Windows clipboard history: what Win+V does, where it stops",
@@ -31,7 +32,7 @@ export const COPANDA_GUIDES: Guide[] = [
         "It keeps 25 entries. The twenty-sixth pushes out the first, and there is no setting to raise it.",
         "It is wiped every time you restart, except what you pinned. The address you copied on Friday is gone on Monday.",
         "Each entry is capped at about 4 MB, so a large image simply does not make it into the history.",
-        "There is no search. Twenty-five entries is a list you scroll, and it does not tell a password apart from a shopping list.",
+        "There is no search: twenty-five entries is a list you scroll by hand. And while Win+V does respect the system exclusion flag from desktop password managers such as 1Password or Bitwarden, any secret or token copied from a browser, terminal or chat stays there in plain sight until you restart.",
       ],
       toolTitle: "When twenty-five is not enough",
       tool: [
@@ -51,7 +52,7 @@ export const COPANDA_GUIDES: Guide[] = [
         },
         {
           q: "Does the clipboard history store passwords?",
-          a: "Windows does not tell one kind of text from another, so anything you copy can end up there. A dedicated manager can ignore what comes from a password manager.",
+          a: "Windows 10 and 11 respect the system exclusion flag used by desktop password managers such as 1Password and Bitwarden, so those entries stay out. Passwords or tokens copied from a browser field, terminal or plain text file are still stored like any other text until cleared or restarted.",
         },
       ],
     },
@@ -81,7 +82,7 @@ export const COPANDA_GUIDES: Guide[] = [
         "Guarda 25 entradas. La vigesimosexta echa a la primera, y no hay ajuste para subirlo.",
         "Se borra cada vez que reinicias, salvo lo que anclaste. La dirección que copiaste el viernes ya no está el lunes.",
         "Cada entrada tiene un tope de unos 4 MB, así que una imagen grande sencillamente no entra en el historial.",
-        "No hay búsqueda. Veinticinco entradas son una lista por la que bajas a mano, y no distingue una contraseña de la lista de la compra.",
+        "No hay búsqueda: veinticinco entradas son una lista que recorres a mano. Y aunque Win+V sí respeta la marca de exclusión de gestores de escritorio como 1Password o Bitwarden, cualquier clave o token que copies desde un navegador, la terminal o un chat queda guardada en claro hasta que reinicies.",
       ],
       toolTitle: "Cuando veinticinco no bastan",
       tool: [
@@ -101,7 +102,7 @@ export const COPANDA_GUIDES: Guide[] = [
         },
         {
           q: "¿El historial del portapapeles guarda contraseñas?",
-          a: "Windows no distingue un tipo de texto de otro, así que cualquier cosa que copies puede acabar ahí. Un gestor dedicado sí puede ignorar lo que venga de un gestor de contraseñas.",
+          a: "Windows 10 y 11 respetan la marca de exclusión del sistema que usan gestores de escritorio como 1Password y Bitwarden, así que esas contraseñas no se guardan. En cambio, las claves o tokens copiados desde un navegador, la terminal o un archivo de texto sí quedan en el historial como cualquier texto hasta que los borres o reinicies.",
         },
       ],
     },

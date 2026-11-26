@@ -29,6 +29,15 @@ const say = es
       lede: "Aplicaciones de escritorio que se adaptan a cómo trabajas. Tus datos en tu disco o en tu nube, tú eliges. Sin telemetría, sin cuentas, sin suscripciones.",
       cta: "Ver las aplicaciones",
       code: "Leer el código",
+      byline: "Hecho a mano por Mario Hidalgo (rgdevment) en Chile",
+      makerEyebrow: "Quién está detrás",
+      makerTitle: "Hola, soy Mario Hidalgo.",
+      makerBody: [
+        "Soy desarrollador de software en Chile y rgdevment es el sello de mi taller en GitHub. Construyo estas tres aplicaciones en los ratos que me deja el día a día porque primero las necesité en mi propio escritorio.",
+        "Me cansé de que herramientas cotidianas —tomar una nota, elegir con qué navegador abrir un enlace o recuperar algo que copié hace diez minutos— pidieran crear cuenta, subieran mis datos a una nube ajena o cobraran una suscripción mensual.",
+        "Aquí no hay empresa, inversores ni letra chica: hay oficio, código abierto que cualquiera puede leer y archivos locales pensados para que sigan siendo tuyos incluso si algún día dejas de usar estas apps.",
+      ],
+      makerSupport: "Cómo colaborar",
       marks: [
         ["lock", "Local"],
         ["eye", "Sin telemetría"],
@@ -73,6 +82,15 @@ const say = es
       lede: "Desktop apps that fit how you work instead of getting in your way. Your data on your disk or in your cloud, your call. No telemetry, no accounts, no subscriptions.",
       cta: "See the apps",
       code: "Read the source",
+      byline: "Hand-built by Mario Hidalgo (rgdevment) in Chile",
+      makerEyebrow: "Who builds this",
+      makerTitle: "Hi, I'm Mario Hidalgo.",
+      makerBody: [
+        "I am an independent software developer in Chile, and rgdevment is my workshop mark on GitHub. I build these three desktop apps because I needed each of them on my own machine first.",
+        "I grew tired of everyday tools — keeping notes, choosing which browser opens a link, or finding something I copied ten minutes ago — demanding an account, syncing my files to someone else's cloud, or charging a monthly subscription.",
+        "There is no company, no investors, and no small print behind this site: just craft, open source code anyone can inspect, and local files designed to stay yours even if you stop using these apps.",
+      ],
+      makerSupport: "How to support",
       marks: [
         ["lock", "Local"],
         ["eye", "No telemetry"],
@@ -168,6 +186,22 @@ const schema = {
       </h1>
 
       <p class="mx-auto mt-7 max-w-2xl text-lg text-body sm:text-xl">{say.lede}</p>
+
+      <p class="mt-5">
+        <a
+          href="#maker"
+          class="inline-flex items-center gap-2.5 rounded-full border border-line bg-surface/80 py-1 pr-4 pl-1.5 text-sm text-body transition hover:border-fg/25 hover:text-fg"
+        >
+          <img
+            src="/avatar-mario.webp"
+            alt={AUTHOR.name}
+            width="28"
+            height="28"
+            class="h-7 w-7 rounded-full object-cover"
+          />
+          <span>{say.byline}</span>
+        </a>
+      </p>
 
       <div class="mt-10 flex flex-wrap justify-center gap-3">
         <a class="btn-primary" href="#apps">
@@ -287,6 +321,44 @@ const schema = {
           );
         })
       }
+    </div>
+  </section>
+
+  <section id="maker" class="shell mt-24 scroll-mt-24 sm:mt-32">
+    <div class="card p-7 sm:p-10 lg:p-12">
+      <div class="grid gap-8 lg:grid-cols-[auto_1fr] lg:items-start lg:gap-10">
+        <img
+          src="/avatar-mario.webp"
+          alt={AUTHOR.name}
+          width="96"
+          height="96"
+          loading="lazy"
+          class="h-20 w-20 rounded-2xl border border-line object-cover sm:h-24 sm:w-24"
+        />
+        <div>
+          <p class="eyebrow">{say.makerEyebrow}</p>
+          <h2 class="section-title mt-3">{say.makerTitle}</h2>
+          <div class="mt-5 max-w-3xl space-y-4 text-body">
+            {say.makerBody.map((paragraph) => <p>{paragraph}</p>)}
+          </div>
+          <div class="mt-7 flex flex-wrap items-center gap-3 text-sm">
+            <a class="chip transition hover:border-fg/25 hover:text-fg" href={AUTHOR.github} rel="noopener">
+              <Icon name="github" class="h-4 w-4" />
+              GitHub (@{AUTHOR.handle})
+            </a>
+            <a class="chip transition hover:border-fg/25 hover:text-fg" href={AUTHOR.linkedin} rel="noopener">
+              LinkedIn
+            </a>
+            <a class="chip transition hover:border-fg/25 hover:text-fg" href={AUTHOR.x} rel="noopener">
+              X (@{AUTHOR.handle})
+            </a>
+            <a class="inline-flex items-center gap-1.5 px-2 font-medium text-fg hover:underline" href={href(locale, es ? "colaborar" : "support")}>
+              {say.makerSupport}
+              <Icon name="arrow" class="h-4 w-4" />
+            </a>
+          </div>
+        </div>
+      </div>
     </div>
   </section>
 

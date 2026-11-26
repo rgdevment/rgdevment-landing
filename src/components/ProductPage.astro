@@ -46,7 +46,7 @@ const social = cardOf(product, locale);
 
 const release = await latestRelease(product);
 const kit = installers(release);
-const starCount = product.signals ? await stars(product) : null;
+const starCount = await stars(product);
 const macDirect = product.requires ? kit.macArm : undefined;
 const licence = `${product.repo}/blob/main/LICENSE`;
 const quiet = "inline-block py-1 underline decoration-muted underline-offset-4 transition hover:text-fg";
@@ -90,6 +90,18 @@ const say = {
   docsGo: es ? "Toda la ayuda" : "All the docs",
   noAccount: es ? `Sin cuenta de ${product.name}` : `No ${product.name} account`,
   noTelemetry: es ? "Sin telemetría" : "No telemetry",
+  pathsEyebrow: es ? "Dos formas de usarlo" : "Two ways to use it",
+  pathPersonalTitle: es ? "Lo quiero para mis notas y tareas" : "I want it for my notes and tasks",
+  pathPersonalBody: es
+    ? "Sin IA ni configuración: captura rápida en lenguaje natural, Hoy, Ideas, documentos vivos en Markdown y archivo local."
+    : "No AI or setup needed: natural-language capture, Today, Ideas, living Markdown documents and a local archive.",
+  pathPersonalCta: es ? "Ver uso personal" : "See personal workflow",
+  pathAgentsTitle: es ? "Trabajo con un agente de IA" : "I work with an AI coding agent",
+  pathAgentsBody: es
+    ? "Conecta Claude Code, GitHub Copilot, Codex o Cursor por MCP local: misma memoria compartida y hasta 99 % menos lectura repetida."
+    : "Connect Claude Code, GitHub Copilot, Codex or Cursor over local MCP: one shared memory and up to 99% less repeated context.",
+  pathAgentsCta: es ? "Ver flujo con agentes y MCP" : "See agent & MCP workflow",
+  storyBy: es ? "— Mario Hidalgo (rgdevment)" : "— Mario Hidalgo (rgdevment)",
 };
 
 const screenshot = t.screens
@@ -224,7 +236,7 @@ const schema = [
               store && (
                 <div class="flex max-w-[18rem] flex-col items-center gap-2.5">
                   <a
-                    class="btn-ghost px-6 py-3.5 group-data-[os=win]:border-transparent group-data-[os=win]:bg-fg group-data-[os=win]:text-canvas group-data-[os=win]:hover:bg-fg/85"
+                    class="btn-primary px-6 py-3.5 group-data-[os=mac]:border group-data-[os=mac]:border-line group-data-[os=mac]:bg-surface group-data-[os=mac]:text-fg group-data-[os=mac]:hover:border-fg/25 group-data-[os=mac]:hover:bg-surface"
                     href={store}
                     rel="noopener"
                   >
@@ -244,7 +256,7 @@ const schema = [
                       </span>
                       {kit.win && (
                         <span class="block whitespace-nowrap">
-                          {say.or} <a class={quiet} href={kit.win.url}>{say.installer} .exe · {megabytes(kit.win, locale)}</a>
+                          {say.or} <a class="inline-block py-1 font-medium text-fg underline decoration-muted underline-offset-4 transition hover:decoration-fg" href={kit.win.url}>{say.installer} .exe · {megabytes(kit.win, locale)}</a>
                         </span>
                       )}
                     </p>
@@ -326,22 +338,18 @@ const schema = [
           <li class="chip border-flame/30 bg-flame-tint font-medium text-flame-ink">
             <Icon name="free" class="h-3.5 w-3.5" />{say.free}
           </li>
-          {
-            product.signals && (
-              <li>
-                <a class="chip transition hover:border-fg/25 hover:text-fg" href={product.repo} rel="noopener">
-                  <Icon name="github" class="h-3.5 w-3.5" />
-                  {say.onGithub}
-                  {starCount !== null && (
-                    <span class="inline-flex items-center gap-1 border-l border-line pl-2 text-xs" title={say.stars}>
-                      <Icon name="star" class="h-3 w-3" />
-                      {starCount}
-                    </span>
-                  )}
-                </a>
-              </li>
-            )
-          }
+          <li>
+            <a class="chip transition hover:border-fg/25 hover:text-fg" href={product.repo} rel="noopener">
+              <Icon name="github" class="h-3.5 w-3.5" />
+              {say.onGithub}
+              {starCount !== null && (
+                <span class="inline-flex items-center gap-1 border-l border-line pl-2 text-xs" title={say.stars}>
+                  <Icon name="star" class="h-3 w-3" />
+                  {starCount}
+                </span>
+              )}
+            </a>
+          </li>
         </ul>
         </div>
       </header>
@@ -368,23 +376,31 @@ const schema = [
   {
     cost && (
       <section class="shell mt-16 sm:mt-20">
-        <a
-          href="#cost"
-          class="card group flex flex-col gap-x-8 gap-y-3 p-6 transition hover:border-fg/25 sm:flex-row sm:items-center sm:p-8"
-        >
-          <p class="flex items-baseline gap-3">
-            <span class="accent-ink text-6xl font-semibold tracking-[-0.03em] sm:text-7xl" style={ink}>{cost.rows[0].saving}</span>
-            <span class="eyebrow">{cost.less}</span>
-          </p>
-          <p class="flex-1 text-lg text-body">
-            <span class="block font-medium text-fg">{say.costBadge}</span>
-            <span class="block text-muted">{cost.rows[0].what}: {cost.rows[0].spends}.</span>
-          </p>
-          <span class="inline-flex items-center gap-1.5 font-medium text-fg group-hover:underline">
-            {say.costHow}
-            <Icon name="arrow" class="h-4 w-4" />
-          </span>
-        </a>
+        {t.story && (
+          <blockquote class="mx-auto mb-8 max-w-3xl rounded-3xl border border-line bg-surface px-6 py-5 text-center sm:px-8">
+            <p class="text-base leading-relaxed text-fg sm:text-lg">“{t.story}”</p>
+            <footer class="mt-2 text-xs font-medium text-muted">{say.storyBy}</footer>
+          </blockquote>
+        )}
+        <p class="eyebrow text-center">{say.pathsEyebrow}</p>
+        <div class="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+          <a href="#personal" class="card-link group flex flex-col p-6 sm:p-7">
+            <h2 class="text-xl font-semibold text-fg">{say.pathPersonalTitle}</h2>
+            <p class="mt-2 flex-1 text-body">{say.pathPersonalBody}</p>
+            <span class="accent-ink mt-5 inline-flex items-center gap-1.5 text-sm font-medium group-hover:underline" style={ink}>
+              {say.pathPersonalCta}
+              <Icon name="arrow" class="h-4 w-4" />
+            </span>
+          </a>
+          <a href="#agents" class="card-link group flex flex-col p-6 sm:p-7">
+            <h2 class="text-xl font-semibold text-fg">{say.pathAgentsTitle}</h2>
+            <p class="mt-2 flex-1 text-body">{say.pathAgentsBody}</p>
+            <span class="accent-ink mt-5 inline-flex items-center gap-1.5 text-sm font-medium group-hover:underline" style={ink}>
+              {say.pathAgentsCta}
+              <Icon name="arrow" class="h-4 w-4" />
+            </span>
+          </a>
+        </div>
       </section>
     )
   }
@@ -448,7 +464,7 @@ const schema = [
     )
   }
 
-  <section class="shell mt-24 sm:mt-32">
+  <section id="personal" class="shell mt-24 scroll-mt-24 sm:mt-32">
     <h2 class="section-title">{es ? `Qué hace ${product.name}` : `What ${product.name} does`}</h2>
     {
       t.groups && (
@@ -496,6 +512,17 @@ const schema = [
   {
     cost && (
       <section id="cost" class="shell mt-24 scroll-mt-24 sm:mt-32">
+        <div id="agents" class="scroll-mt-24" />
+        <div class="mb-6 rounded-3xl border border-line bg-surface p-6 sm:flex sm:items-center sm:gap-8 sm:p-7">
+          <p class="flex items-baseline gap-3">
+            <span class="accent-ink text-5xl font-semibold tracking-[-0.03em] sm:text-6xl" style={ink}>{cost.rows[0].saving}</span>
+            <span class="eyebrow">{cost.less}</span>
+          </p>
+          <p class="mt-2 flex-1 text-body sm:mt-0">
+            <span class="block font-medium text-fg">{say.costBadge}</span>
+            <span class="block text-sm text-muted">{cost.rows[0].what}: {cost.rows[0].spends}.</span>
+          </p>
+        </div>
         <div class="relative isolate overflow-hidden rounded-[2rem] border border-line p-6 sm:p-10 lg:p-12" style={`--accent: ${product.accent}`}>
           <div
             class="pointer-events-none absolute -top-40 left-1/2 -z-10 h-[28rem] w-[52rem] -translate-x-1/2 rounded-full opacity-[0.16] blur-3xl"
@@ -844,10 +871,11 @@ const schema = [
           <li>
             <a class="card-link group flex items-center gap-4 p-5" href={href(locale, one.slug)}>
               <img src={one.icon} alt={iconAlt(one, locale)} width="48" height="48" class="h-12 w-12 rounded-xl" loading="lazy" />
-              <span class="min-w-0">
-                <span class="block text-lg font-semibold text-fg">{one.name}</span>
-                <span class="block text-sm text-muted">{words(one, locale).tagline}</span>
-              </span>
+                <span class="min-w-0">
+                  <span class="block text-lg font-semibold text-fg">{one.name}</span>
+                  <span class="block text-xs text-muted">{words(one, locale).shortKind}</span>
+                  <span class="mt-0.5 block text-sm text-body">{words(one, locale).tagline}</span>
+                </span>
               <Icon name="arrow" class="ml-auto h-4 w-4 shrink-0 text-muted transition group-hover:translate-x-0.5" />
             </a>
           </li>

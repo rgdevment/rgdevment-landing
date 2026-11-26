@@ -198,7 +198,7 @@ export const PRODUCTS: Product[] = [
     storeId: "9PGVWXD8X93N",
     requires: { windows: "Windows 10 (1809)", macos: "macOS 13.3" },
     signals: {
-      producthunt: { url: "https://www.producthunt.com/products/tisty", post: "1290086" },
+      producthunt: { url: "https://www.producthunt.com/products/tisty", post: "1290086", badge: true },
       alternativeto: "https://alternativeto.net/software/tisty/about/",
     },
     winget: "rgdevment.Tisty",
@@ -209,6 +209,8 @@ export const PRODUCTS: Product[] = [
       ["Glama", "https://glama.ai/mcp/servers/rgdevment/Tisty"],
       ["MCP Market", "https://mcpmarket.com/server/tisty"],
       ["M8ven", "https://m8ven.ai/mcp/rgdevment/tisty"],
+      ["Cursor Directory", "https://cursor.directory/"],
+      ["SaaSHub", "https://www.saashub.com/tisty-alternatives"],
     ],
     mcp: {
       registry: "io.github.rgdevment/tisty",
@@ -246,7 +248,7 @@ export const PRODUCTS: Product[] = [
         steps: [
           { title: "Download it", body: "For Windows or macOS. Free, with no account." },
           { title: "Write your first task or note", body: "Type «call the bank at 3» and it is a task with its hour. The welcome guide shows the rest from inside." },
-          { title: "Connect your agent, if you use one", body: "One click in Settings › Assistants, and GitHub Copilot, Claude Code, Codex or Cursor pick up where they left off." },
+          { title: "Connect your agent, if you use one", body: "One click in Settings › Agents, and GitHub Copilot, Claude Code, Codex or Cursor pick up where they left off." },
         ],
       },
       mascot: {
@@ -425,7 +427,7 @@ export const PRODUCTS: Product[] = [
         steps: [
           { title: "Descárgalo", body: "Para Windows o macOS. Gratis y sin cuenta." },
           { title: "Escribe tu primera tarea o nota", body: "Escribe «llamar al banco a las 3» y es una tarea con su hora. La guía de bienvenida te muestra el resto desde dentro." },
-          { title: "Conecta tu agente, si usas uno", body: "Un clic en Configuración › Asistentes, y GitHub Copilot, Claude Code, Codex o Cursor retoman donde quedaron." },
+          { title: "Conecta tu agente, si usas uno", body: "Un clic en Configuración › Agentes, y GitHub Copilot, Claude Code, Codex o Cursor retoman donde quedaron." },
         ],
       },
       mascot: {
@@ -439,7 +441,7 @@ export const PRODUCTS: Product[] = [
       },
       kinds: {
         title: "¿Tarea o documento?",
-        lede: "Tisty guarda dos tipos de cosas, y distinguirlas es buena parte de usarlo bien. Lo que vas a hacer es una tarea. Lo que vas a volver a consultar es un documento. Antes de las dos, muchas veces hay una idea: un pensamiento atrapado al vuelo, pocas palabras en la Lluvia de ideas, que espera volverse tarea, ir a un documento o apartarse.",
+        lede: "Tisty guarda dos tipos de cosas, y distinguirlas es buena parte de usarlo bien. Lo que vas a hacer es una tarea. Lo que vas a volver a consultar es un documento. Antes de las dos, muchas veces hay una idea: un pensamiento atrapado al vuelo, pocas palabras en Ideas, que espera volverse tarea, ir a un documento o apartarse.",
         cards: [
           {
             title: "Una tarea",
@@ -598,6 +600,9 @@ export const PRODUCTS: Product[] = [
     licence: "GPL-3.0-only",
     platforms: ["Windows", "macOS"],
     storeId: "9N9F7C8Q43KC",
+    signals: {
+      alternativeto: "https://alternativeto.net/software/linkunbound/about/",
+    },
     winget: "rgdevment.LinkUnbound",
     cask: "linkunbound",
     shot: {
@@ -624,6 +629,14 @@ export const PRODUCTS: Product[] = [
       meta: "Free, open source browser picker for Windows and macOS: it becomes your default browser and lets you pick the browser or profile for each link.",
       problem:
         "A link from Teams opens in Edge. One from Slack lands wherever Windows decided last. You keep three browsers and four profiles, and nobody asks you which one you meant.",
+      start: {
+        title: "How a link lands where you want",
+        steps: [
+          { title: "Set LinkUnbound as default", body: "Install on Windows or macOS. Every link clicked in Slack, Teams, Outlook or a PDF passes through it." },
+          { title: "Pick with keys 1 to 9", body: "A compact picker opens beside your cursor showing every installed browser and Chromium profile." },
+          { title: "Turn repeats into rules", body: "Route by site, source app or profile, with Microsoft SafeLinks unwrapped before rules run." },
+        ],
+      },
       what: [
         "It makes itself the default browser, so every link clicked outside a browser passes through it first.",
         "If a rule covers the link it opens straight away. If not, a small picker appears beside the cursor and you choose, with the mouse or the keys 1 to 9.",
@@ -673,6 +686,14 @@ export const PRODUCTS: Product[] = [
       meta: "Selector de navegador gratis y libre para Windows y macOS: queda como navegador predeterminado y te deja elegir navegador o perfil para cada enlace.",
       problem:
         "Un enlace de Teams se abre en Edge. Uno de Slack, donde Windows decidiera la última vez. Tienes tres navegadores y cuatro perfiles, y a ti no te pregunta nadie.",
+      start: {
+        title: "Cómo llega cada enlace donde corresponde",
+        steps: [
+          { title: "Pon LinkUnbound como predeterminado", body: "Instálalo en Windows o macOS. Todo enlace que pulses en Slack, Teams, Outlook o un PDF pasa por él." },
+          { title: "Elige con las teclas 1 a 9", body: "Aparece un selector discreto junto al cursor con tus navegadores instalados y perfiles de Chromium." },
+          { title: "Convierte lo repetido en reglas", body: "Enruta por sitio, app de origen o perfil, desenvolviendo SafeLinks de Microsoft antes de aplicar cada regla." },
+        ],
+      },
       what: [
         "Se pone como navegador predeterminado, así que cada enlace que abres fuera de un navegador pasa antes por él.",
         "Si tienes una regla que lo cubre, se abre directamente. Si no, aparece un selector pequeño junto al cursor y eliges tú, con el ratón o con las teclas 1 a 9.",
@@ -720,6 +741,9 @@ export const PRODUCTS: Product[] = [
     licence: "GPL-3.0-only",
     platforms: ["Windows", "macOS"],
     storeId: "9NBJRZF3K856",
+    signals: {
+      alternativeto: "https://alternativeto.net/software/copanda/about/",
+    },
     cask: "copanda",
     shot: {
       src: "/copanda-social.png",
@@ -737,8 +761,8 @@ export const PRODUCTS: Product[] = [
       category: "Clipboard manager for Windows and macOS",
       shortKind: "Clipboard history manager",
       tagline: "An extra thumb for your clipboard.",
-      title: "CoPanda: free clipboard history manager, Windows and macOS",
-      meta: "Free, open source clipboard manager for Windows and macOS, formerly CopyPaste. A searchable local history that skips your password manager. No account.",
+      title: "CoPanda: free clipboard manager with offline OCR, Windows & macOS",
+      meta: "Free, open source clipboard manager for Windows and macOS (formerly CopyPaste): searchable local history, offline screenshot OCR, Paste as JSON/HEX and password-manager privacy.",
       formerly: "Formerly CopyPaste. The same app and the same history, with a name of its own.",
       mascot: {
         title: "An extra thumb for your clipboard.",
@@ -746,11 +770,19 @@ export const PRODUCTS: Product[] = [
       },
       problem:
         "You copied an address ten minutes ago and then copied something else. It is gone, and the only way back is to go and find it again.",
+      start: {
+        title: "Copy once, reuse in seconds",
+        steps: [
+          { title: "Open with one shortcut", body: "Search text, links, code, colors and screenshots across restarts on Windows and macOS." },
+          { title: "Find text inside screenshots", body: "Offline OCR indexes text in copied images locally so you can search or paste it as plain text." },
+          { title: "Paste in the format you need", body: "Use Paste as… to format or minify JSON, convert HEX/RGB/HSL colors, change case or strip styles." },
+        ],
+      },
       what: [
-        "It keeps a history of what you copy, searchable, on your own disk.",
-        "Passwords from your password manager are left out: what it marks as secret is never stored.",
-        "Copying the same text again without styles no longer discards the formatting already stored.",
-        "History, images and settings can be exported and imported as a backup file.",
+        "It keeps a searchable local history of text, links, code and images on your disk across restarts, with no 25-item cap.",
+        "Passwords marked as secret by desktop password managers such as 1Password or Bitwarden are ignored automatically.",
+        "Offline OCR reads and indexes text inside copied screenshots locally, and Paste as… formats or minifies JSON, converts HEX/RGB/HSL colors, changes case or strips styling on the fly.",
+        "History, images and settings stay on your computer and can be exported and imported as a backup file whenever you want.",
       ],
       privacy:
         "Everything is stored locally under your user profile. No cloud, no sync, no tracking.",
@@ -787,8 +819,8 @@ export const PRODUCTS: Product[] = [
       category: "Gestor de portapapeles para Windows y macOS",
       shortKind: "Historial de portapapeles",
       tagline: "Un pulgar extra para tu portapapeles.",
-      title: "CoPanda: gestor e historial de portapapeles, Windows y macOS",
-      meta: "Gestor de portapapeles gratis y libre para Windows y macOS, antes CopyPaste. Historial local con búsqueda que ignora tu gestor de contraseñas. Sin cuenta.",
+      title: "CoPanda: gestor de portapapeles con OCR local, Windows y macOS",
+      meta: "Gestor de portapapeles gratis y libre para Windows y macOS (antes CopyPaste): historial local con búsqueda, OCR en capturas, Pegar como JSON/HEX e ignora gestores de contraseñas.",
       formerly: "Antes se llamaba CopyPaste. La misma aplicación y el mismo historial, con un nombre propio.",
       mascot: {
         title: "Un pulgar extra para tu portapapeles.",
@@ -796,11 +828,19 @@ export const PRODUCTS: Product[] = [
       },
       problem:
         "Copiaste una dirección hace diez minutos y luego copiaste otra cosa. Ya no está, y la única forma de recuperarla es ir a buscarla otra vez.",
+      start: {
+        title: "Copia una vez, reutiliza al instante",
+        steps: [
+          { title: "Abre el historial con un atajo", body: "Busca textos, enlaces, código, colores y capturas entre reinicios en Windows y macOS." },
+          { title: "Extrae texto de tus capturas", body: "El OCR 100 % local lee e indexa texto dentro de imágenes copiadas para buscarlo o pegarlo al vuelo." },
+          { title: "Pega en el formato que necesitas", body: "Usa Pegar como… para formatear o minificar JSON, convertir colores HEX/RGB/HSL, cambiar mayúsculas o quitar estilos." },
+        ],
+      },
       what: [
-        "Guarda en tu propio disco el historial de lo que copias, y puedes buscar dentro.",
-        "Las contraseñas de tu gestor de contraseñas se quedan fuera: lo que marca como secreto nunca se guarda.",
-        "Volver a copiar el mismo texto sin estilos ya no descarta el formato que había guardado.",
-        "El historial, las imágenes y los ajustes se pueden exportar e importar como copia de seguridad.",
+        "Guarda en tu disco un historial con búsqueda de textos, enlaces, código e imágenes que sobrevive a los reinicios y sin límite de 25 entradas.",
+        "Las contraseñas que tu gestor de escritorio (como 1Password o Bitwarden) marca como secretas se ignoran automáticamente.",
+        "Extrae y busca texto dentro de capturas con OCR 100 % local, y transforma al pegar con Pegar como…: formatea o minifica JSON, convierte colores HEX, RGB y HSL, cambia mayúsculas o pega sin formato.",
+        "El historial, las imágenes y los ajustes se quedan en tu equipo y se exportan o importan como copia de seguridad cuando quieras.",
       ],
       privacy:
         "Todo se guarda localmente en tu perfil de usuario. Sin nube, sin sincronización y sin rastreo.",
