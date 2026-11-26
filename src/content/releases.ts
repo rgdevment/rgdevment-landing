@@ -76,7 +76,7 @@ export function everyRelease(product: Product): Promise<Published[]> {
   return listed.get(product.slug)!;
 }
 
-/// Asked once per build: a failed answer only hides the notice, it never stops the site going out.
+/// Asked once per build: in CI a failed answer aborts the build so empty release pages are never published.
 export function latestRelease(product: Product): Promise<Release | null> {
   if (!asked.has(product.slug)) asked.set(product.slug, ask(product));
   return asked.get(product.slug)!;

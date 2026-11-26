@@ -300,14 +300,14 @@ export const COPANDA_GUIDES: Guide[] = [
         },
         {
           title: "Maccy on macOS",
-          body: "Open source, minimal and native to macOS, loved for its speed — but unavailable on Windows and without built-in screenshot OCR or JSON/color paste transforms.",
+          body: "Open source, minimal and native to macOS, loved for its speed and built-in image text search — but unavailable on Windows and without JSON or color paste transforms.",
         },
       ],
       gapTitle: "What you still miss across two machines",
       gap: [
         "Different apps, different shortcuts and different export formats between your Windows PC and your Mac.",
         "In Ditto, excluding password managers often means maintaining manual executable exclusion lists rather than relying purely on system secret flags.",
-        "Neither combines local screenshot OCR and Paste as… transforms (JSON formatting, HEX/RGB/HSL color conversion) out of the box on both platforms.",
+        "Neither combines local screenshot OCR, type filters, portable backups and Paste as… transforms (JSON formatting, HEX/RGB/HSL color conversion) across both Windows and macOS.",
       ],
       toolTitle: "One open source clipboard manager for both",
       tool: [
@@ -319,7 +319,7 @@ export const COPANDA_GUIDES: Guide[] = [
       faq: [
         {
           q: "Is there a Maccy equivalent for Windows?",
-          a: "Maccy itself is macOS-only. CoPanda brings a similarly fast, open source, local-first clipboard history to both Windows and macOS, plus offline OCR and Paste as… transforms.",
+          a: "Maccy itself is macOS-only. CoPanda brings a fast, open source, local-first clipboard history with offline image OCR and Paste as… transforms to both Windows and macOS.",
         },
         {
           q: "Does CoPanda replace Ditto if I need LAN clipboard sync?",
@@ -341,14 +341,14 @@ export const COPANDA_GUIDES: Guide[] = [
         },
         {
           title: "Maccy en macOS",
-          body: "De código abierto, minimalista y muy veloz en Mac, pero no existe en Windows ni trae OCR sobre capturas o transformaciones de pegado integradas.",
+          body: "De código abierto, minimalista y muy veloz en Mac (donde ya busca texto en imágenes), pero no existe en Windows ni ofrece transformaciones de pegado como JSON o colores.",
         },
       ],
       gapTitle: "Qué sigue faltando entre Windows y Mac",
       gap: [
         "Dos programas distintos, dos memorias musculares y copias de seguridad incompatibles entre tu PC y tu Mac.",
         "En Ditto, excluir gestores de contraseñas suele requerir listas manuales de ejecutables en vez de apoyarse solo en las marcas de secreto del sistema.",
-        "Ninguno combina de serie OCR local en capturas y Pegar como… (formatear JSON, convertir colores HEX/RGB/HSL) en ambas plataformas.",
+        "Ninguno reúne en ambas plataformas OCR local sobre capturas, filtros por tipo, copias portables y Pegar como… (formatear JSON, convertir colores HEX/RGB/HSL).",
       ],
       toolTitle: "Un solo gestor libre para los dos sistemas",
       tool: [

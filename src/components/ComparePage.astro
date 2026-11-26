@@ -65,7 +65,7 @@ const priced = (own?: string) => (own ? href(locale, own) : undefined);
       <p class="mt-4 text-sm text-muted">{t.checked}</p>
     </header>
 
-    <div class="mt-10 md:overflow-x-auto md:rounded-3xl md:border md:border-line md:bg-surface" tabindex="0" aria-label={t.heading}>
+    <div role="region" class="mt-10 md:overflow-x-auto md:rounded-3xl md:border md:border-line md:bg-surface" tabindex="0" aria-label={t.heading}>
       <table class="compare-table w-full border-collapse text-left text-sm" role="table">
         <caption class="sr-only">{t.heading}</caption>
         <thead class="sr-only md:not-sr-only" role="rowgroup">
@@ -74,7 +74,7 @@ const priced = (own?: string) => (own ? href(locale, own) : undefined);
             {
               compared.rivals.map((one, at) => (
                 <th scope="col" role="columnheader" class:list={["min-w-[9.5rem] p-4 text-base font-semibold text-fg", { [tint]: at === 0 }]}>
-                  <a class="hover:underline" href={one.url} rel="noopener">{one.name}</a>
+                  {one.name}
                 </th>
               ))
             }

@@ -136,13 +136,17 @@ async function localiseImages(text, product) {
         const raw = execFileSync("curl", ["-fsSL", url], { maxBuffer: 1 << 26 });
         if (shot) {
           writeFileSync(file, await sharp(raw).resize({ width: 1600, withoutEnlargement: true }).webp({ quality: 85 }).toBuffer());
-        } else if (isWebp && raw.length > 300_000) {
+        } else if (isWebp) {
           const meta = await sharp(raw, { animated: true }).metadata();
           animated = (meta.pages ?? 1) > 1;
-          const compressed = animated
-            ? await sharp(raw, { animated: true }).resize({ width: 1200, withoutEnlargement: true }).webp({ quality: 72, effort: 4 }).toBuffer()
-            : await sharp(raw).resize({ width: 1600, withoutEnlargement: true }).webp({ quality: 82 }).toBuffer();
-          writeFileSync(file, compressed.length < raw.length ? compressed : raw);
+          if (raw.length > 300_000) {
+            const compressed = animated
+              ? await sharp(raw, { animated: true }).resize({ width: 1200, withoutEnlargement: true }).webp({ quality: 72, effort: 4 }).toBuffer()
+              : await sharp(raw).resize({ width: 1600, withoutEnlargement: true }).webp({ quality: 82 }).toBuffer();
+            writeFileSync(file, compressed.length < raw.length ? compressed : raw);
+          } else {
+            writeFileSync(file, raw);
+          }
         } else {
           writeFileSync(file, raw);
         }

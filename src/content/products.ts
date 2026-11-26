@@ -209,7 +209,6 @@ export const PRODUCTS: Product[] = [
       ["Glama", "https://glama.ai/mcp/servers/rgdevment/Tisty"],
       ["MCP Market", "https://mcpmarket.com/server/tisty"],
       ["M8ven", "https://m8ven.ai/mcp/rgdevment/tisty"],
-      ["Cursor Directory", "https://cursor.directory/"],
       ["SaaSHub", "https://www.saashub.com/tisty-alternatives"],
     ],
     mcp: {
@@ -762,7 +761,7 @@ export const PRODUCTS: Product[] = [
       shortKind: "Clipboard history manager",
       tagline: "An extra thumb for your clipboard.",
       title: "CoPanda: free clipboard manager with offline OCR, Windows & macOS",
-      meta: "Free, open source clipboard manager for Windows and macOS (formerly CopyPaste): searchable local history, offline screenshot OCR, Paste as JSON/HEX and password-manager privacy.",
+      meta: "Free, open source clipboard manager for Windows and macOS (formerly CopyPaste): local search, offline OCR, Paste as JSON/HEX and password privacy.",
       formerly: "Formerly CopyPaste. The same app and the same history, with a name of its own.",
       mascot: {
         title: "An extra thumb for your clipboard.",
@@ -820,7 +819,7 @@ export const PRODUCTS: Product[] = [
       shortKind: "Historial de portapapeles",
       tagline: "Un pulgar extra para tu portapapeles.",
       title: "CoPanda: gestor de portapapeles con OCR local, Windows y macOS",
-      meta: "Gestor de portapapeles gratis y libre para Windows y macOS (antes CopyPaste): historial local con búsqueda, OCR en capturas, Pegar como JSON/HEX e ignora gestores de contraseñas.",
+      meta: "Gestor de portapapeles gratis y libre para Windows y macOS (antes CopyPaste): historial local, OCR en capturas, Pegar como JSON/HEX y privacidad.",
       formerly: "Antes se llamaba CopyPaste. La misma aplicación y el mismo historial, con un nombre propio.",
       mascot: {
         title: "Un pulgar extra para tu portapapeles.",

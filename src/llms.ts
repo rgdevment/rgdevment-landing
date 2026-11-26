@@ -11,7 +11,7 @@ import { installers, latestRelease, megabytes } from "./content/releases";
 import { MAIN, homeOf, relocate } from "./hosts";
 import { AUTHOR, DOMAIN, HOME_PRODUCT, canonical, type Locale } from "./site";
 
-const CREDIT = "Mario Hidalgo García (rgdevment)";
+const CREDIT = "Mario Hidalgo (rgdevment)";
 
 const TEXT = { "Content-Type": "text/plain; charset=utf-8" };
 

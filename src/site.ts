@@ -50,8 +50,10 @@ export function appRef(product: { slug: string; name: string; subCategory?: stri
     "@id": appId(product.slug),
     "@type": "SoftwareApplication",
     name: product.name,
+    applicationCategory: "UtilitiesApplication",
     ...(product.subCategory ? { applicationSubCategory: product.subCategory } : {}),
     url: canonical("en", product.slug),
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
   };
 }
 

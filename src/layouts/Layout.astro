@@ -51,8 +51,9 @@ const full = title.includes(brand) || title.length > 44 ? title : `${title} · $
 const ownCard = owner && cardOf(owner, locale);
 // An app's own site points at its policies from the foot, where people look for them.
 const terms = owner && (await getCollection("terms")).find((one) => one.id === owner.slug);
-const ogLocale = locale === "es" ? "es_CL" : "en_US";
-const ogAlternate = locale === "es" ? "en_US" : "es_CL";
+const ogLang = textIn ?? contentLang;
+const ogLocale = ogLang === "es" ? "es_CL" : "en_US";
+const ogAlternate = ogLang === "es" ? "en_US" : "es_CL";
 const compared = comparisonOf(owner?.slug ?? null);
 const card = image ?? ownCard ?? { src: es ? "/social-es.png" : "/social.png", width: 1200, height: 630 };
 const cardExtension = new URL(card.src, DOMAIN).pathname.split(".").pop()!.toLowerCase();
