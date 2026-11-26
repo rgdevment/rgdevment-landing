@@ -93,7 +93,13 @@ const locales = Object.keys(COPY) as Locale[];
               </svg>
 
               <p class="eyebrow mt-8">404 · {say.eyebrow}</p>
-              <h1 class="mt-4 text-balance text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">{say.title}</h1>
+              {
+                locale === "en" ? (
+                  <h1 class="mt-4 text-balance text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">{say.title}</h1>
+                ) : (
+                  <h2 class="mt-4 text-balance text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">{say.title}</h2>
+                )
+              }
               <p class="mx-auto mt-5 max-w-xl text-pretty text-lg text-body">{say.lede}</p>
               <p class="lost-path mt-6 hidden">
                 <span class="chip text-xs">

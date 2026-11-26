@@ -28,3 +28,6 @@ pnpm-debug.log*
 # wikis pulled at build time
 .wikis/
 public/docs-assets/
+
+# local wrangler cache
+.wrangler/

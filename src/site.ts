@@ -8,15 +8,15 @@ export type Locale = (typeof LOCALES)[number];
 export const DEFAULT_LOCALE: Locale = "en";
 
 export const AUTHOR = {
-  name: "Mario Hidalgo G.",
+  name: "Mario Hidalgo",
   handle: "rgdevment",
   github: "https://github.com/rgdevment",
   x: "https://x.com/rgdevment",
   linkedin: "https://www.linkedin.com/in/rgdevment/",
   coffee: "https://buymeacoffee.com/rgdevment",
-  avatar: "https://avatars.githubusercontent.com/u/10289498",
+  avatar: "https://rgdevment.dev/avatar-mario.webp",
   role: "Independent software developer",
-  about: "Makes free, open source desktop apps for Windows and macOS, with no account and no telemetry: Tisty, LinkUnbound and CoPanda.",
+  about: "Independent software developer in Chile building free, open source desktop apps for Windows and macOS with no accounts and no telemetry: Tisty, LinkUnbound and CoPanda.",
   knows: ["Desktop applications", "Windows", "macOS", "Rust", "Model Context Protocol", "Privacy by design"],
 };
 
@@ -43,6 +43,18 @@ export function canonical(locale: Locale, path = ""): string {
 
 export function appId(product: string): string {
   return `${canonical("en", product)}#app`;
+}
+
+export function appRef(product: { slug: string; name: string; subCategory?: string }) {
+  return {
+    "@id": appId(product.slug),
+    "@type": "SoftwareApplication",
+    name: product.name,
+    applicationCategory: "UtilitiesApplication",
+    ...(product.subCategory ? { applicationSubCategory: product.subCategory } : {}),
+    url: canonical("en", product.slug),
+    offers: { "@type": "Offer", price: "0", priceCurrency: "USD" },
+  };
 }
 
 export const PERSON_ID = `${MAIN}/#person`;

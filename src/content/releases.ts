@@ -11,15 +11,23 @@ const starred = new Map<string, Promise<number | null>>();
 
 async function github(path: string) {
   const token = process.env.GITHUB_TOKEN;
-  try {
-    const response = await fetch(`https://api.github.com/repos/${path}`, {
-      headers: { Accept: "application/vnd.github+json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
-      signal: AbortSignal.timeout(8000),
-    });
-    return response.ok ? await response.json() : null;
-  } catch {
-    return null;
+  const strict = process.env.CI === "true";
+  let lastError: string | null = null;
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const response = await fetch(`https://api.github.com/repos/${path}`, {
+        headers: { Accept: "application/vnd.github+json", ...(token ? { Authorization: `Bearer ${token}` } : {}) },
+        signal: AbortSignal.timeout(8000),
+      });
+      if (response.ok) return await response.json();
+      lastError = `HTTP ${response.status}`;
+    } catch (error) {
+      lastError = error instanceof Error ? error.message : String(error);
+    }
+    if (attempt === 0) await new Promise((resolve) => setTimeout(resolve, 2000));
   }
+  if (strict) throw new Error(`releases: GitHub API failed for ${path} (${lastError})`);
+  return null;
 }
 
 const repoOf = (product: Product) => product.repo.replace("https://github.com/", "");
@@ -68,7 +76,7 @@ export function everyRelease(product: Product): Promise<Published[]> {
   return listed.get(product.slug)!;
 }
 
-/// Asked once per build: a failed answer only hides the notice, it never stops the site going out.
+/// Asked once per build: in CI a failed answer aborts the build so empty release pages are never published.
 export function latestRelease(product: Product): Promise<Release | null> {
   if (!asked.has(product.slug)) asked.set(product.slug, ask(product));
   return asked.get(product.slug)!;

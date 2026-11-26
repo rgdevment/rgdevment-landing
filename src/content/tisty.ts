@@ -278,9 +278,9 @@ Peso: ==11,4 kg=={green} ::heart red::`,
 };
 
 export const ASSISTANT_EN: Assistant = {
-  title: "Connect your assistant",
-  lede: "Tisty has no AI inside: it keeps your memory, and the assistant you already use reads and adds to it. GitHub Copilot, Claude Code, Codex, Cursor or Gemini CLI connect over MCP, on this machine only, with no port, no account and no key. Your assistant picks up where it left off, files its work as tasks with steps, ticks them as it goes and keeps what it learns in documents, all where you can follow and audit it.",
-  settings: "Or open Settings › Assistants: it finds the assistants installed on this computer and connects them with one click.",
+  title: "Connect your agent",
+  lede: "Tisty has no AI inside: it keeps your memory, and the agent you already use reads and adds to it. GitHub Copilot, Claude Code, Codex, Cursor or Gemini CLI connect over MCP, on this machine only, with no port, no account and no key. Your agent picks up where it left off, files its work as tasks with steps, ticks them as it goes and keeps what it learns in documents, all where you can follow and audit it.",
+  settings: "Or open Settings › Agents: it finds the agents installed on this computer and connects them with one click.",
   other: "Any other client, such as VS Code or Cursor",
   can: {
     title: "It can",
@@ -315,16 +315,16 @@ export const ASSISTANT_EN: Assistant = {
       "Empties a document's history",
     ],
   },
-  door: "The door is open when you install Tisty, and Settings › Assistants closes it with one click. While it is closed, everything an assistant tries is refused.",
+  door: "The door is open when you install Tisty, and Settings › Agents closes it with one click. While it is closed, everything an agent tries is refused.",
   listed: "Listed in",
-  more: "What an assistant may do, in the docs",
+  more: "What an agent may do, in the docs",
   page: "mcp-permissions",
 };
 
 export const ASSISTANT_ES: Assistant = {
-  title: "Conecta tu asistente",
-  lede: "Tisty no tiene IA dentro: guarda tu memoria, y el asistente que ya usas la lee y la amplía. GitHub Copilot, Claude Code, Codex, Cursor o Gemini CLI se conectan por MCP, solo en este equipo, sin puerto, sin cuenta y sin clave. Tu asistente retoma donde quedó, anota su trabajo como tareas con pasos, los marca a medida que avanza y guarda lo que aprende en documentos, todo donde puedes seguirlo y revisarlo.",
-  settings: "O abre Configuración › Asistentes: encuentra los asistentes instalados en este equipo y los conecta con un clic.",
+  title: "Conecta tu agente",
+  lede: "Tisty no tiene IA dentro: guarda tu memoria, y el agente que ya usas la lee y la amplía. GitHub Copilot, Claude Code, Codex, Cursor o Gemini CLI se conectan por MCP, solo en este equipo, sin puerto, sin cuenta y sin clave. Tu agente retoma donde quedó, anota su trabajo como tareas con pasos, los marca a medida que avanza y guarda lo que aprende en documentos, todo donde puedes seguirlo y revisarlo.",
+  settings: "O abre Configuración › Agentes: encuentra los agentes instalados en este equipo y los conecta con un clic.",
   other: "Cualquier otro cliente, como VS Code o Cursor",
   can: {
     title: "Puede",
@@ -359,10 +359,10 @@ export const ASSISTANT_ES: Assistant = {
       "Vacía el historial de un documento",
     ],
   },
-  door: "La puerta viene abierta al instalar Tisty, y Configuración › Asistentes la cierra con un clic. Mientras está cerrada, todo lo que intente un asistente se rechaza.",
+  door: "La puerta viene abierta al instalar Tisty, y Configuración › Agentes la cierra con un clic. Mientras está cerrada, todo lo que intente un agente se rechaza.",
   listed: "Está en",
-  more: "Qué puede hacer un asistente, en la ayuda",
-  page: "que-puede-hacer-un-asistente",
+  more: "Qué puede hacer un agente, en la ayuda",
+  page: "que-puede-hacer-un-agente",
 };
 
 const FOLIO_PAPERS = "https://github.com/rgdevment/Folio-by-Tisty/blob/main/docs/";
@@ -393,7 +393,7 @@ export const SHARING_EN: Sharing = {
     },
   ],
   caveat: "The app has no server and collects nothing; Folio does run one. It keeps the encrypted copy until it expires and counts reads without keeping who read. After a serious report or an order, a document stops being served and may be kept for up to 180 days, or as long as the order asks.",
-  home: "To learn about Folio, visit its home:",
+  home: "Folio runs on its own short domain (tisty.cl, from Chile) to keep shared document links concise and isolated from the main app:",
   site: "https://tisty.cl",
   papers: [
     ["Terms of use", `${FOLIO_PAPERS}TERMS.md`],
@@ -431,7 +431,7 @@ export const SHARING_ES: Sharing = {
     },
   ],
   caveat: "La aplicación no tiene servidor ni recoge nada; Folio sí tiene uno. Guarda la copia cifrada hasta que caduca y cuenta las lecturas sin guardar quién leyó. Con una denuncia seria o una orden, un documento deja de servirse y puede guardarse hasta 180 días, o lo que la orden pida.",
-  home: "Para conocer Folio, visita su sitio:",
+  home: "Folio vive en su propio dominio corto (tisty.cl, desde Chile) para mantener los enlaces compartidos breves y separados de la app principal:",
   site: "https://tisty.cl/es/",
   papers: [
     ["Términos de uso", `${FOLIO_PAPERS}TERMINOS.md`],

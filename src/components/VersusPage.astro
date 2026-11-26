@@ -1,0 +1,240 @@
+---
+import AlternativeTo from "./AlternativeTo.astro";
+import Crumbs from "./Crumbs.astro";
+import Icon from "./Icon.astro";
+import Verdict from "./Verdict.astro";
+import Layout from "../layouts/Layout.astro";
+import { COMPARE_PATH, comparisonOf } from "../content/compare";
+import { GUIDES, written } from "../content/guides";
+import { PRODUCTS, inkOf } from "../content/products";
+import { versusEntry, versusPath, versusRows } from "../content/versus";
+import { HOME_PRODUCT, appRef, canonical, crumbs, href, type Locale } from "../site";
+
+interface Props {
+  locale: Locale;
+  rival: string;
+}
+
+const { locale, rival: slug } = Astro.props;
+const es = locale === "es";
+const entry = versusEntry(HOME_PRODUCT, slug)!;
+const data = versusRows(entry, locale)!;
+const compared = comparisonOf(HOME_PRODUCT)!;
+const product = PRODUCTS.find((one) => one.slug === HOME_PRODUCT)!;
+const t = entry[locale];
+const path = versusPath(locale, entry.slug);
+const paths: Record<Locale, string> = {
+  en: versusPath("en", entry.slug),
+  es: versusPath("es", entry.slug),
+};
+const trail: [string, string][] = [
+  [product.name, ""],
+  [compared[locale].short, COMPARE_PATH[locale]],
+  [t.short, path],
+];
+const ink = inkOf(product);
+const tint = "bg-[color-mix(in_srgb,var(--accent)_10%,transparent)]";
+const priced = (own?: string) => (own ? href(locale, own) : undefined);
+const guides = GUIDES.filter((one) => one.product === product.slug);
+
+const say = es
+  ? {
+      fullTable: `Ver comparativa completa de ${product.name}`,
+      faqTitle: "Preguntas frecuentes",
+      guidesTitle: `Guías relacionadas sobre ${product.name}`,
+      guidesLede: "Primero la solución que ya trae tu sistema; después, dónde ayuda la herramienta.",
+      verdictHeading: "Cuándo conviene cada una",
+    }
+  : {
+      fullTable: `See the full ${product.name} comparison`,
+      faqTitle: "Frequently asked questions",
+      guidesTitle: `Related ${product.name} guides`,
+      guidesLede: "First the setting your system already has; then where the tool helps.",
+      verdictHeading: "When to pick each one",
+    };
+---
+
+<Layout
+  title={t.title}
+  description={t.meta}
+  locale={locale}
+  paths={paths}
+  schema={[
+    crumbs(locale, trail),
+    {
+      "@context": "https://schema.org",
+      "@type": "WebPage",
+      url: canonical(locale, path),
+      name: t.title,
+      description: t.meta,
+      about: appRef(product),
+      mentions: [{ "@type": "SoftwareApplication", name: data.rival.name, url: data.rival.url }],
+    },
+    {
+      "@context": "https://schema.org",
+      "@type": "FAQPage",
+      mainEntity: t.faq.map((one) => ({
+        "@type": "Question",
+        name: one.q,
+        acceptedAnswer: { "@type": "Answer", text: one.a },
+      })),
+    },
+  ]}
+>
+  <section class="shell pt-10 sm:pt-14" style={`--accent: ${product.accent}`}>
+    <Crumbs locale={locale} trail={trail} />
+    <header class="mt-10">
+      <p class="eyebrow">{compared[locale].short}</p>
+      <h1 class="mt-3 text-4xl font-semibold tracking-[-0.03em] sm:text-5xl">{t.heading}</h1>
+      <p class="mt-5 max-w-3xl text-lg text-body">{t.lede}</p>
+      <p class="mt-4 text-sm text-muted">{data.checked}</p>
+    </header>
+
+    <div role="region" class="mt-10 md:overflow-x-auto md:rounded-3xl md:border md:border-line md:bg-surface" tabindex="0" aria-label={t.heading}>
+      <table class="compare-table w-full border-collapse text-left text-sm" role="table">
+        <caption class="sr-only">{t.heading}</caption>
+        <thead class="sr-only md:not-sr-only" role="rowgroup">
+          <tr class="border-b border-line" role="row">
+            <td class="min-w-[13rem] bg-surface p-4" role="cell"></td>
+            <th scope="col" role="columnheader" class:list={["min-w-[12rem] p-4 text-base font-semibold text-fg", tint]}>
+              {data.ownName}
+            </th>
+            <th scope="col" role="columnheader" class="min-w-[12rem] p-4 text-base font-semibold text-fg">
+              {data.rival.name}
+            </th>
+          </tr>
+        </thead>
+        <tbody role="rowgroup">
+          {
+            data.rows.map((row) => (
+              <tr class="compare-row md:border-b md:border-line md:last:border-0" role="row">
+                <th scope="row" role="rowheader" class="compare-rowhead font-medium text-fg md:min-w-[13rem] md:bg-surface md:p-4 md:align-top">
+                  {row.label}
+                </th>
+                <td role="cell" data-label={data.ownName} class:list={["compare-cell break-words md:min-w-[12rem] md:p-4 md:align-top", tint, "compare-own"]}>
+                  <div class="min-w-0">
+                    <Verdict cell={row.ownCell} label={data.marks[row.ownCell.mark]} ink={ink} to={priced(row.own)} />
+                    {row.ownCell.note && <span class="mt-1 block text-[13px] leading-snug text-muted">{row.ownCell.note}</span>}
+                  </div>
+                </td>
+                <td role="cell" data-label={data.rival.name} class="compare-cell break-words md:min-w-[12rem] md:p-4 md:align-top">
+                  <div class="min-w-0">
+                    <Verdict cell={row.rivalCell} label={data.marks[row.rivalCell.mark]} />
+                    {row.rivalCell.note && <span class="mt-1 block text-[13px] leading-snug text-muted">{row.rivalCell.note}</span>}
+                  </div>
+                </td>
+              </tr>
+            ))
+          }
+        </tbody>
+      </table>
+    </div>
+
+    {
+      product.signals?.alternativeto && (
+        <div class="mt-8">
+          <AlternativeTo url={product.signals.alternativeto} name={product.name} locale={locale} />
+        </div>
+      )
+    }
+  </section>
+
+  <section class="shell mt-20" style={`--accent: ${product.accent}`}>
+    <h2 class="section-title">{say.verdictHeading}</h2>
+    <div class="mt-8 grid gap-6 md:grid-cols-2">
+      <div class="card p-7" style="border-color: color-mix(in srgb, var(--accent) 40%, var(--line))">
+        <h3 class="text-xl font-semibold text-fg">{t.chooseOwn.title}</h3>
+        <ul class="mt-4 space-y-3 text-body">
+          {
+            t.chooseOwn.points.map((point) => (
+              <li class="flex items-start gap-2.5">
+                <Icon name="free" class="mt-1 h-4 w-4 shrink-0 text-flame" />
+                <span>{point}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+      <div class="card p-7">
+        <h3 class="text-xl font-semibold text-fg">{t.chooseRival.title}</h3>
+        <ul class="mt-4 space-y-3 text-body">
+          {
+            t.chooseRival.points.map((point) => (
+              <li class="flex items-start gap-2.5">
+                <Icon name="arrow" class="mt-1 h-4 w-4 shrink-0 text-muted" />
+                <span>{point}</span>
+              </li>
+            ))
+          }
+        </ul>
+      </div>
+    </div>
+
+    <div class="mt-10 flex flex-wrap items-center gap-4">
+      <a class="btn-primary" href={`${href(locale)}#download`}>
+        <Icon name="download" class="h-4 w-4" />
+        {data.back}
+      </a>
+      <a class="btn-ghost" href={href(locale, COMPARE_PATH[locale])}>
+        {say.fullTable}
+        <Icon name="arrow" class="h-4 w-4" />
+      </a>
+    </div>
+  </section>
+
+  <section class="shell mt-20">
+    <h2 class="section-title">{say.faqTitle}</h2>
+    <dl class="mt-8 grid gap-4 md:grid-cols-2">
+      {
+        t.faq.map((one) => (
+          <div class="card p-6">
+            <dt class="text-lg font-semibold text-fg">{one.q}</dt>
+            <dd class="mt-2 text-body">{one.a}</dd>
+          </div>
+        ))
+      }
+    </dl>
+  </section>
+
+  {
+    guides.length > 0 && (
+      <section class="shell mt-20">
+        <h2 class="section-title">{say.guidesTitle}</h2>
+        <p class="mt-3 text-muted">{say.guidesLede}</p>
+        <ul class="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-2">
+          {guides.map((one) => (
+            <li>
+              <a class="card-link group block h-full p-6" href={href(locale, written(one, locale).slug)}>
+                <span class="flex items-start justify-between gap-4">
+                  <span class="text-lg font-semibold leading-snug text-fg">{written(one, locale).title}</span>
+                  <Icon name="arrow" class="mt-1 h-4 w-4 shrink-0 text-muted transition group-hover:translate-x-0.5" />
+                </span>
+                <span class="mt-2 block text-sm text-muted">{written(one, locale).description}</span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    data.rivalSources.length > 0 && (
+      <section class="shell mt-20">
+        <h2 class="eyebrow">{data.sourcesLabel}</h2>
+        <div class="mt-4 text-sm">
+          <h3 class="font-medium text-fg">{data.rival.name}</h3>
+          <ul class="mt-2 grid gap-1 sm:grid-cols-2">
+            {data.rivalSources.map((url) => (
+              <li class="break-all">
+                <a class="text-muted underline decoration-muted underline-offset-4 hover:text-fg" href={url} rel="noopener">
+                  {url.replace(/^https:\/\/(www\.)?/, "")}
+                </a>
+              </li>
+            ))}
+          </ul>
+        </div>
+      </section>
+    )
+  }
+</Layout>

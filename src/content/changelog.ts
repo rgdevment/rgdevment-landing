@@ -16,6 +16,7 @@ export type Note = { product: Product; version: string; date: string; url: strin
 
 type Words = {
   title: string;
+  seo: string;
   short: string;
   meta: string;
   lede: string;
@@ -28,6 +29,7 @@ type Words = {
 const WORDS: Record<Locale, (name: string) => Words> = {
   en: (name) => ({
     title: `What's new in ${name}`,
+    seo: `${name} changelog and release notes`,
     short: "What's new",
     meta: `Every ${name} release, newest first: what each version changed for you, from its release notes.`,
     lede: `What each version of ${name} changed, newest first, as its release notes tell it.`,
@@ -37,6 +39,7 @@ const WORDS: Record<Locale, (name: string) => Words> = {
   }),
   es: (name) => ({
     title: `Novedades de ${name}`,
+    seo: `Novedades y notas de versión de ${name}`,
     short: "Novedades",
     meta: `Cada versión de ${name}, de la más nueva a la más antigua: qué cambió para ti en cada una, según sus notas.`,
     lede: `Qué cambió en cada versión de ${name}, de la más nueva a la más antigua, tal como lo cuentan sus notas.`,
@@ -61,12 +64,24 @@ export function changelogUrl(product: Product, locale: Locale, version?: string)
 }
 
 function demoteHeadings() {
-  const walk = (node: { tagName?: string; children?: unknown[] }) => {
-    const level = node.tagName?.match(/^h([1-6])$/)?.[1];
-    if (level) node.tagName = `h${Math.min(Number(level) + 2, 6)}`;
-    (node.children as (typeof node)[] | undefined)?.forEach(walk);
+  type Node = { tagName?: string; children?: unknown[] };
+  return (tree: Node) => {
+    const headings: { node: Node; level: number }[] = [];
+    const collect = (node: Node) => {
+      const level = node.tagName?.match(/^h([1-6])$/)?.[1];
+      if (level) headings.push({ node, level: Number(level) });
+      (node.children as Node[] | undefined)?.forEach(collect);
+    };
+    collect(tree);
+    if (!headings.length) return;
+    const shift = 3 - Math.min(...headings.map((one) => one.level));
+    let prev = 2;
+    for (const one of headings) {
+      const next = Math.min(Math.max(one.level + shift, 3), prev + 1, 6);
+      one.node.tagName = `h${next}`;
+      prev = next;
+    }
   };
-  return walk;
 }
 
 const processor = createMarkdownProcessor({
@@ -94,7 +109,8 @@ function split(product: Product, version: string, body: string): { headline?: st
 async function note(product: Product, release: Published, version: string): Promise<Note> {
   const { headline, text } = split(product, version, release.body);
   const { code } = await (await processor).render(text);
-  return { product, version, date: release.date, url: release.url, headline, html: code };
+  const httpsHtml = code.replace(/http:\/\/((?:www\.)?(?:tisty|linkunbound|copanda)\.app|rgdevment\.dev)/gi, "https://$1");
+  return { product, version, date: release.date, url: release.url, headline, html: httpsHtml };
 }
 
 const written = new Map<string, Promise<Note[]>>();

@@ -113,25 +113,26 @@ const LINKUNBOUND_GUIDES: Guide[] = [
     id: "outlook-links",
     product: "linkunbound",
     published: "2026-09-24",
+    updated: "2026-11-26",
     en: {
       slug: "guides/open-outlook-links-in-chrome-or-firefox",
       title: "Open Outlook links in Chrome or Firefox instead of Edge",
       description:
-        "Classic Outlook has a setting that decides where a link in an email opens. Change it first, and then deal with what it leaves out.",
-      lede: "Outlook on the desktop keeps its own preference for opening links, separate from the Windows default. If your emails keep opening Edge, that setting is almost always the reason.",
-      nativeTitle: "First, the setting Outlook already has",
+        "How to change link handling in classic Outlook and the new Outlook on Windows 11, and how to route work emails to the right browser or profile.",
+      lede: "Outlook on Windows keeps its own link behaviour, separate from your system default. Whether you use classic Outlook or the new Outlook on Windows 11, start with the built-in setting first.",
+      nativeTitle: "First, the settings Outlook already has",
       nativeSteps: [
         {
-          title: "Open File, then Options",
-          body: "This is the classic Outlook desktop application. The new Outlook and the web version do not carry the same setting.",
+          title: "In classic Outlook: File, Options, Advanced",
+          body: "Scroll to Link Handling and change «Open hyperlinks from Outlook in» from Microsoft Edge to Default Browser.",
         },
         {
-          title: "Go to Advanced",
-          body: "Scroll to the section about link handling.",
+          title: "In the new Outlook on Windows 11: Settings, General",
+          body: "Open the gear icon, check General for link preferences when offered by your build, and confirm your Windows default apps under Settings, Apps, Default apps for HTTP and HTTPS.",
         },
         {
-          title: "Set Open hyperlinks from Outlook in",
-          body: "Choose Default Browser rather than Microsoft Edge.",
+          title: "Test a link outside Microsoft 365",
+          body: "Click a regular website link in an email to confirm Outlook now hands it to your Windows default browser instead of Edge.",
         },
       ],
       gapTitle: "What that does not fix",
@@ -152,8 +153,8 @@ const LINKUNBOUND_GUIDES: Guide[] = [
           a: "Classic Outlook carries its own preference under File, Options, Advanced. Until it is set to the default browser, it overrides what Windows says.",
         },
         {
-          q: "Does the new Outlook have the same setting?",
-          a: "No. The setting described here belongs to the classic desktop application. The new Outlook and the web version behave differently.",
+          q: "How does the new Outlook on Windows 11 handle links?",
+          a: "The new Outlook follows Windows default HTTP/HTTPS handlers for regular links unless your build exposes a link preference under Settings, General, though Microsoft still routes some internal side-pane links directly to Edge.",
         },
       ],
     },
@@ -161,21 +162,21 @@ const LINKUNBOUND_GUIDES: Guide[] = [
       slug: "guias/abrir-enlaces-de-outlook-en-chrome-o-firefox",
       title: "Abrir enlaces de Outlook en Chrome o Firefox en vez de Edge",
       description:
-        "El Outlook clásico tiene un ajuste que decide dónde se abre un enlace de un correo. Cámbialo primero y ocúpate después de lo que ese ajuste deja fuera.",
-      lede: "El Outlook de escritorio guarda su propia preferencia para abrir enlaces, aparte del predeterminado de Windows. Si tus correos siguen abriendo Edge, casi siempre es por ese ajuste.",
-      nativeTitle: "Primero, el ajuste que Outlook ya tiene",
+        "Cómo cambiar dónde abre los enlaces el Outlook clásico y el nuevo Outlook de Windows 11, y cómo mandar cada correo al navegador o perfil correcto.",
+      lede: "Outlook en Windows maneja los enlaces con sus propias reglas, aparte del navegador predeterminado. Tanto en el Outlook clásico como en el nuevo Outlook de Windows 11, conviene empezar por el ajuste integrado.",
+      nativeTitle: "Primero, los ajustes que Outlook ya tiene",
       nativeSteps: [
         {
-          title: "Entra en Archivo y luego en Opciones",
-          body: "Esto es el Outlook clásico de escritorio. El Outlook nuevo y la versión web no tienen el mismo ajuste.",
+          title: "En el Outlook clásico: Archivo, Opciones, Avanzado",
+          body: "Baja hasta la sección de hipervínculos y cambia «Abrir hipervínculos de Outlook en» de Microsoft Edge a Navegador predeterminado.",
         },
         {
-          title: "Ve a Avanzado",
-          body: "Baja hasta la sección que habla de los hipervínculos.",
+          title: "En el nuevo Outlook de Windows 11: Configuración, General",
+          body: "Pulsa el ícono del engranaje, revisa en General si tu compilación muestra la preferencia de vínculos y verifica en Windows (Configuración, Aplicaciones, Aplicaciones predeterminadas) el navegador asignado a HTTP y HTTPS.",
         },
         {
-          title: "Cambia Abrir hipervínculos de Outlook en",
-          body: "Elige Navegador predeterminado en lugar de Microsoft Edge.",
+          title: "Prueba con un enlace corriente",
+          body: "Pulsa un enlace normal dentro de un correo para confirmar que Outlook ya lo entrega al navegador predeterminado de Windows en lugar de Edge.",
         },
       ],
       gapTitle: "Lo que eso no arregla",
@@ -196,8 +197,8 @@ const LINKUNBOUND_GUIDES: Guide[] = [
           a: "El Outlook clásico tiene su propia preferencia en Archivo, Opciones, Avanzado. Mientras no esté puesta en el navegador predeterminado, manda sobre lo que diga Windows.",
         },
         {
-          q: "¿El Outlook nuevo tiene el mismo ajuste?",
-          a: "No. El ajuste que se describe aquí es del Outlook clásico de escritorio. El nuevo y la versión web se comportan de otra manera.",
+          q: "¿Cómo maneja los enlaces el nuevo Outlook en Windows 11?",
+          a: "El nuevo Outlook usa el navegador predeterminado de Windows para HTTP/HTTPS salvo cuando tu versión muestra una preferencia propia en Configuración, General, aunque Microsoft sigue abriendo algunos paneles internos directamente en Edge.",
         },
       ],
     },
@@ -375,6 +376,93 @@ const LINKUNBOUND_GUIDES: Guide[] = [
         {
           q: "¿Qué selector de navegador funciona en Windows y en macOS?",
           a: "Casi todos están hechos para una sola plataforma. Browserino, Finicky, Velja y Choosy son solo de macOS; BrowserPicker y Browser Tamer son de Windows. LinkUnbound y Switchbar cubren las dos, y de esos solo LinkUnbound es de código abierto.",
+        },
+      ],
+    },
+  },
+  {
+    id: "unwrap-safelinks",
+    product: "linkunbound",
+    published: "2026-11-26",
+    en: {
+      slug: "guides/unwrap-microsoft-safelinks-before-opening-browser",
+      title: "Unwrap Microsoft SafeLinks before opening your browser",
+      description:
+        "Outlook and Teams wrap links in safelinks.protection.outlook.com redirects that break browser routing rules. How they work and how to unwrap them locally.",
+      lede: "Microsoft Defender SafeLinks rewrites every URL inside work emails and Teams chats into a long redirect under safelinks.protection.outlook.com. That breaks domain rules, clutters shared links and hides where a click really goes.",
+      nativeTitle: "What you can check first",
+      nativeSteps: [
+        {
+          title: "Hover before clicking",
+          body: "Outlook usually shows the original target in the tooltip even though the underlying href points to safelinks.protection.outlook.com.",
+        },
+        {
+          title: "Inspect the url= parameter when copying",
+          body: "The real destination sits encoded inside the url= query parameter. You can decode it by hand or with a browser extension after the tab already opened.",
+        },
+      ],
+      gapTitle: "Why browser extensions arrive too late",
+      gap: [
+        "By the time a browser extension decodes a SafeLink, Windows or macOS has already opened the wrong browser or wrong work profile.",
+        "Domain routing rules fail because the host they see is always safelinks.protection.outlook.com instead of github.com, jira or figma.com.",
+        "Disabling SafeLinks globally requires an Exchange administrator policy and is usually blocked on corporate tenants.",
+      ],
+      toolTitle: "Unwrapping before any rule runs",
+      tool: [
+        "LinkUnbound sits between Outlook or Teams and your browsers, unwrapping Microsoft SafeLinks locally on your machine before matching any rule.",
+        "Both the rule engine and the picker beside your cursor see the real destination address immediately.",
+        "Your work Jira, GitHub and Figma links land in the exact Chrome, Edge or Firefox profile they belong to.",
+        "Free and open source under GPL-3.0 for Windows and macOS, with no account and no telemetry.",
+      ],
+      faq: [
+        {
+          q: "Does unwrapping SafeLinks send my URLs to a third-party server?",
+          a: "Not in LinkUnbound. The real URL is already embedded inside the SafeLink query string, so LinkUnbound extracts it locally on your machine with zero network requests.",
+        },
+        {
+          q: "Why do browser-picker rules fail on Outlook and Teams links?",
+          a: "Because the incoming URL starts with *.safelinks.protection.outlook.com instead of the actual destination domain. Unwrapping it first lets domain rules match reliably.",
+        },
+      ],
+    },
+    es: {
+      slug: "guias/desenvolver-safelinks-de-outlook-y-teams-automaticamente",
+      title: "Desenvolver SafeLinks de Outlook y Teams antes de abrir el navegador",
+      description:
+        "Outlook y Teams envuelven los enlaces en safelinks.protection.outlook.com y rompen tus reglas de navegador. Cómo funcionan y cómo desenvolverlos en local.",
+      lede: "Microsoft Defender SafeLinks reescribe cada URL en correos de trabajo y chats de Teams en un redirector largo bajo safelinks.protection.outlook.com. Eso rompe las reglas por dominio, ensucia los enlaces al copiarlos y oculta el destino real.",
+      nativeTitle: "Qué puedes comprobar primero",
+      nativeSteps: [
+        {
+          title: "Pasa el cursor antes de pulsar",
+          body: "Outlook suele mostrar el destino original en la vista previa aunque el enlace real apunte a safelinks.protection.outlook.com.",
+        },
+        {
+          title: "Extrae el parámetro url= al copiar",
+          body: "La dirección verdadera viaja codificada dentro del parámetro url=. Puedes decodificarla a mano o con una extensión cuando la pestaña ya se abrió.",
+        },
+      ],
+      gapTitle: "Por qué las extensiones del navegador llegan tarde",
+      gap: [
+        "Cuando una extensión decodifica el SafeLink, Windows o macOS ya abrieron el navegador equivocado o el perfil personal en vez del perfil de trabajo.",
+        "Las reglas por dominio fallan porque el host que reciben siempre es safelinks.protection.outlook.com en lugar de github.com, jira o figma.com.",
+        "Desactivar SafeLinks requiere permisos de administrador de Microsoft 365 y casi nunca está disponible para el usuario.",
+      ],
+      toolTitle: "Desenvolver antes de evaluar ninguna regla",
+      tool: [
+        "LinkUnbound se sitúa entre Outlook o Teams y tus navegadores, desenvolviendo los SafeLinks de Microsoft localmente antes de evaluar cualquier regla.",
+        "Tanto el motor de reglas como el selector junto al cursor ven la dirección real al instante.",
+        "Tus enlaces de Jira, GitHub o Figma aterrizan en el perfil exacto de Chrome, Edge o Firefox que corresponde.",
+        "Gratuito y de código abierto bajo GPL-3.0 para Windows y macOS, sin cuenta y sin telemetría.",
+      ],
+      faq: [
+        {
+          q: "¿Desenvolver SafeLinks envía mis enlaces a algún servidor externo?",
+          a: "No en LinkUnbound. La dirección real ya viene dentro de la cadena de consulta del SafeLink, así que LinkUnbound la extrae en tu equipo sin hacer peticiones de red.",
+        },
+        {
+          q: "¿Por qué fallan las reglas por sitio en enlaces de Outlook y Teams?",
+          a: "Porque la URL entrante empieza por *.safelinks.protection.outlook.com en lugar del dominio real. Al desenvolverlo antes, las reglas por dominio vuelven a coincidir.",
         },
       ],
     },

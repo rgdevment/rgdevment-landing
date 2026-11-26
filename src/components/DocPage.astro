@@ -6,7 +6,7 @@ import Icon from "./Icon.astro";
 import Layout from "../layouts/Layout.astro";
 import { bySection, type Doc, docPath, docsOf } from "../content/docs";
 import { PRODUCTS, cardOf, inkOf, iconAlt } from "../content/products";
-import { AUTHOR, DOMAIN, HOME_PRODUCT, PERSON_ID, WEBSITE_ID, appId, canonical, crumbs, href, type Locale } from "../site";
+import { AUTHOR, DOMAIN, HOME_PRODUCT, PERSON_ID, WEBSITE_ID, appRef, canonical, crumbs, href, type Locale } from "../site";
 
 interface Props {
   doc: Doc;
@@ -48,7 +48,8 @@ const path = docPath(locale, product.slug, data.page);
 const other: Locale = es ? "en" : "es";
 const paths = { [locale]: path, [other]: docPath(other, product.slug, data.twin ?? "") };
 const heading = data.page ? data.title : say.title;
-const title = data.page ? `${data.title} · ${es ? `Ayuda de ${product.name}` : `${product.name} docs`}` : say.title;
+const baseTitle = data.page ? `${data.title} · ${es ? `Ayuda de ${product.name}` : `${product.name} docs`}` : es ? `Ayuda de ${product.name}: guías y referencia` : `${product.name} documentation: guides and reference`;
+const title = baseTitle.length < 28 ? `${data.title} · ${es ? `Documentación de ${product.name}` : `${product.name} documentation`}` : baseTitle;
 const trail: [string, string][] = [
   [product.name, product.slug],
   [say.docs, index],
@@ -75,7 +76,7 @@ const schema = [
     publisher: { "@id": PERSON_ID },
     isPartOf: { "@id": WEBSITE_ID },
     mainEntityOfPage: canonical(locale, path),
-    about: { "@id": appId(product.slug) },
+    about: appRef(product),
     ...(card ? { image: new URL(card.src, DOMAIN).toString() } : {}),
     ...(promote ? { mentions: { "@type": "TechArticle", headline: words.title, url: words.url, inLanguage: locale } } : {}),
   },

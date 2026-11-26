@@ -17,7 +17,7 @@ const trail: [string, string][] = [[product.name, ""], [t.short, NEWS_PATH[local
 const stories = await storiesOf(product);
 ---
 
-<Layout title={t.title} description={t.meta} locale={locale} paths={NEWS_PATH} schema={crumbs(locale, trail)}>
+<Layout title={t.seo} description={t.meta} locale={locale} paths={NEWS_PATH} schema={crumbs(locale, trail)}>
   <section class="shell pt-10 sm:pt-14" style={`--accent: ${product.accent}`}>
     <Crumbs locale={locale} trail={trail} />
     <header class="mt-10">

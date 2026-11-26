@@ -99,7 +99,8 @@ function buildIndex(sidebar) {
 function urlOf(product, entry, anchor) {
   const prefix = entry.locale === "es" ? "/es" : "";
   const tail = entry.slug ? `${entry.slug}/` : "";
-  return `${prefix}/${product}/${SECTION[entry.locale]}/${tail}${anchor ? `#${anchor}` : ""}`;
+  const cleanAnchor = anchor ? anchor.replace(/^-+|-+$/g, "") : "";
+  return `${prefix}/${product}/${SECTION[entry.locale]}/${tail}${cleanAnchor ? `#${cleanAnchor}` : ""}`;
 }
 
 function rewriteLinks(text, product, pages) {
@@ -126,12 +127,32 @@ async function localiseImages(text, product) {
   for (const url of new Set(found)) {
     const hash = createHash("sha1").update(url).digest("hex").slice(0, 8);
     const shot = /\.(?:png|jpe?g)$/.test(url);
+    const isWebp = /\.webp$/i.test(url);
     const name = `${product}-${hash}-${basename(new URL(url).pathname)}`.replace(/\.(?:png|jpe?g)$/, ".webp");
     const file = join(ASSETS, name);
+    let animated = false;
     try {
       if (!existsSync(file)) {
         const raw = execFileSync("curl", ["-fsSL", url], { maxBuffer: 1 << 26 });
-        writeFileSync(file, shot ? await sharp(raw).resize({ width: 1600, withoutEnlargement: true }).webp({ quality: 85 }).toBuffer() : raw);
+        if (shot) {
+          writeFileSync(file, await sharp(raw).resize({ width: 1600, withoutEnlargement: true }).webp({ quality: 85 }).toBuffer());
+        } else if (isWebp) {
+          const meta = await sharp(raw, { animated: true }).metadata();
+          animated = (meta.pages ?? 1) > 1;
+          if (raw.length > 300_000) {
+            const compressed = animated
+              ? await sharp(raw, { animated: true }).resize({ width: 1200, withoutEnlargement: true }).webp({ quality: 72, effort: 4 }).toBuffer()
+              : await sharp(raw).resize({ width: 1600, withoutEnlargement: true }).webp({ quality: 82 }).toBuffer();
+            writeFileSync(file, compressed.length < raw.length ? compressed : raw);
+          } else {
+            writeFileSync(file, raw);
+          }
+        } else {
+          writeFileSync(file, raw);
+        }
+      } else if (isWebp) {
+        const meta = await sharp(file, { animated: true }).metadata();
+        animated = (meta.pages ?? 1) > 1;
       }
       text = text.replaceAll(url, `/docs-assets/${name}`);
     } catch {
@@ -139,7 +160,7 @@ async function localiseImages(text, product) {
       console.warn(`wikis: kept remote image, download failed: ${url}`);
       continue;
     }
-    if (shot) await addSmaller(file);
+    if (shot || (isWebp && !animated)) await addSmaller(file);
   }
   return text;
 }

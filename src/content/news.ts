@@ -18,6 +18,7 @@ export type Story = {
 
 type Words = {
   title: string;
+  seo: string;
   short: string;
   meta: string;
   lede: string;
@@ -31,6 +32,7 @@ type Words = {
 const WORDS: Record<Locale, (name: string) => Words> = {
   en: (name) => ({
     title: `${name} news`,
+    seo: `${name} news and releases for Windows and macOS`,
     short: "News",
     meta: `What is new in ${name}, told for the people who use it, newest first.`,
     lede: `What is new in ${name}, told for the people who use it.`,
@@ -42,6 +44,7 @@ const WORDS: Record<Locale, (name: string) => Words> = {
   }),
   es: (name) => ({
     title: `Noticias de ${name}`,
+    seo: `Noticias y lanzamientos de ${name} para Windows y macOS`,
     short: "Noticias",
     meta: `Lo nuevo de ${name}, contado para quien lo usa, de lo más reciente a lo más antiguo.`,
     lede: `Lo nuevo de ${name}, contado para quien lo usa.`,

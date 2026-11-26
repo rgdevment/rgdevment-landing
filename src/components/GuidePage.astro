@@ -5,8 +5,8 @@ import Layout from "../layouts/Layout.astro";
 import { docPath, docsOf } from "../content/docs";
 import { lastChanged } from "../content/guide";
 import { GUIDES, type Guide, written } from "../content/guides";
-import { PRODUCTS, shotSrc, words, iconAlt } from "../content/products";
-import { AUTHOR, DOMAIN, PERSON_ID, WEBSITE_ID, appId, canonical, crumbs, href, type Locale } from "../site";
+import { PRODUCTS, cardOf, shotSrc, words, iconAlt } from "../content/products";
+import { AUTHOR, DOMAIN, PERSON_ID, WEBSITE_ID, appRef, canonical, crumbs, href, type Locale } from "../site";
 
 interface Props {
   guide: Guide;
@@ -37,6 +37,7 @@ const date = day(guide.published);
 const paths = { en: guide.en.slug, es: guide.es.slug };
 const kin = GUIDES.filter((one) => one.id !== guide.id && one.product === guide.product);
 const shot = shotSrc(product, locale) ?? "/social.png";
+const card = cardOf(product, locale);
 const hasDocs = (await docsOf(product.slug, locale)).length > 0;
 
 const schema = [
@@ -52,8 +53,8 @@ const schema = [
     publisher: { "@id": PERSON_ID },
     isPartOf: { "@id": WEBSITE_ID },
     mainEntityOfPage: canonical(locale, t.slug),
-    image: new URL(shot, DOMAIN).toString(),
-    about: { "@id": appId(product.slug) },
+    image: new URL(card?.src ?? shot, DOMAIN).toString(),
+    about: appRef(product),
   },
   {
     "@context": "https://schema.org",
@@ -74,6 +75,7 @@ const schema = [
 <Layout
   title={t.title}
   description={t.description}
+  image={card}
   locale={locale}
   path={t.slug}
   paths={paths}

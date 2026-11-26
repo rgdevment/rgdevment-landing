@@ -12,6 +12,7 @@
     "build:tisty": "astro build --config astro.tisty.config.mjs && pagefind --site dist-tisty",
     "build:linkunbound": "astro build --config astro.linkunbound.config.mjs && pagefind --site dist-linkunbound",
     "build:copanda": "astro build --config astro.copanda.config.mjs && pagefind --site dist-copanda",
+    "verify:seo": "node scripts/verify-seo.mjs",
     "preview": "astro preview",
     "astro": "astro"
   },

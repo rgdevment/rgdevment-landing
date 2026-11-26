@@ -6,12 +6,13 @@ import { PRODUCTS, type Product, brewSteps, releasesUrl, storeUrl } from "./cont
 import { privacyPath } from "./content/privacy";
 import { CHANGELOG_PATH, FEED, hasChangelog } from "./content/changelog";
 import { COMPARE_PATH, comparisonOf, namesOthers } from "./content/compare";
+import { versusOf, versusPath } from "./content/versus";
 import { NEWS_FEED, NEWS_PATH, hasNews } from "./content/news";
 import { installers, latestRelease, megabytes } from "./content/releases";
 import { MAIN, homeOf, relocate } from "./hosts";
 import { AUTHOR, DOMAIN, HOME_PRODUCT, canonical, type Locale } from "./site";
 
-const CREDIT = "Mario Hidalgo García (rgdevment)";
+const CREDIT = "Mario Hidalgo (rgdevment)";
 
 const TEXT = { "Content-Type": "text/plain; charset=utf-8" };
 
@@ -85,9 +86,9 @@ function assistants(product: Product): string[] {
   if (!product.mcp) return [];
   const said = product.en.assistant;
   return [
-    "## Connect an assistant",
+    "## Connect an agent",
     "",
-    `Its MCP server comes inside the app, listed in the MCP Registry as \`${product.mcp.registry}\`. With ${product.name} installed, Settings › Assistants connects the assistants it finds; by hand:`,
+    `Its MCP server comes inside the app, listed in the MCP Registry as \`${product.mcp.registry}\`. With ${product.name} installed, Settings › Agents connects the agents it finds; by hand:`,
     "",
     ...product.mcp.connect.map(({ who, command }) => `- ${who ?? "Any other client, such as VS Code or Cursor"}: \`${command}\``),
     ...(product.listings?.length ? ["", "Also listed at:", "", ...product.listings.map(([name, url]) => `- [${name}](${url})`)] : []),
@@ -282,6 +283,7 @@ export async function appLlms(): Promise<Response> {
     ...(hasChangelog(product.slug) ? [link("What's new", CHANGELOG_PATH.en, "every release, newest first"), `- [RSS feed](${canonical("en", "")}${FEED})`] : []),
     `- [Source code](${product.repo})`,
     ...(compared ? [link(compared.en.title, COMPARE_PATH.en, `what it does that ${namesOthers(compared)} do not`)] : []),
+    ...versusOf(product.slug).map((one) => link(one.en.title, versusPath("en", one.slug), one.en.meta)),
     `- [Español](${canonical("es", "")}): ${product.es.tagline}`,
     `- [Ayuda en español](${canonical("es", docPath("es", product.slug))})`,
     `- [More tools by ${AUTHOR.handle}](${MAIN}/llms.txt)`,
@@ -323,7 +325,11 @@ export function mainLlms(): string {
   const comparisons = PRODUCTS.flatMap((product) => {
     const compared = comparisonOf(product.slug);
     const home = homeOf(product.slug);
-    return compared ? [`- [${compared.en.title}](${home}/${COMPARE_PATH.en}/) ([español](${home}/es/${COMPARE_PATH.es}/)): ${compared.en.meta}`] : [];
+    const base = compared ? [`- [${compared.en.title}](${home}/${COMPARE_PATH.en}/) ([español](${home}/es/${COMPARE_PATH.es}/)): ${compared.en.meta}`] : [];
+    const heads = versusOf(product.slug).map(
+      (one) => `- [${one.en.title}](${home}/${versusPath("en", one.slug)}/) ([español](${home}/es/${versusPath("es", one.slug)}/)): ${one.en.meta}`,
+    );
+    return [...base, ...heads];
   });
   const changelogs = PRODUCTS.filter((product) => hasChangelog(product.slug)).map((product) => {
     const home = homeOf(product.slug);

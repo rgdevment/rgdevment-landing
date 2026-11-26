@@ -20,9 +20,9 @@ jobs:
       project: rgdevment-landing
       document-url: https://github.com/rgdevment/rgdevment-landing/blob/main/CLA.md
       not-signed-message: >-
-        Thanks for the pull request. rgdevment.com is released under the AGPL-3.0 and offered under
-        separate commercial terms, which requires a signature from whoever opened it and every
-        author and co-author of its commits before it can be merged. You keep the copyright on
-        your work. To sign, post a comment on this pull request with:
+        Thanks for the pull request. rgdevment-landing (rgdevment.dev) is released under the AGPL-3.0
+        and requires a CLA signature from whoever opened the pull request and every author and
+        co-author of its commits before it can be merged. You keep the copyright on your work. To
+        sign, post a comment on this pull request with:
     secrets:
       signatures-token: ${{ secrets.CLA_SIGNATURES_TOKEN }}
