@@ -64,12 +64,24 @@ export function changelogUrl(product: Product, locale: Locale, version?: string)
 }
 
 function demoteHeadings() {
-  const walk = (node: { tagName?: string; children?: unknown[] }) => {
-    const level = node.tagName?.match(/^h([1-6])$/)?.[1];
-    if (level) node.tagName = `h${Math.min(Number(level) + 2, 6)}`;
-    (node.children as (typeof node)[] | undefined)?.forEach(walk);
+  type Node = { tagName?: string; children?: unknown[] };
+  return (tree: Node) => {
+    const headings: { node: Node; level: number }[] = [];
+    const collect = (node: Node) => {
+      const level = node.tagName?.match(/^h([1-6])$/)?.[1];
+      if (level) headings.push({ node, level: Number(level) });
+      (node.children as Node[] | undefined)?.forEach(collect);
+    };
+    collect(tree);
+    if (!headings.length) return;
+    const shift = 3 - Math.min(...headings.map((one) => one.level));
+    let prev = 2;
+    for (const one of headings) {
+      const next = Math.min(Math.max(one.level + shift, 3), prev + 1, 6);
+      one.node.tagName = `h${next}`;
+      prev = next;
+    }
   };
-  return walk;
 }
 
 const processor = createMarkdownProcessor({
