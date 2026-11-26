@@ -99,7 +99,8 @@ function buildIndex(sidebar) {
 function urlOf(product, entry, anchor) {
   const prefix = entry.locale === "es" ? "/es" : "";
   const tail = entry.slug ? `${entry.slug}/` : "";
-  return `${prefix}/${product}/${SECTION[entry.locale]}/${tail}${anchor ? `#${anchor}` : ""}`;
+  const cleanAnchor = anchor ? anchor.replace(/^-+|-+$/g, "") : "";
+  return `${prefix}/${product}/${SECTION[entry.locale]}/${tail}${cleanAnchor ? `#${cleanAnchor}` : ""}`;
 }
 
 function rewriteLinks(text, product, pages) {

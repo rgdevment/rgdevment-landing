@@ -193,24 +193,12 @@ const TOPIC_GONE = {
   },
 };
 
-// The README on Tisty's main already links the names the help takes with the next release; until that tag, they lead to the pages that exist.
-const HELP_AHEAD = {
-  tisty: {
-    '/docs/agents-and-mcp/': '/docs/assistants-and-mcp/',
-    '/es/ayuda/agentes-y-mcp/': '/es/ayuda/asistentes-y-mcp/',
-    '/es/ayuda/que-puede-hacer-un-agente/': '/es/ayuda/que-puede-hacer-un-asistente/',
-  },
-};
-
-const untilTheTag = (moved = {}) =>
-  Object.entries(moved)
-    .flatMap(([from, to]) => [`${from} ${to} 302`, `${from.replace(/\/$/, '')} ${to} 302`])
-    .map((line) => `${line}\n`)
-    .join('');
-
-// Tisty's Markdown pages moved to a site of their own, and search engines still send people to the old addresses.
+// Tisty's help renamed Assistants → Agents in v1.50.2, and Markdown pages moved to markdown.tisty.app.
 const HELP_MOVED = {
   tisty: {
+    '/docs/assistants-and-mcp/': '/docs/agents-and-mcp/',
+    '/es/ayuda/asistentes-y-mcp/': '/es/ayuda/agentes-y-mcp/',
+    '/es/ayuda/que-puede-hacer-un-asistente/': '/es/ayuda/que-puede-hacer-un-agente/',
     '/docs/tisty-markdown/': 'https://markdown.tisty.app/',
     '/docs/callouts-and-highlights/': 'https://markdown.tisty.app/quotes-and-callouts',
     '/docs/code-blocks/': 'https://markdown.tisty.app/code-blocks',
@@ -281,7 +269,7 @@ function ownFiles(product) {
         ];
         const icon = CATALOG.find((one) => one.slug === product).icon;
         writeFileSync(at('favicon.ico'), await favicon(`./public${icon}`));
-        writeFileSync(at('_redirects'), renamed({ '/en/': '/', ...SUPPORT_MOVED, ...HELP_MOVED[product], ...TOPIC_GONE[product], ...newsMoved(product) }) + untilTheTag(HELP_AHEAD[product]));
+        writeFileSync(at('_redirects'), renamed({ '/en/': '/', ...SUPPORT_MOVED, ...HELP_MOVED[product], ...TOPIC_GONE[product], ...newsMoved(product) }));
         drop.forEach((path) => rmSync(at(path), { force: true }));
       },
     },

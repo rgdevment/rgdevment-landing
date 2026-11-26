@@ -361,8 +361,8 @@ export const ASSISTANT_ES: Assistant = {
   },
   door: "La puerta viene abierta al instalar Tisty, y Configuración › Asistentes la cierra con un clic. Mientras está cerrada, todo lo que intente un asistente se rechaza.",
   listed: "Está en",
-  more: "Qué puede hacer un asistente, en la ayuda",
-  page: "que-puede-hacer-un-asistente",
+  more: "Qué puede hacer un agente, en la ayuda",
+  page: "que-puede-hacer-un-agente",
 };
 
 const FOLIO_PAPERS = "https://github.com/rgdevment/Folio-by-Tisty/blob/main/docs/";
