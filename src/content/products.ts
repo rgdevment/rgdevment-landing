@@ -198,7 +198,7 @@ export const PRODUCTS: Product[] = [
     storeId: "9PGVWXD8X93N",
     requires: { windows: "Windows 10 (1809)", macos: "macOS 13.3" },
     signals: {
-      producthunt: { url: "https://www.producthunt.com/products/tisty", post: "1290086", badge: true },
+      producthunt: { url: "https://www.producthunt.com/products/tisty", post: "1290086", badge: false },
       alternativeto: "https://alternativeto.net/software/tisty/about/",
     },
     winget: "rgdevment.Tisty",
