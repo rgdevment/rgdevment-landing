@@ -28,8 +28,8 @@ const { width, height } = await sharp(`./public${poster}`).metadata();
       controls
       preload="none"
     >
-      <source src={versioned(`${film.video}.webm`)} type='video/webm; codecs="av01.0.05M.10"' />
-      <source src={versioned(`${film.video}.mp4`)} type='video/mp4; codecs="avc1.640032"' />
+      <source src={versioned(`${film.video}.webm`)} type='video/webm; codecs="vp09.00.40.08"' />
+      <source src={versioned(`${film.video}.mp4`)} type='video/mp4; codecs="avc1.640028"' />
     </video>
     <button
       type="button"
