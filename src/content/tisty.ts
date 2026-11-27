@@ -447,7 +447,7 @@ export const FILM_EN: Film = {
   video: "/tisty-brainsty",
   title: "Brainsty: everything you keep, joined",
   lede: "Your documents, tasks and tags as one map that slowly turns. Up close each one shows its title, and a click opens its card with what points at it. What is alike though nobody tied it shows apart, found by shared words and a word list, with no AI.",
-  label: "Brainsty in Tisty: the network of documents, tasks and tags turns, comes closer until every title shows, and opens the card of the document Household budget 2026",
+  label: "Brainsty in Tisty: the whole network, 1,910 nodes and 4,524 connections, turns like a globe, then flies in to the tag agent and to a task, and opens its card with what joins it",
   play: "Play the video",
   pause: "Pause the video",
 };
@@ -456,7 +456,7 @@ export const FILM_ES: Film = {
   video: "/tisty-brainsty",
   title: "Brainsty: todo lo que guardas, unido",
   lede: "Tus documentos, tareas y etiquetas como un solo mapa que gira despacio. De cerca cada uno muestra su título, y un clic abre su ficha con lo que apunta a él. Lo que se parece sin que nadie lo uniera se ve aparte, encontrado por palabras en común y una lista de palabras, sin IA.",
-  label: "Brainsty en Tisty: la red de documentos, tareas y etiquetas gira, se acerca hasta mostrar cada título y abre la ficha del documento Household budget 2026",
+  label: "Brainsty en Tisty: la red entera, 1910 nodos y 4524 conexiones, gira como un globo, luego vuela hasta la etiqueta agent y hasta una tarea, y abre su ficha con lo que se une a ella",
   play: "Reproducir el video",
   pause: "Pausar el video",
 };
