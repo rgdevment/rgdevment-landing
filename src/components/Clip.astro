@@ -1,0 +1,92 @@
+---
+import sharp from "sharp";
+import { versioned } from "../versioned";
+
+interface Props {
+  video: string;
+  label: string;
+  play: string;
+  pause: string;
+  class?: string;
+}
+
+const { video, label, play, pause, class: klass = "" } = Astro.props;
+const poster = `${video}-poster.webp`;
+const { width, height } = await sharp(`./public${poster}`).metadata();
+---
+
+<div class={`relative ${klass}`} data-clip data-play={play} data-pause={pause}>
+  <video
+    class="block h-auto w-full rounded-3xl border border-line bg-night"
+    width={width}
+    height={height}
+    poster={versioned(poster)}
+    aria-label={label}
+    muted
+    loop
+    playsinline
+    controls
+    preload="none"
+  >
+    <source src={versioned(`${video}.webm`)} type='video/webm; codecs="vp09.00.40.08"' />
+    <source src={versioned(`${video}.mp4`)} type='video/mp4; codecs="avc1.640028"' />
+  </video>
+  <button
+    type="button"
+    class="absolute bottom-3 right-3 hidden h-9 w-9 place-items-center rounded-full bg-black/55 text-white backdrop-blur transition hover:bg-black/75"
+    aria-label={play}
+    data-clip-turn
+  >
+    <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true" data-clip-playing>
+      <rect x="6.5" y="5" width="3.5" height="14" rx="1" />
+      <rect x="14" y="5" width="3.5" height="14" rx="1" />
+    </svg>
+    <svg viewBox="0 0 24 24" fill="currentColor" class="h-4 w-4" aria-hidden="true" data-clip-stopped>
+      <path d="M8 5.5v13a1 1 0 0 0 1.5.86l10.5-6.5a1 1 0 0 0 0-1.72L9.5 4.64A1 1 0 0 0 8 5.5z" />
+    </svg>
+  </button>
+</div>
+
+<script>
+  const still = matchMedia("(prefers-reduced-motion: reduce)");
+
+  for (const box of document.querySelectorAll<HTMLElement>("[data-clip]")) {
+    const video = box.querySelector("video")!;
+    const turn = box.querySelector<HTMLButtonElement>("[data-clip-turn]")!;
+    let wanted = !still.matches;
+    let seen = false;
+
+    const draw = () => {
+      const playing = !video.paused;
+      turn.setAttribute("aria-label", (playing ? box.dataset.pause : box.dataset.play)!);
+      turn.querySelector("[data-clip-playing]")!.classList.toggle("hidden", !playing);
+      turn.querySelector("[data-clip-stopped]")!.classList.toggle("hidden", playing);
+    };
+
+    const follow = () => {
+      if (wanted && seen) video.play().catch(() => {});
+      else video.pause();
+    };
+
+    video.controls = false;
+    turn.classList.replace("hidden", "grid");
+    video.addEventListener("play", draw);
+    video.addEventListener("pause", draw);
+    turn.addEventListener("click", () => {
+      wanted = video.paused;
+      follow();
+    });
+    still.addEventListener("change", () => {
+      wanted = !still.matches;
+      follow();
+    });
+    new IntersectionObserver(
+      ([entry]) => {
+        seen = entry.isIntersecting;
+        follow();
+      },
+      { threshold: 0.4 },
+    ).observe(video);
+    draw();
+  }
+</script>

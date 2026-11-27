@@ -1,9 +1,11 @@
 ---
 import { Image, getImage } from "astro:assets";
 import { render } from "astro:content";
+import Clip from "./Clip.astro";
 import Crumbs from "./Crumbs.astro";
 import GetIt from "./GetIt.astro";
 import Layout from "../layouts/Layout.astro";
+import { versioned } from "../versioned";
 import { NEWS_PATH, homeProduct, newsWords, storiesOf, storyPath } from "../content/news";
 import { cardOf } from "../content/products";
 import { DOMAIN, PERSON_ID, WEBSITE_ID, appRef, canonical, crumbs, href, longDate, type Locale } from "../site";
@@ -21,13 +23,14 @@ const at = stories.findIndex((one) => one.page[locale] === page);
 const story = stories[at];
 const [newer, older] = [stories[at - 1], stories[at + 1]];
 const article = story.article[locale];
-const { title, description, cover, shows } = article.data;
+const { title, description, cover, video, shows } = article.data;
 const { Content, headings } = await render(article);
 const toc = headings.filter((one) => one.depth === 2);
 const paths = { en: storyPath("en", story.page.en), es: storyPath("es", story.page.es) };
 const trail: [string, string][] = [[product.name, ""], [t.short, NEWS_PATH[locale]], [title, paths[locale]]];
 const shared = cover && (await getImage({ src: cover, width: 1200, height: 630, fit: "cover", position: "top", format: "jpg" }));
 const image = shared ? { src: shared.src, width: 1200, height: 630 } : undefined;
+const poster = video && versioned(`${video}-poster.webp`);
 const card = image ?? cardOf(product, locale);
 const url = canonical(locale, paths[locale]);
 const posting = {
@@ -50,6 +53,7 @@ const neighbour = "block rounded-3xl border border-line p-5 transition-colors ho
 ---
 
 <Layout title={title} description={description} locale={locale} paths={paths} published={story.date} image={image} schema={[crumbs(locale, trail), posting]}>
+  {poster && <link slot="head" rel="preload" as="image" href={poster} type="image/webp" fetchpriority="high" />}
   <article class="shell pt-10 sm:pt-14" style={`--accent: ${product.accent}`}>
     <Crumbs locale={locale} trail={trail} />
     <header class="mt-10 max-w-4xl">
@@ -59,7 +63,9 @@ const neighbour = "block rounded-3xl border border-line p-5 transition-colors ho
     </header>
 
     {
-      cover && (
+      video ? (
+        <Clip video={video} label={shows!} play={t.play} pause={t.pause} class="mt-10" />
+      ) : cover && (
         <Image
           src={cover}
           alt={shows!}
