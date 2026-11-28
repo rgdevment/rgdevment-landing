@@ -147,7 +147,7 @@ export const COST_EN: Cost = {
     "Picking up again brings only what moved, and what is finished costs nothing until it is searched.",
     "A search brings ten tasks and ten documents at a time, each with the line that says it cut to 120 characters around the word.",
   ],
-  caveat: "Connecting costs something too: the description of Tisty's tools weighs about a sixth of that log, a third less than it did, and a test keeps it from growing. An assistant that loads tools only as it uses them does not pay it whole; one that loads every tool each session saves 72–83%, and below some 50 KB of notes a plain file is cheaper. Counted in characters, with the JSON each answer carries included.",
+  caveat: "Connecting costs something too: the description of Tisty's tools weighs about a tenth of that log, more than a third less than before, and a test keeps it from growing. An assistant that loads tools only as it uses them does not pay it whole; one that loads every tool each session saves 77–88%, and below some 35 KB of notes a plain file is cheaper. Counted in characters, with the JSON each answer carries included.",
 };
 
 export const COST_ES: Cost = {
@@ -169,7 +169,7 @@ export const COST_ES: Cost = {
     "Retomar trae solo lo que cambió, y lo terminado no cuesta nada hasta que alguien lo busca.",
     "Una búsqueda trae diez tareas y diez documentos por vez, cada uno con la línea que lo dice recortada a 120 caracteres alrededor de la palabra.",
   ],
-  caveat: "Conectarse también cuesta: la descripción de las herramientas de Tisty pesa cerca de una sexta parte de esa bitácora, un tercio menos que antes, y un test impide que vuelva a crecer. Un asistente que carga las herramientas solo a medida que las usa no la paga entera; uno que las carga todas en cada sesión ahorra entre un 72 y un 83 %, y con menos de unos 50 KB de notas un archivo plano sale más barato. Contado en caracteres, incluido el JSON que acompaña cada respuesta.",
+  caveat: "Conectarse también cuesta: la descripción de las herramientas de Tisty pesa cerca de una décima parte de esa bitácora, más de un tercio menos que antes, y un test impide que vuelva a crecer. Un asistente que carga las herramientas solo a medida que las usa no la paga entera; uno que las carga todas en cada sesión ahorra entre un 77 y un 88 %, y con menos de unos 35 KB de notas un archivo plano sale más barato. Contado en caracteres, incluido el JSON que acompaña cada respuesta.",
 };
 
 const LOG = (title: string, entry: string) =>
